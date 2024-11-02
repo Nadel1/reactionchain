@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://bh2a2i4d3rxjl"]
+
+[ext_resource type="Script" path="res://Scripts/hitZone.gd" id="1_qwjnr"]
+[ext_resource type="Texture2D" uid="uid://bhoj52so4jvl1" path="res://Assets/Sprites/Buttons/HitZone.png" id="2_rm68b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0v5ce"]
+atlas = ExtResource("2_rm68b")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udmus"]
+atlas = ExtResource("2_rm68b")
+region = Rect2(68, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kh1n"]
+atlas = ExtResource("2_rm68b")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg1gp"]
+atlas = ExtResource("2_rm68b")
+region = Rect2(68, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0flkk"]
+atlas = ExtResource("2_rm68b")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0xnx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0v5ce")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udmus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kh1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg1gp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0flkk")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0r1s"]
+size = Vector2(62, 62)
+
+[node name="HitZone" type="Node2D"]
+position = Vector2(0, -11)
+script = ExtResource("1_qwjnr")
+
+[node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0xnx8")
+metadata/_edit_lock_ = true
+
+[node name="GoodArea" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoodArea"]
+shape = SubResource("RectangleShape2D_m0r1s")
+metadata/_edit_lock_ = true
+
+[connection signal="area_entered" from="GoodArea" to="." method="_on_good_area_area_entered"]
+[connection signal="area_exited" from="GoodArea" to="." method="_on_good_area_area_exited"]
