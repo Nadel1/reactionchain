@@ -1,3 +1,107 @@
-[gd_scene format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=14 format=3 uid="uid://esuifwpqp2og"]
+
+[ext_resource type="Script" path="res://Scripts/Stream/track.gd" id="1_3fiup"]
+[ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="1_tmafb"]
+[ext_resource type="Texture2D" uid="uid://bhoj52so4jvl1" path="res://Assets/Sprites/Buttons/HitZone.png" id="2_hfhrn"]
+[ext_resource type="Script" path="res://Scripts/hitZone.gd" id="3_sycll"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0hus"]
+atlas = ExtResource("1_tmafb")
+region = Rect2(0, 0, 1500, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ikor"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0hus")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0v5ce"]
+atlas = ExtResource("2_hfhrn")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udmus"]
+atlas = ExtResource("2_hfhrn")
+region = Rect2(68, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kh1n"]
+atlas = ExtResource("2_hfhrn")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg1gp"]
+atlas = ExtResource("2_hfhrn")
+region = Rect2(68, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0flkk"]
+atlas = ExtResource("2_hfhrn")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0xnx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0v5ce")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udmus")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kh1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg1gp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0flkk")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0r1s"]
+size = Vector2(62, 62)
 
 [node name="Stream" type="Node2D"]
+
+[node name="Track" type="Node2D" parent="."]
+position = Vector2(543, 938)
+script = ExtResource("1_3fiup")
+
+[node name="TrackAnimatedSprite2D" type="AnimatedSprite2D" parent="Track"]
+position = Vector2(5, -10)
+sprite_frames = SubResource("SpriteFrames_4ikor")
+
+[node name="HitZone" type="Node2D" parent="Track"]
+position = Vector2(0, -11)
+script = ExtResource("3_sycll")
+
+[node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="Track/HitZone"]
+sprite_frames = SubResource("SpriteFrames_0xnx8")
+metadata/_edit_lock_ = true
+
+[node name="GoodArea" type="Area2D" parent="Track/HitZone"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Track/HitZone/GoodArea"]
+shape = SubResource("RectangleShape2D_m0r1s")
+metadata/_edit_lock_ = true
+
+[node name="SpawnPoint" type="Node2D" parent="Track"]
+position = Vector2(-600, -11)
+
+[node name="SpawnTimer" type="Timer" parent="Track"]
+wait_time = 2.0
+
+[connection signal="area_entered" from="Track/HitZone/GoodArea" to="Track/HitZone" method="_on_good_area_area_entered"]
+[connection signal="area_exited" from="Track/HitZone/GoodArea" to="Track/HitZone" method="_on_good_area_area_exited"]
+[connection signal="timeout" from="Track/SpawnTimer" to="Track" method="_on_spawn_timer_timeout"]
