@@ -43,6 +43,8 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 
 
 func _on_good_area_area_exited(area: Area2D) -> void:
+	if buttonPrompt!=null:
+		get_parent().removeFirstButtonPrompt()
 	buttonPrompt=null
 	goodHit=false
-	get_parent().removeFirstButtonPrompt()
+	

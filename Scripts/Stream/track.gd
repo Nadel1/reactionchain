@@ -25,7 +25,7 @@ func spawnButton():
 func removeFirstButtonPrompt():
 	var firstButtonPrompt= buttonSequence.pop_front()
 	if firstButtonPrompt!=null:
-			firstButtonPrompt.queue_free()
+		firstButtonPrompt.queue_free()
 	
 func _on_spawn_timer_timeout() -> void:
 	spawnButton()
