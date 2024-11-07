@@ -7,8 +7,6 @@ const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
-@onready var spawnTimerPackets=$SpawnTimerPackets
-@onready var spawnTimerButtons=$SpawnTimerButtons
 @onready var spawnPoint=$SpawnPoint
 
 @export var score=0
@@ -22,6 +20,7 @@ var buttonsInCurrentPacket=0
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
 
+	
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.is_action_pressed("right"):
@@ -43,7 +42,7 @@ func spawnButton():
 	get_parent().call_deferred("add_child",newButtonPrompt)
 	buttonSequence.append(newButtonPrompt)
 
-func _on_midi_player_arrows_midi_event(channel: Variant, event: Variant) -> void:
+func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:#no idea why it has to be this type
 		spawnButton()
 
@@ -64,7 +63,6 @@ func evaluateScore(correctInput=true):
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
 		score+=scoreChangeBadHit
-	print("score: ",score)
 	if get_parent()!=null:
 		get_parent().updateScore(score)
 
@@ -81,14 +79,14 @@ func registerInput(inputString):
 		buttonSequence.pop_front().queue_free()
 
 		
-func _on_good_area_area_entered(area: Area2D) -> void:
+func _on_good_area_area_entered(_area: Area2D) -> void:
 	goodHit=true
 	buttonSequence.front().hitZoneEnter(true)
 	
-func _on_good_area_area_exited(area: Area2D) -> void:
+func _on_good_area_area_exited(_area: Area2D) -> void:
 	goodHit=false
 
-func _on_late_area_area_entered(area: Area2D) -> void:
+func _on_late_area_area_entered(_area: Area2D) -> void:
 	buttonSequence.pop_front().queue_free()
 	evaluateScore(false)
 

@@ -22,11 +22,6 @@ file = "res://Assets/Audio/test_MIDI.mid"
 playing = true
 loop = true
 
-[node name="StartPlayingMusicTimer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
 [node name="ScoreLabel" type="RichTextLabel" parent="."]
 offset_left = 16.0
 offset_top = 822.0
@@ -34,5 +29,19 @@ offset_right = 173.0
 offset_bottom = 862.0
 text = "Score: 0"
 
+[node name="StartPlayingMusicTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="EOLStopSpawningArrowsTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="EOLStopPlayingMusicTimer" type="Timer" parent="."]
+
 [connection signal="midi_event" from="MidiPlayerArrows" to="Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
+[connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="." method="_on_eol_stop_spawning_arrows_timer_timeout"]
+[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="." method="_on_eol_stop_playing_music_timer_timeout"]
