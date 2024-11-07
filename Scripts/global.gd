@@ -5,3 +5,5 @@ extends Node
 
 var inputHandler : InputHandler
 var recordings = []
+var currentStreamIndex = 0
+var score = 0

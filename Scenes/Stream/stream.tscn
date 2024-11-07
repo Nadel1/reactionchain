@@ -1,14 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=9 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
 [ext_resource type="PackedScene" uid="uid://bdvkdv77fslji" path="res://addons/midi/ADSR.tscn" id="2_14jv0"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
+[ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
+[ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
+[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/streamer.tscn" id="7_7qkcf"]
+[ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 
 [node name="Stream" type="Node2D"]
 script = ExtResource("1_lwu7i")
 
 [node name="Track" parent="." instance=ExtResource("1_hd44i")]
+position = Vector2(299, 593)
 
 [node name="ADSR" parent="." instance=ExtResource("2_14jv0")]
 
@@ -23,10 +28,10 @@ playing = true
 loop = true
 
 [node name="ScoreLabel" type="RichTextLabel" parent="."]
-offset_left = 16.0
-offset_top = 822.0
-offset_right = 173.0
-offset_bottom = 862.0
+offset_left = 15.0
+offset_top = 519.0
+offset_right = 172.0
+offset_bottom = 559.0
 text = "Score: 0"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
@@ -41,7 +46,25 @@ autostart = true
 
 [node name="EOLStopPlayingMusicTimer" type="Timer" parent="."]
 
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("5_a0dki")
+
+[node name="InputRecorder" type="Node" parent="." node_paths=PackedStringArray("streamer")]
+script = ExtResource("6_o3x8b")
+streamer = NodePath("../Streamer")
+
+[node name="Streamer" parent="." instance=ExtResource("7_7qkcf")]
+position = Vector2(922, 414)
+scale = Vector2(4, 4)
+
+[node name="VideoFrame" parent="." instance=ExtResource("8_iwo4b")]
+
+[node name="SwitchSceneTimer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="midi_event" from="MidiPlayerArrows" to="Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="." method="_on_eol_stop_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="EOLStopPlayingMusicTimer" to="." method="_on_eol_stop_playing_music_timer_timeout"]
+[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="InputRecorder" method="stopRecording"]
+[connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]

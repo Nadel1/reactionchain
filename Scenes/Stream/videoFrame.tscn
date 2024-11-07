@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd2twf35woli5"]
+
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_iec0a"]
+
+[node name="VideoFrame" type="Node2D"]
+
+[node name="StreamBorder" type="NinePatchRect" parent="."]
+z_index = 1
+offset_right = 180.0
+offset_bottom = 102.0
+scale = Vector2(4, 4)
+texture = ExtResource("1_iec0a")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Title" type="RichTextLabel" parent="."]
+offset_left = 5.0
+offset_top = 412.0
+offset_right = 800.0
+offset_bottom = 479.0
+theme_override_font_sizes/normal_font_size = 48
+text = "[Video title here]"
+fit_content = true
+
+[node name="Content" type="Node2D" parent="."]
+scale = Vector2(0.626, 0.626)
