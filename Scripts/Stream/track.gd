@@ -42,37 +42,41 @@ func spawnButton():
 	newButtonPrompt.position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newButtonPrompt)
 	buttonSequence.append(newButtonPrompt)
-	
-func removeButtonPrompt(buttonPrompt):
-	buttonPrompt.queue_free()
-		
-func popFirstButtonPrompt():
-	return buttonSequence.pop_front()
-	
 
 func _on_midi_player_arrows_midi_event(channel: Variant, event: Variant) -> void:
 	if event.type==144:#no idea why it has to be this type
 		spawnButton()
 
+func playScoreDecrease():#animate hitzone and maybe later add more music here? 
+	animatedSprite.play("wrongHit")
 
+func playScoreIncrease():
+	animatedSprite.play("hit")
+	
 func evaluateScore(correctInput=true):
 	if correctInput:
-		if goodHit:
+		if goodHit:#correct input in hitzone
 			score+=scoreChangeGoodHit
-		else:
+			playScoreIncrease()
+		else:#correct input not in hitzone
 			score+=scoreChangeBadHit
-	else:
+			playScoreDecrease()
+	else:#either incorrect input, or no input at all (too late)
+		playScoreDecrease()
 		score+=scoreChangeBadHit
 	print("score: ",score)
+	if get_parent()!=null:
+		get_parent().updateScore(score)
 
 func registerInput(inputString):
 	var buttonPrompt=buttonSequence.front()
 	if buttonPrompt!=null:
 		if buttonPrompt.getInput()==inputString:
-			animatedSprite.play("hit")
+			
+			evaluateScore()
 		else: 
-			animatedSprite.play("default")
-		evaluateScore()
+			evaluateScore(false)
+		
 	if goodHit==true:	
 		buttonSequence.pop_front().queue_free()
 
@@ -85,5 +89,9 @@ func _on_good_area_area_exited(area: Area2D) -> void:
 	goodHit=false
 
 func _on_late_area_area_entered(area: Area2D) -> void:
-	removeButtonPrompt(popFirstButtonPrompt())
+	buttonSequence.pop_front().queue_free()
 	evaluateScore(false)
+
+
+func _on_hit_zone_animated_sprite_2d_animation_finished() -> void:
+	animatedSprite.play("default")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0bluohjgwimb"]
+[gd_scene load_steps=12 format=3 uid="uid://c0bluohjgwimb"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/track.gd" id="1_02ljk"]
 [ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="2_cvast"]
@@ -27,6 +27,10 @@ region = Rect2(0, 0, 34, 68)
 atlas = ExtResource("4_cbvy3")
 region = Rect2(34, 0, 34, 68)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnr0r"]
+atlas = ExtResource("4_cbvy3")
+region = Rect2(102, 0, 34, 68)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_pvy2y"]
 animations = [{
 "frames": [{
@@ -40,9 +44,23 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pnou5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnou5")
 }],
 "loop": false,
 "name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnr0r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnr0r")
+}],
+"loop": false,
+"name": &"wrongHit",
 "speed": 5.0
 }]
 
@@ -67,7 +85,6 @@ position = Vector2(-600, -11)
 [node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(621, -11)
 sprite_frames = SubResource("SpriteFrames_pvy2y")
-animation = &"hit"
 
 [node name="GoodArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
 collision_layer = 2
@@ -81,6 +98,7 @@ shape = SubResource("RectangleShape2D_j5ucw")
 position = Vector2(64, 0)
 shape = SubResource("RectangleShape2D_nmqn4")
 
+[connection signal="animation_finished" from="HitZoneAnimatedSprite2D" to="." method="_on_hit_zone_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
 [connection signal="area_exited" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_exited"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/LateArea" to="." method="_on_late_area_area_entered"]
