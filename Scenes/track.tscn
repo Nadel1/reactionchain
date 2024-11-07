@@ -24,20 +24,12 @@ position = Vector2(543, 938)
 script = ExtResource("1_02ljk")
 
 [node name="TrackAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(5, -10)
+position = Vector2(-44.9999, -10)
+scale = Vector2(0.933333, 1)
 sprite_frames = SubResource("SpriteFrames_4ikor")
 
 [node name="HitZone" parent="." instance=ExtResource("3_hadfj")]
-position = Vector2(722, -11)
+position = Vector2(621, -11)
 
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2(-600, -11)
-
-[node name="SpawnTimerPackets" type="Timer" parent="."]
-wait_time = 3.0
-
-[node name="SpawnTimerButtons" type="Timer" parent="."]
-wait_time = 0.5
-
-[connection signal="timeout" from="SpawnTimerPackets" to="." method="_on_spawn_timer_packets_timeout"]
-[connection signal="timeout" from="SpawnTimerButtons" to="." method="_on_spawn_timer_buttons_timeout"]
