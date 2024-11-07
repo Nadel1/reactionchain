@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7cakd2wnh3no"]
+
+[ext_resource type="PackedScene" uid="uid://cbxqm0hn6vnfy" path="res://Scenes/Objects/Buttons/Button.tscn" id="1_atpwd"]
+[ext_resource type="Texture2D" uid="uid://bsrim815d5p2o" path="res://Assets/Sprites/Buttons/UpButton.png" id="1_phar4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax66q"]
+atlas = ExtResource("1_phar4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3uebw"]
+atlas = ExtResource("1_phar4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ikm64"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax66q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3uebw")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}]
+
+[node name="Button" instance=ExtResource("1_atpwd")]
+input = "up"
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_ikm64")

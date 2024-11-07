@@ -1,3 +1,38 @@
-[gd_scene format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=5 format=3 uid="uid://esuifwpqp2og"]
+
+[ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
+[ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
+[ext_resource type="PackedScene" uid="uid://bdvkdv77fslji" path="res://addons/midi/ADSR.tscn" id="2_14jv0"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
 
 [node name="Stream" type="Node2D"]
+script = ExtResource("1_lwu7i")
+
+[node name="Track" parent="." instance=ExtResource("1_hd44i")]
+
+[node name="ADSR" parent="." instance=ExtResource("2_14jv0")]
+
+[node name="MidiPlayerMusic" parent="." instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/test_MIDI.mid"
+loop = true
+soundfont = "res://Assets/Audio/UprightPianoKW-small-20190703.sf2"
+
+[node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/test_MIDI.mid"
+playing = true
+loop = true
+
+[node name="StartPlayingMusicTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="ScoreLabel" type="RichTextLabel" parent="."]
+offset_left = 16.0
+offset_top = 822.0
+offset_right = 173.0
+offset_bottom = 862.0
+text = "Score: 0"
+
+[connection signal="midi_event" from="MidiPlayerArrows" to="Track" method="_on_midi_player_arrows_midi_event"]
+[connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
