@@ -1,7 +1,6 @@
 extends Node2D
 @export var speed = 250
 @export var input=""
-
 @onready var animatedSprite=get_node("AnimatedSprite")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

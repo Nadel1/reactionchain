@@ -12,13 +12,16 @@ const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 @onready var spawnPoint=$SpawnPoint
 
 @export var score=0
+@export var scoreChangeGoodHit=10
+@export var scoreChangeOkayHit=5
+@export var scoreChangeBadHit=-5
 
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
 var buttonsInCurrentPacket=0
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
-var buttonPrompt=null
+var okayHit=false
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -32,6 +35,7 @@ func _input(event):
 			registerInput("down")
 		else:
 			print("bullshit was pressed")
+			evaluateScore(false)
 			
 func spawnButton():
 	var spawnIndex=randi()%numberOfButtonPrompts
@@ -40,10 +44,11 @@ func spawnButton():
 	get_parent().call_deferred("add_child",newButtonPrompt)
 	buttonSequence.append(newButtonPrompt)
 	
-func removeFirstButtonPrompt():
-	var firstButtonPrompt= buttonSequence.pop_front()
-	if firstButtonPrompt!=null:
-		firstButtonPrompt.queue_free()
+func removeButtonPrompt(buttonPrompt):
+	buttonPrompt.queue_free()
+		
+func popFirstButtonPrompt():
+	return buttonSequence.pop_front()
 	
 
 func _on_midi_player_arrows_midi_event(channel: Variant, event: Variant) -> void:
@@ -51,30 +56,51 @@ func _on_midi_player_arrows_midi_event(channel: Variant, event: Variant) -> void
 		spawnButton()
 
 
-func changeScore(addToScore):
-	pass
+func evaluateScore(correctInput=true):
+	if correctInput:
+		if goodHit && okayHit:
+			score+=scoreChangeGoodHit
+		elif okayHit && !goodHit:
+			score+=scoreChangeOkayHit
+		else:
+			score+=scoreChangeBadHit
+	else:
+		score+=scoreChangeBadHit
+	print("score: ",score)
 
 func registerInput(inputString):
-	removeFirstButtonPrompt()
-	if buttonPrompt!=null: #check to see if there is a button in the hitzone
+	var buttonPrompt=buttonSequence.front()
+	if buttonPrompt!=null:
 		if buttonPrompt.getInput()==inputString:
 			animatedSprite.play("hit")
-			print("righ timing, right input")
 		else: 
 			animatedSprite.play("default")
-			print("righ timing, wrong input")
-		buttonPrompt=null
-	else:
-		print("wrong timing")
+		evaluateScore()
+	if okayHit==true:	
+		removeButtonPrompt(buttonSequence.pop_front())
+
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
-	buttonPrompt=area.get_parent()
-	buttonPrompt.hitZoneEnter(true)
 	goodHit=true
+	okayHit=true
 
 
 func _on_good_area_area_exited(area: Area2D) -> void:
-	if buttonPrompt!=null:
-		removeFirstButtonPrompt()
-	buttonPrompt=null
 	goodHit=false
+	okayHit=true
+	
+
+func _on_okay_area_area_entered(area: Area2D) -> void:
+	buttonSequence.front().hitZoneEnter(true)
+	goodHit=false
+	okayHit=true
+
+
+func _on_okay_area_area_exited(area: Area2D) -> void:
+	okayHit=false
+	goodHit=false
+
+
+func _on_late_area_area_entered(area: Area2D) -> void:
+	removeButtonPrompt(popFirstButtonPrompt())
+	evaluateScore(false)

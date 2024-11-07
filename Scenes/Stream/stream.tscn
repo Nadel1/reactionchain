@@ -20,6 +20,7 @@ soundfont = "res://Assets/Audio/UprightPianoKW-small-20190703.sf2"
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/test_MIDI.mid"
 playing = true
+loop = true
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
 wait_time = 5.0

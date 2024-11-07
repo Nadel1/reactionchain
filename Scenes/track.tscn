@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c0bluohjgwimb"]
+[gd_scene load_steps=12 format=3 uid="uid://c0bluohjgwimb"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/track.gd" id="1_02ljk"]
 [ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="2_cvast"]
@@ -19,31 +19,19 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0v5ce"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei02f"]
 atlas = ExtResource("4_cbvy3")
-region = Rect2(0, 0, 68, 68)
+region = Rect2(0, 0, 34, 68)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_udmus"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnou5"]
 atlas = ExtResource("4_cbvy3")
-region = Rect2(68, 0, 68, 68)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5kh1n"]
-atlas = ExtResource("4_cbvy3")
-region = Rect2(0, 0, 68, 68)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dg1gp"]
-atlas = ExtResource("4_cbvy3")
-region = Rect2(68, 0, 68, 68)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0flkk"]
-atlas = ExtResource("4_cbvy3")
-region = Rect2(0, 0, 68, 68)
+region = Rect2(34, 0, 34, 68)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pvy2y"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0v5ce")
+"texture": SubResource("AtlasTexture_ei02f")
 }],
 "loop": true,
 "name": &"default",
@@ -51,16 +39,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_udmus")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5kh1n")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dg1gp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0flkk")
+"texture": SubResource("AtlasTexture_pnou5")
 }],
 "loop": false,
 "name": &"hit",
@@ -68,7 +47,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ucw"]
-size = Vector2(62, 62)
+size = Vector2(33, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4to6d"]
+size = Vector2(84, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmqn4"]
+size = Vector2(11, 62)
 
 [node name="Track" type="Node2D"]
 position = Vector2(543, 938)
@@ -85,13 +70,29 @@ position = Vector2(-600, -11)
 [node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(621, -11)
 sprite_frames = SubResource("SpriteFrames_pvy2y")
+animation = &"hit"
 
 [node name="GoodArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
-metadata/_edit_lock_ = true
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/GoodArea"]
 shape = SubResource("RectangleShape2D_j5ucw")
-metadata/_edit_lock_ = true
+
+[node name="OkayArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/OkayArea"]
+position = Vector2(14, 0)
+shape = SubResource("RectangleShape2D_4to6d")
+
+[node name="LateArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/LateArea"]
+position = Vector2(64, 0)
+shape = SubResource("RectangleShape2D_nmqn4")
 
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
 [connection signal="area_exited" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_exited"]
+[connection signal="area_entered" from="HitZoneAnimatedSprite2D/OkayArea" to="." method="_on_okay_area_area_entered"]
+[connection signal="area_exited" from="HitZoneAnimatedSprite2D/OkayArea" to="." method="_on_okay_area_area_exited"]
+[connection signal="area_entered" from="HitZoneAnimatedSprite2D/LateArea" to="." method="_on_late_area_area_entered"]
