@@ -8,11 +8,6 @@ var buttonPrompt=null
 func _ready() -> void:
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.is_action_pressed("right"):
@@ -27,14 +22,21 @@ func _input(event):
 			print("bullshit was pressed")
 			
 
+func changeScore(addToScore):
+	pass
+
 func registerInput(inputString):
 	get_parent().removeFirstButtonPrompt()
 	if buttonPrompt!=null: #check to see if there is a button in the hitzone
 		if buttonPrompt.getInput()==inputString:
 			animatedSprite.play("hit")
+			print("righ timing, right input")
 		else: 
 			animatedSprite.play("default")
+			print("righ timing, wrong input")
 		buttonPrompt=null
+	else:
+		print("wrong timing")
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
 	buttonPrompt=area.get_parent()
