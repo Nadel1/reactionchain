@@ -15,7 +15,7 @@ script = ExtResource("1_lwu7i")
 [node name="MidiPlayerMusic" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/test_MIDI.mid"
 loop = true
-soundfont = "res://Assets/Audio/UprightPianoKW-20220221.sf2"
+soundfont = "res://Assets/Audio/UprightPianoKW-small-20190703.sf2"
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/test_MIDI.mid"
