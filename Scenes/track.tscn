@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c0bluohjgwimb"]
+[gd_scene load_steps=11 format=3 uid="uid://c0bluohjgwimb"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/track.gd" id="1_02ljk"]
 [ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="2_cvast"]
@@ -49,9 +49,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ucw"]
 size = Vector2(33, 62)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4to6d"]
-size = Vector2(84, 62)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nmqn4"]
 size = Vector2(11, 62)
 
@@ -78,13 +75,6 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/GoodArea"]
 shape = SubResource("RectangleShape2D_j5ucw")
 
-[node name="OkayArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/OkayArea"]
-position = Vector2(14, 0)
-shape = SubResource("RectangleShape2D_4to6d")
-
 [node name="LateArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/LateArea"]
@@ -93,6 +83,4 @@ shape = SubResource("RectangleShape2D_nmqn4")
 
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
 [connection signal="area_exited" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_exited"]
-[connection signal="area_entered" from="HitZoneAnimatedSprite2D/OkayArea" to="." method="_on_okay_area_area_entered"]
-[connection signal="area_exited" from="HitZoneAnimatedSprite2D/OkayArea" to="." method="_on_okay_area_area_exited"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/LateArea" to="." method="_on_late_area_area_entered"]
