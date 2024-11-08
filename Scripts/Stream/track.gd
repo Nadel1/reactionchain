@@ -62,7 +62,7 @@ func evaluateScore(correctInput=true):
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 	if get_parent()!=null:
-		get_parent().updateScore()
+		find_parent("Stream").updateScore()
 
 func registerInput(inputString):
 	var buttonPrompt=buttonSequence.front()

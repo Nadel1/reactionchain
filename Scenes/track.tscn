@@ -71,7 +71,6 @@ size = Vector2(33, 62)
 size = Vector2(11, 62)
 
 [node name="Track" type="Node2D"]
-position = Vector2(543, 938)
 script = ExtResource("1_02ljk")
 
 [node name="TrackAnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -6,6 +6,14 @@ var playing = true
 var timeSinceLastInput = 0.0
 var inputIndex = 0
 
+func setIndex(i : int):
+	index = i
+	var music = $AudioTrackProvider.getTrack(index)
+	var instrument = $AudioTrackProvider.getSoundFont(index)
+	if music != null:
+		$MidiPlayer.set_file(music)
+		$MidiPlayer.set_soundfont(instrument)
+
 func _physics_process(delta: float) -> void:
 	if playing:
 		if Global.recordings.size() <= index || Global.recordings[index].size() <= inputIndex:
