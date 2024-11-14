@@ -9,7 +9,7 @@ extends Node2D
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 
-@export var musicDelay=5
+@export var musicDelay=6
 var midiPlayers : Array[MidiPlayer]
 
 func _on_start_playing_music_timer_timeout() -> void:
