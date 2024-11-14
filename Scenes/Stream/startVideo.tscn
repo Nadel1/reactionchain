@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbe1ttdb8mw80"]
+
+[ext_resource type="Texture2D" uid="uid://byvbcfglo8pvh" path="res://Assets/Sprites/endesga-32-1x.png" id="1_0baoc"]
+
+[node name="StartVideo" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(574, 324)
+scale = Vector2(36, 650)
+texture = ExtResource("1_0baoc")

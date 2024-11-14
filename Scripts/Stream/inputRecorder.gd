@@ -1,11 +1,21 @@
 extends Node
 
+var recording = []
+var timeSinceLastInput = 0.0
+var recordInputs = true
+@export var streamer : FacecamAnimator
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func stopRecording():
+	recordInputs = false
+	Global.recordings.append(recording)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if Global.inputHandler == null: return
+	if recordInputs:
+		var input = Global.inputHandler.getInput()
+		timeSinceLastInput += delta
+		if(input[1]):
+			recording.append([input[0], timeSinceLastInput])
+			timeSinceLastInput = 0
+			streamer.move(input[0])
 	pass

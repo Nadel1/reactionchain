@@ -9,7 +9,6 @@ const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
 
-@export var score=0
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
 @export var scoreChangeBadHit=-5
@@ -19,7 +18,6 @@ var numberOfButtonPrompts=4
 var buttonsInCurrentPacket=0
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
-
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -55,16 +53,16 @@ func playScoreIncrease():
 func evaluateScore(correctInput=true):
 	if correctInput:
 		if goodHit:#correct input in hitzone
-			score+=scoreChangeGoodHit
+			Global.score+=scoreChangeGoodHit
 			playScoreIncrease()
 		else:#correct input not in hitzone
-			score+=scoreChangeBadHit
+			Global.score+=scoreChangeBadHit
 			playScoreDecrease()
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
-		score+=scoreChangeBadHit
+		Global.score+=scoreChangeBadHit
 	if get_parent()!=null:
-		get_parent().updateScore(score)
+		find_parent("Stream").updateScore()
 
 func registerInput(inputString):
 	var buttonPrompt=buttonSequence.front()
