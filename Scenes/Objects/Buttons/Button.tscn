@@ -1,15 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://cbxqm0hn6vnfy"]
+[gd_scene load_steps=4 format=3 uid="uid://cbxqm0hn6vnfy"]
 
 [ext_resource type="Script" path="res://Scripts/button.gd" id="1_6ju6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nd51l"]
-size = Vector2(64, 57)
+size = Vector2(19.5, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c8dxf"]
+size = Vector2(114, 57)
 
 [node name="Button" type="Node2D"]
 script = ExtResource("1_6ju6v")
 
-[node name="ButtonArea" type="Area2D" parent="."]
+[node name="ButtonGoodArea" type="Area2D" parent="."]
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea"]
-position = Vector2(0, -0.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonGoodArea"]
 shape = SubResource("RectangleShape2D_nd51l")
+
+[node name="ButtonOkayArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonOkayArea"]
+shape = SubResource("RectangleShape2D_c8dxf")
+
+[connection signal="area_entered" from="ButtonGoodArea" to="." method="_on_button_good_area_area_entered"]
+[connection signal="area_entered" from="ButtonOkayArea" to="." method="_on_button_okay_area_area_entered"]

@@ -19,6 +19,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmqn4"]
+size = Vector2(11, 62)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ei02f"]
 atlas = ExtResource("4_cbvy3")
 region = Rect2(0, 0, 34, 68)
@@ -67,9 +70,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ucw"]
 size = Vector2(33, 62)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmqn4"]
-size = Vector2(11, 62)
-
 [node name="Track" type="Node2D"]
 script = ExtResource("1_02ljk")
 
@@ -81,6 +81,15 @@ sprite_frames = SubResource("SpriteFrames_4ikor")
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2(-600, -11)
 
+[node name="LateArea" type="Area2D" parent="."]
+position = Vector2(621, -11)
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LateArea"]
+position = Vector2(182, 0)
+shape = SubResource("RectangleShape2D_nmqn4")
+
 [node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(621, -11)
 sprite_frames = SubResource("SpriteFrames_pvy2y")
@@ -91,13 +100,17 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/GoodArea"]
 shape = SubResource("RectangleShape2D_j5ucw")
 
-[node name="LateArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
+[node name="UI" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitZoneAnimatedSprite2D/LateArea"]
-position = Vector2(64, 0)
-shape = SubResource("RectangleShape2D_nmqn4")
+[node name="JudgingPrompt" type="RichTextLabel" parent="UI"]
+offset_left = 580.0
+offset_top = 23.0
+offset_right = 665.0
+offset_bottom = 52.0
+bbcode_enabled = true
+text = "[center][/center]"
 
+[connection signal="area_entered" from="LateArea" to="." method="_on_late_area_area_entered"]
 [connection signal="animation_finished" from="HitZoneAnimatedSprite2D" to="." method="_on_hit_zone_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
 [connection signal="area_exited" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_exited"]
-[connection signal="area_entered" from="HitZoneAnimatedSprite2D/LateArea" to="." method="_on_late_area_area_entered"]

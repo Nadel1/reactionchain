@@ -8,6 +8,7 @@ const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
+@onready var judgingUI=$UI/JudgingPrompt
 
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
@@ -18,6 +19,9 @@ var numberOfButtonPrompts=4
 var buttonsInCurrentPacket=0
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
+var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
+var judgingPromptsOkay=["okay"]
+var judgingPromptsBad=["uff","bad"]
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -50,43 +54,47 @@ func playScoreDecrease():#animate hitzone and maybe later add more music here?
 func playScoreIncrease():
 	animatedSprite.play("hit")
 	
-func evaluateScore(correctInput=true):
-	if correctInput:
-		if goodHit:#correct input in hitzone
+func evaluateScore(buttonPrompt,correctInput=true):
+	if correctInput && goodHit&&buttonPrompt!=null:#correct input in hitzone
+		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
 			playScoreIncrease()
-		else:#correct input not in hitzone
-			Global.score+=scoreChangeBadHit
-			playScoreDecrease()
+			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
+		else: 
+			Global.score+=scoreChangeOkayHit
+			playScoreIncrease()
+			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
+		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 
 func registerInput(inputString):
+	if buttonSequence.is_empty()==true:
+		evaluateScore(null,false)#substract points when input for example at end of level
+		
 	var buttonPrompt=buttonSequence.front()
 	if buttonPrompt!=null:
+		print("registered input")
 		if buttonPrompt.getInput()==inputString:
-			
-			evaluateScore()
+			evaluateScore(buttonPrompt)
 		else: 
-			evaluateScore(false)
+			evaluateScore(buttonPrompt,false)
 		
 	if goodHit==true:	
 		buttonSequence.pop_front().queue_free()
-
-		
 func _on_good_area_area_entered(_area: Area2D) -> void:
 	goodHit=true
 	buttonSequence.front().hitZoneEnter(true)
 	
 func _on_good_area_area_exited(_area: Area2D) -> void:
 	goodHit=false
-
+		
 func _on_late_area_area_entered(_area: Area2D) -> void:
 	buttonSequence.pop_front().queue_free()
-	evaluateScore(false)
+	evaluateScore(null,false)
 
 
 func _on_hit_zone_animated_sprite_2d_animation_finished() -> void:
