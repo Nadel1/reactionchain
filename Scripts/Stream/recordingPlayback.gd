@@ -14,9 +14,6 @@ func setStreamer(newStreamer):
 func setIndex(i : int):
 	index = i
 	$TrackPlaybackHandler.setIndex(i)
-	
-func start():
-	$TrackPlaybackHandler.start()
 
 func _physics_process(delta: float) -> void:
 	if playing:

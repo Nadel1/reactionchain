@@ -3,14 +3,16 @@ class_name TrackPlaybackHandler
 
 @onready var playerCorrect = $MidiPlayerCorrect
 @onready var playerFail = $MidiPlayerFail
-@export var failFalloff : Curve
 var index = 0
+var fade = 0.0
 
 func setIndex(index : int):
 	self.index = index
 	call_deferred("setupPlayers")
 
 func setupPlayers():
+	playerCorrect.setName("Correct"+str(index))
+	playerFail.setName("Fail"+str(index))
 	var musicCorrect = $AudioTrackProvider.getTrackCorrect(index)
 	var musicFail = $AudioTrackProvider.getTrackFail(index)
 	var instrument = $AudioTrackProvider.getSoundFont(index)
@@ -19,10 +21,12 @@ func setupPlayers():
 		playerCorrect.set_soundfont(instrument)
 		playerFail.set_file(musicFail)
 		playerFail.set_soundfont(instrument)
+	playerCorrect.playing = false
+	playerFail.playing = false
 
 func start():
 	playerCorrect.play()
-	#playerFail.set_volume_db(-80)
+	playerFail.set_volume_db(-80)
 	playerFail.play()
 
 func stop():
@@ -39,5 +43,6 @@ func failInput():
 
 func _process(delta: float) -> void:
 	var factor = $FailFade.time_left/$FailFade.wait_time
-	#playerCorrect.set_volume_db(lerpf(-20,-80, factor))
-	#playerFail.set_volume_db(lerpf(-80,-20, factor))
+	playerCorrect.set_volume_db(lerpf(-20,-40, factor))
+	playerFail.set_volume_db(lerpf(-40,-20, factor))
+	fade = factor

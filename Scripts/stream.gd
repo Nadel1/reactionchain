@@ -25,6 +25,9 @@ func _on_start_playing_music_timer_timeout() -> void:
 	$TrackPlaybackHandler.call_deferred("start")
 	for player in trackPlayers:
 		player.call_deferred("start")
+		
+	#for i in range(0, AudioServer.get_bus_count()):
+	#	print(AudioServer.get_bus_name(i))
 
 func prepareStreamer():
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
@@ -45,10 +48,11 @@ func _ready():
 	prepareStreamer()
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
-	
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
-	midiPlayerArrows.call_deferred("set_file",$TrackPlaybackHandler.call_deferred("getTrackCorrect"))
-	midiPlayerArrows.call_deferred("play")
+	Global.currentTrackHandler = $TrackPlaybackHandler
+	midiPlayerArrows.setName("Arrows")
+	midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
+	midiPlayerArrows.play()
 	
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
@@ -60,17 +64,22 @@ func _ready():
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
-			recursionInstance.call_deferred("start")
 			currentNode.find_child("Content").add_child(recursionInstance)
 			var trackPlayer = recursionInstance.find_child("TrackPlaybackHandler")
 			if trackPlayer != null:
 				trackPlayers.append(trackPlayer)
+				trackPlayer.find_child("MidiPlayerCorrect").bus = "Correct"+str((Global.currentStreamIndex-1)-i)
+				trackPlayer.find_child("MidiPlayerFail").bus = "Fail"+str((Global.currentStreamIndex-1)-i)
 			currentNode = recursionInstance
 	var video = startVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
 	$Transition.play("zoomOut")
 	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
 	Global.streamerIndices.append(currentStreamerIndex)
+
+func _process(delta: float) -> void:
+	$UI/TrackWrong.scale.y = $TrackPlaybackHandler.fade
+	$UI/TrackRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)

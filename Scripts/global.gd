@@ -8,6 +8,7 @@ var inputHandler : InputHandler
 var inputRecorder : InputRecorder
 var recordingsMovement = []
 var recordingsReaction= []
+var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
 var score = 0
 var streamerIndices =[]
