@@ -1,5 +1,5 @@
-extends Node
-class_name FacecamAnimator
+extends Node2D
+
 func move(direction : RT.Direction):
 	$Movement.play("shift_"+RT.dirToStr(direction))
 

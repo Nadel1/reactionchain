@@ -77,7 +77,6 @@ func registerInput(inputString):
 		
 	var buttonPrompt=buttonSequence.front()
 	if buttonPrompt!=null:
-		print("registered input")
 		if buttonPrompt.getInput()==inputString:
 			evaluateScore(buttonPrompt)
 		else: 

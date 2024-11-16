@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="3_faimc"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
-[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/Streamers/streamer.tscn" id="7_7qkcf"]
+[ext_resource type="PackedScene" uid="uid://b51c13rwbexn" path="res://Scenes/Objects/Streamers/streamerBasic1.tscn" id="7_yl2li"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 
 [sub_resource type="Animation" id="Animation_637ko"]
@@ -109,6 +109,9 @@ wait_time = 2.0
 
 [node name="UI" type="Node2D" parent="."]
 
+[node name="StreamerBasic1" parent="UI" instance=ExtResource("7_yl2li")]
+position = Vector2(920, 479)
+
 [node name="ScoreLabel" type="RichTextLabel" parent="UI"]
 offset_left = 9.31677
 offset_top = 492.547
@@ -118,10 +121,6 @@ text = "Score: 0"
 
 [node name="Track" parent="UI" instance=ExtResource("1_hd44i")]
 position = Vector2(299, 593)
-
-[node name="Streamer" parent="UI" instance=ExtResource("7_7qkcf")]
-position = Vector2(922, 414)
-scale = Vector2(4, 4)
 
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
 

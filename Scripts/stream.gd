@@ -11,12 +11,12 @@ var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 
 #preload streamers
-var streamer0=preload("res://Scenes/Objects/Streamers/streamer.tscn")
-var streamer1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
-var allStreamers=[streamer0,streamer1]
+const STREAMER0=preload("res://Scenes/Objects/Streamers/streamer.tscn")
+const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
+var allStreamers=[STREAMER1]
 var lastStreamerIndex=-1
 var currentStreamerIndex=-1
-var lastStreamer=null
+var currentStreamer=null
 
 
 @export var musicDelay=6
@@ -29,7 +29,6 @@ func _on_start_playing_music_timer_timeout() -> void:
 		player.play()
 
 func prepareStreamer():
-	var currentStreamer=allStreamers.pick_random()
 	#currentStreamerIndex=allStreamers.find(currentStreamer)
 	#if currentStreamerIndex==lastStreamerIndex: #making sure we dont pick the same streamer twice in a row
 #		if currentStreamerIndex==0:
@@ -41,8 +40,8 @@ func prepareStreamer():
 #		currentStreamerIndex=allStreamers.find(currentStreamer)
 	#lastStreamerIndex=currentStreamerIndex
 	#lastStreamer=currentStreamer
-	currentStreamer.instantiate()
-	get_parent().call_deferred("add_child",currentStreamer)
+	currentStreamer=allStreamers[0].instantiate()
+	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
 	
 	
@@ -63,7 +62,7 @@ func _ready():
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
 			var recursionInstance = recording.instantiate()
-			recursionInstance.setStreamer(lastStreamer)
+			recursionInstance.setStreamer(currentStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
 			var midiPlayer = recursionInstance.find_child("MidiPlayer")
