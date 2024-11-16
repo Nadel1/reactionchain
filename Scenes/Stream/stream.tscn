@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=12 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="3_faimc"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
-[ext_resource type="PackedScene" uid="uid://b51c13rwbexn" path="res://Scenes/Objects/Streamers/streamerBasic1.tscn" id="7_yl2li"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 
 [sub_resource type="Animation" id="Animation_637ko"]
@@ -108,9 +107,6 @@ script = ExtResource("6_o3x8b")
 wait_time = 2.0
 
 [node name="UI" type="Node2D" parent="."]
-
-[node name="StreamerBasic1" parent="UI" instance=ExtResource("7_yl2li")]
-position = Vector2(920, 479)
 
 [node name="ScoreLabel" type="RichTextLabel" parent="UI"]
 offset_left = 9.31677
