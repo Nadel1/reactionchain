@@ -86,7 +86,8 @@ func registerInput(inputString):
 		buttonSequence.pop_front().queue_free()
 func _on_good_area_area_entered(_area: Area2D) -> void:
 	goodHit=true
-	buttonSequence.front().hitZoneEnter(true)
+	if buttonSequence.front()!=null:
+		buttonSequence.front().hitZoneEnter(true)
 	
 func _on_good_area_area_exited(_area: Area2D) -> void:
 	goodHit=false

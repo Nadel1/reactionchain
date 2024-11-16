@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd0iwekxolhbf"]
+
+[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/Streamers/streamer.tscn" id="1_fxgj4"]
+[ext_resource type="Texture2D" uid="uid://cjqeiqvhj5v37" path="res://Assets/Sprites/Streamers/Streamer0/PlaceholderHead.png" id="2_qki7c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sor3h"]
+atlas = ExtResource("2_qki7c")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_be0hb"]
+atlas = ExtResource("2_qki7c")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s5ls5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sor3h")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sor3h")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sor3h")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sor3h")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_be0hb")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[node name="Streamer" instance=ExtResource("1_fxgj4")]
+
+[node name="Head" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_s5ls5")
+animation = &"up"
+
+[node name="Face" parent="Head" index="0"]
+animation = &"cringe"

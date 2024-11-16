@@ -661,12 +661,10 @@ animation = &"left"
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_4hqou")
-animation = &"up"
 
 [node name="Face" type="AnimatedSprite2D" parent="Head"]
 z_index = 2
 sprite_frames = SubResource("SpriteFrames_3ay6f")
-animation = &"angry"
 
 [node name="Movement" type="AnimationPlayer" parent="."]
 libraries = {
