@@ -106,10 +106,16 @@ animations = [{
 "texture": SubResource("AtlasTexture_u4wml")
 }],
 "loop": true,
-"name": &"laughter",
+"name": &"laugh",
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twald")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_twald")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_twald")
 }],

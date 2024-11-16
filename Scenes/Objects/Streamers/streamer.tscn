@@ -127,7 +127,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ijr00")
 }],
 "loop": true,
-"name": &"laughter",
+"name": &"laugh",
 "speed": 5.0
 }, {
 "frames": [{
@@ -665,6 +665,7 @@ sprite_frames = SubResource("SpriteFrames_4hqou")
 [node name="Face" type="AnimatedSprite2D" parent="Head"]
 z_index = 2
 sprite_frames = SubResource("SpriteFrames_3ay6f")
+animation = &"angry"
 
 [node name="Movement" type="AnimationPlayer" parent="."]
 libraries = {

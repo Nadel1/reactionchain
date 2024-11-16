@@ -61,4 +61,6 @@ sprite_frames = SubResource("SpriteFrames_s5ls5")
 animation = &"up"
 
 [node name="Face" parent="Head" index="0"]
-animation = &"cringe"
+animation = &"pog"
+
+[connection signal="animation_finished" from="Head/Face" to="." method="_on_face_animation_finished"]

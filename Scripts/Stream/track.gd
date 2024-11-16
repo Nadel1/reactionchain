@@ -22,6 +22,10 @@ var goodHit=false
 var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
 var judgingPromptsOkay=["okay"]
 var judgingPromptsBad=["uff","bad"]
+
+#abstraction for reactions
+var correctInputs=4
+var currentCorrectInputs=0
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -54,22 +58,33 @@ func playScoreDecrease():#animate hitzone and maybe later add more music here?
 func playScoreIncrease():
 	animatedSprite.play("hit")
 	
+
+func react():
+	if currentCorrectInputs==correctInputs:
+		if Global.currentStreamer!=null:
+			Global.currentStreamer.react(RT.Emotion.POG)
+			currentCorrectInputs=0
+			
 func evaluateScore(buttonPrompt,correctInput=true):
 	if correctInput && goodHit&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
 			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
+			currentCorrectInputs+=1
 		else: 
 			Global.score+=scoreChangeOkayHit
 			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
+			currentCorrectInputs+=1
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
+		currentCorrectInputs=0
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
+	react()
 
 func registerInput(inputString):
 	if buttonSequence.is_empty()==true:

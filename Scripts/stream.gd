@@ -78,7 +78,7 @@ func _ready():
 	var video = startVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
 	$Transition.play("zoomOut")
-	
+	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
 	Global.streamerIndices.append(currentStreamerIndex)
 	
 func updateScore():

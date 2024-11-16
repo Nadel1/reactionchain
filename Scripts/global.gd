@@ -8,3 +8,4 @@ var recordings = []
 var currentStreamIndex = 0
 var score = 0
 var streamerIndices =[]
+var currentStreamer=null
