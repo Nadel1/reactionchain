@@ -11,7 +11,7 @@ var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 
 #preload streamers
-const STREAMER0=preload("res://Scenes/Objects/Streamers/streamer.tscn")
+const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
 const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
 var allStreamers=[STREAMER0,STREAMER1]
 var lastStreamerIndex=-1

@@ -5,3 +5,6 @@ func move(direction : RT.Direction):
 
 func react(emotion : RT.Emotion):
 	$Head/Face.play(emotion)
+
+func _ready():
+	$Head/Face.play("default")
