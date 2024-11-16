@@ -11,4 +11,5 @@ func _ready():
 
 
 func _on_face_animation_finished() -> void:
+	print("finished anim")
 	$Head/Face.play("default")
