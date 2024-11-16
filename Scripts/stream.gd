@@ -6,8 +6,18 @@ extends Node2D
 @onready var EOLStopPlayingMusicTimer=$EOLStopPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
 @onready var scoreLabel=$UI/ScoreLabel
+@onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
+
+#preload streamers
+var streamer0=preload("res://Scenes/Objects/Streamers/streamer.tscn")
+var streamer1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
+var allStreamers=[streamer0,streamer1]
+var lastStreamerIndex=-1
+var currentStreamerIndex=-1
+var lastStreamer=null
+
 
 @export var musicDelay=6
 var midiPlayers : Array[MidiPlayer]
@@ -18,7 +28,26 @@ func _on_start_playing_music_timer_timeout() -> void:
 	for player in midiPlayers:
 		player.play()
 
+func prepareStreamer():
+	var currentStreamer=allStreamers.pick_random()
+	#currentStreamerIndex=allStreamers.find(currentStreamer)
+	#if currentStreamerIndex==lastStreamerIndex: #making sure we dont pick the same streamer twice in a row
+#		if currentStreamerIndex==0:
+#			currentStreamer=allStreamers[1]
+#		elif currentStreamerIndex==allStreamers.size():
+#			currentStreamer=allStreamers[0]
+#		else:
+#			currentStreamer=allStreamers[currentStreamerIndex+1]
+#		currentStreamerIndex=allStreamers.find(currentStreamer)
+	#lastStreamerIndex=currentStreamerIndex
+	#lastStreamer=currentStreamer
+	currentStreamer.instantiate()
+	get_parent().call_deferred("add_child",currentStreamer)
+	inputRecorder.setStreamer(currentStreamer)
+	
+	
 func _ready():
+	prepareStreamer()
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
 	
@@ -34,6 +63,7 @@ func _ready():
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
 			var recursionInstance = recording.instantiate()
+			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
 			var midiPlayer = recursionInstance.find_child("MidiPlayer")

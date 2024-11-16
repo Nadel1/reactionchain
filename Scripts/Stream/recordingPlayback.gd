@@ -1,10 +1,13 @@
 extends Node
 
 @export var index = 0
-@export var streamer : FacecamAnimator
+var streamer : FacecamAnimator
 var playing = true
 var timeSinceLastInput = 0.0
 var inputIndex = 0
+
+func setStreamer(newStreamer:FacecamAnimator):
+	streamer=newStreamer
 
 func setIndex(i : int):
 	index = i

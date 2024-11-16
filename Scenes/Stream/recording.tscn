@@ -1,14 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbfggapgaey4o"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/recordingPlayback.gd" id="1_0vrxd"]
-[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/streamer.tscn" id="1_uiohb"]
+[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/Streamers/streamer.tscn" id="1_uiohb"]
 [ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="2_6c80v"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="3_147ex"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_uo3xs"]
 
-[node name="Recording" type="Node2D" node_paths=PackedStringArray("streamer")]
+[node name="Recording" type="Node2D"]
 script = ExtResource("1_0vrxd")
-streamer = NodePath("Streamer")
 
 [node name="AudioTrackProvider" parent="." instance=ExtResource("2_6c80v")]
 

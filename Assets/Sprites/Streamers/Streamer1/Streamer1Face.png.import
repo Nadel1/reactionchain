@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bngr4m3ll267e"
-path="res://.godot/imported/FacecamMask.png-a2c937d8d03430e5e8e6e3c430e3026f.ctex"
+uid="uid://c6idbwhxbp3y6"
+path="res://.godot/imported/Streamer1Face.png-75d5ba04df61b71414433199932e94c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Streamers/FacecamMask.png"
-dest_files=["res://.godot/imported/FacecamMask.png-a2c937d8d03430e5e8e6e3c430e3026f.ctex"]
+source_file="res://Assets/Sprites/Streamers/Streamer1/Streamer1Face.png"
+dest_files=["res://.godot/imported/Streamer1Face.png-75d5ba04df61b71414433199932e94c3.ctex"]
 
 [params]
 

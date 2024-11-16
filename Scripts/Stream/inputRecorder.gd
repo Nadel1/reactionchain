@@ -3,7 +3,10 @@ extends Node
 var recording = []
 var timeSinceLastInput = 0.0
 var recordInputs = true
-@export var streamer : FacecamAnimator
+var streamer :FacecamAnimator
+
+func setStreamer(newStreamer:FacecamAnimator):
+	streamer=newStreamer
 
 func stopRecording():
 	recordInputs = false
