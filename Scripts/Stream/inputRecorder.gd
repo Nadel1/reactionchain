@@ -11,12 +11,13 @@ var streamer
 func setStreamer(newStreamer):
 	streamer=newStreamer
 
+func _ready() -> void:
+	Global.inputRecorder = self
+
 func stopRecording():
 	recordInputs = false
 	Global.recordingsMovement.append(recordingMovement)
 	Global.recordingsReaction.append(recordingReaction)
-	
-
 
 func _physics_process(delta: float) -> void:
 	if Global.inputHandler == null: return

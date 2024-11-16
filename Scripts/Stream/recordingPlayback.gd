@@ -13,22 +13,30 @@ func setStreamer(newStreamer):
 
 func setIndex(i : int):
 	index = i
-	var music = $AudioTrackProvider.getTrack(index)
-	var instrument = $AudioTrackProvider.getSoundFont(index)
-	if music != null:
-		$MidiPlayer.set_file(music)
-		$MidiPlayer.set_soundfont(instrument)
+	$TrackPlaybackHandler.setIndex(i)
+	
+func start():
+	$TrackPlaybackHandler.start()
 
 func _physics_process(delta: float) -> void:
 	if playing:
+<<<<<<< HEAD
 		if Global.recordingsMovement.size() <= index || Global.recordingsMovement[index].size() <= inputIndex:
+=======
+		if Global.inputRecordings.size() <= index || Global.inputRecordings[index].size() <= inputIndex:
+>>>>>>> b3011b9 (Add unified TrackPlaybackHandler)
 			playing = false
 			print("End playback")
 			return
 		timeSinceLastInput += delta
+<<<<<<< HEAD
 		timeSinceLastReaction+=delta
 		if Global.recordingsMovement[index][inputIndex][1] == timeSinceLastInput:
 			var input = Global.recordingsMovement[index][inputIndex][0]
+=======
+		if Global.inputRecordings[index][inputIndex][1] == timeSinceLastInput:
+			var input = Global.inputRecordings[index][inputIndex][0]
+>>>>>>> b3011b9 (Add unified TrackPlaybackHandler)
 			streamer.move(input)
 			timeSinceLastInput = 0
 			inputIndex += 1

@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
 [ext_resource type="PackedScene" uid="uid://bdvkdv77fslji" path="res://addons/midi/ADSR.tscn" id="2_14jv0"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
-[ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="3_faimc"]
+[ext_resource type="PackedScene" uid="uid://bj51y3dvakvs2" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
@@ -72,14 +72,9 @@ _data = {
 [node name="Stream" type="Node2D"]
 script = ExtResource("1_lwu7i")
 
-[node name="AudioTrackProvider" parent="." instance=ExtResource("3_faimc")]
-
 [node name="ADSR" parent="." instance=ExtResource("2_14jv0")]
 
-[node name="MidiPlayerMusic" parent="." instance=ExtResource("3_b6yqj")]
-file = "res://Assets/Audio/Tracks/test_MIDI.mid"
-loop = true
-soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+[node name="TrackPlaybackHandler" parent="." instance=ExtResource("4_ta3ta")]
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/test_MIDI.mid"

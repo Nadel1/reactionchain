@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var midiPlayerMusic=$MidiPlayerMusic
 @onready var midiPlayerArrows=$MidiPlayerArrows
 @onready var startPlayingMusicTimer=$StartPlayingMusicTimer
 @onready var EOLStopPlayingMusicTimer=$EOLStopPlayingMusicTimer
@@ -20,13 +19,12 @@ var currentStreamer=null
 
 
 @export var musicDelay=6
-var midiPlayers : Array[MidiPlayer]
+var trackPlayers : Array[TrackPlaybackHandler]
 
 func _on_start_playing_music_timer_timeout() -> void:
-	midiPlayerMusic.playing=true
-	midiPlayerMusic.play()
-	for player in midiPlayers:
-		player.play()
+	$TrackPlaybackHandler.call_deferred("start")
+	for player in trackPlayers:
+		player.call_deferred("start")
 
 func prepareStreamer():
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
@@ -48,14 +46,10 @@ func _ready():
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
 	
-	var audioFile = $AudioTrackProvider.getTrack(Global.currentStreamIndex)
-	var instrument = $AudioTrackProvider.getSoundFont(Global.currentStreamIndex)
-	if audioFile != null:
-		midiPlayerMusic.set_file(audioFile)
-		midiPlayerMusic.set_soundfont(instrument)
-		midiPlayerArrows.set_file(audioFile)
-		midiPlayerArrows.play()
-		
+	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
+	midiPlayerArrows.call_deferred("set_file",$TrackPlaybackHandler.call_deferred("getTrackCorrect"))
+	midiPlayerArrows.call_deferred("play")
+	
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
@@ -66,10 +60,11 @@ func _ready():
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
+			recursionInstance.call_deferred("start")
 			currentNode.find_child("Content").add_child(recursionInstance)
-			var midiPlayer = recursionInstance.find_child("MidiPlayer")
-			if midiPlayer != null:
-				midiPlayers.append(midiPlayer)
+			var trackPlayer = recursionInstance.find_child("TrackPlaybackHandler")
+			if trackPlayer != null:
+				trackPlayers.append(trackPlayer)
 			currentNode = recursionInstance
 	var video = startVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
@@ -86,9 +81,9 @@ func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	EOLStopPlayingMusicTimer.start()
 	
 func _on_eol_stop_playing_music_timer_timeout() -> void:
-	midiPlayerMusic.playing=false
-	for player in midiPlayers:
-		player.playing = false
+	$TrackPlaybackHandler.stop()
+	for trackPlayer in trackPlayers:
+		trackPlayer.stop()
 	switchSceneTimer.start()
 	
 func _on_switch_scene_timer_timeout() -> void:
