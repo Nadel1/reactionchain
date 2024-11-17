@@ -13,9 +13,8 @@ var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
 const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
-var allStreamers=[STREAMER1,STREAMER1]
-var lastStreamerIndex=-1
-var currentStreamerIndex=-1
+var allStreamers=[STREAMER0,STREAMER1]
+var currentStreamerIndex=0
 var currentStreamer=null
 
 
@@ -29,12 +28,8 @@ func _on_start_playing_music_timer_timeout() -> void:
 		player.play()
 
 func prepareStreamer():
-	currentStreamerIndex = randi() % allStreamers.size()
-
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
-		if currentStreamerIndex==0:
-			currentStreamer=allStreamers[1]
-		elif currentStreamerIndex==allStreamers.size()-1:
+		if currentStreamerIndex==allStreamers.size()-1:
 			currentStreamer=allStreamers[0]
 		else:
 			currentStreamer=allStreamers[currentStreamerIndex+1]

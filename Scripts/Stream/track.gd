@@ -68,7 +68,6 @@ func react():
 			newEntry.inputIndex=totalNumberCorrectInputs
 			newEntry.reaction=RT.Emotion.POG
 			Global.reactions.append(newEntry)
-			print("appended entry with value: ", totalNumberCorrectInputs)
 			currentCorrectInputs=0
 			
 func evaluateScore(buttonPrompt,correctInput=true):
@@ -77,16 +76,14 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			Global.score+=scoreChangeGoodHit
 			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
-			currentCorrectInputs+=1
+			currentCorrectInputs+=1#keep track how many consecutive inputs were correct
 			totalNumberCorrectInputs+=1
-			print("totalNumbercorrectInputs: ", totalNumberCorrectInputs)
 		else: 
 			Global.score+=scoreChangeOkayHit
 			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 			currentCorrectInputs+=1
 			totalNumberCorrectInputs+=1
-			print("totalNumbercorrectInputs: ", totalNumberCorrectInputs)
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
