@@ -50,8 +50,10 @@ func spawnButton():
 	buttonSequence.append(newButtonPrompt)
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
-	if event.type==144:#no idea why it has to be this type
+	if event.type==144 and event.velocity>1:#no idea why it has to be this type
 		spawnButton()
+	if event.type==144 :
+		print("velocity: ", event.velocity)
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	animatedSprite.play("wrongHit")
