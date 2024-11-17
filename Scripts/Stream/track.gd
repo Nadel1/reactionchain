@@ -63,10 +63,11 @@ func playScoreIncrease():
 func react():
 	if currentCorrectInputs==correctInputs:
 		if Global.currentStreamer!=null:
-			Global.currentStreamer.react(RT.Emotion.POG)
+			var reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions
+			Global.currentStreamer.react(reaction)
 			var newEntry=ReactionRecord.new()
 			newEntry.inputIndex=totalNumberCorrectInputs
-			newEntry.reaction=RT.Emotion.POG
+			newEntry.reaction=reaction
 			Global.reactions.append(newEntry)
 			currentCorrectInputs=0
 			
