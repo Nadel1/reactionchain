@@ -9,7 +9,5 @@ func react(emotion : RT.Emotion):
 func _ready():
 	$Head/Face.play("default")
 
-
 func _on_face_animation_finished() -> void:
-	print("finished anim")
 	$Head/Face.play("default")

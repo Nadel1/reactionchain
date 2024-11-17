@@ -87,7 +87,7 @@ collision_layer = 2
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LateArea"]
-position = Vector2(182, 0)
+position = Vector2(142, 0)
 shape = SubResource("RectangleShape2D_nmqn4")
 
 [node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]

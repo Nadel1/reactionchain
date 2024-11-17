@@ -22,6 +22,7 @@ var goodHit=false
 var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
 var judgingPromptsOkay=["okay"]
 var judgingPromptsBad=["uff","bad"]
+var totalNumberCorrectInputs=0
 
 #abstraction for reactions
 var correctInputs=4
@@ -63,6 +64,11 @@ func react():
 	if currentCorrectInputs==correctInputs:
 		if Global.currentStreamer!=null:
 			Global.currentStreamer.react(RT.Emotion.POG)
+			var newEntry=ReactionRecord.new()
+			newEntry.inputIndex=totalNumberCorrectInputs
+			newEntry.reaction=RT.Emotion.POG
+			Global.reactions.append(newEntry)
+			print("appended entry with value: ", totalNumberCorrectInputs)
 			currentCorrectInputs=0
 			
 func evaluateScore(buttonPrompt,correctInput=true):
@@ -72,11 +78,15 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
 			currentCorrectInputs+=1
+			totalNumberCorrectInputs+=1
+			print("totalNumbercorrectInputs: ", totalNumberCorrectInputs)
 		else: 
 			Global.score+=scoreChangeOkayHit
 			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 			currentCorrectInputs+=1
+			totalNumberCorrectInputs+=1
+			print("totalNumbercorrectInputs: ", totalNumberCorrectInputs)
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
@@ -96,9 +106,9 @@ func registerInput(inputString):
 			evaluateScore(buttonPrompt)
 		else: 
 			evaluateScore(buttonPrompt,false)
-		
 	if goodHit==true:	
 		buttonSequence.pop_front().queue_free()
+		
 func _on_good_area_area_entered(_area: Area2D) -> void:
 	goodHit=true
 	if buttonSequence.front()!=null:

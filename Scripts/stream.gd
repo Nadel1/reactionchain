@@ -13,7 +13,7 @@ var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
 const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
-var allStreamers=[STREAMER0,STREAMER1]
+var allStreamers=[STREAMER1,STREAMER1]
 var lastStreamerIndex=-1
 var currentStreamerIndex=-1
 var currentStreamer=null
