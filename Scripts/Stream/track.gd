@@ -4,7 +4,7 @@ const BUTTONRIGHT=preload("res://Scenes/Objects/Buttons/ButtonRight.tscn")
 const BUTTONLEFT=preload("res://Scenes/Objects/Buttons/ButtonLeft.tscn")
 const BUTTONUP=preload("res://Scenes/Objects/Buttons/ButtonUp.tscn")
 const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
-
+const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
@@ -40,7 +40,7 @@ func _input(event):
 			registerInput("down")
 		else:
 			print("bullshit was pressed")
-			evaluateScore(false)
+			evaluateScore(null,false)
 			
 func spawnButton():
 	var spawnIndex=randi()%numberOfButtonPrompts
@@ -49,11 +49,17 @@ func spawnButton():
 	get_parent().call_deferred("add_child",newButtonPrompt)
 	buttonSequence.append(newButtonPrompt)
 
+func spawnMarker():
+	var newMarker=MARKER.instantiate()
+	newMarker.position=spawnPoint.global_position
+	get_parent().call_deferred("add_child",newMarker)
+	print("spawnMarker")
+
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144 and event.velocity>1:#no idea why it has to be this type
 		spawnButton()
-	if event.type==144 :
-		print("velocity: ", event.velocity)
+	if event.type==144 and event.velocity==1:
+		spawnMarker()
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	animatedSprite.play("wrongHit")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dd2twf35woli5"]
 
-[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer1/FacecamFrame.png" id="1_iec0a"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer0/FacecamFrame.png" id="1_iec0a"]
 
 [node name="VideoFrame" type="Node2D"]
 
