@@ -73,20 +73,16 @@ _data = {
 script = ExtResource("1_lwu7i")
 
 [node name="AudioTrackProvider" parent="." instance=ExtResource("3_faimc")]
-tracks = Array[String](["res://Assets/Audio/Tracks/track01/01_bass1.MID", "res://Assets/Audio/Tracks/track01/01_lead1.MID", "res://Assets/Audio/Tracks/track01/01_bass2.MID"])
-soundfonts = Array[String](["res://Assets/Audio/Instruments/LatelyBass 20240409.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"])
 
 [node name="ADSR" parent="." instance=ExtResource("2_14jv0")]
 
 [node name="MidiPlayerMusic" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/test_MIDI.mid"
-play_speed = 0.5
 loop = true
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/test_MIDI.mid"
-play_speed = 0.5
 loop = true
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]

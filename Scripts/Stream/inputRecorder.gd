@@ -12,6 +12,7 @@ func stopRecording():
 	recordInputs = false
 	Global.recordings.append(recording)
 
+
 func _physics_process(delta: float) -> void:
 	if Global.inputHandler == null: return
 	if recordInputs:

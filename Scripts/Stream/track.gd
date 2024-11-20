@@ -27,9 +27,14 @@ var totalNumberCorrectInputs=0
 #abstraction for reactions
 var correctInputs=4
 var currentCorrectInputs=0
+var correctReactionPacket=false
+var countReactionPacket=0
+var countInputs=0#necessary to record the reactions
+var reactionIndex=0#when going through previous reactions
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
+		countInputs+=1
 		if event.is_action_pressed("right"):
 			registerInput("right")
 		elif event.is_action_pressed("left"):
@@ -53,13 +58,14 @@ func spawnMarker():
 	var newMarker=MARKER.instantiate()
 	newMarker.position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
-	print("spawnMarker")
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
-	if event.type==144 and event.velocity>1:#no idea why it has to be this type
-		spawnButton()
-	if event.type==144 and event.velocity==1:
-		spawnMarker()
+	if event.type==144:
+		if event.velocity==1:
+			spawnMarker()
+		elif event.velocity>1:
+			spawnButton()
+	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	animatedSprite.play("wrongHit")
@@ -69,38 +75,41 @@ func playScoreIncrease():
 	
 
 func react():
-	if currentCorrectInputs==correctInputs:
-		if Global.currentStreamer!=null:
-			var reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions
-			Global.currentStreamer.react(reaction)
-			var newEntry=ReactionRecord.new()
-			newEntry.inputIndex=totalNumberCorrectInputs
-			newEntry.reaction=reaction
-			Global.reactions.append(newEntry)
-			currentCorrectInputs=0
+	if Global.currentStreamer!=null:
+		var reaction
+		if Global.currentStreamIndex==0:
+			reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions
+		else:
+			reaction=Global.reactions[reactionIndex].reaction
+			reactionIndex+=1
+		Global.currentStreamer.react(reaction)
+		var newEntry=ReactionRecord.new()
+		newEntry.inputIndex=countInputs
+		newEntry.reaction=reaction
+		Global.reactions.append(newEntry)
+		currentCorrectInputs=0
 			
 func evaluateScore(buttonPrompt,correctInput=true):
-	if correctInput && goodHit&&buttonPrompt!=null:#correct input in hitzone
+	if correctInput &&buttonPrompt!=null:#correct input in hitzo ne
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
-			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
-			currentCorrectInputs+=1#keep track how many consecutive inputs were correct
-			totalNumberCorrectInputs+=1
 		else: 
 			Global.score+=scoreChangeOkayHit
-			playScoreIncrease()
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
-			currentCorrectInputs+=1
-			totalNumberCorrectInputs+=1
+		playScoreIncrease()
+		buttonSequence.pop_front().queue_free()
+		currentCorrectInputs+=1
+		totalNumberCorrectInputs+=1
 	else:#either incorrect input, or no input at all (too late)
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
 		currentCorrectInputs=0
+		correctReactionPacket=false
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
-	react()
+	
 
 func registerInput(inputString):
 	if buttonSequence.is_empty()==true:
@@ -112,20 +121,26 @@ func registerInput(inputString):
 			evaluateScore(buttonPrompt)
 		else: 
 			evaluateScore(buttonPrompt,false)
-	if goodHit==true:	
-		buttonSequence.pop_front().queue_free()
 		
-func _on_good_area_area_entered(_area: Area2D) -> void:
-	goodHit=true
-	if buttonSequence.front()!=null:
-		buttonSequence.front().hitZoneEnter(true)
+func _on_good_area_area_entered(area: Area2D) -> void:
+	if area.get_parent().is_in_group("PacketMarker"):
+		if correctReactionPacket:#last reaction paket was correct, as the start of a new packet indicates the end of the last one
+			react()
+		correctReactionPacket=true
+		countReactionPacket+=1
+	else:
+		goodHit=true
+		if buttonSequence.front()!=null:
+			buttonSequence.front().hitZoneEnter(true)
 	
-func _on_good_area_area_exited(_area: Area2D) -> void:
-	goodHit=false
+func _on_good_area_area_exited(area: Area2D) -> void:
+	if !area.get_parent().is_in_group("PacketMarker"):
+		goodHit=false
 		
-func _on_late_area_area_entered(_area: Area2D) -> void:
-	buttonSequence.pop_front().queue_free()
-	evaluateScore(null,false)
+func _on_late_area_area_entered(area: Area2D) -> void:
+	if !area.get_parent().is_in_group("PacketMarker"):
+		evaluateScore(null,false)
+		buttonSequence.pop_front().queue_free()
 
 
 func _on_hit_zone_animated_sprite_2d_animation_finished() -> void:
