@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 			streamer.move(input[0])
 	pass
 
-func appendRecordedReaction(countMovements,reaction):
+func appendRecordedReaction(reaction):
 	recordingReaction.append([timeSinceLastReaction,reaction])
 	timeSinceLastReaction=0
 	

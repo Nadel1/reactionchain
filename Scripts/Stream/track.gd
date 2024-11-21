@@ -30,14 +30,12 @@ var correctInputs=4
 var currentCorrectInputs=0
 var correctReactionPacket=false
 var countReactionPacket=-1
-var countInputs=0#necessary to record the reactions
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 	
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		countInputs+=1
 		if event.is_action_pressed("right"):
 			registerInput("right")
 		elif event.is_action_pressed("left"):
@@ -80,19 +78,16 @@ func playScoreIncrease():
 func react():
 	if Global.currentStreamer!=null:
 		var reaction
-		if Global.currentStreamIndex>0:
-			print("reaction index: ", reactionIndex)
-			print("size of reactions for last streamer: ",Global.recordingsReaction[Global.currentStreamIndex-1].size())
 		if Global.currentStreamIndex==0 ||countReactionPacket>=Global.recordingsReaction[Global.currentStreamIndex-1].size():
 			reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 		else:
 			reaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
 		Global.currentStreamer.react(reaction)
-		inputRecorder.appendRecordedReaction(countInputs,reaction)
+		inputRecorder.appendRecordedReaction(reaction)
 			
 			
 func evaluateScore(buttonPrompt,correctInput=true):
-	if correctInput &&buttonPrompt!=null:#correct input in hitzo ne
+	if goodHit&&correctInput &&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
 			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
@@ -101,9 +96,10 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
+		print("removing front because right input")
 		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
-	else:#either incorrect input, or no input at all (too late)
+	else:#either incorrect input, no input at all (too late), or way too early
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
@@ -143,6 +139,7 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
+		print("removing front because late area")
 
 
 func _on_hit_zone_animated_sprite_2d_animation_finished() -> void:
