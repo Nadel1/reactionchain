@@ -5,9 +5,10 @@ extends Node
 
 
 var inputHandler : InputHandler
-var recordings = []
+var inputRecorder : InputRecorder
+var recordingsMovement = []
+var recordingsReaction= []
 var currentStreamIndex = 0
 var score = 0
 var streamerIndices =[]
 var currentStreamer=null
-var reactions:Array[ReactionRecord]=[]#holds reactionRecords for each streamer

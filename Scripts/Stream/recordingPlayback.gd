@@ -20,16 +20,16 @@ func setIndex(i : int):
 
 func _physics_process(delta: float) -> void:
 	if playing:
-		if Global.recordings.size() <= index || Global.recordings[index].size() <= inputIndex:
+		if Global.recordingsMovement.size() <= index || Global.recordingsMovement[index].size() <= inputIndex:
 			playing = false
 			print("End playback")
 			return
 		timeSinceLastInput += delta
-		if Global.recordings[index][inputIndex][1] == timeSinceLastInput:
-			var input = Global.recordings[index][inputIndex][0]
+		if Global.recordingsMovement[index][inputIndex][1] == timeSinceLastInput:
+			var input = Global.recordingsMovement[index][inputIndex][0]
 			streamer.move(input)
-			if reactionIndex<Global.reactions.size() and Global.reactions[reactionIndex].inputIndex==inputIndex:
-				streamer.react(Global.reactions[reactionIndex].reaction)
+			if reactionIndex < Global.recordingsReaction[index].size()and Global.recordingsReaction[index][reactionIndex][0]==inputIndex:
+				streamer.react( Global.recordingsReaction[index][reactionIndex][1])
 				reactionIndex+=1
 			timeSinceLastInput = 0
 			inputIndex += 1

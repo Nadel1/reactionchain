@@ -9,6 +9,7 @@ const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
 @onready var judgingUI=$UI/JudgingPrompt
+@onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
@@ -28,9 +29,11 @@ var totalNumberCorrectInputs=0
 var correctInputs=4
 var currentCorrectInputs=0
 var correctReactionPacket=false
-var countReactionPacket=0
+var countReactionPacket=-1
 var countInputs=0#necessary to record the reactions
 var reactionIndex=0#when going through previous reactions
+var reactionArray=[]
+	
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -77,17 +80,16 @@ func playScoreIncrease():
 func react():
 	if Global.currentStreamer!=null:
 		var reaction
-		if Global.currentStreamIndex==0:
-			reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions
+		if Global.currentStreamIndex>0:
+			print("reaction index: ", reactionIndex)
+			print("size of reactions for last streamer: ",Global.recordingsReaction[Global.currentStreamIndex-1].size())
+		if Global.currentStreamIndex==0 ||countReactionPacket>=Global.recordingsReaction[Global.currentStreamIndex-1].size():
+			reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 		else:
-			reaction=Global.reactions[reactionIndex].reaction
-			reactionIndex+=1
+			reaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
 		Global.currentStreamer.react(reaction)
-		var newEntry=ReactionRecord.new()
-		newEntry.inputIndex=countInputs
-		newEntry.reaction=reaction
-		Global.reactions.append(newEntry)
-		currentCorrectInputs=0
+		inputRecorder.appendRecordedReaction(countInputs,reaction)
+			
 			
 func evaluateScore(buttonPrompt,correctInput=true):
 	if correctInput &&buttonPrompt!=null:#correct input in hitzo ne

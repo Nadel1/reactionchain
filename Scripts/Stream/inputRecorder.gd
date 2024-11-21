@@ -1,6 +1,8 @@
 extends Node
+class_name InputRecorder
 
-var recording = []
+var recordingMovement = []
+var recordingReaction =[]
 var timeSinceLastInput = 0.0
 var recordInputs = true
 var streamer
@@ -10,7 +12,9 @@ func setStreamer(newStreamer):
 
 func stopRecording():
 	recordInputs = false
-	Global.recordings.append(recording)
+	Global.recordingsMovement.append(recordingMovement)
+	Global.recordingsReaction.append(recordingReaction)
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -19,7 +23,12 @@ func _physics_process(delta: float) -> void:
 		var input = Global.inputHandler.getInput()
 		timeSinceLastInput += delta
 		if(input[1]):
-			recording.append([input[0], timeSinceLastInput])
+			recordingMovement.append([input[0], timeSinceLastInput])
 			timeSinceLastInput = 0
 			streamer.move(input[0])
 	pass
+
+func appendRecordedReaction(countMovements,reaction):
+	recordingReaction.append([countMovements,reaction])
+func _on_eol_stop_playing_music_timer_timeout() -> void:
+	pass # Replace with function body.
