@@ -4,6 +4,7 @@ extends Node
 var streamer 
 var playing = true
 var timeSinceLastInput = 0.0
+var timeSinceLastReaction=0.0
 var inputIndex = 0
 var reactionIndex=0
 
@@ -25,12 +26,15 @@ func _physics_process(delta: float) -> void:
 			print("End playback")
 			return
 		timeSinceLastInput += delta
+		timeSinceLastReaction+=delta
 		if Global.recordingsMovement[index][inputIndex][1] == timeSinceLastInput:
 			var input = Global.recordingsMovement[index][inputIndex][0]
 			streamer.move(input)
-			if reactionIndex < Global.recordingsReaction[index].size()and Global.recordingsReaction[index][reactionIndex][0]==inputIndex:
-				streamer.react( Global.recordingsReaction[index][reactionIndex][1])
-				reactionIndex+=1
 			timeSinceLastInput = 0
 			inputIndex += 1
+		if reactionIndex < Global.recordingsReaction[index].size()and Global.recordingsReaction[index][reactionIndex][0]==timeSinceLastReaction:
+			streamer.react( Global.recordingsReaction[index][reactionIndex][1])
+			timeSinceLastReaction=0
+			reactionIndex+=1
+			
 	pass

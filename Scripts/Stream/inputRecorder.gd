@@ -4,6 +4,7 @@ class_name InputRecorder
 var recordingMovement = []
 var recordingReaction =[]
 var timeSinceLastInput = 0.0
+var timeSinceLastReaction=0.0
 var recordInputs = true
 var streamer
 
@@ -22,6 +23,7 @@ func _physics_process(delta: float) -> void:
 	if recordInputs:
 		var input = Global.inputHandler.getInput()
 		timeSinceLastInput += delta
+		timeSinceLastReaction+=delta
 		if(input[1]):
 			recordingMovement.append([input[0], timeSinceLastInput])
 			timeSinceLastInput = 0
@@ -29,6 +31,8 @@ func _physics_process(delta: float) -> void:
 	pass
 
 func appendRecordedReaction(countMovements,reaction):
-	recordingReaction.append([countMovements,reaction])
+	recordingReaction.append([timeSinceLastReaction,reaction])
+	timeSinceLastReaction=0
+	
 func _on_eol_stop_playing_music_timer_timeout() -> void:
 	pass # Replace with function body.
