@@ -87,7 +87,7 @@ func react():
 			
 			
 func evaluateScore(buttonPrompt,correctInput=true):
-	if goodHit&&correctInput &&buttonPrompt!=null:#correct input in hitzone
+	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
 			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
@@ -96,7 +96,6 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
-		print("removing front because right input")
 		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
 	else:#either incorrect input, no input at all (too late), or way too early
@@ -139,7 +138,6 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
-		print("removing front because late area")
 
 
 func _on_hit_zone_animated_sprite_2d_animation_finished() -> void:
