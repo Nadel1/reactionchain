@@ -38,8 +38,9 @@ func prepareStreamer():
 		currentStreamerIndex=allStreamers.find(currentStreamer)
 		
 	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
-	currentStreamer.position=Vector2(922,414)
-	currentStreamer.scale=Vector2(4,4)
+	currentStreamer.position=$UI/StreamerPlaceholder.position
+	currentStreamer.scale=$UI/StreamerPlaceholder.scale
+	$UI/StreamerPlaceholder.visible = false
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
 	
@@ -59,8 +60,8 @@ func _ready():
 		for i in range(0,Global.currentStreamIndex):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[Global.currentStreamIndex-1-i]].instantiate()
-			lastStreamer.position=Vector2(922,414)
-			lastStreamer.scale=Vector2(4,4)
+			lastStreamer.position=$UI/StreamerPlaceholder.position
+			lastStreamer.scale=$UI/StreamerPlaceholder.scale
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)

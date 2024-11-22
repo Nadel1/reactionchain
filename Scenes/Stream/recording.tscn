@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbfggapgaey4o"]
+[gd_scene load_steps=4 format=3 uid="uid://cbfggapgaey4o"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/recordingPlayback.gd" id="1_0vrxd"]
-[ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="2_6c80v"]
-[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/streamer.tscn" id="1_uiohb"]
 [ext_resource type="PackedScene" uid="uid://cq6heevemk6q8" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="3_0pve0"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="3_147ex"]
 

@@ -69,7 +69,7 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	animatedSprite.play("wrongHit")
-	Global.inputRecorder.failInput()
+	Global.currentTrackHandler.failInput()
 
 func playScoreIncrease():
 	animatedSprite.play("hit")

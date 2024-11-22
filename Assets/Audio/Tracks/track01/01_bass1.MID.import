@@ -1,0 +1,14 @@
+[remap]
+
+importer="com.nlaha.godotmidi"
+type="MidiResource"
+uid="uid://bc0w06xwbwg7n"
+path="res://.godot/imported/01_bass1.MID-931b573e0dd86f09209b3d38382e3e1a.res"
+
+[deps]
+
+source_file="res://Assets/Audio/Tracks/track01/01_bass1.MID"
+dest_files=["res://.godot/imported/01_bass1.MID-931b573e0dd86f09209b3d38382e3e1a.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="com.nlaha.godotmidi"
+type="MidiResource"
+uid="uid://r833itsuvsvm"
+path="res://.godot/imported/pp_lead1.MID-4acb47e4e8bf5b8b87af6dd756c7221c.res"
+
+[deps]
+
+source_file="res://Assets/Audio/Tracks/track-pp/pp_lead1.MID"
+dest_files=["res://.godot/imported/pp_lead1.MID-4acb47e4e8bf5b8b87af6dd756c7221c.res"]
+
+[params]
+
