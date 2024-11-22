@@ -3,6 +3,17 @@ class_name RT
 enum Direction {UP, RIGHT, DOWN, LEFT}
 enum Emotion {POG, LAUGH, ANGRY, CRINGE}
 
+static func intToDir(index:int):
+	match(index):
+		0:
+			return Emotion.POG
+		1: 
+			return Emotion.LAUGH
+		2: 
+			return Emotion.ANGRY
+		3: 
+			return Emotion.CRINGE
+				
 static func dirToStr(direction : Direction):
 	match(direction):
 		Direction.UP:

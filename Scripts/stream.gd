@@ -6,10 +6,20 @@ extends Node2D
 @onready var EOLStopPlayingMusicTimer=$EOLStopPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
 @onready var scoreLabel=$UI/ScoreLabel
+@onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 
-@export var musicDelay=5
+#preload streamers
+const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
+const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
+const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
+var allStreamers=[STREAMER1,STREAMER2]
+var currentStreamerIndex=0
+var currentStreamer=null
+
+
+@export var musicDelay=6
 var midiPlayers : Array[MidiPlayer]
 
 func _on_start_playing_music_timer_timeout() -> void:
@@ -18,7 +28,23 @@ func _on_start_playing_music_timer_timeout() -> void:
 	for player in midiPlayers:
 		player.play()
 
+func prepareStreamer():
+	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
+		if currentStreamerIndex==allStreamers.size()-1:
+			currentStreamer=allStreamers[0]
+		else:
+			currentStreamer=allStreamers[currentStreamerIndex+1]
+		currentStreamerIndex=allStreamers.find(currentStreamer)
+		
+	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
+	currentStreamer.position=Vector2(922,414)
+	currentStreamer.scale=Vector2(4,4)
+	$UI.call_deferred("add_child",currentStreamer)
+	inputRecorder.setStreamer(currentStreamer)
+	
+	
 func _ready():
+	prepareStreamer()
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
 	
@@ -34,6 +60,11 @@ func _ready():
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
 			var recursionInstance = recording.instantiate()
+			var lastStreamer=allStreamers[Global.streamerIndices[Global.currentStreamIndex-1-i]].instantiate()
+			lastStreamer.position=Vector2(922,414)
+			lastStreamer.scale=Vector2(4,4)
+			recursionInstance.setStreamer(lastStreamer)
+			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
 			var midiPlayer = recursionInstance.find_child("MidiPlayer")
@@ -43,6 +74,8 @@ func _ready():
 	var video = startVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
 	$Transition.play("zoomOut")
+	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
+	Global.streamerIndices.append(currentStreamerIndex)
 	
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)

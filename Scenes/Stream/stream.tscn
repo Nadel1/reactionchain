@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=12 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -7,35 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="3_faimc"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
-[ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/streamer.tscn" id="7_7qkcf"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
-
-[sub_resource type="Animation" id="Animation_jxp2g"]
-resource_name = "zoomOut"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UI:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.5),
-"transitions": PackedFloat32Array(2, 0.5, 1),
-"update": 0,
-"values": [Vector2(1.61, 1.61), Vector2(1.4575, 1.4575), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("UI:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_637ko"]
 length = 0.001
@@ -64,6 +36,33 @@ tracks/1/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_jxp2g"]
+resource_name = "zoomOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.5),
+"transitions": PackedFloat32Array(2, 0.5, 1),
+"update": 0,
+"values": [Vector2(1.61, 1.61), Vector2(1.4575, 1.4575), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cfqdi"]
 _data = {
 "RESET": SubResource("Animation_637ko"),
@@ -87,7 +86,7 @@ file = "res://Assets/Audio/Tracks/test_MIDI.mid"
 loop = true
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 6.0
 one_shot = true
 autostart = true
 
@@ -101,9 +100,8 @@ autostart = true
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("5_a0dki")
 
-[node name="InputRecorder" type="Node" parent="." node_paths=PackedStringArray("streamer")]
+[node name="InputRecorder" type="Node" parent="."]
 script = ExtResource("6_o3x8b")
-streamer = NodePath("../UI/Streamer")
 
 [node name="SwitchSceneTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -120,10 +118,6 @@ text = "Score: 0"
 [node name="Track" parent="UI" instance=ExtResource("1_hd44i")]
 position = Vector2(299, 593)
 
-[node name="Streamer" parent="UI" instance=ExtResource("7_7qkcf")]
-position = Vector2(922, 414)
-scale = Vector2(4, 4)
-
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
 
 [node name="Transition" type="AnimationPlayer" parent="."]
@@ -134,6 +128,8 @@ libraries = {
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="." method="_on_eol_stop_spawning_arrows_timer_timeout"]
+[connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="UI/Track" method="_on_eol_stop_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="EOLStopPlayingMusicTimer" to="." method="_on_eol_stop_playing_music_timer_timeout"]
 [connection signal="timeout" from="EOLStopPlayingMusicTimer" to="InputRecorder" method="stopRecording"]
+[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="UI/Track" method="_on_eol_stop_playing_music_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bjfey2jmh5t2s"]
+[gd_scene load_steps=16 format=3 uid="uid://bjfey2jmh5t2s"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_brk8q"]
-[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_lxfp8"]
-[ext_resource type="Texture2D" uid="uid://wwn3rnyf2sx8" path="res://Assets/Sprites/Streamers/PlaceholderBody.png" id="2_7x4mx"]
-[ext_resource type="Texture2D" uid="uid://cjqeiqvhj5v37" path="res://Assets/Sprites/Streamers/PlaceholderHead.png" id="3_mjxof"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer2/FacecamFrame.png" id="1_lxfp8"]
+[ext_resource type="Texture2D" uid="uid://wwn3rnyf2sx8" path="res://Assets/Sprites/Streamers/Streamer0/PlaceholderBody.png" id="2_7x4mx"]
+[ext_resource type="Texture2D" uid="uid://cjqeiqvhj5v37" path="res://Assets/Sprites/Streamers/Streamer0/PlaceholderHead.png" id="3_mjxof"]
+[ext_resource type="Texture2D" uid="uid://54rft2orwbeq" path="res://Assets/Sprites/Streamers/Streamer1/Streamer1FaceDefault.png" id="3_v7g30"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a4qcp"]
 animations = [{
@@ -88,6 +89,53 @@ animations = [{
 }],
 "loop": true,
 "name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijr00"]
+atlas = ExtResource("3_v7g30")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ay6f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijr00")
+}],
+"loop": true,
+"name": &"angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijr00")
+}],
+"loop": true,
+"name": &"cringe",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijr00")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijr00")
+}],
+"loop": true,
+"name": &"laugh",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijr00")
+}],
+"loop": true,
+"name": &"pog",
 "speed": 5.0
 }]
 
@@ -608,12 +656,16 @@ texture = ExtResource("1_lxfp8")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_a4qcp")
-animation = &"up"
+animation = &"left"
 
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_4hqou")
-animation = &"up"
+
+[node name="Face" type="AnimatedSprite2D" parent="Head"]
+z_index = 2
+sprite_frames = SubResource("SpriteFrames_3ay6f")
+animation = &"angry"
 
 [node name="Movement" type="AnimationPlayer" parent="."]
 libraries = {
