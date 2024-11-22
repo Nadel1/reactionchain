@@ -13,3 +13,4 @@ var currentStreamIndex = 0
 var score = 0
 var streamerIndices =[]
 var currentStreamer=null
+var difficulty = 2 # 1: arrow on every note, 4: arrow on every 4th note, etc

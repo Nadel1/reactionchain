@@ -79,8 +79,8 @@ func _ready():
 	Global.streamerIndices.append(currentStreamerIndex)
 
 func _process(delta: float) -> void:
-	$UI/TrackWrong.scale.y = $TrackPlaybackHandler.fade
-	$UI/TrackRight.scale.y = 1.0-$TrackPlaybackHandler.fade
+	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
+	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)

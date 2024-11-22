@@ -24,6 +24,7 @@ var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
 var judgingPromptsOkay=["okay"]
 var judgingPromptsBad=["uff","bad"]
 var totalNumberCorrectInputs=0
+var arrowSpawnID = 0
 
 #abstraction for reactions
 var correctInputs=4
@@ -49,11 +50,13 @@ func _input(event):
 			evaluateScore(null,false)
 			
 func spawnButton():
-	var spawnIndex=randi()%numberOfButtonPrompts
-	var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
-	newButtonPrompt.position=spawnPoint.global_position
-	get_parent().call_deferred("add_child",newButtonPrompt)
-	buttonSequence.append(newButtonPrompt)
+	arrowSpawnID += 1
+	if arrowSpawnID % Global.difficulty == 0:
+		var spawnIndex=randi()%numberOfButtonPrompts
+		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
+		newButtonPrompt.position=spawnPoint.global_position
+		get_parent().call_deferred("add_child",newButtonPrompt)
+		buttonSequence.append(newButtonPrompt)
 
 func spawnMarker():
 	var newMarker=MARKER.instantiate()
