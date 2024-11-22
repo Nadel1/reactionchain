@@ -5,6 +5,7 @@ class_name TrackPlaybackHandler
 @onready var playerFail = $MidiPlayerFail
 var index = 0
 var fade = 0.0
+var inputFadeTime = 1.0
 
 func setIndex(index : int):
 	self.index = index
@@ -39,7 +40,10 @@ func getTrackCorrect():
 func failInput():
 	#playerCorrect.set_volume_db(-80)
 	#playerFail.set_volume_db(-20)
-	$FailFade.start()
+	$FailFade.start(inputFadeTime)
+
+func failReaction(length:float):
+	$FailFade.start(length)
 
 func _process(delta: float) -> void:
 	var factor = $FailFade.time_left/$FailFade.wait_time

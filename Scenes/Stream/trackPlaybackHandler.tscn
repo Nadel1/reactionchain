@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cq6heevemk6q8"]
+[gd_scene load_steps=4 format=3 uid="uid://ciayf6jvcdddn"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/trackPlaybackHandler.gd" id="1_4dn7u"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_wg2vy"]

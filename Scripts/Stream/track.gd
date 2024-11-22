@@ -33,7 +33,9 @@ var correctReactionPacket=false
 var countReactionPacket=-1
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
-	
+var currentPacketDuration=0.0
+var firstPacketStarted=false
+
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -126,8 +128,12 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		if correctReactionPacket:#last reaction paket was correct, as the start of a new packet indicates the end of the last one
 			react()
-		correctReactionPacket=true
-		countReactionPacket+=1
+		elif firstPacketStarted:
+			Global.inputRecorder.reactionFailed(currentPacketDuration)
+		firstPacketStarted = true
+		correctReactionPacket = true
+		countReactionPacket += 1
+		currentPacketDuration = 0.0
 	else:
 		goodHit=true
 		if buttonSequence.front()!=null:
@@ -144,3 +150,7 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	spawnMarker()
+
+func _process(delta: float) -> void:
+	if firstPacketStarted:
+		currentPacketDuration += delta

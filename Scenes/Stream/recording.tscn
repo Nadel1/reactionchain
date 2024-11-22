@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cbfggapgaey4o"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/recordingPlayback.gd" id="1_0vrxd"]
-[ext_resource type="PackedScene" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="3_0pve0"]
+[ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="3_0pve0"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="3_147ex"]
 
 [node name="Recording" type="Node2D"]
