@@ -128,6 +128,7 @@ libraries = {
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="." method="_on_eol_stop_spawning_arrows_timer_timeout"]
+[connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="UI/Track" method="_on_eol_stop_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="EOLStopPlayingMusicTimer" to="." method="_on_eol_stop_playing_music_timer_timeout"]
 [connection signal="timeout" from="EOLStopPlayingMusicTimer" to="InputRecorder" method="stopRecording"]
 [connection signal="timeout" from="EOLStopPlayingMusicTimer" to="UI/Track" method="_on_eol_stop_playing_music_timer_timeout"]

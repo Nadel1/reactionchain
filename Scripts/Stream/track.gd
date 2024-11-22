@@ -139,6 +139,5 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
 
-
-func _on_hit_zone_animated_sprite_2d_animation_finished() -> void:
-	animatedSprite.play("default")
+func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
+	spawnMarker()
