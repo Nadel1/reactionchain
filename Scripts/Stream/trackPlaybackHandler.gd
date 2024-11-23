@@ -32,8 +32,8 @@ func start():
 	playerFail.play()
 
 func stop():
-	playerCorrect.stop()
-	playerFail.stop()
+	playerCorrect.playing = false
+	playerFail.playing = false
 
 func getTrackCorrect():
 	return playerCorrect.file
