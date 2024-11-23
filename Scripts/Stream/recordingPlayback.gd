@@ -7,17 +7,18 @@ var timeSinceLastInput = 0.0
 var timeSinceLastReaction=0.0
 var inputIndex = 0
 var reactionIndex=0
+var musicToPlay
+var musicIndex=0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
 
 func setIndex(i : int):
 	index = i
-	var music = $AudioTrackProvider.getTrack(index)
+	musicToPlay=Global.musicTracks[index]
 	var instrument = $AudioTrackProvider.getSoundFont(index)
-	if music != null:
-		$MidiPlayer.set_file(music)
-		$MidiPlayer.set_soundfont(instrument)
+	$MidiPlayer.set_file(musicToPlay[musicIndex])
+	$MidiPlayer.set_soundfont(instrument)
 
 func _physics_process(delta: float) -> void:
 	if playing:
@@ -38,3 +39,9 @@ func _physics_process(delta: float) -> void:
 			reactionIndex+=1
 			
 	pass
+
+
+func _on_midi_player_finished() -> void:
+	musicIndex+=1
+	if musicIndex<musicToPlay.size():
+		$MidiPlayer.set_file(musicToPlay[musicIndex])

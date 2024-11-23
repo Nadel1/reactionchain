@@ -34,5 +34,3 @@ func appendRecordedReaction(reaction):
 	recordingReaction.append([timeSinceLastReaction,reaction])
 	timeSinceLastReaction=0
 	
-func _on_eol_stop_playing_music_timer_timeout() -> void:
-	pass # Replace with function body.

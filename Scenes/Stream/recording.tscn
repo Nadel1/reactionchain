@@ -14,3 +14,5 @@ script = ExtResource("1_0vrxd")
 loop = true
 
 [node name="VideoFrame" parent="." instance=ExtResource("3_147ex")]
+
+[connection signal="finished" from="MidiPlayer" to="." method="_on_midi_player_finished"]

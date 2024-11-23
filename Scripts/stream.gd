@@ -61,6 +61,7 @@ func prepareMusic():
 	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]
 	for i in lengthOfMusic:
 		musicToPlay.append(layerToChoseFrom.pick_random())
+	Global.musicTracks.append(musicToPlay)
 	midiPlayerMusic.set_file(musicToPlay[0])
 	midiPlayerArrows.set_file(musicToPlay[0])
 	var instrument = $AudioTrackProvider.getSoundFont(Global.currentStreamIndex)#maybe also chose random soundfont?
@@ -114,7 +115,6 @@ func _on_switch_scene_timer_timeout() -> void:
 func _on_midi_player_arrows_finished() -> void:
 	counterForArrowsPlayer+=1
 	if counterForArrowsPlayer<lengthOfMusic:
-		print("new packet: ", counterForArrowsPlayer)
 		midiPlayerArrows.set_file(musicToPlay[counterForArrowsPlayer])
 		midiPlayerArrows.play()
 		
@@ -126,5 +126,4 @@ func _on_midi_player_music_finished() -> void:
 		midiPlayerMusic.play()
 	else:
 		#end of layer
-		print("end of level")
 		switchSceneTimer.start()
