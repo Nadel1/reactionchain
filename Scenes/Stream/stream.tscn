@@ -1,13 +1,25 @@
-[gd_scene load_steps=12 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=16 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
-[ext_resource type="PackedScene" uid="uid://bdvkdv77fslji" path="res://addons/midi/ADSR.tscn" id="2_14jv0"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
-[ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="3_faimc"]
+[ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer0/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
+
+[sub_resource type="Gradient" id="Gradient_fghfg"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sgihh"]
+gradient = SubResource("Gradient_fghfg")
+
+[sub_resource type="Gradient" id="Gradient_it41p"]
+colors = PackedColorArray(0.2, 1, 0, 1, 0.2, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nh8vi"]
+gradient = SubResource("Gradient_it41p")
 
 [sub_resource type="Animation" id="Animation_637ko"]
 length = 0.001
@@ -72,18 +84,11 @@ _data = {
 [node name="Stream" type="Node2D"]
 script = ExtResource("1_lwu7i")
 
-[node name="AudioTrackProvider" parent="." instance=ExtResource("3_faimc")]
-
-[node name="ADSR" parent="." instance=ExtResource("2_14jv0")]
-
-[node name="MidiPlayerMusic" parent="." instance=ExtResource("3_b6yqj")]
-file = "res://Assets/Audio/Tracks/test_MIDI.mid"
-loop = true
-soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+[node name="TrackPlaybackHandler" parent="." instance=ExtResource("4_ta3ta")]
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
-file = "res://Assets/Audio/Tracks/test_MIDI.mid"
 loop = true
+bus = &"Arrows"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
 wait_time = 6.0
@@ -119,6 +124,19 @@ text = "Score: 0"
 position = Vector2(299, 593)
 
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
+
+[node name="TrackIndicatorWrong" type="Sprite2D" parent="UI"]
+position = Vector2(839, 230)
+texture = SubResource("GradientTexture2D_sgihh")
+
+[node name="TrackIndicatorRight" type="Sprite2D" parent="UI"]
+position = Vector2(914, 230)
+texture = SubResource("GradientTexture2D_nh8vi")
+
+[node name="StreamerPlaceholder" type="Sprite2D" parent="UI"]
+position = Vector2(922, 414)
+scale = Vector2(4, 4)
+texture = ExtResource("8_imbvg")
 
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {

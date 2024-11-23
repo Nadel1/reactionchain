@@ -27,11 +27,6 @@ const max_program_number:int = 128
 ## ドラムトラックチャンネル番号
 const drum_track_channel:int = 0x09
 
-## MIDI Master Bus Name
-const midi_master_bus_name:String = "arlez80_GMP_MASTER_BUS"
-## MIDI Channnel Bus Name
-const midi_channel_bus_name:String = "arlez80_GMP_CHANNEL_BUS%d"
-
 # -----------------------------------------------------------------------------
 # Classes
 
@@ -292,6 +287,10 @@ var is_audio_server_inited:bool = false
 # 
 var _previous_time:float
 
+## MIDI Master Bus Name
+var midi_master_bus_name:String = "arlez80_GMP_MASTER_BUS"
+## MIDI Channnel Bus Name
+var midi_channel_bus_name:String = "arlez80_GMP_CHANNEL_BUS%d"
 # -----------------------------------------------------------------------------
 # シグナル
 
@@ -324,8 +323,13 @@ signal looped
 ## 終了
 signal finished
 
+func setName(name:String):
+	midi_master_bus_name = name + "_BUS"
+	midi_channel_bus_name = name + "_CHANNEL%d"
+	init()
+
 ## 準備
-func _ready( ):
+func init( ):
 	if AudioServer.get_bus_index( self.midi_master_bus_name ) == -1:
 		AudioServer.add_bus( -1 )
 		var midi_master_bus_idx:int = AudioServer.get_bus_count( ) - 1

@@ -1,0 +1,14 @@
+[remap]
+
+importer="com.nlaha.godotmidi"
+type="MidiResource"
+uid="uid://bygcgj1t4lkpe"
+path="res://.godot/imported/01_lead1.MID-8d01d5e4a387655512e5e6b1b9f9e093.res"
+
+[deps]
+
+source_file="res://Assets/Audio/Tracks/track01/01_lead1.MID"
+dest_files=["res://.godot/imported/01_lead1.MID-8d01d5e4a387655512e5e6b1b9f9e093.res"]
+
+[params]
+

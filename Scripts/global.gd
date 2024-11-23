@@ -7,8 +7,11 @@ extends Node
 var inputHandler : InputHandler
 var inputRecorder : InputRecorder
 var recordingsMovement = []
-var recordingsReaction= []
+var recordingsReaction = []
+var recordingsFails = []
+var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
 var score = 0
 var streamerIndices =[]
 var currentStreamer=null
+var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc

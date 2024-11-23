@@ -1,0 +1,14 @@
+[remap]
+
+importer="com.nlaha.godotmidi"
+type="MidiResource"
+uid="uid://1pfcdc5wtnh7"
+path="res://.godot/imported/01_lead1-fail.MID-82768e19bb08a10459d7f2b22fb6d192.res"
+
+[deps]
+
+source_file="res://Assets/Audio/Tracks/track01/01_lead1-fail.MID"
+dest_files=["res://.godot/imported/01_lead1-fail.MID-82768e19bb08a10459d7f2b22fb6d192.res"]
+
+[params]
+

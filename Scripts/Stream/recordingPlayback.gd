@@ -4,37 +4,50 @@ extends Node
 var streamer 
 var playing = true
 var timeSinceLastInput = 0.0
-var timeSinceLastReaction=0.0
+var timeSinceLastReaction = 0.0
+var timeSinceLastFail = 0.0
 var inputIndex = 0
-var reactionIndex=0
+var reactionIndex = 0
+var failIndex = 0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
 
 func setIndex(i : int):
 	index = i
-	var music = $AudioTrackProvider.getTrack(index)
-	var instrument = $AudioTrackProvider.getSoundFont(index)
-	if music != null:
-		$MidiPlayer.set_file(music)
-		$MidiPlayer.set_soundfont(instrument)
+	$TrackPlaybackHandler.setIndex(i)
 
 func _physics_process(delta: float) -> void:
+	checkIndices()
 	if playing:
-		if Global.recordingsMovement.size() <= index || Global.recordingsMovement[index].size() <= inputIndex:
-			playing = false
-			print("End playback")
-			return
 		timeSinceLastInput += delta
-		timeSinceLastReaction+=delta
-		if Global.recordingsMovement[index][inputIndex][1] == timeSinceLastInput:
+		timeSinceLastReaction += delta
+		timeSinceLastFail += delta
+		if inputIndex < Global.recordingsMovement[index].size() and Global.recordingsMovement[index][inputIndex][1] <= timeSinceLastInput:
 			var input = Global.recordingsMovement[index][inputIndex][0]
 			streamer.move(input)
 			timeSinceLastInput = 0
 			inputIndex += 1
-		if reactionIndex < Global.recordingsReaction[index].size()and Global.recordingsReaction[index][reactionIndex][0]==timeSinceLastReaction:
-			streamer.react( Global.recordingsReaction[index][reactionIndex][1])
-			timeSinceLastReaction=0
-			reactionIndex+=1
+		if reactionIndex < Global.recordingsReaction[index].size() and Global.recordingsReaction[index][reactionIndex][0] <= timeSinceLastReaction:
+			streamer.react(Global.recordingsReaction[index][reactionIndex][1])
+			timeSinceLastReaction = 0
+			reactionIndex += 1
+		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:
+			$TrackPlaybackHandler.failReaction(Global.recordingsFails[index][failIndex][1])
+			timeSinceLastFail = 0
+			failIndex += 1
 			
 	pass
+
+func checkIndices():
+	if !playing:
+		return
+	var shouldStop = Global.recordingsMovement.size() <= index
+	if !shouldStop:
+		var anyListUnfinished = false
+		anyListUnfinished = anyListUnfinished || inputIndex < Global.recordingsMovement[index].size()
+		anyListUnfinished = anyListUnfinished || reactionIndex < Global.recordingsReaction[index].size()
+		anyListUnfinished = anyListUnfinished || failIndex < Global.recordingsFails[index].size()
+		shouldStop = !anyListUnfinished
+	playing = playing && !shouldStop
+	if shouldStop: print("End playback")

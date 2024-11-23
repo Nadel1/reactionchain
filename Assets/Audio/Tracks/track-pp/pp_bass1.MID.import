@@ -1,0 +1,14 @@
+[remap]
+
+importer="com.nlaha.godotmidi"
+type="MidiResource"
+uid="uid://cyv1wta41muwm"
+path="res://.godot/imported/pp_bass1.MID-3e5e98f10f4ab89f582fc3e210d16730.res"
+
+[deps]
+
+source_file="res://Assets/Audio/Tracks/track-pp/pp_bass1.MID"
+dest_files=["res://.godot/imported/pp_bass1.MID-3e5e98f10f4ab89f582fc3e210d16730.res"]
+
+[params]
+

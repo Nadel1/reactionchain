@@ -24,6 +24,7 @@ var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
 var judgingPromptsOkay=["okay"]
 var judgingPromptsBad=["uff","bad"]
 var totalNumberCorrectInputs=0
+var arrowSpawnID = 0
 
 #abstraction for reactions
 var correctInputs=4
@@ -32,7 +33,9 @@ var correctReactionPacket=false
 var countReactionPacket=-1
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
-	
+var currentPacketDuration=0.0
+var firstPacketStarted=false
+
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -49,11 +52,13 @@ func _input(event):
 			evaluateScore(null,false)
 			
 func spawnButton():
-	var spawnIndex=randi()%numberOfButtonPrompts
-	var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
-	newButtonPrompt.position=spawnPoint.global_position
-	get_parent().call_deferred("add_child",newButtonPrompt)
-	buttonSequence.append(newButtonPrompt)
+	if arrowSpawnID % Global.difficulty == 0:
+		var spawnIndex=randi()%numberOfButtonPrompts
+		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
+		newButtonPrompt.position=spawnPoint.global_position
+		get_parent().call_deferred("add_child",newButtonPrompt)
+		buttonSequence.append(newButtonPrompt)
+	arrowSpawnID += 1
 
 func spawnMarker():
 	var newMarker=MARKER.instantiate()
@@ -66,10 +71,10 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 			spawnMarker()
 		elif event.velocity>1:
 			spawnButton()
-	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	animatedSprite.play("wrongHit")
+	Global.currentTrackHandler.failInput()
 
 func playScoreIncrease():
 	animatedSprite.play("hit")
@@ -123,8 +128,12 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		if correctReactionPacket:#last reaction paket was correct, as the start of a new packet indicates the end of the last one
 			react()
-		correctReactionPacket=true
-		countReactionPacket+=1
+		elif firstPacketStarted:
+			Global.inputRecorder.reactionFailed(currentPacketDuration)
+		firstPacketStarted = true
+		correctReactionPacket = true
+		countReactionPacket += 1
+		currentPacketDuration = 0.0
 	else:
 		goodHit=true
 		if buttonSequence.front()!=null:
@@ -141,3 +150,7 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	spawnMarker()
+
+func _process(delta: float) -> void:
+	if firstPacketStarted:
+		currentPacketDuration += delta
