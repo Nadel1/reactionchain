@@ -116,14 +116,10 @@ func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)
 	
 	
-func _on_eol_stop_playing_music_timer_timeout() -> void:
-	midiPlayerMusic.playing=false
-	for player in midiPlayers:
-		player.playing = false
-	switchSceneTimer.start()
 	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
+	inputRecorder.stopRecording()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
 
