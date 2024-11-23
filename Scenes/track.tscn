@@ -79,7 +79,7 @@ scale = Vector2(0.933333, 1)
 sprite_frames = SubResource("SpriteFrames_4ikor")
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(-844, -11)
+position = Vector2(-379, -11)
 
 [node name="LateArea" type="Area2D" parent="."]
 position = Vector2(621, -11)

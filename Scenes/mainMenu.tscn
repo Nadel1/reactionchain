@@ -1,3 +1,187 @@
-[gd_scene format=3 uid="uid://oqtxuh6lfavi"]
+[gd_scene load_steps=10 format=3 uid="uid://oqtxuh6lfavi"]
+
+[ext_resource type="Texture2D" uid="uid://d2mo23t2gbb52" path="res://Assets/Sprites/MainMenu/Title1.png" id="1_ggqlj"]
+[ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="1_gvy58"]
+[ext_resource type="Script" path="res://Scripts/mainMenu.gd" id="1_txtt8"]
+[ext_resource type="Texture2D" uid="uid://cn65hxca57jml" path="res://Assets/Sprites/MainMenu/Title2.png" id="2_5038a"]
+[ext_resource type="Texture2D" uid="uid://coq1gsyd2r3ja" path="res://Assets/Sprites/MainMenu/Title3.png" id="3_g8fk8"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="4_jced4"]
+
+[sub_resource type="Animation" id="Animation_1sc46"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-128, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Title2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-216, 144)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Title3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-160, 224)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Buttons:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cnhrj"]
+resource_name = "SlideIn"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Vector2(-128, 64), Vector2(160, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Title2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.266667, 1),
+"transitions": PackedFloat32Array(1, 0.5, 2),
+"update": 0,
+"values": [Vector2(-216, 144), Vector2(-216, 144), Vector2(288, 144)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Title3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.833333, 1.5),
+"transitions": PackedFloat32Array(1, 0.5, 2),
+"update": 0,
+"values": [Vector2(-160, 224), Vector2(-160, 224), Vector2(224, 224)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Buttons:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_436wm"]
+_data = {
+"RESET": SubResource("Animation_1sc46"),
+"SlideIn": SubResource("Animation_cnhrj")
+}
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_txtt8")
+
+[node name="StartVideo" parent="." instance=ExtResource("1_gvy58")]
+z_index = -5
+
+[node name="Title" type="Node2D" parent="."]
+
+[node name="Title1" type="Sprite2D" parent="Title"]
+position = Vector2(-128, 64)
+scale = Vector2(4, 4)
+texture = ExtResource("1_ggqlj")
+
+[node name="Title2" type="Sprite2D" parent="Title"]
+position = Vector2(-216, 144)
+scale = Vector2(4, 4)
+texture = ExtResource("2_5038a")
+
+[node name="Title3" type="Sprite2D" parent="Title"]
+position = Vector2(-160, 224)
+scale = Vector2(4, 4)
+texture = ExtResource("3_g8fk8")
+
+[node name="TitleAnim" type="AnimationPlayer" parent="Title"]
+libraries = {
+"": SubResource("AnimationLibrary_436wm")
+}
+autoplay = "SlideIn"
+
+[node name="Buttons" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 320.0
+offset_right = 64.0
+offset_bottom = 320.0
+
+[node name="Start" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_top = -16.0
+offset_right = 64.0
+offset_bottom = 3.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+text = "Start Game"
+
+[node name="Options" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_top = 88.0
+offset_right = 64.0
+offset_bottom = 107.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+text = "Options"
+
+[node name="Quit" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_top = 192.0
+offset_right = 64.0
+offset_bottom = 211.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+text = "Quit
+"
+
+[connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
+[connection signal="button_down" from="Buttons/Quit" to="." method="_on_quit_button_down"]

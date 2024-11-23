@@ -36,7 +36,6 @@ var allLayers=[allSnippetsLayer1,allSnippetsLayer2,allSnippetsLayer3]
 @export var lengthOfMusic=5#number of reaction packets to play
 var dropPacketsIndex=0
 
-@export var musicDelay=6
 var trackPlayers : Array[TrackPlaybackHandler]
 
 func _on_start_playing_music_timer_timeout() -> void:
@@ -98,6 +97,7 @@ func _ready():
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
 	index=Global.currentStreamIndex
+	midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
 	
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
@@ -118,7 +118,6 @@ func _ready():
 			currentNode = recursionInstance
 	var video = startVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
-	$Transition.play("zoomOut")
 	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
 	Global.streamerIndices.append(currentStreamerIndex)
 
@@ -131,7 +130,7 @@ func updateScore():
 	
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	midiPlayerArrows.playing=false
-	EOLStopPlayingMusicTimer.set_wait_time(musicDelay)#so that the music ends with the same delay it started with
+	EOLStopPlayingMusicTimer.set_wait_time(startPlayingMusicTimer.wait_time)#so that the music ends with the same delay it started with
 	EOLStopPlayingMusicTimer.start()
 	
 	
@@ -158,3 +157,7 @@ func _on_track_playback_handler_layer_finished() -> void:
 	switchSceneTimer.start()
 	Global.inputRecorder.stopRecording()
 	Global.stopMetronome()
+
+func _on_start_spawning_arrows_timer_timeout() -> void:
+	midiPlayerArrows.play()
+	$StartPlayingMusicTimer.start()

@@ -9,8 +9,8 @@ var inputFadeTime = 1.0
 var counterForMusicPlayer=0#counter which index from musicToPlay should be inserted next
 signal layerFinished
 
-func setIndex(index : int):
-	self.index = index
+func setIndex(id : int):
+	index = id
 	call_deferred("setupPlayers")
 
 func _ready() -> void:
