@@ -13,3 +13,4 @@ var score = 0
 var streamerIndices =[]
 var currentStreamer=null
 var musicTracks=[]
+var packetsToBeDropped=[]

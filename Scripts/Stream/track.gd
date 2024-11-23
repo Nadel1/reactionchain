@@ -26,12 +26,12 @@ var judgingPromptsBad=["uff","bad"]
 var totalNumberCorrectInputs=0
 
 #abstraction for reactions
-var correctInputs=4
-var currentCorrectInputs=0
 var correctReactionPacket=false
-var countReactionPacket=-1
+var countReactionPacket=-1#used to determine which packet to switch when incorrect packet detected
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
+var packetsToBeDropped=[]#gather index of packets to drop
+
 	
 	
 func _input(event):
@@ -96,13 +96,11 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
-		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
 	else:#either incorrect input, no input at all (too late), or way too early
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
-		currentCorrectInputs=0
 		correctReactionPacket=false
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
@@ -118,11 +116,16 @@ func registerInput(inputString):
 			evaluateScore(buttonPrompt)
 		else: 
 			evaluateScore(buttonPrompt,false)
-		
+
+func prepareDropPacket():
+	Global.packetsToBeDropped.append(countReactionPacket+1)
+
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		if correctReactionPacket:#last reaction paket was correct, as the start of a new packet indicates the end of the last one
 			react()
+		else:
+			prepareDropPacket()
 		correctReactionPacket=true
 		countReactionPacket+=1
 	else:

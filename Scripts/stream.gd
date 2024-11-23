@@ -33,6 +33,7 @@ var musicToPlay=[]
 @export var lengthOfMusic=5#number of reaction packets to play
 var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var counterForMusicPlayer=0#counter which index from musicToPlay should be inserted next
+var dropPacketsIndex=0
 
 @export var musicDelay=6
 var midiPlayers : Array[MidiPlayer]
@@ -58,9 +59,23 @@ func prepareStreamer():
 	inputRecorder.setStreamer(currentStreamer)
 
 func prepareMusic():
-	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]
-	for i in lengthOfMusic:
-		musicToPlay.append(layerToChoseFrom.pick_random())
+	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]#modulo only needed here for endless 
+	if Global.currentStreamIndex==0:
+		for i in lengthOfMusic:
+			musicToPlay.append(layerToChoseFrom.pick_random())
+	else:
+		#play the corresponding next layer to the previous snippet or drop if needed
+		for i in lengthOfMusic:
+			var lastReactionPacket=Global.musicTracks[Global.currentStreamIndex-1][i]
+			var lastIndex=allLayers[Global.currentStreamIndex-1].find(lastReactionPacket)
+			print("last index: ", lastIndex)
+			
+			if Global.packetsToBeDropped.size()==0:
+				musicToPlay.append(layerToChoseFrom[lastIndex])
+			elif Global.packetsToBeDropped[dropPacketsIndex]==lastIndex:
+				print("append different ")
+				musicToPlay.append(layerToChoseFrom.pick_random())
+				
 	Global.musicTracks.append(musicToPlay)
 	midiPlayerMusic.set_file(musicToPlay[0])
 	midiPlayerArrows.set_file(musicToPlay[0])
