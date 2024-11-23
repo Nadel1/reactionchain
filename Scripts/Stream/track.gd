@@ -52,13 +52,13 @@ func _input(event):
 			evaluateScore(null,false)
 			
 func spawnButton():
-	arrowSpawnID += 1
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.position=spawnPoint.global_position
 		get_parent().call_deferred("add_child",newButtonPrompt)
 		buttonSequence.append(newButtonPrompt)
+	arrowSpawnID += 1
 
 func spawnMarker():
 	var newMarker=MARKER.instantiate()
