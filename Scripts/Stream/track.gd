@@ -52,6 +52,8 @@ func spawnButton():
 	var spawnIndex=randi()%numberOfButtonPrompts
 	var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 	newButtonPrompt.position=spawnPoint.global_position
+	print("spawning at: ", spawnPoint.global_position)
+	newButtonPrompt.position= Vector2(-545,582)#hotfix for now
 	get_parent().call_deferred("add_child",newButtonPrompt)
 	buttonSequence.append(newButtonPrompt)
 
@@ -62,9 +64,10 @@ func spawnMarker():
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
+		print("velocity: ", event.velocity)
 		if event.velocity==2:
 			spawnMarker()
-		elif event.velocity>2:
+		elif event.velocity==127:
 			spawnButton()
 	
 

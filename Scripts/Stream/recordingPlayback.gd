@@ -45,3 +45,4 @@ func _on_midi_player_finished() -> void:
 	musicIndex+=1
 	if musicIndex<musicToPlay.size():
 		$MidiPlayer.set_file(musicToPlay[musicIndex])
+		$MidiPlayer.play()

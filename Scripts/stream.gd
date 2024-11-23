@@ -66,8 +66,8 @@ func prepareMusic():
 	else:
 		#play the corresponding next layer to the previous snippet or drop if needed
 		for i in lengthOfMusic:
-			var lastReactionPacket=Global.musicTracks[Global.currentStreamIndex-1][i]
-			var lastIndex=allLayers[Global.currentStreamIndex-1].find(lastReactionPacket)
+			var lastReactionPacket=Global.musicTracks[Global.currentStreamIndex%allLayers.size()-1][i]
+			var lastIndex=allLayers[Global.currentStreamIndex%allLayers.size()-1].find(lastReactionPacket)
 			print("last index: ", lastIndex)
 			
 			if Global.packetsToBeDropped.size()==0:
