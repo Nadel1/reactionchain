@@ -18,6 +18,21 @@ var allStreamers=[STREAMER1,STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 
+#generate music track
+#file path (preload doesnt work apparently with mid files)
+const LAYER1="res://Assets/Audio/Tracks/snippets/lead1_layer1.MID"
+const LAYER2="res://Assets/Audio/Tracks/snippets/lead1_layer2.MID"
+const LAYER3="res://Assets/Audio/Tracks/snippets/lead1_layer3.MID"
+
+var allSnippetsLayer1=[LAYER1]
+var allSnippetsLayer2=[LAYER2]
+var allSnippetsLayer3=[LAYER3]
+
+var allLayers=[allSnippetsLayer1,allSnippetsLayer2,allSnippetsLayer3]
+var musicToPlay=[]
+@export var lengthOfMusic=5#number of reaction packets to play
+var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
+var counterForMusicPlayer=0#counter which index from musicToPlay should be inserted next
 
 @export var musicDelay=6
 var midiPlayers : Array[MidiPlayer]
@@ -41,21 +56,25 @@ func prepareStreamer():
 	currentStreamer.scale=Vector2(4,4)
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
-	
-	
+
+func prepareMusic():
+	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]
+	for i in lengthOfMusic:
+		musicToPlay.append(layerToChoseFrom.pick_random())
+	midiPlayerMusic.set_file(musicToPlay[0])
+	midiPlayerArrows.set_file(musicToPlay[0])
+	var instrument = $AudioTrackProvider.getSoundFont(Global.currentStreamIndex)#maybe also chose random soundfont?
+	midiPlayerMusic.set_soundfont(instrument)
+	midiPlayerArrows.play()
+
+		
 func _ready():
 	prepareStreamer()
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
-	
+	prepareMusic()
 	var audioFile = $AudioTrackProvider.getTrack(Global.currentStreamIndex)
-	var instrument = $AudioTrackProvider.getSoundFont(Global.currentStreamIndex)
-	if audioFile != null:
-		midiPlayerMusic.set_file(audioFile)
-		midiPlayerMusic.set_soundfont(instrument)
-		midiPlayerArrows.set_file(audioFile)
-		midiPlayerArrows.play()
-		
+
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
@@ -80,10 +99,6 @@ func _ready():
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)
 	
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	midiPlayerArrows.playing=false
-	EOLStopPlayingMusicTimer.set_wait_time(musicDelay)#so that the music ends with the same delay it started with
-	EOLStopPlayingMusicTimer.start()
 	
 func _on_eol_stop_playing_music_timer_timeout() -> void:
 	midiPlayerMusic.playing=false
@@ -94,3 +109,22 @@ func _on_eol_stop_playing_music_timer_timeout() -> void:
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
+
+
+func _on_midi_player_arrows_finished() -> void:
+	counterForArrowsPlayer+=1
+	if counterForArrowsPlayer<lengthOfMusic:
+		print("new packet: ", counterForArrowsPlayer)
+		midiPlayerArrows.set_file(musicToPlay[counterForArrowsPlayer])
+		midiPlayerArrows.play()
+		
+
+func _on_midi_player_music_finished() -> void:
+	counterForMusicPlayer+=1
+	if counterForMusicPlayer<lengthOfMusic:
+		midiPlayerMusic.set_file(musicToPlay[counterForMusicPlayer])
+		midiPlayerMusic.play()
+	else:
+		#end of layer
+		print("end of level")
+		switchSceneTimer.start()

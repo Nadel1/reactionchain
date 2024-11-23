@@ -77,13 +77,10 @@ script = ExtResource("1_lwu7i")
 [node name="ADSR" parent="." instance=ExtResource("2_14jv0")]
 
 [node name="MidiPlayerMusic" parent="." instance=ExtResource("3_b6yqj")]
-file = "res://Assets/Audio/Tracks/test_MIDI.mid"
-loop = true
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/test_MIDI.mid"
-loop = true
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
 wait_time = 6.0
@@ -125,6 +122,9 @@ libraries = {
 "": SubResource("AnimationLibrary_cfqdi")
 }
 
+[connection signal="finished" from="MidiPlayerMusic" to="." method="_on_midi_player_music_finished"]
+[connection signal="finished" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_finished"]
+[connection signal="looped" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_looped"]
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="." method="_on_eol_stop_spawning_arrows_timer_timeout"]

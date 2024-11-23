@@ -62,9 +62,9 @@ func spawnMarker():
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
-		if event.velocity==1:
+		if event.velocity==2:
 			spawnMarker()
-		elif event.velocity>1:
+		elif event.velocity>2:
 			spawnButton()
 	
 
@@ -138,6 +138,3 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
-
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	spawnMarker()
