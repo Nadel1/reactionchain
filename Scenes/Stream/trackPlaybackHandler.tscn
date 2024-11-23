@@ -14,6 +14,7 @@ bus = &"Correct0"
 
 [node name="MidiPlayerFail" parent="." instance=ExtResource("2_wg2vy")]
 volume_db = -80.0
+key_shift = -1
 loop = true
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 bus = &"Fail0"

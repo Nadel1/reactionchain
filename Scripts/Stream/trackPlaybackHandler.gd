@@ -15,13 +15,14 @@ func setupPlayers():
 	playerCorrect.setName("Correct"+str(index))
 	playerFail.setName("Fail"+str(index))
 	var musicCorrect = $AudioTrackProvider.getTrackCorrect(index)
-	var musicFail = $AudioTrackProvider.getTrackFail(index)
+	#var musicFail = $AudioTrackProvider.getTrackFail(index)
 	var instrument = $AudioTrackProvider.getSoundFont(index)
 	if musicCorrect != null:
 		playerCorrect.set_file(musicCorrect)
 		playerCorrect.set_soundfont(instrument)
-		playerFail.set_file(musicFail)
+		playerFail.set_file(musicCorrect)
 		playerFail.set_soundfont(instrument)
+		playerFail.key_shift = -1
 	playerCorrect.playing = false
 	playerFail.playing = false
 

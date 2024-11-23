@@ -4,6 +4,5 @@
 
 [node name="AudioTrackProvider" type="Node"]
 script = ExtResource("1_einh4")
-tracksCorrect = Array[String](["res://Assets/Audio/Tracks/track01/01_bass1.MID", "res://Assets/Audio/Tracks/track01/01_lead1.MID", "res://Assets/Audio/Tracks/track01/01_bass2.MID"])
-tracksFail = Array[String](["res://Assets/Audio/Tracks/track01/01_bass1-fail.MID", "res://Assets/Audio/Tracks/track01/01_lead1-fail.MID", "res://Assets/Audio/Tracks/track01/01_bass2-fail.MID"])
-soundfonts = Array[String](["res://Assets/Audio/Instruments/LatelyBass 20240409.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"])
+tracksCorrect = Array[String](["res://Assets/Audio/Tracks/track-pp/pp_bass1.MID", "res://Assets/Audio/Tracks/track-pp/pp_lead1.MID", "res://Assets/Audio/Tracks/track-pp/pp_bass2.MID", "res://Assets/Audio/Tracks/track-pp/pp_lead2.MID"])
+soundfonts = Array[String](["res://Assets/Audio/Instruments/LatelyBass 20240409.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2"])
