@@ -140,8 +140,6 @@ func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	EOLStopPlayingMusicTimer.set_wait_time(musicDelay)#so that the music ends with the same delay it started with
 	EOLStopPlayingMusicTimer.start()
 	
-func _on_eol_stop_playing_music_timer_timeout() -> void:
-	pass
 	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
@@ -165,4 +163,5 @@ func _on_track_playback_handler_layer_finished() -> void:
 	for trackPlayer in trackPlayers:
 		trackPlayer.stop()
 	switchSceneTimer.start()
+	Global.inputRecorder.stopRecording()
 	Global.stopMetronome()

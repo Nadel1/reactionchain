@@ -94,11 +94,6 @@ wait_time = 6.0
 one_shot = true
 autostart = true
 
-[node name="EOLStopSpawningArrowsTimer" type="Timer" parent="."]
-wait_time = 10.0
-
-[node name="EOLStopPlayingMusicTimer" type="Timer" parent="."]
-
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("5_a0dki")
 
@@ -144,7 +139,4 @@ libraries = {
 [connection signal="finished" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_finished"]
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
-[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="." method="_on_eol_stop_playing_music_timer_timeout"]
-[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="InputRecorder" method="stopRecording"]
-[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="UI/Track" method="_on_eol_stop_playing_music_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
