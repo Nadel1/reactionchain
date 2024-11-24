@@ -87,7 +87,6 @@ script = ExtResource("1_lwu7i")
 [node name="TrackPlaybackHandler" parent="." instance=ExtResource("4_ta3ta")]
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
-loop = true
 bus = &"Arrows"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]

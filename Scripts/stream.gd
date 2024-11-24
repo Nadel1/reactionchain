@@ -82,13 +82,17 @@ func prepareMusic():
 				
 	Global.musicTracks.append(musicToPlay)
 	
+	
 func prepareArrows():
 	var firstSnippet = musicToPlay[0]
 	midiPlayerArrows.set_file(firstSnippet)
-	midiPlayerArrows.play()
+	
+	Global.startMetronomeArrows()
 	
 func _ready():
-	Global.tact.connect(nextTact)
+	#Global.tact.connect(nextTact)
+	Global.tactArrows.connect(nextArrowTact)
+	
 	prepareMusic()
 	prepareStreamer()
 	prepareArrows()
@@ -142,17 +146,16 @@ func _on_eol_stop_playing_music_timer_timeout() -> void:
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
-
-
-func nextTact():
+	
+func nextArrowTact():
 	midiPlayerArrows.play()
 	
 func _on_midi_player_arrows_finished() -> void:
 	counterForArrowsPlayer+=1
 	if counterForArrowsPlayer<Global.musicTracks[index].size():
 		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
-		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
-		
+	else:
+		Global.stopMetronomeArrows()
 
 
 func _on_track_playback_handler_layer_finished() -> void:
