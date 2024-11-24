@@ -17,6 +17,8 @@ var allStreamers=[STREAMER1,STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 
+var arrowsPlayer
+
 
 @export var musicDelay=6
 var trackPlayers : Array[TrackPlaybackHandler]
@@ -28,6 +30,7 @@ func _on_start_playing_music_timer_timeout() -> void:
 		
 	#for i in range(0, AudioServer.get_bus_count()):
 	#	print(AudioServer.get_bus_name(i))
+
 
 func prepareStreamer():
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
@@ -99,3 +102,7 @@ func _on_eol_stop_playing_music_timer_timeout() -> void:
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
+
+
+func _on_track_playback_handler_layer_finished() -> void:
+	switchSceneTimer

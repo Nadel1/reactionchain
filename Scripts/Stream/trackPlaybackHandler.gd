@@ -6,25 +6,37 @@ class_name TrackPlaybackHandler
 var index = 0
 var fade = 0.0
 var inputFadeTime = 1.0
+var counterForMusicPlayer=0#counter which index from musicToPlay should be inserted next
+
+
+
+
+signal layerFinished
 
 func setIndex(index : int):
 	self.index = index
 	call_deferred("setupPlayers")
 
+
+	
+func setTrack(snippet):
+	playerCorrect.set_file(snippet)
+	playerFail.set_file(snippet)
+	
 func setupPlayers():
 	playerCorrect.setName("Correct"+str(index))
 	playerFail.setName("Fail"+str(index))
-	var musicCorrect = $AudioTrackProvider.getTrackCorrect(index)
-	#var musicFail = $AudioTrackProvider.getTrackFail(index)
+	var musicCorrect = Global.musicTracks[index][0]
 	var instrument = $AudioTrackProvider.getSoundFont(index)
 	if musicCorrect != null:
-		playerCorrect.set_file(musicCorrect)
 		playerCorrect.set_soundfont(instrument)
+		playerCorrect.set_file(musicCorrect)
 		playerFail.set_file(musicCorrect)
 		playerFail.set_soundfont(instrument)
 		playerFail.key_shift = -1
 	playerCorrect.playing = false
 	playerFail.playing = false
+
 
 func start():
 	playerCorrect.play()
@@ -51,3 +63,14 @@ func _process(delta: float) -> void:
 	playerCorrect.set_volume_db(lerpf(-20,-40, factor))
 	playerFail.set_volume_db(lerpf(-40,-20, factor))
 	fade = factor
+
+
+func _on_midi_player_correct_finished() -> void:
+	counterForMusicPlayer+=1
+	if counterForMusicPlayer<Global.musicTracks[index].size():
+		playerCorrect.set_file(Global.musicTracks[index][counterForMusicPlayer])
+		playerFail.set_file(Global.musicTracks[index][counterForMusicPlayer])
+		playerCorrect.play()
+	else:
+		#end of layer
+		self.emit_signal("layerFinished")
