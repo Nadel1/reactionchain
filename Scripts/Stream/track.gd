@@ -67,10 +67,11 @@ func spawnMarker():
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
-		if event.velocity==1:
+		if event.velocity==2:
 			spawnMarker()
-		elif event.velocity>1:
+		elif event.velocity==127:
 			spawnButton()
+	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	animatedSprite.play("wrongHit")
