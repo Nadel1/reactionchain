@@ -41,12 +41,10 @@ var trackPlayers : Array[TrackPlaybackHandler]
 
 func _on_start_playing_music_timer_timeout() -> void:
 	$TrackPlaybackHandler.call_deferred("start")
+	Global.startMetronome()
 	for player in trackPlayers:
 		player.call_deferred("start")
-		
-	#for i in range(0, AudioServer.get_bus_count()):
-	#	print(AudioServer.get_bus_name(i))
-
+	
 
 func prepareStreamer():
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
@@ -90,6 +88,7 @@ func prepareArrows():
 	midiPlayerArrows.play()
 	
 func _ready():
+	
 	prepareMusic()
 	prepareStreamer()
 	prepareArrows()
@@ -150,6 +149,7 @@ func _on_switch_scene_timer_timeout() -> void:
 
 func _on_track_playback_handler_layer_finished() -> void:
 	switchSceneTimer.start()
+	Global.stopMetronome()
 
 
 func _on_midi_player_arrows_finished() -> void:

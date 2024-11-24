@@ -17,7 +17,8 @@ func setIndex(index : int):
 	self.index = index
 	call_deferred("setupPlayers")
 
-
+func _ready() -> void:
+	Global.tact.connect(nextTact)
 	
 func setTrack(snippet):
 	playerCorrect.set_file(snippet)
@@ -66,13 +67,15 @@ func _process(delta: float) -> void:
 	playerFail.set_volume_db(lerpf(-40,-20, factor))
 	fade = factor
 
+func nextTact():
+	playerCorrect.play()
+	playerFail.play()
 
 func _on_midi_player_correct_finished() -> void:
 	counterForMusicPlayer+=1
 	if counterForMusicPlayer<Global.musicTracks[index].size():
 		playerCorrect.set_file(Global.musicTracks[index][counterForMusicPlayer])
 		playerFail.set_file(Global.musicTracks[index][counterForMusicPlayer])
-		playerCorrect.play()
 	else:
 		#end of layer
 		self.emit_signal("layerFinished")

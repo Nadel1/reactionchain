@@ -17,8 +17,14 @@ var currentStreamer=null
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
 var musicTracks=[]
 var packetsToBeDropped=[]
+signal tact
 
+func _on_metronome_timeout() -> void:
+	self.emit_signal("tact")
 
-
-
+func startMetronome():
+	$Metronome.start()
+	self.emit_signal("tact")
 	
+func stopMetronome():
+	$Metronome.stop()
