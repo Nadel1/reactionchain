@@ -53,10 +53,12 @@ func getTrackCorrect():
 func failInput():
 	#playerCorrect.set_volume_db(-80)
 	#playerFail.set_volume_db(-20)
-	$FailFade.start(inputFadeTime)
+	#$FailFade.start(inputFadeTime)
+	pass
 
 func failReaction(length:float):
-	$FailFade.start(length)
+	#$FailFade.start(length)
+	pass
 
 func _process(delta: float) -> void:
 	var factor = $FailFade.time_left/$FailFade.wait_time

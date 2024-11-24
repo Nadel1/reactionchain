@@ -17,8 +17,9 @@ var allStreamers=[STREAMER1,STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 
-var arrowsPlayer
 
+var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
+var index
 
 @export var musicDelay=6
 var trackPlayers : Array[TrackPlaybackHandler]
@@ -47,16 +48,23 @@ func prepareStreamer():
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
 	
+func prepareArrows():
+	var firstSnippet = Global.musicTracks[Global.currentStreamIndex][0]
+	midiPlayerArrows.set_file(firstSnippet)
+	midiPlayerArrows.play()
 	
 func _ready():
+	Global.prepareMusic()
 	prepareStreamer()
+	prepareArrows()
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
-	midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
-	midiPlayerArrows.play()
+	#midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
+	#midiPlayerArrows.play()
+	index=Global.currentStreamIndex
 	
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
@@ -105,4 +113,12 @@ func _on_switch_scene_timer_timeout() -> void:
 
 
 func _on_track_playback_handler_layer_finished() -> void:
-	switchSceneTimer
+	switchSceneTimer.start()
+
+
+func _on_midi_player_arrows_finished() -> void:
+	counterForArrowsPlayer+=1
+	if counterForArrowsPlayer<Global.musicTracks[index].size():
+		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
+		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
+		midiPlayerArrows.play()

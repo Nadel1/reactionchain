@@ -31,11 +31,9 @@ var allSnippetsLayer3=[LAYER3]
 var allLayers=[allSnippetsLayer1,allSnippetsLayer2,allSnippetsLayer3]
 var musicToPlay=[]
 @export var lengthOfMusic=5#number of reaction packets to play
-var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var dropPacketsIndex=0
 
-
-func _ready() -> void:
+func prepareMusic():
 	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]#modulo only needed here for endless 
 	if Global.currentStreamIndex==0:
 		for i in lengthOfMusic:
