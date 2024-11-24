@@ -18,6 +18,14 @@ var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
 var musicTracks=[]
 var packetsToBeDropped=[]
 signal tact
+signal tactArrows
+
+@export var snippetLength=2.4
+
+func _ready():
+	$Metronome.wait_time=snippetLength
+	$MetronomeArrows.wait_time=snippetLength
+	
 
 func _on_metronome_timeout() -> void:
 	self.emit_signal("tact")
@@ -28,3 +36,15 @@ func startMetronome():
 	
 func stopMetronome():
 	$Metronome.stop()
+
+
+func _on_metronome_arrows_timeout() -> void:
+	self.emit_signal("tactArrows")
+	
+func startMetronomeArrows():
+	$MetronomeArrows.start()
+	self.emit_signal("tactArrows")
+	
+func stopMetronomeArrows():
+	$MetronomeArrows.stop()
+	
