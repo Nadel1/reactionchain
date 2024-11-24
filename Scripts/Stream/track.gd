@@ -150,7 +150,8 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 		buttonSequence.pop_front().queue_free()
 
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	spawnMarker()
+	#spawnMarker()
+	pass
 
 func _process(delta: float) -> void:
 	if firstPacketStarted:

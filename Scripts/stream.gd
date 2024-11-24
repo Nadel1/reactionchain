@@ -72,12 +72,12 @@ func prepareMusic():
 		for i in lengthOfMusic:
 			var lastSnippet=Global.musicTracks[Global.currentStreamIndex%allLayers.size()-1][i]
 			var lastIndex=allLayers[Global.currentStreamIndex%allLayers.size()-1].find(lastSnippet)
-			print("last index: ", lastIndex)
+			#print("last index: ", lastIndex)
 			
 			if Global.packetsToBeDropped.size()==0:
 				musicToPlay.append(layerToChoseFrom[lastIndex])
 			elif Global.packetsToBeDropped[dropPacketsIndex]==lastIndex:
-				print("append different ")
+				#print("append different ")
 				musicToPlay.append(layerToChoseFrom.pick_random())
 				
 	Global.musicTracks.append(musicToPlay)
@@ -149,12 +149,14 @@ func _on_switch_scene_timer_timeout() -> void:
 	
 func nextArrowTact():
 	midiPlayerArrows.play()
+		
 	
 func _on_midi_player_arrows_finished() -> void:
 	counterForArrowsPlayer+=1
 	if counterForArrowsPlayer<Global.musicTracks[index].size():
 		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
 	else:
+		print("stop arrows")
 		Global.stopMetronomeArrows()
 
 
