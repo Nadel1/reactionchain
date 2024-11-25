@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://oqtxuh6lfavi"]
+[gd_scene load_steps=11 format=3 uid="uid://oqtxuh6lfavi"]
 
 [ext_resource type="Texture2D" uid="uid://d2mo23t2gbb52" path="res://Assets/Sprites/MainMenu/Title1.png" id="1_ggqlj"]
 [ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="1_gvy58"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cn65hxca57jml" path="res://Assets/Sprites/MainMenu/Title2.png" id="2_5038a"]
 [ext_resource type="Texture2D" uid="uid://coq1gsyd2r3ja" path="res://Assets/Sprites/MainMenu/Title3.png" id="3_g8fk8"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="4_jced4"]
+[ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="7_8cedv"]
 
 [sub_resource type="Animation" id="Animation_1sc46"]
 length = 0.001
@@ -182,6 +183,81 @@ theme = ExtResource("4_jced4")
 text = "Quit
 "
 
+[node name="OptionsMenu" type="Node2D" parent="."]
+visible = false
+position = Vector2(576, 304)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="OptionsMenu"]
+offset_left = -224.0
+offset_top = -104.0
+offset_right = -112.0
+offset_bottom = -20.0
+scale = Vector2(4, 4)
+texture = ExtResource("7_8cedv")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+patch_margin_bottom = 5
+
+[node name="Devmode" type="Button" parent="OptionsMenu"]
+offset_left = -176.0
+offset_top = 112.0
+offset_right = -89.0
+offset_bottom = 131.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+toggle_mode = true
+text = "Developer mode"
+
+[node name="Difficulty" type="HSlider" parent="OptionsMenu"]
+offset_left = -168.0
+offset_top = -32.0
+offset_right = -84.0
+offset_bottom = -16.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+min_value = 1.0
+max_value = 4.0
+value = 4.0
+rounded = true
+tick_count = 4
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="OptionsMenu/Difficulty"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_top = -18.0
+offset_right = 47.0
+offset_bottom = 5.0
+theme = ExtResource("4_jced4")
+text = "Difficulty"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="OptionsMenu/Difficulty"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -4.0
+offset_top = 10.0
+offset_right = 43.0
+offset_bottom = 33.0
+theme = ExtResource("4_jced4")
+text = "Easy"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="OptionsMenu/Difficulty"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 10.0
+offset_right = 107.0
+offset_bottom = 33.0
+theme = ExtResource("4_jced4")
+text = "Normal"
+vertical_alignment = 1
+
 [connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="button_down" from="Buttons/Quit" to="." method="_on_quit_button_down"]
+[connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
+[connection signal="value_changed" from="OptionsMenu/Difficulty" to="." method="_on_difficulty_value_changed"]

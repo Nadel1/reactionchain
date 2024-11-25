@@ -1,13 +1,24 @@
 extends Node2D
 
+func _ready() -> void:
+	$OptionsMenu/Devmode.button_pressed = Global.developerMode
+	$OptionsMenu/Difficulty.value = 5 - Global.difficulty
 
 func _on_start_button_down() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
 
 func _on_options_button_down() -> void:
-	pass # Replace with function body.
+	$OptionsMenu.visible = !$OptionsMenu.visible
 
 
 func _on_quit_button_down() -> void:
 	get_tree().quit()
+
+
+func _on_difficulty_value_changed(value: float) -> void:
+	Global.difficulty = 4 - value
+
+
+func _on_devmode_toggled(toggled_on: bool) -> void:
+	Global.developerMode = int(toggled_on)

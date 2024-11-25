@@ -16,6 +16,7 @@ var score = 0
 var streamerIndices =[]
 var currentStreamer=null
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
+var developerMode = false #TODO: When true disables being able to fail
 var musicTracks=[]
 var packetsToBeDropped=[]
 signal tact
@@ -48,4 +49,4 @@ func startMetronomeArrows():
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
-	
+
