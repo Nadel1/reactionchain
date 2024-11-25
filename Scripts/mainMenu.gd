@@ -17,8 +17,8 @@ func _on_quit_button_down() -> void:
 
 
 func _on_difficulty_value_changed(value: float) -> void:
-	Global.difficulty = 4 - value
+	Global.difficulty = int(4 - value)
 
 
 func _on_devmode_toggled(toggled_on: bool) -> void:
-	Global.developerMode = int(toggled_on)
+	Global.developerMode = toggled_on
