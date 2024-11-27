@@ -29,8 +29,8 @@ var arrowSpawnID = 0
 #abstraction for reactions
 var correctInputs=4
 var currentCorrectInputs=0
-var correctReactionPacket=false
-var countReactionPacket=-1
+var correctReactionPacket=true
+var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
@@ -81,16 +81,31 @@ func playScoreIncrease():
 	animatedSprite.play("hit")
 	
 
-func react():
+func react(correctReaction=true):
+	var reaction
 	if Global.currentStreamer!=null:
-		var reaction
-		if Global.currentStreamIndex==0 ||countReactionPacket>=Global.recordingsReaction[Global.currentStreamIndex-1].size():
-			reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
+		if correctReaction:
+			#on first layer, always random reaction
+			if Global.currentStreamIndex==0 :
+				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
+				Global.currentStreamer.react(reaction)
+				inputRecorder.appendRecordedReaction(reaction)
+				return
+			
+			#use last reaction, or if the last reaction was none, replace it with random
+			var lastReaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
+			if lastReaction==RT.dirToInt(RT.Emotion.NONE):
+				print("last reaction was none, so now random")
+				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
+			else:
+				reaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
+			
 		else:
-			reaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
+			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
+			inputRecorder.appendRecordedReaction(reaction)
+			print("NO reaction")
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
-			
 			
 func evaluateScore(buttonPrompt,correctInput=true):
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
@@ -109,7 +124,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
 		currentCorrectInputs=0
-		correctReactionPacket=false
+		#correctReactionPacket=false
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 	
@@ -129,9 +144,6 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		if correctReactionPacket:#last reaction paket was correct, as the start of a new packet indicates the end of the last one
 			react()
-		elif firstPacketStarted:
-			Global.inputRecorder.reactionFailed(currentPacketDuration)
-		firstPacketStarted = true
 		correctReactionPacket = true
 		countReactionPacket += 1
 		currentPacketDuration = 0.0
@@ -148,10 +160,6 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
-
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	#spawnMarker()
-	pass
 
 func _process(delta: float) -> void:
 	if firstPacketStarted:
