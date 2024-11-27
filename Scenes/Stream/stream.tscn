@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
-[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer0/FacecamFrame.png" id="8_imbvg"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer2/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
