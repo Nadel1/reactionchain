@@ -11,6 +11,7 @@ const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 @onready var judgingUI=$UI/JudgingPrompt
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 
+
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
 @export var scoreChangeBadHit=-5
@@ -35,7 +36,7 @@ var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
 var firstPacketStarted=false
-
+var countMarker=0#keep track if current marker is start or end marker
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -56,6 +57,7 @@ func spawnButton():
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.position=spawnPoint.global_position
+		newButtonPrompt.position=Vector2(-545,582)
 		get_parent().call_deferred("add_child",newButtonPrompt)
 		buttonSequence.append(newButtonPrompt)
 	arrowSpawnID += 1
@@ -67,7 +69,9 @@ func spawnMarker():
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
-		if event.velocity==2:
+		if event.velocity==1:
+			spawnMarker()
+		elif event.velocity==2:
 			spawnMarker()
 		elif event.velocity==127:
 			spawnButton()
@@ -85,6 +89,7 @@ func react(correctReaction=true):
 	var reaction
 	if Global.currentStreamer!=null:
 		if correctReaction:
+			print("CORRECT")
 			#on first layer, always random reaction
 			if Global.currentStreamIndex==0 :
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
@@ -93,17 +98,13 @@ func react(correctReaction=true):
 				return
 			
 			#use last reaction, or if the last reaction was none, replace it with random
-			var lastReaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
+			var lastReaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1][1]
 			if lastReaction==RT.dirToInt(RT.Emotion.NONE):
-				print("last reaction was none, so now random")
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 			else:
-				reaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket][1]
-			
+				reaction=lastReaction
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
-			inputRecorder.appendRecordedReaction(reaction)
-			print("NO reaction")
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
 			
@@ -120,11 +121,12 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
 	else:#either incorrect input, no input at all (too late), or way too early
+		correctReactionPacket=false
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
 		currentCorrectInputs=0
-		#correctReactionPacket=false
+
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 	
@@ -142,10 +144,14 @@ func registerInput(inputString):
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
-		if correctReactionPacket:#last reaction paket was correct, as the start of a new packet indicates the end of the last one
-			react()
-		correctReactionPacket = true
-		countReactionPacket += 1
+		countMarker+=1
+		if countMarker%2==0:
+			#endmarker
+			react(correctReactionPacket)
+		else:
+			#startmarker
+			correctReactionPacket = true
+			countReactionPacket += 1
 		currentPacketDuration = 0.0
 	else:
 		goodHit=true
@@ -160,7 +166,3 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
-
-func _process(delta: float) -> void:
-	if firstPacketStarted:
-		currentPacketDuration += delta
