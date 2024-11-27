@@ -11,7 +11,6 @@ const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 @onready var judgingUI=$UI/JudgingPrompt
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 
-
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
 @export var scoreChangeBadHit=-5
@@ -49,7 +48,6 @@ func _input(event):
 		elif event.is_action_pressed("down"):
 			registerInput("down")
 		else:
-			print("bullshit was pressed")
 			evaluateScore(null,false)
 			
 func spawnButton():
@@ -89,7 +87,6 @@ func react(correctReaction=true):
 	var reaction
 	if Global.currentStreamer!=null:
 		if correctReaction:
-			print("CORRECT")
 			#on first layer, always random reaction
 			if Global.currentStreamIndex==0 :
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
@@ -142,17 +139,20 @@ func registerInput(inputString):
 		else: 
 			evaluateScore(buttonPrompt,false)
 		
+func dealWithMarker():
+	countMarker+=1
+	if countMarker%2==0:
+		#endmarker
+		react(correctReactionPacket)
+		
+	else:
+		#startmarker
+		correctReactionPacket = true
+		countReactionPacket += 1
+		
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
-		countMarker+=1
-		if countMarker%2==0:
-			#endmarker
-			react(correctReactionPacket)
-		else:
-			#startmarker
-			correctReactionPacket = true
-			countReactionPacket += 1
-		currentPacketDuration = 0.0
+		dealWithMarker()
 	else:
 		goodHit=true
 		if buttonSequence.front()!=null:
