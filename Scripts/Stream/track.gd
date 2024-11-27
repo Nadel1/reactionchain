@@ -36,6 +36,7 @@ var reactionArray=[]
 var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
+var nextButtonReact=false
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -117,6 +118,9 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		buttonSequence.pop_front().queue_free()
 		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
+		if nextButtonReact:
+			react(correctReactionPacket)
+			nextButtonReact=false
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
@@ -143,10 +147,12 @@ func dealWithMarker():
 	countMarker+=1
 	if countMarker%2==0:
 		#endmarker
-		react(correctReactionPacket)
+		nextButtonReact=true
+		#react(correctReactionPacket)
 		
 	else:
 		#startmarker
+		nextButtonReact=false
 		correctReactionPacket = true
 		countReactionPacket += 1
 		
