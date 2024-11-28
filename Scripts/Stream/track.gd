@@ -99,7 +99,6 @@ func react(correctReaction=true):
 			else:
 				reaction=lastReaction
 		else:
-			print("no reaction")
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
