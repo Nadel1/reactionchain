@@ -73,12 +73,9 @@ func prepareMusic():
 		for i in lengthOfMusic:
 			var lastSnippet=Global.musicTracks[Global.currentStreamIndex%allLayers.size()-1][i]
 			var lastIndex=allLayers[Global.currentStreamIndex%allLayers.size()-1].find(lastSnippet)
-			#print("last index: ", lastIndex)
-			
 			if Global.packetsToBeDropped.size()==0:
 				musicToPlay.append(layerToChoseFrom[lastIndex])
 			elif Global.packetsToBeDropped[dropPacketsIndex]==lastIndex:
-				#print("append different ")
 				musicToPlay.append(layerToChoseFrom.pick_random())
 				
 	Global.musicTracks.append(musicToPlay)
@@ -91,7 +88,6 @@ func prepareArrows():
 	Global.startMetronomeArrows()
 	
 func _ready():
-	#Global.tact.connect(nextTact)
 	Global.tactArrows.connect(nextArrowTact)
 	midiPlayerBass.setName("Bass")
 	
@@ -103,8 +99,6 @@ func _ready():
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
-	#midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
-	#midiPlayerArrows.play()
 	index=Global.currentStreamIndex
 	
 	var currentNode = $UI/VideoFrame

@@ -48,13 +48,13 @@ func getTrackCorrect():
 	return playerCorrect.file
 
 func failInput():
-	#playerCorrect.set_volume_db(-80)
-	#playerFail.set_volume_db(-20)
-	#$FailFade.start(inputFadeTime)
+	playerCorrect.set_volume_db(-80)
+	playerFail.set_volume_db(-20)
+	$FailFade.start(inputFadeTime)
 	pass
 
 func failReaction(length:float):
-	#$FailFade.start(length)
+	$FailFade.start(length)
 	pass
 
 func _process(delta: float) -> void:
