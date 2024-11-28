@@ -148,7 +148,6 @@ func dealWithMarker():
 	else:
 		#startmarker
 		nextButtonReact=false
-		#correctReactionPacket = true
 		countReactionPacket += 1
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
