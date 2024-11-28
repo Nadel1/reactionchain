@@ -135,13 +135,6 @@ libraries = {
 "": SubResource("AnimationLibrary_cfqdi")
 }
 
-[node name="MidiPlayerBass" parent="." instance=ExtResource("3_b6yqj")]
-file = "res://Assets/Audio/Tracks/snippets/bass.mid"
-playing = true
-loop = true
-soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
-bus = &"Bass"
-
 [connection signal="layerFinished" from="TrackPlaybackHandler" to="." method="_on_track_playback_handler_layer_finished"]
 [connection signal="finished" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_finished"]
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
