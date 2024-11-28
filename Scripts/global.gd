@@ -3,6 +3,7 @@ extends Node
 # Any stuff that needs to be accessible from anywhere and/or persistent
 # between scene changes goes in here
 
+@onready var videoSeed = randi()
 
 var inputHandler : InputHandler
 var inputRecorder : InputRecorder
@@ -15,6 +16,7 @@ var score = 0
 var streamerIndices =[]
 var currentStreamer=null
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
+var developerMode = false #TODO: When true disables being able to fail
 var musicTracks=[]
 var packetsToBeDropped=[]
 signal tact
@@ -47,4 +49,3 @@ func startMetronomeArrows():
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
-	

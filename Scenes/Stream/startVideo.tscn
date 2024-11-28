@@ -1,10 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbe1ttdb8mw80"]
+[gd_scene load_steps=4 format=3 uid="uid://cbe1ttdb8mw80"]
 
 [ext_resource type="Texture2D" uid="uid://byvbcfglo8pvh" path="res://Assets/Sprites/endesga-32-1x.png" id="1_0baoc"]
+[ext_resource type="Script" path="res://Scripts/Stream/startVideoSelector.gd" id="1_ra6wx"]
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_705m1"]
+file = "res://Assets/Videos/SmithSpaghet.ogv"
 
 [node name="StartVideo" type="Node2D"]
+script = ExtResource("1_ra6wx")
+files = Array[String](["res://Assets/Videos/SmithSpaghet.ogv", "res://Assets/Videos/BigCats.ogv", "res://Assets/Videos/Godzilla.ogv", "res://Assets/Videos/Club.ogv"])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(574, 324)
 scale = Vector2(36, 650)
 texture = ExtResource("1_0baoc")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+offset_right = 480.0
+offset_bottom = 272.0
+scale = Vector2(2.4, 2.4)
+stream = SubResource("VideoStreamTheora_705m1")
+volume_db = -80.0
+loop = true

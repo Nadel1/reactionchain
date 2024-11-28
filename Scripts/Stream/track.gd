@@ -55,14 +55,14 @@ func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
-		newButtonPrompt.position=spawnPoint.global_position
+		newButtonPrompt.global_position=spawnPoint.global_position
 		get_parent().call_deferred("add_child",newButtonPrompt)
 		buttonSequence.append(newButtonPrompt)
 	arrowSpawnID += 1
 
 func spawnMarker():
 	var newMarker=MARKER.instantiate()
-	newMarker.position=spawnPoint.global_position
+	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
@@ -169,3 +169,10 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
+
+func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
+	spawnMarker()
+
+func _process(delta: float) -> void:
+	if firstPacketStarted:
+		currentPacketDuration += delta
