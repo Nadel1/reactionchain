@@ -16,18 +16,35 @@ const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
 var allStreamers=[STREAMER1,STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
+var musicToPlay=[]
 
+var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
+var index
+
+#generate music track
+#file path (preload doesnt work apparently with mid files)
+const LAYER1SNIPPET="res://Assets/Audio/Tracks/snippets/lead1_layer1.MID"
+const LAYER2SNIPPET="res://Assets/Audio/Tracks/snippets/lead1_layer2.MID"
+const LAYER3SNIPPET="res://Assets/Audio/Tracks/snippets/lead1_layer3.MID"
+
+var allSnippetsLayer1=[LAYER1SNIPPET]
+var allSnippetsLayer2=[LAYER2SNIPPET]
+var allSnippetsLayer3=[LAYER3SNIPPET]
+
+var allLayers=[allSnippetsLayer1,allSnippetsLayer2,allSnippetsLayer3]
+
+@export var lengthOfMusic=5#number of reaction packets to play
+var dropPacketsIndex=0
 
 @export var musicDelay=6
 var trackPlayers : Array[TrackPlaybackHandler]
 
 func _on_start_playing_music_timer_timeout() -> void:
 	$TrackPlaybackHandler.call_deferred("start")
+	Global.startMetronome()
 	for player in trackPlayers:
 		player.call_deferred("start")
-		
-	#for i in range(0, AudioServer.get_bus_count()):
-	#	print(AudioServer.get_bus_name(i))
+	
 
 func prepareStreamer():
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
@@ -44,16 +61,43 @@ func prepareStreamer():
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
 	
+func prepareMusic():
+	
+	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]#modulo only needed here for endless 
+	if Global.currentStreamIndex==0:
+		for i in lengthOfMusic:
+			musicToPlay.append(layerToChoseFrom.pick_random())
+	else:
+		#play the corresponding next layer to the previous snippet or drop if needed
+		for i in lengthOfMusic:
+			var lastSnippet=Global.musicTracks[Global.currentStreamIndex%allLayers.size()-1][i]
+			var lastIndex=allLayers[Global.currentStreamIndex%allLayers.size()-1].find(lastSnippet)
+			if Global.packetsToBeDropped.size()==0:
+				musicToPlay.append(layerToChoseFrom[lastIndex])
+			elif Global.packetsToBeDropped[dropPacketsIndex]==lastIndex:
+				musicToPlay.append(layerToChoseFrom.pick_random())
+				
+	Global.musicTracks.append(musicToPlay)
+	
+	
+func prepareArrows():
+	var firstSnippet = musicToPlay[0]
+	midiPlayerArrows.set_file(firstSnippet)
+	
+	Global.startMetronomeArrows()
 	
 func _ready():
+	Global.tactArrows.connect(nextArrowTact)
+	
+	prepareMusic()
 	prepareStreamer()
+	prepareArrows()
 	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
-	midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
-	midiPlayerArrows.play()
+	index=Global.currentStreamIndex
 	
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
@@ -90,12 +134,27 @@ func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	EOLStopPlayingMusicTimer.set_wait_time(musicDelay)#so that the music ends with the same delay it started with
 	EOLStopPlayingMusicTimer.start()
 	
-func _on_eol_stop_playing_music_timer_timeout() -> void:
-	$TrackPlaybackHandler.stop()
-	for trackPlayer in trackPlayers:
-		trackPlayer.stop()
-	switchSceneTimer.start()
 	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
+	
+func nextArrowTact():
+	midiPlayerArrows.play()
+	
+func _on_midi_player_arrows_finished() -> void:
+	counterForArrowsPlayer+=1
+	if counterForArrowsPlayer<Global.musicTracks[index].size():
+		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
+	else:
+		print("stop arrows")
+		Global.stopMetronomeArrows()
+
+
+func _on_track_playback_handler_layer_finished() -> void:
+	$TrackPlaybackHandler.stop()
+	for trackPlayer in trackPlayers:
+		trackPlayer.stop()
+	switchSceneTimer.start()
+	Global.inputRecorder.stopRecording()
+	Global.stopMetronome()

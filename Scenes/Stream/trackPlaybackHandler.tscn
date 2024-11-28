@@ -2,13 +2,12 @@
 
 [ext_resource type="Script" path="res://Scripts/Stream/trackPlaybackHandler.gd" id="1_4dn7u"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_wg2vy"]
-[ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/audioTrackProvider.tscn" id="3_y3nts"]
+[ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/AudioTrackProvider.tscn" id="3_y3nts"]
 
 [node name="TrackPlaybackHandler" type="Node2D"]
 script = ExtResource("1_4dn7u")
 
 [node name="MidiPlayerCorrect" parent="." instance=ExtResource("2_wg2vy")]
-loop = true
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 bus = &"Correct0"
 
@@ -23,3 +22,5 @@ bus = &"Fail0"
 
 [node name="FailFade" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="finished" from="MidiPlayerCorrect" to="." method="_on_midi_player_correct_finished"]

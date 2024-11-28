@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
-[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer0/FacecamFrame.png" id="8_imbvg"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer2/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
@@ -87,20 +87,12 @@ script = ExtResource("1_lwu7i")
 [node name="TrackPlaybackHandler" parent="." instance=ExtResource("4_ta3ta")]
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
-loop = true
 bus = &"Arrows"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
 wait_time = 6.0
 one_shot = true
 autostart = true
-
-[node name="EOLStopSpawningArrowsTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-autostart = true
-
-[node name="EOLStopPlayingMusicTimer" type="Timer" parent="."]
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("5_a0dki")
@@ -143,11 +135,8 @@ libraries = {
 "": SubResource("AnimationLibrary_cfqdi")
 }
 
+[connection signal="layerFinished" from="TrackPlaybackHandler" to="." method="_on_track_playback_handler_layer_finished"]
+[connection signal="finished" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_finished"]
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
-[connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="." method="_on_eol_stop_spawning_arrows_timer_timeout"]
-[connection signal="timeout" from="EOLStopSpawningArrowsTimer" to="UI/Track" method="_on_eol_stop_spawning_arrows_timer_timeout"]
-[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="." method="_on_eol_stop_playing_music_timer_timeout"]
-[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="InputRecorder" method="stopRecording"]
-[connection signal="timeout" from="EOLStopPlayingMusicTimer" to="UI/Track" method="_on_eol_stop_playing_music_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
