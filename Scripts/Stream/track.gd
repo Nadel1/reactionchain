@@ -56,7 +56,6 @@ func spawnButton():
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.position=spawnPoint.global_position
-		newButtonPrompt.position=Vector2(-545,582)
 		get_parent().call_deferred("add_child",newButtonPrompt)
 		buttonSequence.append(newButtonPrompt)
 	arrowSpawnID += 1
