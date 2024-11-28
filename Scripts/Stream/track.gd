@@ -103,6 +103,7 @@ func react(correctReaction=true):
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
+		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
@@ -147,7 +148,7 @@ func dealWithMarker():
 	else:
 		#startmarker
 		nextButtonReact=false
-		correctReactionPacket = true
+		#correctReactionPacket = true
 		countReactionPacket += 1
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
@@ -166,9 +167,6 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
-
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	spawnMarker()
 
 func _process(delta: float) -> void:
 	if firstPacketStarted:
