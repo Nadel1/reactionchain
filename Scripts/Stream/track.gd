@@ -27,8 +27,6 @@ var totalNumberCorrectInputs=0
 var arrowSpawnID = 0
 
 #abstraction for reactions
-var correctInputs=4
-var currentCorrectInputs=0
 var correctReactionPacket=true
 var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
@@ -101,6 +99,7 @@ func react(correctReaction=true):
 			else:
 				reaction=lastReaction
 		else:
+			print("no reaction")
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
@@ -115,18 +114,16 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
-		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
-		if nextButtonReact:
-			react(correctReactionPacket)
-			nextButtonReact=false
+		
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
-		currentCorrectInputs=0
-
+	if nextButtonReact:
+		react(correctReactionPacket)
+		nextButtonReact=false
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 	
