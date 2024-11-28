@@ -5,6 +5,7 @@ const BUTTONLEFT=preload("res://Scenes/Objects/Buttons/ButtonLeft.tscn")
 const BUTTONUP=preload("res://Scenes/Objects/Buttons/ButtonUp.tscn")
 const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
+const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
@@ -105,13 +106,18 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
+	var splat = SPLAT.instantiate()
+	get_parent().add_child(splat)
+	splat.global_position = $UI/SplatSpawnPos.global_position
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
-			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
+			#judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
+			splat.call_deferred("setText", 2)
 		else: 
 			Global.score+=scoreChangeOkayHit
-			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
+			#judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
+			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
 		
@@ -119,10 +125,10 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		correctReactionPacket=false
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
-		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
-		
+		#judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
+		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
-			react(correctReactionPacket)
+		react(correctReactionPacket)
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 	

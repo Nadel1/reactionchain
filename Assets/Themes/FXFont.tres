@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dfyebrjr2v20w"]
+
+[ext_resource type="FontFile" uid="uid://dxfcpeyfjfm31" path="res://Assets/Fonts/Karma Suture.otf" id="1_sgspu"]
+
+[resource]
+default_font = ExtResource("1_sgspu")
+default_font_size = 20

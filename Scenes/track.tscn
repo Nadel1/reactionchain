@@ -110,6 +110,9 @@ offset_bottom = 52.0
 bbcode_enabled = true
 text = "[center][/center]"
 
+[node name="SplatSpawnPos" type="Node2D" parent="UI"]
+position = Vector2(624, -96)
+
 [connection signal="area_entered" from="LateArea" to="." method="_on_late_area_area_entered"]
 [connection signal="animation_finished" from="HitZoneAnimatedSprite2D" to="." method="_on_hit_zone_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
