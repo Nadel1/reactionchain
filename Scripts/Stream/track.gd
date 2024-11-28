@@ -147,7 +147,6 @@ func dealWithMarker():
 	if countMarker%2==0:
 		#endmarker
 		nextButtonReact=true
-		#react(correctReactionPacket)
 		
 	else:
 		#startmarker

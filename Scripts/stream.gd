@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var midiPlayerArrows=$MidiPlayerArrows
+@onready var midiPlayerBass=$MidiPlayerBass
 @onready var startPlayingMusicTimer=$StartPlayingMusicTimer
 @onready var EOLStopPlayingMusicTimer=$EOLStopPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
@@ -92,6 +93,7 @@ func prepareArrows():
 func _ready():
 	#Global.tact.connect(nextTact)
 	Global.tactArrows.connect(nextArrowTact)
+	midiPlayerBass.setName("Bass")
 	
 	prepareMusic()
 	prepareStreamer()
@@ -147,7 +149,7 @@ func _on_switch_scene_timer_timeout() -> void:
 	
 func nextArrowTact():
 	midiPlayerArrows.play()
-		
+	midiPlayerBass.play()
 	
 func _on_midi_player_arrows_finished() -> void:
 	counterForArrowsPlayer+=1
