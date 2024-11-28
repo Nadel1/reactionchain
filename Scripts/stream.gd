@@ -83,21 +83,17 @@ func prepareArrows():
 	var firstSnippet = musicToPlay[0]
 	midiPlayerArrows.set_file(firstSnippet)
 	
-	Global.startMetronomeArrows()
-	
 func _ready():
 	Global.tactArrows.connect(nextArrowTact)
 	
 	prepareMusic()
 	prepareStreamer()
 	prepareArrows()
-	startPlayingMusicTimer.set_wait_time(musicDelay)
 	updateScore()
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
 	index=Global.currentStreamIndex
-	midiPlayerArrows.set_file($TrackPlaybackHandler/AudioTrackProvider.getTrackCorrect(Global.currentStreamIndex))
 	
 	var currentNode = $UI/VideoFrame
 	if Global.currentStreamIndex > 0:
@@ -159,5 +155,5 @@ func _on_track_playback_handler_layer_finished() -> void:
 	Global.stopMetronome()
 
 func _on_start_spawning_arrows_timer_timeout() -> void:
-	midiPlayerArrows.play()
+	Global.startMetronomeArrows()
 	$StartPlayingMusicTimer.start()

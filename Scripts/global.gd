@@ -49,4 +49,3 @@ func startMetronomeArrows():
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
-
