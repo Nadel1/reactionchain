@@ -122,6 +122,14 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
+func gameOver():
+	pass
+	
+func updateScore():
+	scoreLabel.text="Score: "+str(Global.score)
+	if(Global.score<0):
+		gameOver()
+	
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	midiPlayerArrows.playing=false
 	

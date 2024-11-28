@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq3fllmdkq2sc"]
+
+[ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
+[ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
+
+[node name="GameOver" type="Node2D"]
+
+[node name="GameOverText" type="Node2D" parent="."]
+
+[node name="Game" type="Sprite2D" parent="GameOverText"]
+position = Vector2(-77, 95)
+texture = ExtResource("1_dqk7c")
+
+[node name="Over" type="Sprite2D" parent="GameOverText"]
+position = Vector2(-74, 127)
+texture = ExtResource("2_ylw7e")
