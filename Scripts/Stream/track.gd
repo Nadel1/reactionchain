@@ -27,8 +27,6 @@ var totalNumberCorrectInputs=0
 var arrowSpawnID = 0
 
 #abstraction for reactions
-var correctInputs=4
-var currentCorrectInputs=0
 var correctReactionPacket=true
 var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
@@ -104,6 +102,7 @@ func react(correctReaction=true):
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
+		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
@@ -115,18 +114,16 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
-		currentCorrectInputs+=1
 		totalNumberCorrectInputs+=1
-		if nextButtonReact:
-			react(correctReactionPacket)
-			nextButtonReact=false
+		
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
-		currentCorrectInputs=0
-
+	if nextButtonReact:
+		react(correctReactionPacket)
+		nextButtonReact=false
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 	
@@ -150,7 +147,6 @@ func dealWithMarker():
 	else:
 		#startmarker
 		nextButtonReact=false
-		correctReactionPacket = true
 		countReactionPacket += 1
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
@@ -169,9 +165,6 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(null,false)
 		buttonSequence.pop_front().queue_free()
-
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	spawnMarker()
 
 func _process(delta: float) -> void:
 	if firstPacketStarted:
