@@ -123,7 +123,7 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
 func gameOver():
-	pass
+	get_tree().change_scene_to_file("res://Scenes/gameOver.tscn")
 	
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)
@@ -145,7 +145,6 @@ func _on_midi_player_arrows_finished() -> void:
 	if counterForArrowsPlayer<Global.musicTracks[index].size():
 		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
 	else:
-		print("stop arrows")
 		Global.stopMetronomeArrows()
 
 

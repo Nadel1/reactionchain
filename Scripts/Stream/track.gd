@@ -119,9 +119,13 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
+			Global.increaseScore(scoreChangeGoodHit)
+			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
 			splat.call_deferred("setText", 2)
 		else: 
 			Global.score+=scoreChangeOkayHit
+			Global.increaseScore(scoreChangeOkayHit)
+			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
