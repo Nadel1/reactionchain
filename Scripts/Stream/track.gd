@@ -17,24 +17,22 @@ const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
-var buttonsInCurrentPacket=0
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
 var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
 var judgingPromptsOkay=["okay"]
 var judgingPromptsBad=["uff","bad"]
-var totalNumberCorrectInputs=0
 var arrowSpawnID = 0
+var currentButtonToEvaluate
 
 #abstraction for reactions
 var correctReactionPacket=true
 var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
-var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
-var nextButtonReact=false
+var lastButtonSpawned
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -56,12 +54,16 @@ func spawnButton():
 		newButtonPrompt.global_position=spawnPoint.global_position
 		get_parent().call_deferred("add_child",newButtonPrompt)
 		buttonSequence.append(newButtonPrompt)
+		return newButtonPrompt
 	arrowSpawnID += 1
+	
 
 func spawnMarker():
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
+	if lastButtonSpawned!=null:
+		lastButtonSpawned.lastButton=true
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
@@ -70,7 +72,7 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 		elif event.velocity==2:
 			spawnMarker()
 		elif event.velocity==127:
-			spawnButton()
+			lastButtonSpawned=spawnButton()
 	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
@@ -88,20 +90,18 @@ func react(correctReaction=true):
 			#on first layer, always random reaction
 			if Global.currentStreamIndex==0 :
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
-				Global.currentStreamer.react(reaction)
-				inputRecorder.appendRecordedReaction(reaction)
-				return
-			
-			#use last reaction, or if the last reaction was none, replace it with random
-			var lastReaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1][1]
-			if lastReaction==RT.dirToInt(RT.Emotion.NONE):
-				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 			else:
-				reaction=lastReaction
+				#use last reaction, or if the last reaction was none, replace it with random
+				var lastReaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1][1]
+				if lastReaction==RT.dirToInt(RT.Emotion.NONE):
+					reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
+				else:
+					reaction=lastReaction
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
+		currentButtonToEvaluate=null
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
@@ -114,16 +114,15 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
-		totalNumberCorrectInputs+=1
 		
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
 		judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
-	if nextButtonReact:
-		react(correctReactionPacket)
-		nextButtonReact=false
+		
+	if buttonPrompt!=null and buttonPrompt.lastButton==true:
+			react(correctReactionPacket)
 	if get_parent()!=null:
 		find_parent("Stream").updateScore()
 	
@@ -131,22 +130,16 @@ func evaluateScore(buttonPrompt,correctInput=true):
 func registerInput(inputString):
 	if buttonSequence.is_empty()==true:
 		evaluateScore(null,false)#substract points when input for example at end of level
-		
-	var buttonPrompt=buttonSequence.front()
-	if buttonPrompt!=null:
-		if buttonPrompt.getInput()==inputString:
-			evaluateScore(buttonPrompt)
-		else: 
-			evaluateScore(buttonPrompt,false)
+	if currentButtonToEvaluate!=null:
+		if currentButtonToEvaluate.getInput()==inputString:
+			evaluateScore(currentButtonToEvaluate,true)
+	else: 
+		evaluateScore(null,false)
 		
 func dealWithMarker():
 	countMarker+=1
-	if countMarker%2==0:
-		#endmarker
-		nextButtonReact=true
-	else:
+	if countMarker%2==1:
 		#startmarker
-		nextButtonReact=false
 		countReactionPacket += 1
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
@@ -155,7 +148,8 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	else:
 		goodHit=true
 		if buttonSequence.front()!=null:
-			buttonSequence.front().hitZoneEnter(true)
+			currentButtonToEvaluate=buttonSequence.front()
+			currentButtonToEvaluate.hitZoneEnter(true)
 	
 func _on_good_area_area_exited(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
@@ -163,9 +157,5 @@ func _on_good_area_area_exited(area: Area2D) -> void:
 		
 func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
-		evaluateScore(null,false)
+		evaluateScore(currentButtonToEvaluate,false)
 		buttonSequence.pop_front().queue_free()
-
-func _process(delta: float) -> void:
-	if firstPacketStarted:
-		currentPacketDuration += delta
