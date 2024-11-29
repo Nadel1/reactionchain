@@ -1,7 +1,7 @@
 extends Node2D
 
 func init(seed : int): #TODO: Make this randomize the streamer sprites too
-	var hue = 1.0/(rand_from_seed(seed + Global.videoSeed)[0]%100)
+	var hue = (rand_from_seed(seed + Global.videoSeed)[0]%100)/100.0
 	$Background.color = Color.from_hsv(hue, 0.8, 0.8)
 
 func move(direction : RT.Direction):
