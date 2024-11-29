@@ -100,8 +100,10 @@ func react(correctReaction=true):
 				reaction=lastReaction
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
+		
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
+		print("appended reaction: ", inputRecorder.recordingReaction.size())
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
