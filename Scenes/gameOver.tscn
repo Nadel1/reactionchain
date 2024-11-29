@@ -1,16 +1,189 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq3fllmdkq2sc"]
+[gd_scene load_steps=8 format=3 uid="uid://bj1bahvddpwlx"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
+[ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
 [ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
+
+[sub_resource type="Animation" id="Animation_ea673"]
+resource_name = "slideTitle"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Game:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-227, 100), Vector2(560, 100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Over:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.266667, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-224, 220), Vector2(-224, 220), Vector2(560, 220)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Buttons:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Text:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_y1q0o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Over:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(560, 184)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Game:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(559, 152)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Buttons:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Text:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_40nyb"]
+_data = {
+"RESET": SubResource("Animation_y1q0o"),
+"slideTitle": SubResource("Animation_ea673")
+}
 
 [node name="GameOver" type="Node2D"]
+script = ExtResource("1_xsauy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../GameOverText")
+libraries = {
+"": SubResource("AnimationLibrary_40nyb")
+}
+autoplay = "slideTitle"
 
 [node name="GameOverText" type="Node2D" parent="."]
 
 [node name="Game" type="Sprite2D" parent="GameOverText"]
-position = Vector2(-77, 95)
+position = Vector2(559, 152)
+scale = Vector2(4, 4)
 texture = ExtResource("1_dqk7c")
 
 [node name="Over" type="Sprite2D" parent="GameOverText"]
-position = Vector2(-74, 127)
+position = Vector2(560, 184)
+scale = Vector2(4, 4)
 texture = ExtResource("2_ylw7e")
+
+[node name="Buttons" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Restart" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 422.0
+offset_right = 474.0
+offset_bottom = 441.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "Restart"
+
+[node name="QuitGame" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 395.0
+offset_top = 512.0
+offset_right = 474.0
+offset_bottom = 532.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "Quit Game
+"
+
+[node name="Text" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -188.0
+offset_top = 80.0
+offset_right = -148.0
+offset_bottom = 120.0
+
+[node name="ScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 602.0
+offset_top = 220.0
+offset_right = 681.0
+offset_bottom = 236.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "Score
+"
+
+[connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
+[connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
