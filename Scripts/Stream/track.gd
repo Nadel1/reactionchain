@@ -129,8 +129,6 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
-	if get_parent()!=null:
-		find_parent("Stream").updateScore()
 	
 
 func registerInput(inputString):

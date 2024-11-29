@@ -13,7 +13,7 @@ var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
 const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
 const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
-var allStreamers=[STREAMER1,STREAMER2]
+var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 var musicToPlay=[]
@@ -46,16 +46,15 @@ func _on_start_playing_music_timer_timeout() -> void:
 	
 
 func prepareStreamer():
+	currentStreamerIndex = randi() % allStreamers.size()
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
-		if currentStreamerIndex==allStreamers.size()-1:
-			currentStreamer=allStreamers[0]
-		else:
-			currentStreamer=allStreamers[currentStreamerIndex+1]
-		currentStreamerIndex=allStreamers.find(currentStreamer)
+		currentStreamerIndex += 1
+		currentStreamerIndex %= allStreamers.size()
 		
 	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
 	currentStreamer.position=$UI/StreamerPlaceholder.position
 	currentStreamer.scale=$UI/StreamerPlaceholder.scale
+	currentStreamer.init(currentStreamerIndex)
 	$UI/StreamerPlaceholder.visible = false
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
@@ -89,7 +88,6 @@ func _ready():
 	prepareMusic()
 	prepareStreamer()
 	prepareArrows()
-	updateScore()
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
@@ -102,6 +100,7 @@ func _ready():
 			var lastStreamer=allStreamers[Global.streamerIndices[Global.currentStreamIndex-1-i]].instantiate()
 			lastStreamer.position=$UI/StreamerPlaceholder.position
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
+			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i])
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
@@ -120,9 +119,6 @@ func _ready():
 func _process(delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
-	
-func updateScore():
-	scoreLabel.text="Score: "+str(Global.score)
 	
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	midiPlayerArrows.playing=false

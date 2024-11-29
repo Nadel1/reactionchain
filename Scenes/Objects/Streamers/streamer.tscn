@@ -1,11 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://bjfey2jmh5t2s"]
+[gd_scene load_steps=28 format=3 uid="uid://bjfey2jmh5t2s"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_brk8q"]
-[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer2/FacecamFrame.png" id="1_lxfp8"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_lxfp8"]
 [ext_resource type="Texture2D" uid="uid://b7h5ew50b7jcs" path="res://Assets/Sprites/Streamers/Parts/Body0/movement0.png" id="3_g627v"]
-[ext_resource type="Texture2D" uid="uid://cjqeiqvhj5v37" path="res://Assets/Sprites/Streamers/Streamer0/PlaceholderHead.png" id="3_mjxof"]
-[ext_resource type="Texture2D" uid="uid://54rft2orwbeq" path="res://Assets/Sprites/Streamers/Streamer1/Streamer1FaceDefault.png" id="3_v7g30"]
 [ext_resource type="Texture2D" uid="uid://b638x4o8hc3hq" path="res://Assets/Sprites/Streamers/Parts/Body0/movement1.png" id="4_eq480"]
+[ext_resource type="Texture2D" uid="uid://bcj0wh2nygt5n" path="res://Assets/Sprites/Streamers/Parts/Head0.png" id="5_2yud5"]
+[ext_resource type="Texture2D" uid="uid://bc43tuambkcp6" path="res://Assets/Sprites/Streamers/Parts/Face0.png" id="7_bxhal"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_id6wl"]
 atlas = ExtResource("3_g627v")
@@ -133,7 +133,7 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_mjxof")
+"texture": ExtResource("5_2yud5")
 }],
 "loop": true,
 "name": &"default",
@@ -141,7 +141,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_mjxof")
+"texture": ExtResource("5_2yud5")
 }],
 "loop": true,
 "name": &"down",
@@ -149,7 +149,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_mjxof")
+"texture": ExtResource("5_2yud5")
 }],
 "loop": true,
 "name": &"left",
@@ -157,7 +157,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_mjxof")
+"texture": ExtResource("5_2yud5")
 }],
 "loop": true,
 "name": &"right",
@@ -165,7 +165,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_mjxof")
+"texture": ExtResource("5_2yud5")
 }],
 "loop": true,
 "name": &"up",
@@ -173,8 +173,11 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ijr00"]
-atlas = ExtResource("3_v7g30")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f88b7"]
+atlas = ExtResource("7_bxhal")
+region = Rect2(0, 384, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3ay6f"]
 animations = [{
@@ -208,6 +211,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"laugh",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f88b7")
+}],
+"loop": true,
+"name": &"none",
 "speed": 5.0
 }, {
 "frames": [{
@@ -850,6 +861,10 @@ _data = {
 [node name="Streamer" type="Node2D"]
 script = ExtResource("1_brk8q")
 
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(7.12335e-06, 0.608189, 0.809683, 1)
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
 [node name="Frame" type="Sprite2D" parent="."]
 z_index = 2
 texture = ExtResource("1_lxfp8")
@@ -864,13 +879,21 @@ sprite_frames = SubResource("SpriteFrames_kjhlb")
 [node name="Head" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_4hqou")
+animation = &"up"
 
 [node name="Face" type="AnimatedSprite2D" parent="Head"]
-z_index = 2
 sprite_frames = SubResource("SpriteFrames_3ay6f")
-animation = &"angry"
 
 [node name="Movement" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_hjhqc")
 }
+
+[node name="ReactionRevert" type="Timer" parent="."]
+one_shot = true
+
+[node name="MovementRevert" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ReactionRevert" to="." method="_on_reaction_revert_timeout"]
+[connection signal="timeout" from="MovementRevert" to="." method="_on_movement_revert_timeout"]

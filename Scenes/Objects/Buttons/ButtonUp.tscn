@@ -3,19 +3,19 @@
 [ext_resource type="PackedScene" uid="uid://cbxqm0hn6vnfy" path="res://Scenes/Objects/Buttons/Button.tscn" id="1_atpwd"]
 [ext_resource type="Texture2D" uid="uid://bsrim815d5p2o" path="res://Assets/Sprites/Buttons/UpButton.png" id="1_phar4"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ax66q"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_punyr"]
 atlas = ExtResource("1_phar4")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 18, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3uebw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv471"]
 atlas = ExtResource("1_phar4")
-region = Rect2(64, 0, 64, 64)
+region = Rect2(18, 0, 18, 18)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ikm64"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_g7xtq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ax66q")
+"texture": SubResource("AtlasTexture_punyr")
 }],
 "loop": true,
 "name": &"default",
@@ -23,7 +23,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3uebw")
+"texture": SubResource("AtlasTexture_lv471")
 }],
 "loop": true,
 "name": &"hit",
@@ -33,5 +33,7 @@ animations = [{
 [node name="Button" instance=ExtResource("1_atpwd")]
 input = "up"
 
-[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." index="0"]
-sprite_frames = SubResource("SpriteFrames_ikm64")
+[node name="AnimatedSprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_g7xtq")
+animation = &"default"
+autoplay = "default"

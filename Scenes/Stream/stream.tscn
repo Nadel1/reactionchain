@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=18 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
+[ext_resource type="Script" path="res://Scripts/Stream/scoreDisplay.gd" id="6_a5we1"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="6_f2vs8"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
-[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/Streamer2/FacecamFrame.png" id="8_imbvg"]
+[ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
@@ -109,12 +111,25 @@ wait_time = 2.0
 
 [node name="UI" type="Node2D" parent="."]
 
-[node name="ScoreLabel" type="RichTextLabel" parent="UI"]
-offset_left = 9.31677
-offset_top = 492.547
-offset_right = 166.317
-offset_bottom = 532.547
+[node name="Score" type="Node2D" parent="UI"]
+z_index = 1
+position = Vector2(128, 528)
+script = ExtResource("6_a5we1")
+
+[node name="Label" type="RichTextLabel" parent="UI/Score"]
+offset_left = -119.0
+offset_top = -35.0
+offset_right = 30.0
+offset_bottom = -20.0
+scale = Vector2(4, 4)
+theme = ExtResource("6_f2vs8")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
 text = "Score: 0"
+
+[node name="ViewerUpdate" type="Timer" parent="UI/Score/Label"]
+wait_time = 2.0
+autostart = true
 
 [node name="Track" parent="UI" instance=ExtResource("1_hd44i")]
 position = Vector2(299, 593)
@@ -146,3 +161,4 @@ autoplay = "zoomOut"
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="StartSpawningArrowsTimer" to="." method="_on_start_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
+[connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]

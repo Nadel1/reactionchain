@@ -1,6 +1,34 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbxqm0hn6vnfy"]
+[gd_scene load_steps=8 format=3 uid="uid://cbxqm0hn6vnfy"]
 
 [ext_resource type="Script" path="res://Scripts/button.gd" id="1_6ju6v"]
+[ext_resource type="Texture2D" uid="uid://bpv7vci25yq6n" path="res://Assets/Sprites/Buttons/RightButton.png" id="2_t4t5t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pqq3"]
+atlas = ExtResource("2_t4t5t")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndpo3"]
+atlas = ExtResource("2_t4t5t")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xaey2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0pqq3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndpo3")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nd51l"]
 size = Vector2(19.5, 57)
@@ -10,6 +38,11 @@ size = Vector2(114, 57)
 
 [node name="Button" type="Node2D"]
 script = ExtResource("1_6ju6v")
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_xaey2")
+animation = &"hit"
 
 [node name="ButtonGoodArea" type="Area2D" parent="."]
 collision_mask = 2

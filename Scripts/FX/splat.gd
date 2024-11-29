@@ -37,7 +37,6 @@ func setText(score : int): # 0 -> bad, 1 -> eh, 2 -> great
 		$Text.modulate = Color.RED
 	
 	$Text.text = "[center]" + newText + "[/center]"
-	$TextShadow.text = $Text.text
 
 func _process(delta: float) -> void:
 	velocity += gravity * delta

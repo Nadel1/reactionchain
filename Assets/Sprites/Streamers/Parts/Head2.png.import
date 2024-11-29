@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eo7hjrw3s2cf"
-path="res://.godot/imported/Streamer1FacePog.png-25812881c3a8902b9b63de5f6cebc7df.ctex"
+uid="uid://ba4x53fwjspgi"
+path="res://.godot/imported/Head2.png-aff4fac80eca1dbba3c453d4a92693c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Streamers/Streamer1/Streamer1FacePog.png"
-dest_files=["res://.godot/imported/Streamer1FacePog.png-25812881c3a8902b9b63de5f6cebc7df.ctex"]
+source_file="res://Assets/Sprites/Streamers/Parts/Head2.png"
+dest_files=["res://.godot/imported/Head2.png-aff4fac80eca1dbba3c453d4a92693c0.ctex"]
 
 [params]
 
