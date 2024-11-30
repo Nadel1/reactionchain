@@ -71,21 +71,16 @@ func spawnMarker():
 	get_parent().call_deferred("add_child",newMarker)
 	spawnedMarkers+=1
 	if spawnedMarkers%2==0 and lastButtonSpawned!=null:
-		print("setting last spawned to true")
 		lastButtonSpawned.lastButton=true
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
 		if event.velocity==1:
 			spawnMarker()
-			#pass
 		elif event.velocity==2:
 			spawnMarker()
-			print("======endmarker spawn=======")
-			print("")
 		elif event.velocity==127:
 			lastButtonSpawned=spawnButton()
-			print("button spawn")
 	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
@@ -126,11 +121,9 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
-			#judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
 			splat.call_deferred("setText", 2)
 		else: 
 			Global.score+=scoreChangeOkayHit
-			#judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
@@ -139,7 +132,6 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		correctReactionPacket=false
 		playScoreDecrease()
 		Global.score+=scoreChangeBadHit
-		#judgingUI.text="[center]"+judgingPromptsBad.pick_random()+"[/center]"
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
@@ -169,7 +161,7 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 		goodHit=true
 		if buttonSequence.size() > 0 and buttonSequence.front()!=null:
 			currentButtonToEvaluate=buttonSequence.front()
-			currentButtonToEvaluate.hitZoneEnter(true)
+			area.get_parent().hitZoneEnter(true)
 	
 func _on_good_area_area_exited(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
