@@ -34,6 +34,7 @@ var reactionArray=[]
 var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
+var spawnedMarkers=0
 var lastButtonSpawned
 	
 func _input(event):
@@ -68,17 +69,23 @@ func spawnMarker():
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
-	if lastButtonSpawned!=null:
+	spawnedMarkers+=1
+	if spawnedMarkers%2==0 and lastButtonSpawned!=null:
+		print("setting last spawned to true")
 		lastButtonSpawned.lastButton=true
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
 		if event.velocity==1:
 			spawnMarker()
+			#pass
 		elif event.velocity==2:
 			spawnMarker()
+			print("======endmarker spawn=======")
+			print("")
 		elif event.velocity==127:
 			lastButtonSpawned=spawnButton()
+			print("button spawn")
 	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
