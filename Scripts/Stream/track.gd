@@ -160,7 +160,7 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 		dealWithMarker()
 	else:
 		goodHit=true
-		if buttonSequence.front()!=null:
+		if buttonSequence.size() > 0 and buttonSequence.front()!=null:
 			currentButtonToEvaluate=buttonSequence.front()
 			currentButtonToEvaluate.hitZoneEnter(true)
 	

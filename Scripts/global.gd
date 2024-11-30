@@ -34,22 +34,22 @@ func _ready():
 	
 
 func _on_metronome_timeout() -> void:
-	self.emit_signal("tact")
+	tact.emit()
 
 func startMetronome():
 	$Metronome.start()
-	self.emit_signal("tact")
+	tact.emit()
 	
 func stopMetronome():
 	$Metronome.stop()
 
 
 func _on_metronome_arrows_timeout() -> void:
-	self.emit_signal("tactArrows")
+	tactArrows.emit()
 	
 func startMetronomeArrows():
 	$MetronomeArrows.start()
-	self.emit_signal("tactArrows")
+	tactArrows.emit()
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()

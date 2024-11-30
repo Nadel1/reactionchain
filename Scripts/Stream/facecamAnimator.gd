@@ -1,8 +1,8 @@
 extends Node2D
 
-func init(streamerIndex : int, seed : int): #TODO: Make this randomize the streamer sprites too
-	var hue = (rand_from_seed(seed + Global.mainSeed)[0]%1000)/1000.0
-	var value = (rand_from_seed(seed + 10 + Global.mainSeed)[0]%1000)/1000.0
+func init(_streamerIndex : int, streamerSeed : int): #TODO: Make this randomize the streamer sprites too
+	var hue = (rand_from_seed(streamerSeed + Global.mainSeed)[0]%1000)/1000.0
+	var value = (rand_from_seed(streamerSeed + 10 + Global.mainSeed)[0]%1000)/1000.0
 	value = 1.0 - value * value
 	$Background.color = Color.from_hsv(hue, 0.8, value)
 

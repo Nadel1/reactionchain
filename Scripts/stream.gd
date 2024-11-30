@@ -2,9 +2,7 @@ extends Node2D
 
 @onready var midiPlayerArrows=$MidiPlayerArrows
 @onready var startPlayingMusicTimer=$StartPlayingMusicTimer
-@onready var EOLStopPlayingMusicTimer=$EOLStopPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
-@onready var scoreLabel=$UI/ScoreLabel
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
@@ -120,15 +118,12 @@ func _ready():
 	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
 	Global.streamerIndices.append(currentStreamerIndex)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	midiPlayerArrows.playing=false
-	EOLStopPlayingMusicTimer.set_wait_time(startPlayingMusicTimer.wait_time)#so that the music ends with the same delay it started with
-	EOLStopPlayingMusicTimer.start()
-	
 	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1

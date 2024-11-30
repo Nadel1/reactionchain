@@ -35,12 +35,12 @@ static func extendTitle(index : int):
 	Global.videoTitle[0].append(getString(0, index))
 	Global.videoTitle[2].append(getString(2, index))
 
-static func getString(part : int, seed : int):
-	if part > 0 or seed > 0:
-		var at = rand_from_seed(seed + spices[part] + Global.mainSeed)[0] % titles[part].size()
+static func getString(part : int, stringSeed : int):
+	if part > 0 or stringSeed > 0:
+		var at = rand_from_seed(stringSeed + spices[part] + Global.mainSeed)[0] % titles[part].size()
 		return titles[part][at]
 	return ""
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$TimelineProgress.scale.x = 1 - $Time.time_left / $Time.wait_time
 	
