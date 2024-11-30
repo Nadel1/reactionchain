@@ -123,7 +123,9 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
 func gameOver():
-	get_tree().change_scene_to_file("res://Scenes/gameOver.tscn")
+	get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+	Global.stopMetronome()
+	Global.stopMetronomeArrows()
 	
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)

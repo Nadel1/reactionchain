@@ -5,6 +5,57 @@
 [ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
 
+[sub_resource type="Animation" id="Animation_y1q0o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Over:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(560, 184)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Game:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(559, 152)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Buttons:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Text:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_ea673"]
 resource_name = "slideTitle"
 length = 1.5
@@ -57,57 +108,6 @@ tracks/3/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_y1q0o"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Over:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(560, 184)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Game:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(559, 152)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Buttons:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../Text:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40nyb"]
 _data = {
 "RESET": SubResource("Animation_y1q0o"),
@@ -145,20 +145,20 @@ offset_bottom = 40.0
 
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 395.0
-offset_top = 422.0
-offset_right = 474.0
-offset_bottom = 441.0
+offset_left = 342.0
+offset_top = 419.0
+offset_right = 445.0
+offset_bottom = 438.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Restart"
 
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 395.0
-offset_top = 512.0
-offset_right = 474.0
-offset_bottom = 532.0
+offset_left = 342.0
+offset_top = 510.0
+offset_right = 445.0
+offset_bottom = 530.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Quit Game
@@ -175,10 +175,10 @@ offset_bottom = 120.0
 
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 602.0
-offset_top = 220.0
-offset_right = 681.0
-offset_bottom = 236.0
+offset_left = 530.0
+offset_top = 200.0
+offset_right = 642.0
+offset_bottom = 216.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true

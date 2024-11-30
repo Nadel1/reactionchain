@@ -7,6 +7,9 @@ func _ready() -> void:
 
 
 func _on_restart_button_down() -> void:
+	Global.score=0
+	Global.currentHighScore=0
+	Global.videoSeed=randi()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
 
