@@ -15,25 +15,9 @@ const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
 var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
-var musicToPlay=[]
 
 var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var index
-
-#generate music track
-#file path (preload doesnt work apparently with mid files)
-const LAYER1SNIPPET="res://Assets/Audio/Tracks/snippets/lead1_layer1.MID"
-const LAYER2SNIPPET="res://Assets/Audio/Tracks/snippets/lead1_layer2.MID"
-const LAYER3SNIPPET="res://Assets/Audio/Tracks/snippets/lead1_layer3.MID"
-
-var allSnippetsLayer1=[LAYER1SNIPPET]
-var allSnippetsLayer2=[LAYER2SNIPPET]
-var allSnippetsLayer3=[LAYER3SNIPPET]
-
-var allLayers=[allSnippetsLayer1,allSnippetsLayer2,allSnippetsLayer3]
-
-@export var lengthOfMusic=5#number of reaction packets to play
-var dropPacketsIndex=0
 
 var trackPlayers : Array[TrackPlaybackHandler]
 
@@ -57,37 +41,21 @@ func prepareStreamer():
 	$UI/StreamerPlaceholder.visible = false
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
-	
-func prepareMusic():
-	
-	var layerToChoseFrom= allLayers[Global.currentStreamIndex%allLayers.size()]#modulo only needed here for endless 
-	if Global.currentStreamIndex==0:
-		for i in lengthOfMusic:
-			musicToPlay.append(layerToChoseFrom.pick_random())
-	else:
-		#play the corresponding next layer to the previous snippet or drop if needed
-		for i in lengthOfMusic:
-			var lastSnippet=Global.musicTracks[Global.currentStreamIndex%allLayers.size()-1][i]
-			var lastIndex=allLayers[Global.currentStreamIndex%allLayers.size()-1].find(lastSnippet)
-			if Global.packetsToBeDropped.size()==0:
-				musicToPlay.append(layerToChoseFrom[lastIndex])
-			elif Global.packetsToBeDropped[dropPacketsIndex]==lastIndex:
-				musicToPlay.append(layerToChoseFrom.pick_random())
-				
-	Global.musicTracks.append(musicToPlay)
-	
-	
+
 func prepareArrows():
-	var firstSnippet = musicToPlay[0]
+	var firstSnippet = Global.musicTracks[index][0].getLayer(index)
 	midiPlayerArrows.set_file(firstSnippet)
 	
 	
 func _ready():
 	$UI/TrackIndicatorWrong.visible=Global.developerMode
 	$UI/TrackIndicatorRight.visible=Global.developerMode
+	index=Global.currentStreamIndex
 	Global.tactArrows.connect(nextArrowTact)
+	$MidiPlayerBass.setName("Bass")
+	Global.tact.connect($MidiPlayerBass.play)
 	
-	prepareMusic()
+	AudioTrackProvider.prepareMusic()
 	prepareStreamer()
 	prepareArrows()
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
@@ -99,23 +67,24 @@ func _ready():
 	
 	var currentNode = $UI/VideoFrame
 	currentNode.init(Global.currentStreamIndex)
-	if Global.currentStreamIndex > 0:
-		for i in range(0,Global.currentStreamIndex):
+
+	if index > 0:
+		for i in range(0,index):
 			var recursionInstance = recording.instantiate()
-			var lastStreamer=allStreamers[Global.streamerIndices[Global.currentStreamIndex-1-i]].instantiate()
+			var lastStreamer=allStreamers[Global.streamerIndices[index-1-i]].instantiate()
 			lastStreamer.position=$UI/StreamerPlaceholder.position
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
 			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i], Global.currentStreamIndex-1-i)
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
-			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
+			recursionInstance.setIndex((index-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
 			recursionInstance.find_child("VideoFrame").init((Global.currentStreamIndex-1)-i)
 			var trackPlayer = recursionInstance.find_child("TrackPlaybackHandler")
 			if trackPlayer != null:
 				trackPlayers.append(trackPlayer)
-				trackPlayer.find_child("MidiPlayerCorrect").bus = "Correct"+str((Global.currentStreamIndex-1)-i)
-				trackPlayer.find_child("MidiPlayerFail").bus = "Fail"+str((Global.currentStreamIndex-1)-i)
+				trackPlayer.find_child("MidiPlayerCorrect").bus = "Correct"+str((index-1)-i)
+				trackPlayer.find_child("MidiPlayerFail").bus = "Fail"+str((index-1)-i)
 			currentNode = recursionInstance
 	var video = startVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
@@ -141,7 +110,7 @@ func nextArrowTact():
 func _on_midi_player_arrows_finished() -> void:
 	counterForArrowsPlayer+=1
 	if counterForArrowsPlayer<Global.musicTracks[index].size():
-		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
+		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer].getLayer(index))
 	else:
 		Global.stopMetronomeArrows()
 

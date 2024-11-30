@@ -89,7 +89,14 @@ script = ExtResource("1_lwu7i")
 [node name="TrackPlaybackHandler" parent="." instance=ExtResource("4_ta3ta")]
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
+play_speed = 0.666
 bus = &"Arrows"
+
+[node name="MidiPlayerBass" parent="." instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets01/bass.MID"
+play_speed = 0.666
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
 wait_time = 4.0

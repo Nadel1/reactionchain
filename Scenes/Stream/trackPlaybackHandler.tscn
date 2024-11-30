@@ -1,24 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://ciayf6jvcdddn"]
+[gd_scene load_steps=3 format=3 uid="uid://ciayf6jvcdddn"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/trackPlaybackHandler.gd" id="1_4dn7u"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_wg2vy"]
-[ext_resource type="PackedScene" uid="uid://c2v4rw01rukni" path="res://Scenes/Stream/audioTrackProvider.tscn" id="3_y3nts"]
 
 [node name="TrackPlaybackHandler" type="Node2D"]
 script = ExtResource("1_4dn7u")
 
 [node name="MidiPlayerCorrect" parent="." instance=ExtResource("2_wg2vy")]
+play_speed = 0.666
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 bus = &"Correct0"
 
 [node name="MidiPlayerFail" parent="." instance=ExtResource("2_wg2vy")]
+play_speed = 0.666
 volume_db = -80.0
 key_shift = -1
-loop = true
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 bus = &"Fail0"
-
-[node name="AudioTrackProvider" parent="." instance=ExtResource("3_y3nts")]
 
 [node name="FailFade" type="Timer" parent="."]
 one_shot = true

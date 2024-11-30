@@ -3,14 +3,18 @@ class_name TrackPlaybackHandler
 
 @onready var playerCorrect = $MidiPlayerCorrect
 @onready var playerFail = $MidiPlayerFail
-var index = 0
+var layerIndex = 0
 var fade = 0.0
 var inputFadeTime = 1.0
-var counterForMusicPlayer=0#counter which index from musicToPlay should be inserted next
+var fullVolume = -20.0
+var zeroVolume = -40.0
+var snippetIndex=0
 signal layerFinished
 
 func setIndex(id : int):
-	index = id
+	layerIndex = id
+	fullVolume = -20.0 - 5*(Global.currentStreamIndex - id)
+	print("set up player with volume " + str(fullVolume))
 	call_deferred("setupPlayers")
 
 func _ready() -> void:
@@ -21,23 +25,24 @@ func setTrack(snippet):
 	playerFail.set_file(snippet)
 	
 func setupPlayers():
-	playerCorrect.setName("Correct"+str(index))
-	playerFail.setName("Fail"+str(index))
-	var musicCorrect = Global.musicTracks[index][0]
-	var instrument = $AudioTrackProvider.getSoundFont(index)
-	if musicCorrect != null:
+	playerCorrect.setName("Correct"+str(layerIndex))
+	playerFail.setName("Fail"+str(layerIndex))
+	var snippet = Global.musicTracks[layerIndex][0].getLayer(layerIndex)
+	var instrument = AudioTrackProvider.getSoundFont(layerIndex)
+	if snippet != null:
 		playerCorrect.set_soundfont(instrument)
-		playerCorrect.set_file(musicCorrect)
-		playerFail.set_file(musicCorrect)
+		playerCorrect.set_file(snippet)
+		playerFail.set_file(snippet)
 		playerFail.set_soundfont(instrument)
 		playerFail.key_shift = -1
 	playerCorrect.playing = false
 	playerFail.playing = false
+	playerCorrect.call_deferred("set_volume_db", fullVolume)
 
 
 func start():
 	playerCorrect.play()
-	playerFail.set_volume_db(-80)
+	playerFail.set_volume_db(zeroVolume)
 	playerFail.play()
 
 func stop():
@@ -48,8 +53,8 @@ func getTrackCorrect():
 	return playerCorrect.file
 
 func failInput():
-	playerCorrect.set_volume_db(-80)
-	playerFail.set_volume_db(-20)
+	playerCorrect.set_volume_db(zeroVolume)
+	playerFail.set_volume_db(fullVolume)
 	$FailFade.start(inputFadeTime)
 	pass
 
@@ -59,8 +64,8 @@ func failReaction(length:float):
 
 func _process(_delta: float) -> void:
 	var factor = $FailFade.time_left/$FailFade.wait_time
-	playerCorrect.set_volume_db(lerpf(-20,-40, factor))
-	playerFail.set_volume_db(lerpf(-40,-20, factor))
+	playerCorrect.set_volume_db(lerpf(fullVolume, zeroVolume, factor))
+	playerFail.set_volume_db(lerpf(zeroVolume, fullVolume, factor))
 	fade = factor
 
 func nextTact():
@@ -68,10 +73,10 @@ func nextTact():
 	playerFail.play()
 
 func _on_midi_player_correct_finished() -> void:
-	counterForMusicPlayer+=1
-	if counterForMusicPlayer<Global.musicTracks[index].size():
-		playerCorrect.set_file(Global.musicTracks[index][counterForMusicPlayer])
-		playerFail.set_file(Global.musicTracks[index][counterForMusicPlayer])
+	snippetIndex += 1
+	if snippetIndex<Global.musicTracks[layerIndex].size():
+		playerCorrect.set_file(Global.musicTracks[layerIndex][snippetIndex].getLayer(layerIndex))
+		playerFail.set_file(playerCorrect.file)
 	else:
 		#end of layer
 		layerFinished.emit()

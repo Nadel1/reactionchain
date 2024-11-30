@@ -25,10 +25,13 @@ var developerMode = false
 var musicTracks=[]
 var packetsToBeDropped=[]
 var videoTitle = [[],[],[]]
+var musicTracks = []
+var packetToBeDropped = []
 signal tact
 signal tactArrows
 
-@export var snippetLength=2.4
+@export var lengthOfMusic = 5 #number of reaction packets to play
+@export var snippetLength = 2.4
 
 func _enter_tree():
 	loadGame()
