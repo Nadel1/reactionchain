@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func reactionFailed(packetDuration: float):
 	recordingFails.append([timeSinceLastFail-packetDuration, packetDuration])
-	timeSinceLastFail = 0
+	timeSinceLastFail = 0.0
 
 func stopRecording():
 	recordInputs = false

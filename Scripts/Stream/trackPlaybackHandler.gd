@@ -57,7 +57,7 @@ func failReaction(length:float):
 	$FailFade.start(length)
 	pass
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var factor = $FailFade.time_left/$FailFade.wait_time
 	playerCorrect.set_volume_db(lerpf(-20,-40, factor))
 	playerFail.set_volume_db(lerpf(-40,-20, factor))
@@ -74,4 +74,4 @@ func _on_midi_player_correct_finished() -> void:
 		playerFail.set_file(Global.musicTracks[index][counterForMusicPlayer])
 	else:
 		#end of layer
-		self.emit_signal("layerFinished")
+		layerFinished.emit()

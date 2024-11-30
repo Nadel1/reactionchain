@@ -2,9 +2,7 @@ extends Node2D
 
 @onready var midiPlayerArrows=$MidiPlayerArrows
 @onready var startPlayingMusicTimer=$StartPlayingMusicTimer
-@onready var EOLStopPlayingMusicTimer=$EOLStopPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
-@onready var scoreLabel=$UI/ScoreLabel
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
@@ -13,7 +11,7 @@ var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
 const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
 const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
-var allStreamers=[STREAMER1,STREAMER2]
+var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 var musicToPlay=[]
@@ -46,16 +44,15 @@ func _on_start_playing_music_timer_timeout() -> void:
 	
 
 func prepareStreamer():
+	currentStreamerIndex = randi() % allStreamers.size()
 	if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
-		if currentStreamerIndex==allStreamers.size()-1:
-			currentStreamer=allStreamers[0]
-		else:
-			currentStreamer=allStreamers[currentStreamerIndex+1]
-		currentStreamerIndex=allStreamers.find(currentStreamer)
+		currentStreamerIndex += 1
+		currentStreamerIndex %= allStreamers.size()
 		
 	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
 	currentStreamer.position=$UI/StreamerPlaceholder.position
 	currentStreamer.scale=$UI/StreamerPlaceholder.scale
+	currentStreamer.init(currentStreamerIndex, Global.currentStreamIndex)
 	$UI/StreamerPlaceholder.visible = false
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
@@ -89,23 +86,27 @@ func _ready():
 	prepareMusic()
 	prepareStreamer()
 	prepareArrows()
-	updateScore()
 	$TrackPlaybackHandler.setIndex(Global.currentStreamIndex)
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
 	index=Global.currentStreamIndex
+	if index > 0:
+		VideoCustomizer.extendTitle(index)
 	
 	var currentNode = $UI/VideoFrame
+	currentNode.init(Global.currentStreamIndex)
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[Global.currentStreamIndex-1-i]].instantiate()
 			lastStreamer.position=$UI/StreamerPlaceholder.position
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
+			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i], Global.currentStreamIndex-1-i)
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
+			recursionInstance.find_child("VideoFrame").init((Global.currentStreamIndex-1)-i)
 			var trackPlayer = recursionInstance.find_child("TrackPlaybackHandler")
 			if trackPlayer != null:
 				trackPlayers.append(trackPlayer)
@@ -117,18 +118,12 @@ func _ready():
 	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
 	Global.streamerIndices.append(currentStreamerIndex)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
-func updateScore():
-	scoreLabel.text="Score: "+str(Global.score)
-	
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	midiPlayerArrows.playing=false
-	EOLStopPlayingMusicTimer.set_wait_time(startPlayingMusicTimer.wait_time)#so that the music ends with the same delay it started with
-	EOLStopPlayingMusicTimer.start()
-	
 	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1

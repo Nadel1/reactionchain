@@ -1,21 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd0iwekxolhbf"]
+[gd_scene load_steps=13 format=3 uid="uid://cd0iwekxolhbf"]
 
 [ext_resource type="PackedScene" uid="uid://bjfey2jmh5t2s" path="res://Scenes/Objects/Streamers/streamer.tscn" id="1_fxgj4"]
-[ext_resource type="Texture2D" uid="uid://cjqeiqvhj5v37" path="res://Assets/Sprites/Streamers/Streamer0/PlaceholderHead.png" id="2_qki7c"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sor3h"]
-atlas = ExtResource("2_qki7c")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_be0hb"]
-atlas = ExtResource("2_qki7c")
-region = Rect2(0, 0, 64, 64)
+[ext_resource type="Texture2D" uid="uid://bcj0wh2nygt5n" path="res://Assets/Sprites/Streamers/Parts/Head0.png" id="2_tfr4s"]
+[ext_resource type="Texture2D" uid="uid://bc43tuambkcp6" path="res://Assets/Sprites/Streamers/Parts/Face0.png" id="3_lcj16"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s5ls5"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sor3h")
+"texture": ExtResource("2_tfr4s")
 }],
 "loop": true,
 "name": &"default",
@@ -23,7 +16,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sor3h")
+"texture": ExtResource("2_tfr4s")
 }],
 "loop": true,
 "name": &"down",
@@ -31,7 +24,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sor3h")
+"texture": ExtResource("2_tfr4s")
 }],
 "loop": true,
 "name": &"left",
@@ -39,7 +32,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sor3h")
+"texture": ExtResource("2_tfr4s")
 }],
 "loop": true,
 "name": &"right",
@@ -47,20 +40,102 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_be0hb")
+"texture": ExtResource("2_tfr4s")
 }],
 "loop": true,
 "name": &"up",
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbx67"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw3mp"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs1wc"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5inpu"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0ne8"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egyo6"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m8cu"]
+atlas = ExtResource("3_lcj16")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wt6lc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbx67")
+}],
+"loop": true,
+"name": &"angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yw3mp")
+}],
+"loop": true,
+"name": &"cringe",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs1wc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5inpu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0ne8")
+}],
+"loop": true,
+"name": &"laugh",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egyo6")
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6m8cu")
+}],
+"loop": true,
+"name": &"pog",
+"speed": 5.0
+}]
+
 [node name="Streamer" instance=ExtResource("1_fxgj4")]
 
-[node name="Head" parent="." index="2"]
+[node name="Head" parent="." index="3"]
 sprite_frames = SubResource("SpriteFrames_s5ls5")
-animation = &"up"
 
 [node name="Face" parent="Head" index="0"]
-animation = &"pog"
+position = Vector2(0, 4)
+sprite_frames = SubResource("SpriteFrames_wt6lc")
 
 [connection signal="animation_finished" from="Head/Face" to="." method="_on_face_animation_finished"]

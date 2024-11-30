@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b60r1mgnhshop"
-path="res://.godot/imported/m5x7.ttf-778afa09f28a4b3db6ea995db1b715ac.fontdata"
+uid="uid://dxfcpeyfjfm31"
+path="res://.godot/imported/Karma Suture.otf-89b87151b3443eadb66ee5dd47458991.fontdata"
 
 [deps]
 
-source_file="res://Assets/Fonts/m5x7.ttf"
-dest_files=["res://.godot/imported/m5x7.ttf-778afa09f28a4b3db6ea995db1b715ac.fontdata"]
+source_file="res://Assets/Fonts/Karma Suture.otf"
+dest_files=["res://.godot/imported/Karma Suture.otf-89b87151b3443eadb66ee5dd47458991.fontdata"]
 
 [params]
 
