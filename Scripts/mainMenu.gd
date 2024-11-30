@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
-	$OptionsMenu/Devmode.button_pressed = Global.developerMode
+	#$OptionsMenu/Devmode.button_pressed = Global.useDevMode()
 	$OptionsMenu/Difficulty.value = 5 - Global.difficulty
 
 func _on_start_button_down() -> void:

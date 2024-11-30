@@ -19,7 +19,7 @@ var currentHighScore=0#we want to display the highest score at game over
 var streamerIndices =[]
 var currentStreamer=null
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
-var developerMode = false #TODO: When true disables being able to fail
+var developerMode = true #TODO: When true disables being able to fail
 var musicTracks=[]
 var packetsToBeDropped=[]
 var videoTitle = [[],[],[]]
@@ -28,6 +28,9 @@ signal tactArrows
 
 @export var snippetLength=2.4
 
+func useDevMode():
+	developerMode=!developerMode#turn on/off
+	
 func increaseScore(deltaScore):
 	score+=deltaScore
 	if score>currentHighScore:

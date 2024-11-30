@@ -6,6 +6,7 @@ extends Node2D
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
+var gameOverPossible=true#modified by developermode
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -80,7 +81,10 @@ func prepareArrows():
 	var firstSnippet = musicToPlay[0]
 	midiPlayerArrows.set_file(firstSnippet)
 	
+	
 func _ready():
+	$UI/TrackIndicatorWrong.visible=Global.developerMode
+	$UI/TrackIndicatorRight.visible=Global.developerMode
 	Global.tactArrows.connect(nextArrowTact)
 	
 	prepareMusic()
@@ -123,9 +127,10 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
 func gameOver():
-	get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
-	Global.stopMetronome()
-	Global.stopMetronomeArrows()
+	if !Global.developerMode: 
+		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+		Global.stopMetronome()
+		Global.stopMetronomeArrows()
 	
 func updateScore():
 	scoreLabel.text="Score: "+str(Global.score)

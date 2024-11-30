@@ -36,6 +36,7 @@ var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
 	
+	
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.is_action_pressed("right"):
@@ -68,6 +69,7 @@ func spawnMarker(end:bool):
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
+	newMarker.setVisible(Global.developerMode)
 	if end and lastButtonSpawned!=null:
 		lastButtonSpawned.lastButton=true
 
@@ -88,7 +90,7 @@ func playScoreDecrease():#animate hitzone and maybe later add more music here?
 func playScoreIncrease():
 	animatedSprite.play("hit")
 	
-
+	
 func react(correctReaction=true):
 	var reaction
 	if Global.currentStreamer!=null:
