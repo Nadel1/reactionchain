@@ -3,7 +3,9 @@ extends Node
 # Any stuff that needs to be accessible from anywhere and/or persistent
 # between scene changes goes in here
 
-@onready var videoSeed = randi()
+# Random seed, constant within a game.
+# Derive from this via rand_from_seed() for things that should be random but consistent
+@onready var mainSeed = randi()
 
 var inputHandler : InputHandler
 var inputRecorder : InputRecorder
@@ -19,6 +21,7 @@ var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
 var developerMode = false #TODO: When true disables being able to fail
 var musicTracks=[]
 var packetsToBeDropped=[]
+var videoTitle = [[],[],[]]
 signal tact
 signal tactArrows
 
@@ -27,6 +30,7 @@ signal tactArrows
 func _ready():
 	$Metronome.wait_time=snippetLength
 	$MetronomeArrows.wait_time=snippetLength
+	VideoCustomizer.generateFirstTitle()
 	
 
 func _on_metronome_timeout() -> void:

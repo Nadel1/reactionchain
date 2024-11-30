@@ -29,12 +29,15 @@ func _physics_process(delta: float) -> void:
 			timeSinceLastInput = 0
 			inputIndex += 1
 		if reactionIndex < Global.recordingsReaction[index].size() and Global.recordingsReaction[index][reactionIndex][0] <= timeSinceLastReaction:
-			streamer.react(Global.recordingsReaction[index][reactionIndex][1])
+			var reaction = Global.recordingsReaction[index][reactionIndex][1]
+			if reaction != RT.Emotion.NONE:
+				streamer.react(reaction)
 			timeSinceLastReaction = 0
 			reactionIndex += 1
 		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:
-			$TrackPlaybackHandler.failReaction(Global.recordingsFails[index][failIndex][1])
-			timeSinceLastFail = 0
+			var fail = Global.recordingsFails[index][failIndex]
+			$TrackPlaybackHandler.failReaction(fail[1])
+			timeSinceLastFail = -fail[1]
 			failIndex += 1
 			
 	pass

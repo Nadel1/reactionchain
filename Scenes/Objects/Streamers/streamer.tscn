@@ -866,6 +866,7 @@ color = Color(7.12335e-06, 0.608189, 0.809683, 1)
 polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 
 [node name="Frame" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 z_index = 2
 texture = ExtResource("1_lxfp8")
 

@@ -31,6 +31,7 @@ var correctReactionPacket=true
 var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
+var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
@@ -47,7 +48,11 @@ func _input(event):
 			registerInput("down")
 		else:
 			evaluateScore(null,false)
-			
+
+func _process(delta: float) -> void:
+	if firstPacketStarted:
+		currentPacketDuration += delta
+
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
@@ -100,6 +105,8 @@ func react(correctReaction=true):
 					reaction=lastReaction
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
+			inputRecorder.reactionFailed(currentPacketDuration)
+			currentPacketDuration = 0.0
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
 		currentButtonToEvaluate=null
@@ -141,10 +148,12 @@ func registerInput(inputString):
 		evaluateScore(null,false)
 		
 func dealWithMarker():
+	firstPacketStarted = true
 	countMarker+=1
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1
+		currentPacketDuration = 0.0
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):

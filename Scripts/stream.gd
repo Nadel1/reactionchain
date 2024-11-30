@@ -54,7 +54,7 @@ func prepareStreamer():
 	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
 	currentStreamer.position=$UI/StreamerPlaceholder.position
 	currentStreamer.scale=$UI/StreamerPlaceholder.scale
-	currentStreamer.init(currentStreamerIndex)
+	currentStreamer.init(currentStreamerIndex, Global.currentStreamIndex)
 	$UI/StreamerPlaceholder.visible = false
 	$UI.call_deferred("add_child",currentStreamer)
 	inputRecorder.setStreamer(currentStreamer)
@@ -92,19 +92,23 @@ func _ready():
 	Global.currentTrackHandler = $TrackPlaybackHandler
 	midiPlayerArrows.setName("Arrows")
 	index=Global.currentStreamIndex
+	if index > 0:
+		VideoCustomizer.extendTitle(index)
 	
 	var currentNode = $UI/VideoFrame
+	currentNode.init(Global.currentStreamIndex)
 	if Global.currentStreamIndex > 0:
 		for i in range(0,Global.currentStreamIndex):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[Global.currentStreamIndex-1-i]].instantiate()
 			lastStreamer.position=$UI/StreamerPlaceholder.position
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
-			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i])
+			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i], Global.currentStreamIndex-1-i)
 			recursionInstance.setStreamer(lastStreamer)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((Global.currentStreamIndex-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
+			recursionInstance.find_child("VideoFrame").init((Global.currentStreamIndex-1)-i)
 			var trackPlayer = recursionInstance.find_child("TrackPlaybackHandler")
 			if trackPlayer != null:
 				trackPlayers.append(trackPlayer)
