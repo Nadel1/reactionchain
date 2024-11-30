@@ -15,3 +15,15 @@ func _on_restart_button_down() -> void:
 
 func _on_quit_game_button_down() -> void:
 	get_tree().quit()
+
+
+func _on_options_button_down() -> void:
+	$OptionsMenu.visible = true
+
+
+func _on_quit_menu_button_pressed() -> void:
+	$OptionsMenu.visible = false
+
+
+func _on_devmode_toggled(toggled_on: bool) -> void:
+	Global.developerMode=toggled_on

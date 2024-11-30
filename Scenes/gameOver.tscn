@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bj1bahvddpwlx"]
+[gd_scene load_steps=9 format=3 uid="uid://bj1bahvddpwlx"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
 [ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
 [ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
+[ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="5_ltstr"]
 
 [sub_resource type="Animation" id="Animation_y1q0o"]
 length = 0.001
@@ -146,9 +147,9 @@ offset_bottom = 40.0
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 342.0
-offset_top = 419.0
+offset_top = 382.0
 offset_right = 445.0
-offset_bottom = 438.0
+offset_bottom = 401.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Restart"
@@ -156,12 +157,22 @@ text = "Restart"
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 342.0
-offset_top = 510.0
+offset_top = 553.0
 offset_right = 445.0
-offset_bottom = 530.0
+offset_bottom = 573.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Quit Game
+"
+
+[node name="Options" type="Button" parent="Buttons"]
+offset_left = 342.0
+offset_top = 465.0
+offset_right = 445.0
+offset_bottom = 485.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "Options
 "
 
 [node name="Text" type="Control" parent="."]
@@ -185,5 +196,91 @@ bbcode_enabled = true
 text = "Score
 "
 
+[node name="OptionsMenu" type="Node2D" parent="."]
+visible = false
+position = Vector2(576, 304)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="OptionsMenu"]
+offset_left = -253.0
+offset_top = -104.0
+offset_right = -141.0
+offset_bottom = -20.0
+scale = Vector2(4, 4)
+texture = ExtResource("5_ltstr")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+patch_margin_bottom = 5
+
+[node name="Devmode" type="Button" parent="OptionsMenu"]
+offset_left = -206.0
+offset_top = 100.0
+offset_right = -119.0
+offset_bottom = 119.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+toggle_mode = true
+text = "Developer mode"
+
+[node name="Difficulty" type="HSlider" parent="OptionsMenu"]
+offset_left = -206.0
+offset_top = -24.0
+offset_right = -122.0
+offset_bottom = -8.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+min_value = 1.0
+max_value = 4.0
+value = 4.0
+rounded = true
+tick_count = 4
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="OptionsMenu/Difficulty"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_top = -18.0
+offset_right = 47.0
+offset_bottom = 5.0
+theme = ExtResource("3_xylrd")
+text = "Difficulty"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="OptionsMenu/Difficulty"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -4.0
+offset_top = 10.0
+offset_right = 43.0
+offset_bottom = 33.0
+theme = ExtResource("3_xylrd")
+text = "Easy"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="OptionsMenu/Difficulty"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 60.0
+offset_top = 10.0
+offset_right = 107.0
+offset_bottom = 33.0
+theme = ExtResource("3_xylrd")
+text = "Normal"
+vertical_alignment = 1
+
+[node name="QuitMenuButton" type="Button" parent="OptionsMenu"]
+offset_left = 142.0
+offset_top = -104.0
+offset_right = 154.0
+offset_bottom = -85.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "X
+"
+
 [connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
 [connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
+[connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
+[connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
+[connection signal="pressed" from="OptionsMenu/QuitMenuButton" to="." method="_on_quit_menu_button_pressed"]
