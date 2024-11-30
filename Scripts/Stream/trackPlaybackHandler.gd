@@ -8,13 +8,14 @@ var fade = 0.0
 var inputFadeTime = 1.0
 var fullVolume = -20.0
 var zeroVolume = -40.0
-var snippetIndex=0
+var snippetIndex = 0
+var audible = true
 signal layerFinished
 
 func setIndex(id : int):
 	layerIndex = id
 	fullVolume = -20.0 - 5*(Global.currentStreamIndex - id)
-	print("set up player with volume " + str(fullVolume))
+	if fullVolume <= zeroVolume: audible = false
 	call_deferred("setupPlayers")
 
 func _ready() -> void:

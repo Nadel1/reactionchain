@@ -1,21 +1,21 @@
 [gd_scene load_steps=3 format=3 uid="uid://c2v4rw01rukni"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/audioTrackProvider.gd" id="1_einh4"]
-[ext_resource type="Script" path="res://Scripts/trackSnippet.gd" id="2_ocv6o"]
+[ext_resource type="Script" path="res://Scripts/Stream/audioTrackProvider.gd" id="1_ioscl"]
+[ext_resource type="Script" path="res://Scripts/trackSnippet.gd" id="2_7oiyd"]
 
 [node name="AudioTrackProvider" type="Node" node_paths=PackedStringArray("snippets")]
-script = ExtResource("1_einh4")
+script = ExtResource("1_ioscl")
 snippets = [NodePath("Snippet"), NodePath("Snippet2"), NodePath("Snippet3")]
 soundfonts = Array[String](["res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2"])
 
 [node name="Snippet" type="Node" parent="."]
-script = ExtResource("2_ocv6o")
+script = ExtResource("2_7oiyd")
 layers = Array[String](["res://Assets/Audio/Tracks/snippets01/lead1_layer1.MID", "res://Assets/Audio/Tracks/snippets01/lead1_layer2.MID", "res://Assets/Audio/Tracks/snippets01/lead1_layer3.MID"])
 
 [node name="Snippet2" type="Node" parent="."]
-script = ExtResource("2_ocv6o")
+script = ExtResource("2_7oiyd")
 layers = Array[String](["res://Assets/Audio/Tracks/snippets01/lead2_layer1.MID", "res://Assets/Audio/Tracks/snippets01/lead2_layer2.MID", "res://Assets/Audio/Tracks/snippets01/lead2_layer3.MID"])
 
 [node name="Snippet3" type="Node" parent="."]
-script = ExtResource("2_ocv6o")
+script = ExtResource("2_7oiyd")
 layers = Array[String](["res://Assets/Audio/Tracks/snippets01/lead3_layer1.MID", "res://Assets/Audio/Tracks/snippets01/lead3_layer2.MID", "res://Assets/Audio/Tracks/snippets01/lead3_layer3.MID"])
