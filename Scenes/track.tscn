@@ -102,14 +102,6 @@ shape = SubResource("RectangleShape2D_j5ucw")
 
 [node name="UI" type="Node2D" parent="."]
 
-[node name="JudgingPrompt" type="RichTextLabel" parent="UI"]
-offset_left = 580.0
-offset_top = 23.0
-offset_right = 665.0
-offset_bottom = 52.0
-bbcode_enabled = true
-text = "[center][/center]"
-
 [node name="SplatSpawnPos" type="Node2D" parent="UI"]
 position = Vector2(624, -96)
 

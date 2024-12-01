@@ -9,7 +9,6 @@ const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
-@onready var judgingUI=$UI/JudgingPrompt
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 
 @export var scoreChangeGoodHit=10
@@ -124,12 +123,10 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
 			Global.increaseScore(scoreChangeGoodHit)
-			judgingUI.text="[center]"+judgingPromptsGood.pick_random()+"[/center]"
 			splat.call_deferred("setText", 2)
 		else: 
 			Global.score+=scoreChangeOkayHit
 			Global.increaseScore(scoreChangeOkayHit)
-			judgingUI.text="[center]"+judgingPromptsOkay.pick_random()+"[/center]"
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
