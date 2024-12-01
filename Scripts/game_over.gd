@@ -3,6 +3,11 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Global.currentHighScore>Global.highScore:
+		Global.highScore=Global.currentHighScore
+		$Text/HighScore.visible=true
+	else:
+		$Text/HighScore.visible=false
 	$Text/ScoreText.text="[center]"+"Highest score: "+str(Global.currentHighScore)+"[/center]"
 
 
@@ -15,6 +20,7 @@ func _on_restart_button_down() -> void:
 
 
 func _on_quit_game_button_down() -> void:
+	Global.saveGame()
 	get_tree().quit()
 
 
@@ -28,3 +34,4 @@ func _on_quit_menu_button_pressed() -> void:
 
 func _on_devmode_toggled(toggled_on: bool) -> void:
 	Global.developerMode=toggled_on
+	

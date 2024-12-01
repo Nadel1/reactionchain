@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj1bahvddpwlx"]
+[gd_scene load_steps=13 format=3 uid="uid://bj1bahvddpwlx"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
 [ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
 [ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
+[ext_resource type="Script" path="res://Scripts/high_score_display.gd" id="5_6tkhb"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="5_ltstr"]
 
 [sub_resource type="Animation" id="Animation_y1q0o"]
@@ -115,6 +116,43 @@ _data = {
 "slideTitle": SubResource("Animation_ea673")
 }
 
+[sub_resource type="Animation" id="Animation_5gvbc"]
+resource_name = "displayHighScore"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0349066, -0.0349066, 0.0349066]
+}
+
+[sub_resource type="Animation" id="Animation_k84k1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0349066]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dvshw"]
+_data = {
+"RESET": SubResource("Animation_k84k1"),
+"displayHighScore": SubResource("Animation_5gvbc")
+}
+
 [node name="GameOver" type="Node2D"]
 script = ExtResource("1_xsauy")
 
@@ -166,6 +204,7 @@ text = "Quit Game
 "
 
 [node name="Options" type="Button" parent="Buttons"]
+layout_mode = 0
 offset_left = 342.0
 offset_top = 465.0
 offset_right = 445.0
@@ -186,15 +225,35 @@ offset_bottom = 120.0
 
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 530.0
+offset_left = 511.0
 offset_top = 200.0
-offset_right = 642.0
+offset_right = 623.0
 offset_bottom = 216.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
-text = "Score
+text = "Score"
+
+[node name="HighScore" type="Node2D" parent="Text"]
+position = Vector2(730, 268)
+rotation = 0.0349066
+script = ExtResource("5_6tkhb")
+
+[node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
+offset_left = -200.0
+offset_top = -28.0
+offset_right = -96.0
+offset_bottom = -12.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "[center]New Highscore![/center]
 "
+
+[node name="AnimationPlayerHighScore" type="AnimationPlayer" parent="Text/HighScore"]
+libraries = {
+"": SubResource("AnimationLibrary_dvshw")
+}
 
 [node name="OptionsMenu" type="Node2D" parent="."]
 visible = false
