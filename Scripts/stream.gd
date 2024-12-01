@@ -45,6 +45,7 @@ func prepareStreamer():
 func prepareArrows():
 	var firstSnippet = Global.musicTracks[index][0].getLayer(index)
 	midiPlayerArrows.set_file(firstSnippet)
+	midiPlayerArrows.play_speed = Global.playbackSpeed
 	
 	
 func _ready():
@@ -53,6 +54,7 @@ func _ready():
 	index=Global.currentStreamIndex
 	Global.tactArrows.connect(nextArrowTact)
 	$MidiPlayerBass.setName("Bass")
+	$MidiPlayerBass.play_speed = Global.playbackSpeed
 	Global.tact.connect($MidiPlayerBass.play)
 	
 	AudioTrackProvider.prepareMusic()
@@ -105,15 +107,12 @@ func _on_switch_scene_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 	
 func nextArrowTact():
-	midiPlayerArrows.play()
-	
-func _on_midi_player_arrows_finished() -> void:
-	counterForArrowsPlayer+=1
 	if counterForArrowsPlayer<Global.musicTracks[index].size():
 		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer].getLayer(index))
+		midiPlayerArrows.play()
 	else:
 		Global.stopMetronomeArrows()
-
+	counterForArrowsPlayer+=1
 
 func _on_track_playback_handler_layer_finished() -> void:
 	$TrackPlaybackHandler.stop()

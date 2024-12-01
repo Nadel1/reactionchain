@@ -31,6 +31,7 @@ signal tact
 signal tactArrows
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
+@export var playbackSpeed = 0.575
 @export var snippetLength = 2.4
 
 func _enter_tree():

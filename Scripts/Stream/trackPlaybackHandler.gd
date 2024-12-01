@@ -42,7 +42,9 @@ func setupPlayers():
 
 
 func start():
+	playerCorrect.play_speed = Global.playbackSpeed
 	playerCorrect.play()
+	playerFail.play_speed = Global.playbackSpeed
 	playerFail.set_volume_db(zeroVolume)
 	playerFail.play()
 
@@ -70,14 +72,12 @@ func _process(_delta: float) -> void:
 	fade = factor
 
 func nextTact():
-	playerCorrect.play()
-	playerFail.play()
-
-func _on_midi_player_correct_finished() -> void:
-	snippetIndex += 1
 	if snippetIndex<Global.musicTracks[layerIndex].size():
 		playerCorrect.set_file(Global.musicTracks[layerIndex][snippetIndex].getLayer(layerIndex))
 		playerFail.set_file(playerCorrect.file)
+		playerCorrect.play()
+		playerFail.play()
 	else:
 		#end of layer
 		layerFinished.emit()
+	snippetIndex += 1

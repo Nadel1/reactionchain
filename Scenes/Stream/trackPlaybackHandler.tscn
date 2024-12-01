@@ -20,5 +20,3 @@ bus = &"Fail0"
 
 [node name="FailFade" type="Timer" parent="."]
 one_shot = true
-
-[connection signal="finished" from="MidiPlayerCorrect" to="." method="_on_midi_player_correct_finished"]
