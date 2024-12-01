@@ -115,6 +115,8 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
+	if(Global.score<0):
+		gameOver()
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
@@ -141,6 +143,13 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		react(correctReactionPacket)
 	
 
+func gameOver():
+	if !Global.developerMode: 
+		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+		Global.stopMetronome()
+		Global.stopMetronomeArrows()
+	
+		
 func registerInput(inputString):
 	if buttonSequence.is_empty()==true:
 		evaluateScore(null,false)#substract points when input for example at end of level
