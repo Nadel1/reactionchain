@@ -9,7 +9,6 @@ const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
-@onready var judgingUI=$UI/JudgingPrompt
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 
 @export var scoreChangeGoodHit=10
@@ -35,6 +34,7 @@ var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
+	
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -68,6 +68,7 @@ func spawnMarker(end:bool):
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
+	newMarker.setVisible(Global.developerMode)
 	if end and lastButtonSpawned!=null:
 		lastButtonSpawned.lastButton=true
 
@@ -88,7 +89,7 @@ func playScoreDecrease():#animate hitzone and maybe later add more music here?
 func playScoreIncrease():
 	animatedSprite.play("hit")
 	
-
+	
 func react(correctReaction=true):
 	var reaction
 	if Global.currentStreamer!=null:
@@ -113,15 +114,19 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
+	if(Global.score<=0):
+		gameOver()
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
+			Global.increaseScore(scoreChangeGoodHit)
 			splat.call_deferred("setText", 2)
 		else: 
 			Global.score+=scoreChangeOkayHit
+			Global.increaseScore(scoreChangeOkayHit)
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
@@ -135,6 +140,13 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		react(correctReactionPacket)
 	
 
+func gameOver():
+	if !Global.developerMode: 
+		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+		Global.stopMetronome()
+		Global.stopMetronomeArrows()
+	
+		
 func registerInput(inputString):
 	if buttonSequence.is_empty()==true:
 		evaluateScore(null,false)#substract points when input for example at end of level

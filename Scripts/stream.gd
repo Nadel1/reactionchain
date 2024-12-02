@@ -6,6 +6,7 @@ extends Node2D
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
+var gameOverPossible=true#modified by developermode
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -80,7 +81,10 @@ func prepareArrows():
 	var firstSnippet = musicToPlay[0]
 	midiPlayerArrows.set_file(firstSnippet)
 	
+	
 func _ready():
+	$UI/TrackIndicatorWrong.visible=Global.developerMode
+	$UI/TrackIndicatorRight.visible=Global.developerMode
 	Global.tactArrows.connect(nextArrowTact)
 	
 	prepareMusic()
@@ -122,6 +126,8 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	
+
+	
 func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
 	midiPlayerArrows.playing=false
 	
@@ -137,7 +143,6 @@ func _on_midi_player_arrows_finished() -> void:
 	if counterForArrowsPlayer<Global.musicTracks[index].size():
 		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer])
 	else:
-		print("stop arrows")
 		Global.stopMetronomeArrows()
 
 

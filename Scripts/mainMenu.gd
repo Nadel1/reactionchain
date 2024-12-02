@@ -13,6 +13,7 @@ func _on_options_button_down() -> void:
 
 
 func _on_quit_button_down() -> void:
+	Global.saveGame()
 	get_tree().quit()
 
 
@@ -22,3 +23,7 @@ func _on_difficulty_value_changed(value: float) -> void:
 
 func _on_devmode_toggled(toggled_on: bool) -> void:
 	Global.developerMode = toggled_on
+
+
+func _on_reset_save_file_pressed() -> void:
+	Global.resetSaveFile()
