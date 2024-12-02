@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bj1bahvddpwlx"]
+[gd_scene load_steps=15 format=3 uid="uid://bv0ca4q3shcn5"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
 [ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
@@ -6,6 +6,8 @@
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
 [ext_resource type="Script" path="res://Scripts/high_score_display.gd" id="5_6tkhb"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="5_ltstr"]
+[ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="7_1q6on"]
+[ext_resource type="Texture2D" uid="uid://wktqe8sxtius" path="res://Assets/Sprites/GameOver/backgroundCamera.png" id="8_jbcag"]
 
 [sub_resource type="Animation" id="Animation_y1q0o"]
 length = 0.001
@@ -57,10 +59,46 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Background/BackgroundText:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Text/ScoreText:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../Text/HighScore/HighScore:visible_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_ea673"]
 resource_name = "slideTitle"
-length = 1.5
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -92,7 +130,7 @@ tracks/2/path = NodePath("../Buttons:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.966667, 1.5),
+"times": PackedFloat32Array(0, 1.5, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -104,16 +142,67 @@ tracks/3/path = NodePath("../Text:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.966667, 1.5),
+"times": PackedFloat32Array(0, 1.5, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Background/BackgroundText:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../Text/ScoreText:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../Text/HighScore/HighScore:visible_ratio")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40nyb"]
 _data = {
 "RESET": SubResource("Animation_y1q0o"),
 "slideTitle": SubResource("Animation_ea673")
+}
+
+[sub_resource type="Animation" id="Animation_k84k1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0349066]
 }
 
 [sub_resource type="Animation" id="Animation_5gvbc"]
@@ -132,21 +221,6 @@ tracks/0/keys = {
 "values": [0.0349066, -0.0349066, 0.0349066]
 }
 
-[sub_resource type="Animation" id="Animation_k84k1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0349066]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dvshw"]
 _data = {
 "RESET": SubResource("Animation_k84k1"),
@@ -163,7 +237,32 @@ libraries = {
 }
 autoplay = "slideTitle"
 
+[node name="Background" type="Node2D" parent="."]
+
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+position = Vector2(558, 365)
+scale = Vector2(10.0938, 11.3594)
+texture = ExtResource("7_1q6on")
+
+[node name="CameraSprite" type="Sprite2D" parent="Background"]
+position = Vector2(513, 228)
+scale = Vector2(4, 4)
+texture = ExtResource("8_jbcag")
+
+[node name="BackgroundText" type="RichTextLabel" parent="Background"]
+offset_left = 304.0
+offset_top = 68.0
+offset_right = 448.0
+offset_bottom = 106.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "> Technical difficulties...
+> We will be right back..."
+visible_characters = 0
+visible_ratio = 0.0
+
 [node name="GameOverText" type="Node2D" parent="."]
+visible = false
 
 [node name="Game" type="Sprite2D" parent="GameOverText"]
 position = Vector2(559, 152)
@@ -226,13 +325,15 @@ offset_bottom = 120.0
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 511.0
-offset_top = 200.0
+offset_top = 196.0
 offset_right = 623.0
-offset_bottom = 216.0
+offset_bottom = 212.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "Score"
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="HighScore" type="Node2D" parent="Text"]
 position = Vector2(730, 268)
@@ -249,6 +350,8 @@ theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "[center]New Highscore![/center]
 "
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="AnimationPlayerHighScore" type="AnimationPlayer" parent="Text/HighScore"]
 libraries = {
@@ -263,7 +366,7 @@ position = Vector2(576, 304)
 offset_left = -253.0
 offset_top = -104.0
 offset_right = -141.0
-offset_bottom = -20.0
+offset_bottom = 1.0
 scale = Vector2(4, 4)
 texture = ExtResource("5_ltstr")
 region_rect = Rect2(0, 0, 32, 32)
@@ -338,8 +441,18 @@ theme = ExtResource("3_xylrd")
 text = "X
 "
 
+[node name="DeleteSavefileButton" type="Button" parent="OptionsMenu"]
+offset_left = -206.0
+offset_top = 198.0
+offset_right = -119.0
+offset_bottom = 217.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "Reset savefile"
+
 [connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
 [connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
 [connection signal="pressed" from="OptionsMenu/QuitMenuButton" to="." method="_on_quit_menu_button_pressed"]
+[connection signal="pressed" from="OptionsMenu/DeleteSavefileButton" to="." method="_on_delete_savefile_button_pressed"]

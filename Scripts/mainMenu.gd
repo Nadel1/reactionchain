@@ -23,3 +23,7 @@ func _on_difficulty_value_changed(value: float) -> void:
 
 func _on_devmode_toggled(toggled_on: bool) -> void:
 	Global.developerMode = toggled_on
+
+
+func _on_reset_save_file_pressed() -> void:
+	Global.resetSaveFile()

@@ -35,3 +35,7 @@ func _on_quit_menu_button_pressed() -> void:
 func _on_devmode_toggled(toggled_on: bool) -> void:
 	Global.developerMode=toggled_on
 	
+
+
+func _on_delete_savefile_button_pressed() -> void:
+	Global.resetSaveFile()

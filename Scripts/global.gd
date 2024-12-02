@@ -99,3 +99,7 @@ func loadGame():
 	else:
 		saveGame();
 		printerr("No saved data!")
+		
+func resetSaveFile():
+	highScore=0
+	saveGame()
