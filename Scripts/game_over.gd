@@ -3,6 +3,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	if Global.currentHighScore>Global.highScore:
 		Global.highScore=Global.currentHighScore
 		$Text/HighScore.visible=true

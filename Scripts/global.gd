@@ -15,7 +15,7 @@ var recordingsReaction = []
 var recordingsFails = []
 var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
-var score = 0
+var score = 10
 var currentHighScore=0#we want to display the highest score at game over
 var highScore=0
 var streamerIndices =[]
