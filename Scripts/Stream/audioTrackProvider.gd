@@ -1,24 +1,26 @@
 extends Node
-class_name AudioTrackProvider
 
-@export_file("*.MID") var tracksCorrect : Array[String]
-@export_file("*.MID") var tracksFail : Array[String]
+@export var snippets : Array[TrackSnippet]
 @export_file("*.sf2") var soundfonts : Array[String]
 
-func getTrackCorrect(index : int):
-	if checkIndex(index):
-		return tracksCorrect[index]
-	return null
+func getSnippet(index : int):
+	return snippets[index % snippets.size()]
 
-func getTrackFail(index : int):
-	if checkIndex(index):
-		return tracksFail[index]
-	return null
+func getSoundFont(layerIndex : int):
+	return soundfonts[layerIndex % soundfonts.size()]
 
-func getSoundFont(index : int):
-	if checkIndex(index):
-		return soundfonts[index]
-	return null
-
-func checkIndex(index : int) -> bool:
-	return index < len(tracksCorrect) and index >= 0
+func prepareMusic():
+	var track = []
+	if Global.currentStreamIndex > 0:
+		for i in Global.lengthOfMusic:
+			if Global.packetToBeDropped[i]:
+				track.append(snippets.pick_random())
+			else:
+				track.append(Global.musicTracks[Global.currentStreamIndex-1][i])
+			Global.packetToBeDropped[i] = false
+	else:
+		for i in Global.lengthOfMusic:
+			track.append(snippets.pick_random())
+			Global.packetToBeDropped.append(false)
+	
+	Global.musicTracks.append(track)

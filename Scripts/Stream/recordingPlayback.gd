@@ -53,4 +53,3 @@ func checkIndices():
 		anyListUnfinished = anyListUnfinished || failIndex < Global.recordingsFails[index].size()
 		shouldStop = !anyListUnfinished
 	playing = playing && !shouldStop
-	if shouldStop: print("End playback")

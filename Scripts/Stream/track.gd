@@ -64,7 +64,7 @@ func spawnButton():
 	arrowSpawnID += 1
 	
 
-func spawnMarker(end:bool):
+func spawnMarker(end : bool):
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
@@ -108,6 +108,7 @@ func react(correctReaction=true):
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 			inputRecorder.reactionFailed(currentPacketDuration)
 			currentPacketDuration = 0.0
+			Global.packetToBeDropped[countReactionPacket-1] = true
 		Global.currentStreamer.react(reaction)
 		inputRecorder.appendRecordedReaction(reaction)
 		currentButtonToEvaluate=null

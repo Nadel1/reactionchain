@@ -23,12 +23,14 @@ var currentStreamer=null
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
 var developerMode = false
 var musicTracks=[]
-var packetsToBeDropped=[]
+var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
 signal tact
 signal tactArrows
 
-@export var snippetLength=2.4
+@export var lengthOfMusic = 5 #number of reaction packets to play
+@export var playbackSpeed = 0.575
+@export var snippetLength = 2.4
 
 func _enter_tree():
 	loadGame()

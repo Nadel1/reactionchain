@@ -56,13 +56,13 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("UI:scale")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.5),
-"transitions": PackedFloat32Array(2, 0.5, 1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(1.61, 1.61), Vector2(1.4575, 1.4575), Vector2(1, 1)]
+"values": [Vector2(1.69778, 1.69778), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -74,7 +74,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0)]
+"values": [Vector2(-40, -40), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cfqdi"]
@@ -89,7 +89,14 @@ script = ExtResource("1_lwu7i")
 [node name="TrackPlaybackHandler" parent="." instance=ExtResource("4_ta3ta")]
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("3_b6yqj")]
+play_speed = 0.666
 bus = &"Arrows"
+
+[node name="MidiPlayerBass" parent="." instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets01/bass.MID"
+play_speed = 0.666
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
 wait_time = 4.0
@@ -157,7 +164,6 @@ libraries = {
 autoplay = "zoomOut"
 
 [connection signal="layerFinished" from="TrackPlaybackHandler" to="." method="_on_track_playback_handler_layer_finished"]
-[connection signal="finished" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_finished"]
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="StartSpawningArrowsTimer" to="." method="_on_start_spawning_arrows_timer_timeout"]
