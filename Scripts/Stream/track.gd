@@ -114,7 +114,7 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
-	if(Global.score<0):
+	if(Global.score<=0):
 		gameOver()
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
