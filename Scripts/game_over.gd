@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func _on_restart_button_down() -> void:
-	Global.score=0
+	Global.score=10
 	Global.currentHighScore=0
 	Global.mainSeed=randi()
 	Global.currentStreamIndex=0
