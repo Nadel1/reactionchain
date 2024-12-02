@@ -6,7 +6,7 @@
 [node name="AudioTrackProvider" type="Node" node_paths=PackedStringArray("snippets")]
 script = ExtResource("1_ioscl")
 snippets = [NodePath("Snippet"), NodePath("Snippet2"), NodePath("Snippet3")]
-soundfonts = Array[String](["res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2", "res://Assets/Audio/Instruments/UprightPianoKW-small-20190703.sf2"])
+soundfonts = Array[String](["res://Assets/Audio/Instruments/Hybrid_Synthetic_Str.sf2"])
 
 [node name="Snippet" type="Node" parent="."]
 script = ExtResource("2_7oiyd")

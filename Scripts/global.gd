@@ -23,10 +23,8 @@ var currentStreamer=null
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
 var developerMode = false
 var musicTracks=[]
-var packetsToBeDropped=[]
+var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
-var musicTracks = []
-var packetToBeDropped = []
 signal tact
 signal tactArrows
 
