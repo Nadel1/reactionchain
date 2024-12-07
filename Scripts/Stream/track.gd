@@ -6,6 +6,7 @@ const BUTTONUP=preload("res://Scenes/Objects/Buttons/ButtonUp.tscn")
 const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
+enum Score{GOOD, OKAY, BAD}
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
@@ -67,7 +68,20 @@ func spawnButton():
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
-
+func calculateScoreChange(score:Score):
+	var change=0
+	var x=Global.currentStreamIndex
+	match score:
+		Score.GOOD:
+			change=1.6*exp(0.25*x)+5
+		Score.OKAY:
+			change=0.5*exp(0.25*x)+5
+		Score.BAD:
+			change=-(0.2*exp(1.4*x)+5)
+	print("change on layer is: ",x,int(change))
+	return int(change)
+	
+	
 func spawnMarker(end : bool):
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
@@ -131,11 +145,11 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			Global.score+=scoreChangeGoodHit
-			Global.increaseScore(scoreChangeGoodHit)
+			Global.increaseScore(calculateScoreChange(Score.GOOD))
 			splat.call_deferred("setText", 2)
 		else: 
 			Global.score+=scoreChangeOkayHit
-			Global.increaseScore(scoreChangeOkayHit)
+			Global.increaseScore(calculateScoreChange(Score.OKAY))
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
@@ -143,7 +157,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
-		Global.score+=scoreChangeBadHit
+		Global.score+=calculateScoreChange(Score.BAD)
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
