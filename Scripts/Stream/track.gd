@@ -12,18 +12,14 @@ enum Score{GOOD, OKAY, BAD}
 @onready var spawnPoint=$SpawnPoint
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
+@onready var failTimer=$FailTimer #is started whenever a wrong input is detected. if another wrong input is detected BEFORE the timer is over, the game is over. otherwise, the wait time increases
 
-@export var scoreChangeGoodHit=10
-@export var scoreChangeOkayHit=5
-@export var scoreChangeBadHit=-5
+@export var failTimerIncreasePerFail=1.1
 
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
-var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
-var judgingPromptsOkay=["okay"]
-var judgingPromptsBad=["uff","bad"]
 var arrowSpawnID = 0
 var currentButtonToEvaluate
 
@@ -33,7 +29,7 @@ var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
-var firstPacketStarted=false
+#var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
 
@@ -54,9 +50,9 @@ func _input(event):
 		else:
 			evaluateScore(null,false)
 
-func _process(delta: float) -> void:
-	if firstPacketStarted:
-		currentPacketDuration += delta
+#func _process(delta: float) -> void:
+#	if firstPacketStarted:
+#		currentPacketDuration += delta
 
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
@@ -70,15 +66,30 @@ func spawnButton():
 	
 func calculateScoreChange(score:Score):
 	var change=0
-	var x=Global.currentStreamIndex
+	var x=Global.score
 	match score:
 		Score.GOOD:
-			change=1.6*exp(0.25*x)+5
+			if x<500:
+				change=0.125*x+10
+			elif x>=100 and x<1000:
+				change=0.25*x+10
+			else:
+				change=randi()%x/10
 		Score.OKAY:
-			change=0.5*exp(0.25*x)+5
+			if x<500:
+				change=0.0625*x+10
+			elif x>=500 and x<1000:
+				change=0.125*x+10
+			else:
+				change=randi()%x/5
 		Score.BAD:
-			change=-(0.2*exp(1.4*x)+5)
-	print("change on layer is: ",x,int(change))
+			if failTimer.is_stopped():
+				print("start fail timer")
+				failTimer.start()
+				change=x/2
+				print("change is ", change)
+			else:
+				change=x
 	return int(change)
 	
 	
@@ -142,14 +153,17 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
+	var scoreChange
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
-			Global.score+=scoreChangeGoodHit
-			Global.increaseScore(calculateScoreChange(Score.GOOD))
+			scoreChange=calculateScoreChange(Score.GOOD)
+			Global.score+=scoreChange
+			Global.increaseScore(scoreChange)
 			splat.call_deferred("setText", 2)
 		else: 
-			Global.score+=scoreChangeOkayHit
-			Global.increaseScore(calculateScoreChange(Score.OKAY))
+			scoreChange=calculateScoreChange(Score.OKAY)
+			Global.score+=scoreChange
+			Global.increaseScore(scoreChange)
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
@@ -157,7 +171,8 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
-		Global.score+=calculateScoreChange(Score.BAD)
+		scoreChange=calculateScoreChange(Score.BAD)
+		Global.score-=scoreChange
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
@@ -205,3 +220,8 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(currentButtonToEvaluate,false)
 		buttonSequence.pop_front().queue_free()
+
+
+func _on_fail_timer_timeout() -> void:
+	failTimer.wait_time=failTimer.wait_time*failTimerIncreasePerFail
+	failTimer.stop()

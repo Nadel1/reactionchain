@@ -105,7 +105,10 @@ shape = SubResource("RectangleShape2D_j5ucw")
 [node name="SplatSpawnPos" type="Node2D" parent="UI"]
 position = Vector2(624, -96)
 
+[node name="FailTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="LateArea" to="." method="_on_late_area_area_entered"]
 [connection signal="animation_finished" from="HitZoneAnimatedSprite2D" to="." method="_on_hit_zone_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
 [connection signal="area_exited" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_exited"]
+[connection signal="timeout" from="FailTimer" to="." method="_on_fail_timer_timeout"]
