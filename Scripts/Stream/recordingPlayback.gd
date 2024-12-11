@@ -9,6 +9,7 @@ var timeSinceLastFail = 0.0
 var inputIndex = 0
 var reactionIndex = 0
 var failIndex = 0
+var messageIndex=0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer

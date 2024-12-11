@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=19 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
+[ext_resource type="PackedScene" uid="uid://dylolctgual2i" path="res://Scenes/Stream/chat.tscn" id="2_p3jgj"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
@@ -156,6 +157,9 @@ self_modulate = Color(0, 0, 0, 1)
 position = Vector2(936, 416)
 scale = Vector2(4, 4)
 texture = ExtResource("8_imbvg")
+
+[node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
+position = Vector2(808, 24)
 
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {

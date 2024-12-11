@@ -9,6 +9,25 @@
 [node name="VideoFrame" type="Node2D"]
 script = ExtResource("1_2n6c5")
 
+[node name="RecordedChat" type="Node2D" parent="."]
+position = Vector2(808, 24)
+
+[node name="ChatBackground" type="Polygon2D" parent="RecordedChat"]
+self_modulate = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 256, 0, 256, 248, 0, 248)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RecordedChat/ChatBackground"]
+offset_right = 240.0
+offset_bottom = 232.0
+theme = ExtResource("3_6olq0")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "!! DEBUG TEXT !!
+"
+scroll_active = false
+scroll_following = true
+metadata/_edit_use_anchors_ = true
+
 [node name="VideoBackground" type="Polygon2D" parent="."]
 z_index = -2
 color = Color(0.0807833, 0.0807833, 0.0807833, 1)
@@ -44,27 +63,6 @@ z_index = -2
 color = Color(0.792157, 0.792157, 0.792157, 1)
 polygon = PackedVector2Array(0, 648, 0, 512, 800, 512, 800, 0, 1152, 0, 1152, 648)
 
-[node name="Chat" type="Node2D" parent="."]
-position = Vector2(808, 24)
-
-[node name="ChatBackground" type="Polygon2D" parent="Chat"]
-self_modulate = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(0, 0, 256, 0, 256, 248, 0, 248)
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Chat/ChatBackground"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 248.0
-offset_bottom = 240.0
-theme = ExtResource("3_6olq0")
-theme_override_font_sizes/normal_font_size = 32
-text = "Imagine
-an
-active
-chat
-room
-here"
-
 [node name="StreamBorder" type="NinePatchRect" parent="."]
 z_index = 1
 offset_right = 200.0
@@ -94,6 +92,7 @@ position = Vector2(24, 24)
 scale = Vector2(0.590614, 0.590614)
 
 [node name="StartVideo" parent="Content" instance=ExtResource("4_8g86c")]
+position = Vector2(-40.6357, -40.6357)
 
 [node name="Time" type="Timer" parent="."]
 wait_time = 25.0

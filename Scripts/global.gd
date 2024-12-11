@@ -25,8 +25,11 @@ var developerMode = false
 var musicTracks=[]
 var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
+var chatLog=[]
 signal tact
 signal tactArrows
+
+var chatUsers=[]
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
 @export var playbackSpeed = 0.575
