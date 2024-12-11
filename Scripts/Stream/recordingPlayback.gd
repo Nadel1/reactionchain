@@ -3,9 +3,11 @@ extends Node
 @export var index = 0
 var streamer 
 var playing = true
+var chat
 var timeSinceLastInput = 0.0
 var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
+var timeSinceLastMessage = 0.0
 var inputIndex = 0
 var reactionIndex = 0
 var failIndex = 0
@@ -13,6 +15,9 @@ var messageIndex=0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
+
+func setChat(newChat):
+	chat=newChat
 
 func setIndex(i : int):
 	index = i
@@ -24,6 +29,7 @@ func _physics_process(delta: float) -> void:
 		timeSinceLastInput += delta
 		timeSinceLastReaction += delta
 		timeSinceLastFail += delta
+		timeSinceLastMessage+=delta
 		if inputIndex < Global.recordingsMovement[index].size() and Global.recordingsMovement[index][inputIndex][1] <= timeSinceLastInput:
 			var input = Global.recordingsMovement[index][inputIndex][0]
 			streamer.move(input)
@@ -35,6 +41,10 @@ func _physics_process(delta: float) -> void:
 				streamer.react(reaction)
 			timeSinceLastReaction = 0
 			reactionIndex += 1
+		if messageIndex<Global.chatLog[index].size() and  Global.chatLog[index][messageIndex][0] <= timeSinceLastMessage:
+			var message=Global.chatLog[index][messageIndex][1]
+			chat.text=chat.text+message
+			messageIndex+=1
 		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:
 			var fail = Global.recordingsFails[index][failIndex]
 			$TrackPlaybackHandler.failReaction(fail[1])
