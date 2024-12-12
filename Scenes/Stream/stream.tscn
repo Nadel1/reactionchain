@@ -162,6 +162,9 @@ position = Vector2(936, 416)
 scale = Vector2(4, 4)
 texture = ExtResource("8_imbvg")
 
+[node name="TimerSinceLastMessage" type="Timer" parent="UI"]
+autostart = true
+
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_cfqdi")
@@ -174,3 +177,4 @@ autoplay = "zoomOut"
 [connection signal="timeout" from="StartSpawningArrowsTimer" to="." method="_on_start_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
 [connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]
+[connection signal="timeout" from="UI/TimerSinceLastMessage" to="UI/Chat" method="_on_timer_since_last_message_timeout"]

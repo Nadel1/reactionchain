@@ -20,6 +20,7 @@ var currentHighScore=0#we want to display the highest score at game over
 var highScore=0
 var streamerIndices =[]
 var currentStreamer=null
+var chatDepth=5#at some point you cant read it anymore
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
 var developerMode = false
 var musicTracks=[]

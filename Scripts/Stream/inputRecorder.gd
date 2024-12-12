@@ -27,7 +27,11 @@ func stopRecording():
 	Global.recordingsMovement.append(recordingMovement)
 	Global.recordingsReaction.append(recordingReaction)
 	Global.recordingsFails.append(recordingFails)
-	Global.chatLog.append(recordingChat)
+	if Global.chatLog.size()<=Global.chatDepth:
+		Global.chatLog.append(recordingChat)
+		print("append")
+	else:
+		Global.chatLog[Global.currentStreamIndex%Global.chatDepth]=recordingChat
 
 func _physics_process(delta: float) -> void:
 	if Global.inputHandler == null: return

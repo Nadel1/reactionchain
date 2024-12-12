@@ -37,11 +37,12 @@ func _physics_process(delta: float) -> void:
 				streamer.react(reaction)
 			timeSinceLastReaction = 0
 			reactionIndex += 1
-		if messageIndex<Global.chatLog[index].size() and  Global.chatLog[index][messageIndex][0] <= timeSinceLastMessage:
-			var message=Global.chatLog[index][messageIndex][1]
-			$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
-			timeSinceLastMessage = 0
-			messageIndex+=1
+		if index>Global.currentStreamIndex-Global.chatDepth:
+			if messageIndex<Global.chatLog[index%Global.chatDepth].size() and  Global.chatLog[index%Global.chatDepth][messageIndex][0] <= timeSinceLastMessage:
+				var message=Global.chatLog[index%Global.chatDepth][messageIndex][1]
+				$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
+				timeSinceLastMessage = 0
+				messageIndex+=1
 		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:
 			var fail = Global.recordingsFails[index][failIndex]
 			$TrackPlaybackHandler.failReaction(fail[1])
