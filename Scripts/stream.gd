@@ -75,14 +75,10 @@ func _ready():
 		for i in range(0,index):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[index-1-i]].instantiate()
-			var lastChat=RECORDEDCHAT.instantiate()
-			lastChat.position=$UI/ChatPlaceholder.position
-			lastChat.scale=$UI/ChatPlaceholder.scale
 			lastStreamer.position=$UI/StreamerPlaceholder.position
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
 			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i], Global.currentStreamIndex-1-i)
 			recursionInstance.setStreamer(lastStreamer)
-			recursionInstance.setChat(lastChat)
 			recursionInstance.add_child(lastStreamer)
 			recursionInstance.setIndex((index-1)-i)
 			currentNode.find_child("Content").add_child(recursionInstance)
