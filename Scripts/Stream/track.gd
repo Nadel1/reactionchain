@@ -83,13 +83,12 @@ func calculateScoreChange(score:Score):
 			else:
 				change=randi()%x/5
 		Score.BAD:
-			if failTimer.is_stopped():
-				print("start fail timer")
-				failTimer.start()
-				change=x/2
-				print("change is ", change)
+			if x<500:
+				change=10*1.0625
+			elif x>=500 and x<1000:
+				change=10*1.0625
 			else:
-				change=x
+				change=randi()%x/5
 	return int(change)
 	
 	
