@@ -43,6 +43,9 @@ func _physics_process(delta: float) -> void:
 			reactionIndex += 1
 		if messageIndex<Global.chatLog[index].size() and  Global.chatLog[index][messageIndex][0] <= timeSinceLastMessage:
 			chat.get_node("ChatBackground/ChatText").text="ITs working!!"
+			print("position of chat is: ", chat.position)
+			chat.position=streamer.position
+			
 			#var message=Global.chatLog[index][messageIndex][1]
 			#chat.text=chat.text+message
 			#messageIndex+=1

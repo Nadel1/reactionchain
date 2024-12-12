@@ -6,6 +6,7 @@ extends Node2D
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
+const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
 
 #preload streamers
@@ -74,10 +75,10 @@ func _ready():
 		for i in range(0,index):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[index-1-i]].instantiate()
-			var lastChat=$UI/ChatPlaceholder
-			lastChat.position=$UI/StreamerPlaceholder.position
+			var lastChat=RECORDEDCHAT.instantiate()
+			lastChat.position=$UI/ChatPlaceholder.position
+			lastChat.scale=$UI/ChatPlaceholder.scale
 			lastStreamer.position=$UI/StreamerPlaceholder.position
-			print("last streamer position: ", lastStreamer.position)
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
 			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i], Global.currentStreamIndex-1-i)
 			recursionInstance.setStreamer(lastStreamer)

@@ -119,6 +119,29 @@ wait_time = 2.0
 
 [node name="UI" type="Node2D" parent="."]
 
+[node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
+position = Vector2(808, 24)
+
+[node name="ChatPlaceholder" type="Node2D" parent="UI"]
+visible = false
+position = Vector2(808, 7)
+
+[node name="ChatBackground" type="Polygon2D" parent="UI/ChatPlaceholder"]
+self_modulate = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 256, 0, 256, 248, 0, 248)
+
+[node name="ChatText" type="RichTextLabel" parent="UI/ChatPlaceholder/ChatBackground"]
+offset_right = 240.0
+offset_bottom = 232.0
+theme = ExtResource("6_f2vs8")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "ChatPlaceholder
+"
+scroll_active = false
+scroll_following = true
+metadata/_edit_use_anchors_ = true
+
 [node name="Score" type="Node2D" parent="UI"]
 z_index = 1
 position = Vector2(128, 536)
@@ -143,6 +166,7 @@ autostart = true
 position = Vector2(299, 593)
 
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
+position = Vector2(-1, -1)
 
 [node name="TrackIndicatorWrong" type="Sprite2D" parent="UI"]
 position = Vector2(839, 230)
@@ -157,28 +181,6 @@ self_modulate = Color(0, 0, 0, 1)
 position = Vector2(936, 416)
 scale = Vector2(4, 4)
 texture = ExtResource("8_imbvg")
-
-[node name="ChatPlaceholder" type="Node2D" parent="UI"]
-
-[node name="ChatBackground" type="Polygon2D" parent="UI/ChatPlaceholder"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(808, 24)
-polygon = PackedVector2Array(0, 0, 256, 0, 256, 248, 0, 248)
-
-[node name="ChatText" type="RichTextLabel" parent="UI/ChatPlaceholder/ChatBackground"]
-offset_right = 240.0
-offset_bottom = 232.0
-theme = ExtResource("6_f2vs8")
-theme_override_font_sizes/normal_font_size = 32
-bbcode_enabled = true
-text = "!! DEBUG TEXT !!
-"
-scroll_active = false
-scroll_following = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
-position = Vector2(808, 24)
 
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {
