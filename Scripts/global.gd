@@ -14,6 +14,7 @@ var recordingsMovement = []
 var recordingsReaction = []
 var recordingsFails = []
 var recordDonationReaction = []
+var recordingsEvents = []
 var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
 var score = 10
@@ -30,10 +31,9 @@ var musicTracks=[]
 var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
 var chatLog=[]
+var chatUsers=[]
 var decreaseWrongInput=1.1
 var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
-signal tact
-signal tactArrows
 
 var moneyEarned = 0
 var moneyHighScore=0
@@ -44,6 +44,15 @@ var nextDonationViewerCount=500
 var chatUsers=[]
 var difficultyDonations=3#how many donation inputs appear
 var viewersNeededToNextDonation=500
+
+var musicSnippetIndex = 0
+var arrowSnippetIndex = 0
+var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
+
+signal tact
+signal tactArrows
+signal pause(int)
+signal resume(int)
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
 @export var playbackSpeed = 0.575
@@ -61,14 +70,19 @@ func _ready():
 	$Metronome.wait_time=snippetLength
 	$MetronomeArrows.wait_time=snippetLength
 	VideoCustomizer.generateFirstTitle()
-	
+
+func resetPerStream():
+	musicSnippetIndex = 0
+	arrowSnippetIndex = 0
 
 func _on_metronome_timeout() -> void:
 	tact.emit()
+	musicSnippetIndex += 1
 
 func startMetronome():
 	$Metronome.start()
 	tact.emit()
+	#musicSnippetIndex += 1
 	
 func stopMetronome():
 	$Metronome.stop()
@@ -76,14 +90,24 @@ func stopMetronome():
 
 func _on_metronome_arrows_timeout() -> void:
 	tactArrows.emit()
+	arrowSnippetIndex += 1
 	
 func startMetronomeArrows():
 	$MetronomeArrows.start()
 	tactArrows.emit()
+	#arrowSnippetIndex += 1
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
-	
+
+func pauseStream(depth : int):
+	pauseDepths.push_back(depth)
+	pause.emit(depth)
+
+func resumeStream():
+	resume.emit(pauseDepths.pop_back())
+
+
 func makeSaveDict():
 	var saveDict = {
 		"highScoreViewers" : highScoreViewers,

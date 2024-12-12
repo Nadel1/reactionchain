@@ -8,8 +8,8 @@ var fade = 0.0
 var inputFadeTime = 1.0
 var fullVolume = -20.0
 var zeroVolume = -40.0
-var snippetIndex = 0
 var audible = true
+var playingIndex = -1 # Mirrors Global.musicSnippetIndex but always gives the snippet being played right now
 signal layerFinished
 
 func setIndex(id : int):
@@ -52,6 +52,13 @@ func stop():
 	playerCorrect.playing = false
 	playerFail.playing = false
 
+func pause():
+	stop()
+
+func resume():
+	playerCorrect.playing = true
+	playerFail.playing = true
+
 func getTrackCorrect():
 	return playerCorrect.file
 
@@ -72,12 +79,21 @@ func _process(_delta: float) -> void:
 	fade = factor
 
 func nextTact():
-	if snippetIndex<Global.musicTracks[layerIndex].size():
-		playerCorrect.set_file(Global.musicTracks[layerIndex][snippetIndex].getLayer(layerIndex))
+	if Global.musicSnippetIndex<Global.musicTracks[layerIndex].size():
+		playingIndex = Global.musicSnippetIndex
+		playerCorrect.set_file(Global.musicTracks[layerIndex][playingIndex].getLayer(layerIndex))
 		playerFail.set_file(playerCorrect.file)
 		playerCorrect.play()
 		playerFail.play()
 	else:
 		#end of layer
 		layerFinished.emit()
-	snippetIndex += 1
+	updatePlayingState()
+
+func skipSnippet():
+	updatePlayingState()
+
+func updatePlayingState():
+	if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() >= layerIndex:
+		playerCorrect.playing = false
+		playerFail.playing = false

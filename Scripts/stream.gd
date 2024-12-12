@@ -18,9 +18,8 @@ var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 
-
-var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var index
+var arrowPlayingIndex = -1
 
 var trackPlayers : Array[TrackPlaybackHandler]
 
@@ -58,6 +57,9 @@ func _ready():
 	$UI/TrackIndicatorRight.visible=Global.developerMode
 	index=Global.currentStreamIndex
 	Global.tactArrows.connect(nextArrowTact)
+	Global.pause.connect(pause)
+	Global.resume.connect(resume)
+	Global.resetPerStream()
 	$MidiPlayerBass.setName("Bass")
 	$MidiPlayerBass.play_speed = Global.playbackSpeed
 	Global.tact.connect($MidiPlayerBass.play)
@@ -118,12 +120,23 @@ func _on_switch_scene_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 	
 func nextArrowTact():
-	if counterForArrowsPlayer<Global.musicTracks[index].size():
-		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer].getLayer(index))
+	if Global.arrowSnippetIndex<Global.musicTracks[index].size():
+		arrowPlayingIndex = Global.arrowSnippetIndex
+		midiPlayerArrows.set_file(Global.musicTracks[index][arrowPlayingIndex].getLayer(index))
 		midiPlayerArrows.play()
 	else:
 		Global.stopMetronomeArrows()
-	counterForArrowsPlayer+=1
+	updateArrowPlayingState()
+
+func updateArrowPlayingState():
+	if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() >= index:
+		midiPlayerArrows.playing = false
+
+func pause():
+	pass
+	
+func resume():
+	pass
 
 func _on_track_playback_handler_layer_finished() -> void:
 	$TrackPlaybackHandler.stop()

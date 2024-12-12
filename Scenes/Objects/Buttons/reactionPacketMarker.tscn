@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://edajm02im3be"]
 
-[ext_resource type="Texture2D" uid="uid://cy6n3fmivyryf" path="res://Assets/Sprites/DebugMarker.png" id="1_mo78o"]
-[ext_resource type="Script" path="res://Scripts/reaction_packet_marker.gd" id="1_ptdq7"]
+[ext_resource type="Script" path="res://Scripts/reaction_packet_marker.gd" id="1_7urvn"]
+[ext_resource type="Texture2D" uid="uid://cy6n3fmivyryf" path="res://Assets/Sprites/DebugMarker.png" id="2_d6blh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t7dr8"]
 size = Vector2(57, 59)
 
 [node name="ReactionPacketMarker" type="Node2D" groups=["PacketMarker"]]
-script = ExtResource("1_ptdq7")
+script = ExtResource("1_7urvn")
 
 [node name="DebugSprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_mo78o")
+texture = ExtResource("2_d6blh")
 
 [node name="ReactionPacketArea2D" type="Area2D" parent="."]
 

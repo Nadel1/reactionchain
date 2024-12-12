@@ -1,5 +1,4 @@
-extends Node2D
-@export var speed = 250
+extends GenericPrompt
 @export var input=""
 @onready var animatedSprite=get_node("AnimatedSprite")
 
@@ -10,11 +9,6 @@ var lastButton=false
 func _ready() -> void:
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
-	position += Vector2(speed * delta,0)
-	
 func getInput():
 	return input
 	

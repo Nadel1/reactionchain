@@ -4,7 +4,8 @@ const BUTTONRIGHT=preload("res://Scenes/Objects/Buttons/ButtonRight.tscn")
 const BUTTONLEFT=preload("res://Scenes/Objects/Buttons/ButtonLeft.tscn")
 const BUTTONUP=preload("res://Scenes/Objects/Buttons/ButtonUp.tscn")
 const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
-const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
+const MARKER=preload("res://Scenes/Objects/Buttons/reactionPacketMarker.tscn")
+const EVENTTRIGGER=preload("res://Scenes/Objects/Buttons/EventTrigger.tscn")
 const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
 enum Score{GOOD, OKAY, BAD}
 
@@ -101,6 +102,11 @@ func spawnMarker(end : bool):
 		#print("last button detected ",debuglastButton)
 		debuglastButton+=1
 		lastButtonSpawned.lastButton=true
+
+func spawnEventTrigger():
+	var trigger = EVENTTRIGGER.instantiate()
+	trigger.global_position=spawnPoint.global_position
+	get_parent().call_deferred("add_child",trigger)
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type==144:
@@ -200,9 +206,17 @@ func dealWithMarker():
 		currentPacketDuration = 0.0
 	countMarker+=1
 		
+
+func dealWithEventTrigger():
+	Global.currentStreamer.event()
+	$StartEventTimer.start()
+	pass
+
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		dealWithMarker()
+	elif area.get_parent().is_in_group("EventTrigger"):
+		dealWithEventTrigger()
 	else:
 		goodHit=true
 		if buttonSequence.size() > 0 and buttonSequence.front()!=null:
@@ -210,10 +224,14 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 			area.get_parent().hitZoneEnter(true)
 	
 func _on_good_area_area_exited(area: Area2D) -> void:
-	if !area.get_parent().is_in_group("PacketMarker"):
+	if !area.get_parent().is_in_group("InputPrompt"):
 		goodHit=false
 		
 func _on_late_area_area_entered(area: Area2D) -> void:
-	if !area.get_parent().is_in_group("PacketMarker"):
+	if area.get_parent().is_in_group("InputPrompt"):
 		evaluateScore(currentButtonToEvaluate,false)
 		buttonSequence.pop_front().queue_free()
+
+
+func _on_start_event_timer_timeout() -> void:
+	Global.pause.emit()

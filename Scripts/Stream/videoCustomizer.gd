@@ -9,8 +9,14 @@ const titles = [
 	["- GONE WRONG", "- MENTAL", "- WHAT?!", "", ""]
 ]
 const spices = [857167209, 9816348721, 98239659]
+var layerIndex = 0
+
+func _ready() -> void:
+	Global.pause.connect(pause)
+	Global.resume.connect(resume)
 
 func init(index : int):
+	layerIndex = index
 	var prefixStack = ""
 	for i in range(0, index):
 		prefixStack = Global.videoTitle[0][i] + " " + prefixStack
@@ -40,6 +46,14 @@ static func getString(part : int, stringSeed : int):
 		var at = rand_from_seed(stringSeed + spices[part] + Global.mainSeed)[0] % titles[part].size()
 		return titles[part][at]
 	return ""
+
+func pause(depth):
+	if depth >= layerIndex:
+		$PausePlay.play("pause")
+
+func resume(depth):
+	if depth >= layerIndex:
+		$PausePlay.play("play")
 
 func _process(_delta: float) -> void:
 	$TimelineProgress.scale.x = 1 - $Time.time_left / $Time.wait_time

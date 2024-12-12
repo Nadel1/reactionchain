@@ -24,3 +24,10 @@ func prepareMusic():
 			Global.packetToBeDropped.append(false)
 	
 	Global.musicTracks.append(track)
+	$EventScheduler.generateEvents()
+
+func insertEvent(snippetIndex : int, toInsert : Array[TrackSnippet]): #TODO: Add type parameter
+	for i in toInsert:
+		for j in Global.musicTracks:
+			Global.musicTracks[j].insert(snippetIndex+1, toInsert[i])
+		

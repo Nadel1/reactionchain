@@ -74,15 +74,14 @@ size = Vector2(13.5, 62)
 script = ExtResource("1_02ljk")
 
 [node name="TrackAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-44.9999, -10)
-scale = Vector2(0.933333, 1)
+position = Vector2(-112, -8)
 sprite_frames = SubResource("SpriteFrames_4ikor")
 
 [node name="SpawnPoint" type="Node2D" parent="."]
 position = Vector2(-379, -11)
 
 [node name="LateArea" type="Area2D" parent="."]
-position = Vector2(621, -11)
+position = Vector2(624, -8)
 collision_layer = 2
 collision_mask = 3
 
@@ -91,7 +90,7 @@ position = Vector2(142, 0)
 shape = SubResource("RectangleShape2D_nmqn4")
 
 [node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(621, -11)
+position = Vector2(624, -8)
 sprite_frames = SubResource("SpriteFrames_pvy2y")
 
 [node name="GoodArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
@@ -105,7 +104,11 @@ shape = SubResource("RectangleShape2D_j5ucw")
 [node name="SplatSpawnPos" type="Node2D" parent="UI"]
 position = Vector2(624, -96)
 
+[node name="StartEventTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="LateArea" to="." method="_on_late_area_area_entered"]
 [connection signal="animation_finished" from="HitZoneAnimatedSprite2D" to="." method="_on_hit_zone_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_entered"]
 [connection signal="area_exited" from="HitZoneAnimatedSprite2D/GoodArea" to="." method="_on_good_area_area_exited"]
+[connection signal="timeout" from="StartEventTimer" to="." method="_on_start_event_timer_timeout"]
