@@ -34,7 +34,8 @@ var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
-	
+
+var debuglastButton=0
 	
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -70,6 +71,8 @@ func spawnMarker(end : bool):
 	get_parent().call_deferred("add_child",newMarker)
 	newMarker.setVisible(Global.developerMode)
 	if end and lastButtonSpawned!=null:
+		print("last button detected ",debuglastButton)
+		debuglastButton+=1
 		lastButtonSpawned.lastButton=true
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:

@@ -74,8 +74,10 @@ func _ready():
 		for i in range(0,index):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[index-1-i]].instantiate()
-			var lastChat=$UI/VideoFrame/RecordedChat/ChatBackground/RichTextLabel
+			var lastChat=$UI/ChatPlaceholder
+			lastChat.position=$UI/StreamerPlaceholder.position
 			lastStreamer.position=$UI/StreamerPlaceholder.position
+			print("last streamer position: ", lastStreamer.position)
 			lastStreamer.scale=$UI/StreamerPlaceholder.scale
 			lastStreamer.init(Global.streamerIndices[Global.currentStreamIndex-1-i], Global.currentStreamIndex-1-i)
 			recursionInstance.setStreamer(lastStreamer)
