@@ -16,6 +16,16 @@ enum Score{GOOD, OKAY, BAD}
 
 @export var failTimerIncreasePerFail=1.1
 
+@export var thresholdFastIncrease=1000
+@export var increaseGoodHit=0.0125
+@export var increaseOkayHit=0.00625
+@export var scoreOffset=10
+@export var minimumLoss=5
+@export var removeScore=0.25
+@export var decreaseWrongInput=1.125
+@export var increaseOfLossPerWrongInput=0.1
+@export var startValueDecrease=5
+
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
@@ -29,7 +39,7 @@ var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
-#var firstPacketStarted=false
+
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
 
@@ -49,11 +59,7 @@ func _input(event):
 			registerInput("down")
 		else:
 			evaluateScore(null,false)
-
-#func _process(delta: float) -> void:
-#	if firstPacketStarted:
-#		currentPacketDuration += delta
-
+			
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
@@ -69,28 +75,22 @@ func calculateScoreChange(score:Score):
 	var x=Global.score
 	match score:
 		Score.GOOD:
-			if x<500:
-				change=0.125*x+10
-			elif x>=100 and x<1000:
-				change=0.25*x+10
+			if x<thresholdFastIncrease:
+				change=increaseGoodHit*x+scoreOffset
 			else:
-				change=randi()%x/10
+				change=increaseGoodHit*2*x+scoreOffset
 		Score.OKAY:
-			if x<500:
-				change=0.0625*x+10
-			elif x>=500 and x<1000:
-				change=0.125*x+10
+			if x<thresholdFastIncrease:
+				change=increaseOkayHit*x+scoreOffset
 			else:
-				change=randi()%x/5
+				change=increaseOkayHit*2*x+scoreOffset
 		Score.BAD:
-			if x<500:
-				change=10*1.0625
-			elif x>=500 and x<1000:
-				change=10*1.0625
-			else:
-				change=randi()%x/5
+			Global.decreaseWrongInput+=increaseOfLossPerWrongInput
+			var dec=startValueDecrease+x*removeScore*Global.decreaseWrongInput 
+			print("decrease: ",dec)
+			change=dec
 	return int(change)
-	
+
 	
 func spawnMarker(end : bool):
 	var newMarker=MARKER.instantiate()
@@ -185,8 +185,6 @@ func gameOver():
 	
 		
 func registerInput(inputString):
-	if buttonSequence.is_empty()==true:
-		evaluateScore(null,false)#substract points when input for example at end of level
 	if currentButtonToEvaluate!=null:
 		if currentButtonToEvaluate.getInput()==inputString:
 			evaluateScore(currentButtonToEvaluate,true)

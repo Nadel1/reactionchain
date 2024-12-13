@@ -27,6 +27,7 @@ var musicTracks=[]
 var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
 var chatLog=[]
+var decreaseWrongInput=1.1
 signal tact
 signal tactArrows
 
