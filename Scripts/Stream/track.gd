@@ -10,6 +10,7 @@ const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
+@onready var chat=get_parent().find_child("Chat")
 
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
@@ -73,7 +74,7 @@ func spawnMarker(end : bool):
 	get_parent().call_deferred("add_child",newMarker)
 	newMarker.setVisible(Global.developerMode)
 	if end and lastButtonSpawned!=null:
-		print("last button detected ",debuglastButton)
+		#print("last button detected ",debuglastButton)
 		debuglastButton+=1
 		lastButtonSpawned.lastButton=true
 
@@ -109,12 +110,14 @@ func react(correctReaction=true):
 					reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 				else:
 					reaction=lastReaction
+			chat.initiateSendReactionMessage(reaction)
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 			inputRecorder.reactionFailed(currentPacketDuration)
 			currentPacketDuration = 0.0
 			Global.packetToBeDropped[countReactionPacket-1] = true
 		Global.currentStreamer.react(reaction)
+		
 		inputRecorder.appendRecordedReaction(reaction)
 		currentButtonToEvaluate=null
 		correctReactionPacket = true
@@ -167,7 +170,7 @@ func dealWithMarker():
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1
-		print("count increased: ",countReactionPacket)
+		#print("count increased: ",countReactionPacket)
 		currentPacketDuration = 0.0
 	countMarker+=1
 		
