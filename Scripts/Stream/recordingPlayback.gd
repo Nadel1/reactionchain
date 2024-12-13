@@ -38,8 +38,9 @@ func _physics_process(delta: float) -> void:
 			timeSinceLastReaction = 0
 			reactionIndex += 1
 		if index>Global.currentStreamIndex-Global.chatDepth:
-			if messageIndex<Global.chatLog[index%Global.chatDepth].size() and  Global.chatLog[index%Global.chatDepth][messageIndex][0] <= timeSinceLastMessage:
-				var message=Global.chatLog[index%Global.chatDepth][messageIndex][1]
+			var chatIndex=index%Global.chatDepth
+			if messageIndex<Global.chatLog[chatIndex].size() and  Global.chatLog[chatIndex][messageIndex][0] <= timeSinceLastMessage:
+				var message=Global.chatLog[chatIndex][messageIndex][1]
 				$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
 				timeSinceLastMessage = 0
 				messageIndex+=1

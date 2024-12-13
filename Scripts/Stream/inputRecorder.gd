@@ -27,7 +27,7 @@ func stopRecording():
 	Global.recordingsMovement.append(recordingMovement)
 	Global.recordingsReaction.append(recordingReaction)
 	Global.recordingsFails.append(recordingFails)
-	if Global.chatLog.size()<=Global.chatDepth:
+	if Global.chatLog.size()<Global.chatDepth:
 		Global.chatLog.append(recordingChat)
 		print("append")
 	else:

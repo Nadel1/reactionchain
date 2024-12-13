@@ -36,7 +36,9 @@ var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
 
 var debuglastButton=0
-	
+
+func _ready():
+	countReactionPacket=0
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.is_action_pressed("right"):
@@ -162,11 +164,12 @@ func registerInput(inputString):
 		
 func dealWithMarker():
 	firstPacketStarted = true
-	countMarker+=1
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1
+		print("count increased: ",countReactionPacket)
 		currentPacketDuration = 0.0
+	countMarker+=1
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):

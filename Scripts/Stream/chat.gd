@@ -4,7 +4,7 @@ extends Node2D
 @onready var chatText=$ChatBackground/RichTextLabel
 var timerCounter=0
 var probabilityNextMessage=0.5
-
+@export var maxUserCount=10
 var lastScore=0#to have a relation between viewer counts and active commenters
 var usernameStrings=["new","user","destroyer","bob","spencer","dark","hunter","ree","wompwomp"]
 var messagesString=["why the hate?","haha nice one", "i love it when you do that","im your biggest fan!"]
@@ -12,7 +12,6 @@ var welcomeStrings=["hi","hey","hewwo","how are you","wazzup"]
 var colors=["red","blue","green","yellow","violet","pink","darkgreen"]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#timer.wait_time=min(100/Global.score,5)
 	chatText.text=""
 
 func generateMessage(user,firstMessage=false):
@@ -33,13 +32,12 @@ func generateNewUser():
 	return newUser
 
 func deleteUsers():
-	while(Global.chatUsers.size()>0 and Global.chatUsers.size()>=Global.score/2):
-		Global.chatUsers.remove_at(randi()%Global.chatUsers.size())
+	pass
 	
 #background fluff
 func sendNewMessage():
 	var message
-	if Global.chatUsers.size()<Global.score/2 or Global.chatUsers.size()==0:#generate new user if the viewer count has doubled
+	if Global.chatUsers.size()<maxUserCount or Global.chatUsers.size()==0:#generate new user if the viewer count has doubled
 		lastScore=Global.score
 		message=generateMessage(generateNewUser(),true)#new users introduce themselves
 	else:
