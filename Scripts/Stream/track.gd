@@ -20,7 +20,6 @@ enum Score{GOOD, OKAY, BAD}
 @export var increaseGoodHit=0.0125
 @export var increaseOkayHit=0.00625
 @export var scoreOffset=10
-@export var minimumLoss=5
 @export var removeScore=0.25
 @export var decreaseWrongInput=1.125
 @export var increaseOfLossPerWrongInput=0.1
@@ -86,9 +85,7 @@ func calculateScoreChange(score:Score):
 				change=increaseOkayHit*2*x+scoreOffset
 		Score.BAD:
 			Global.decreaseWrongInput+=increaseOfLossPerWrongInput
-			var dec=startValueDecrease+x*removeScore*Global.decreaseWrongInput 
-			print("decrease: ",dec)
-			change=dec
+			change=startValueDecrease+x*removeScore*Global.decreaseWrongInput 
 	return int(change)
 
 	
