@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var timer=get_parent().get_node("TimerSinceLastMessage")
+@onready var timer=$TimerSinceLastMessage#get_parent().get_node("TimerSinceLastMessage")
 @onready var chatText=$ChatBackground/RichTextLabel
 var timerCounter=0
 var probabilityNextMessage=0.5

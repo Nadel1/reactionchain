@@ -55,5 +55,3 @@ func appendChatMessage(message):
 	recordingChat.append([timeSinceLastMessage,message])
 	timeSinceLastMessage=0
 	
-func _on_eol_stop_playing_music_timer_timeout() -> void:
-	pass # Replace with function body.
