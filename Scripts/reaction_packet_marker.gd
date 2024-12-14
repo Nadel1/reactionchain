@@ -8,3 +8,6 @@ func _physics_process(delta: float) -> void:
 
 func setVisible(visible: bool):
 	$DebugSprite2D.visible=visible
+
+func setIndex(index):
+	$Label.text = str(index)

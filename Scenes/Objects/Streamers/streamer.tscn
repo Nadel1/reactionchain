@@ -1321,7 +1321,11 @@ one_shot = true
 [node name="MovementRevert" type="Timer" parent="."]
 one_shot = true
 
+[node name="EventStart" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="animation_finished" from="DonationReaction" to="." method="_on_donation_reaction_animation_finished"]
 [connection signal="animation_finished" from="Movement" to="." method="_on_movement_animation_finished"]
 [connection signal="timeout" from="ReactionRevert" to="." method="_on_reaction_revert_timeout"]
 [connection signal="timeout" from="MovementRevert" to="." method="_on_movement_revert_timeout"]
+[connection signal="timeout" from="EventStart" to="." method="_on_event_start_timeout"]

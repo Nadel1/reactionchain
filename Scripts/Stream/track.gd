@@ -58,7 +58,14 @@ func _input(event):
 			registerInput("up")
 		elif event.is_action_pressed("down"):
 			registerInput("down")
-			
+
+func _ready() -> void:
+	Global.eventImminent.connect(spawnEventTrigger)
+
+func _process(delta: float) -> void:
+	if firstPacketStarted:
+		currentPacketDuration += delta
+
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
@@ -98,6 +105,8 @@ func spawnMarker(end : bool):
 	newMarker.global_position=spawnPoint.global_position
 	get_parent().call_deferred("add_child",newMarker)
 	newMarker.setVisible(Global.developerMode)
+	if !end:
+		newMarker.setIndex(Global.arrowSnippetIndex)
 	if end and lastButtonSpawned!=null:
 		#print("last button detected ",debuglastButton)
 		debuglastButton+=1
@@ -106,6 +115,7 @@ func spawnMarker(end : bool):
 func spawnEventTrigger():
 	var trigger = EVENTTRIGGER.instantiate()
 	trigger.global_position=spawnPoint.global_position
+	trigger.find_child("Label").text = str(Global.events[Global.eventIndexArrows].length)
 	get_parent().call_deferred("add_child",trigger)
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
@@ -135,17 +145,17 @@ func react(correctReaction=true):
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 			else:
 				#use last reaction, or if the last reaction was none, replace it with random
-				var lastReaction=Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1][1]
-				if lastReaction==RT.dirToInt(RT.Emotion.NONE):
+				var lastReaction = Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1]
+				if lastReaction is int or lastReaction[1]==RT.dirToInt(RT.Emotion.NONE):
 					reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 				else:
-					reaction=lastReaction
+					reaction=lastReaction[1]
 			chat.initiateSendReactionMessage(reaction)
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 			inputRecorder.reactionFailed(currentPacketDuration)
 			currentPacketDuration = 0.0
-			Global.packetToBeDropped[countReactionPacket-1] = true
+			Global.packetToBeDropped[min(Global.packetToBeDropped.size()-1,countReactionPacket-1)] = true
 		Global.currentStreamer.react(reaction)
 		
 		inputRecorder.appendRecordedReaction(reaction)
@@ -209,7 +219,6 @@ func dealWithMarker():
 
 func dealWithEventTrigger():
 	Global.currentStreamer.event()
-	$StartEventTimer.start()
 	pass
 
 func _on_good_area_area_entered(area: Area2D) -> void:
@@ -231,7 +240,3 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("InputPrompt"):
 		evaluateScore(currentButtonToEvaluate,false)
 		buttonSequence.pop_front().queue_free()
-
-
-func _on_start_event_timer_timeout() -> void:
-	Global.pause.emit()

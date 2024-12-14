@@ -94,6 +94,6 @@ func skipSnippet():
 	updatePlayingState()
 
 func updatePlayingState():
-	if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() >= layerIndex:
+	if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() > layerIndex:
 		playerCorrect.playing = false
 		playerFail.playing = false

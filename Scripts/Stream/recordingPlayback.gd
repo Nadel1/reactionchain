@@ -3,6 +3,7 @@ extends Node
 @export var index = 0
 var streamer 
 var playing = true
+var paused = false
 var timeSinceLastInput = 0.0
 var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
@@ -21,9 +22,13 @@ func setIndex(i : int):
 	index = i
 	$TrackPlaybackHandler.setIndex(i)
 
+func _ready() -> void:
+	Global.pause.connect(pause)
+	Global.resume.connect(resume)
+
 func _physics_process(delta: float) -> void:
 	checkIndices()
-	if playing:
+	if playing and !paused:
 		timeSinceLastInput += delta
 		timeSinceLastReaction += delta
 		timeSinceLastFail += delta
@@ -39,6 +44,8 @@ func _physics_process(delta: float) -> void:
 			streamer.move(input)
 			timeSinceLastInput = 0
 			inputIndex += 1
+		while reactionIndex < Global.recordingsReaction[index].size() and Global.recordingsReaction[index][reactionIndex] is int:
+			reactionIndex += 1
 		if reactionIndex < Global.recordingsReaction[index].size() and Global.recordingsReaction[index][reactionIndex][0] <= timeSinceLastReaction:
 			var reaction = Global.recordingsReaction[index][reactionIndex][1]
 			if reaction != RT.Emotion.NONE:
@@ -61,7 +68,7 @@ func _physics_process(delta: float) -> void:
 	pass
 
 func checkIndices():
-	if !playing:
+	if !playing or paused:
 		return
 	var shouldStop = Global.recordingsMovement.size() <= index
 	if !shouldStop:
@@ -71,3 +78,11 @@ func checkIndices():
 		anyListUnfinished = anyListUnfinished || failIndex < Global.recordingsFails[index].size()
 		shouldStop = !anyListUnfinished
 	playing = playing && !shouldStop
+
+func pause(depth : int):
+	if depth > index:
+		paused = true
+
+func resume(depth : int):
+	if depth > index:
+		paused = false

@@ -48,12 +48,14 @@ static func getString(part : int, stringSeed : int):
 	return ""
 
 func pause(depth):
-	if depth >= layerIndex:
+	if depth == layerIndex:
 		$PausePlay.play("pause")
+	$Time.set_paused(depth >= layerIndex)
 
 func resume(depth):
-	if depth >= layerIndex:
+	if depth == layerIndex:
 		$PausePlay.play("play")
+	$Time.set_paused(not depth >= layerIndex)
 
 func _process(_delta: float) -> void:
 	$TimelineProgress.scale.x = 1 - $Time.time_left / $Time.wait_time

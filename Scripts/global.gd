@@ -26,7 +26,7 @@ var streamerIndices =[]
 var currentStreamer=null
 var chatDepth=5#at some point you cant read it anymore
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
-var developerMode = false
+var developerMode = true
 var musicTracks=[]
 var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
@@ -47,10 +47,16 @@ var viewersNeededToNextDonation=500
 
 var musicSnippetIndex = 0
 var arrowSnippetIndex = 0
+var events = []
+var eventIndexArrows = 0
+var eventIndexMusic = 0
+var eventEnds = []
 var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
 
 signal tact
 signal tactArrows
+signal eventImminent
+signal pastEvent(Event)
 signal pause(int)
 signal resume(int)
 
@@ -74,10 +80,24 @@ func _ready():
 func resetPerStream():
 	musicSnippetIndex = 0
 	arrowSnippetIndex = 0
+	eventIndexArrows = 0
+	eventIndexMusic = 0
 
 func _on_metronome_timeout() -> void:
+	if eventEnds.size() > 0 and eventEnds.back() <= 0:
+		eventEnds.pop_back()
+		resumeStream()
+	if eventIndexMusic < events.size() and events[eventIndexMusic].startIndex == arrowSnippetIndex:
+		var event = events[eventIndexMusic]
+		if event.startIndex == arrowSnippetIndex:
+			if event.startLayer != currentStreamIndex:
+				pastEvent.emit(event)
+		eventEnds.push_back(event.length + 1)
+		print("Event started, ends in: " + str(event.length + 1))
 	tact.emit()
 	musicSnippetIndex += 1
+	if eventEnds.size() > 0:
+		eventEnds[eventEnds.size()-1] -= 1
 
 func startMetronome():
 	$Metronome.start()
@@ -89,6 +109,11 @@ func stopMetronome():
 
 
 func _on_metronome_arrows_timeout() -> void:
+	if eventIndexArrows < events.size() and events[eventIndexArrows].startIndex == arrowSnippetIndex:
+		var event = events[eventIndexArrows]
+		if event.startIndex == arrowSnippetIndex and event.startLayer == currentStreamIndex:
+			eventImminent.emit()
+		eventIndexArrows += 1
 	tactArrows.emit()
 	arrowSnippetIndex += 1
 	
@@ -103,10 +128,32 @@ func stopMetronomeArrows():
 func pauseStream(depth : int):
 	pauseDepths.push_back(depth)
 	pause.emit(depth)
+	print("Paused. Pause Stack:")
+	for i in pauseDepths:
+		print("- " + str(i))
 
 func resumeStream():
-	resume.emit(pauseDepths.pop_back())
+	var depth = pauseDepths.pop_back()
+	resume.emit(depth)
+	print("Resumed. Pause Stack:")
+	for i in pauseDepths:
+		print("- " + str(i))
 
+func insertEvent(newEvent : Event):
+	if events.size() == 0 or events.back().startIndex <= newEvent.startIndex:
+		events.append(newEvent)
+		return
+	
+	var readjustingIndices = false
+	for i in events.size():
+		var oldEvent = events[i]
+		if !readjustingIndices:
+			if oldEvent.startIndex >= newEvent.startIndex:
+				readjustingIndices = true
+				events.insert(i, newEvent)
+				oldEvent.startIndex += newEvent.length
+		else:
+			oldEvent.startIndex += newEvent.length
 
 func makeSaveDict():
 	var saveDict = {

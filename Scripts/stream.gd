@@ -110,11 +110,6 @@ func _process(_delta: float) -> void:
 		newDonation.loadDonation(Global.difficultyDonations)
 		find_child("UI").add_child(newDonation)
 	
-
-	
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	midiPlayerArrows.playing=false
-	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
@@ -129,8 +124,9 @@ func nextArrowTact():
 	updateArrowPlayingState()
 
 func updateArrowPlayingState():
-	if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() >= index:
-		midiPlayerArrows.playing = false
+	#if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() >= index:
+	#	midiPlayerArrows.playing = false
+	pass
 
 func pause():
 	pass
