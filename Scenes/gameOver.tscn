@@ -354,9 +354,9 @@ rotation = 0.0349066
 script = ExtResource("5_6tkhb")
 
 [node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -267.0
+offset_left = -379.0
 offset_top = -21.0
-offset_right = -131.0
+offset_right = -177.0
 offset_bottom = -5.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
