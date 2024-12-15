@@ -52,6 +52,7 @@ var eventIndexArrows = 0
 var eventIndexMusic = 0
 var eventEnds = []
 var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
+var debugLabel : Label
 
 signal tact
 signal tactArrows

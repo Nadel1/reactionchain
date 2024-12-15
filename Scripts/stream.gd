@@ -60,6 +60,7 @@ func _ready():
 	Global.pause.connect(pause)
 	Global.resume.connect(resume)
 	Global.resetPerStream()
+	Global.debugLabel = $UI/DebugLabel
 	$MidiPlayerBass.setName("Bass")
 	$MidiPlayerBass.play_speed = Global.playbackSpeed
 	Global.tact.connect($MidiPlayerBass.play)

@@ -241,6 +241,16 @@ texture = ExtResource("8_imbvg")
 [node name="TimerSinceLastMessage" type="Timer" parent="UI"]
 autostart = true
 
+[node name="DebugLabel" type="Label" parent="UI"]
+offset_left = 816.0
+offset_top = 584.0
+offset_right = 876.0
+offset_bottom = 600.0
+scale = Vector2(4, 4)
+theme = ExtResource("6_f2vs8")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_cfqdi")

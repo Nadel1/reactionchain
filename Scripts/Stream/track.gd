@@ -29,10 +29,7 @@ enum Score{GOOD, OKAY, BAD}
 
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
-var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
-var goodHit=false
 var arrowSpawnID = 0
-var currentButtonToEvaluate
 
 #abstraction for reactions
 var correctReactionPacket=true
@@ -65,6 +62,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if firstPacketStarted:
 		currentPacketDuration += delta
+	#if Global.debugLabel != null:
+		#Global.debugLabel.text = str(currentButtonsToEvaluate.size())
 
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
@@ -72,7 +71,6 @@ func spawnButton():
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.global_position=spawnPoint.global_position
 		get_parent().call_deferred("add_child",newButtonPrompt)
-		buttonSequence.append(newButtonPrompt)
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
@@ -159,7 +157,7 @@ func react(correctReaction=true):
 		Global.currentStreamer.react(reaction)
 		
 		inputRecorder.appendRecordedReaction(reaction)
-		currentButtonToEvaluate=null
+		#currentButtonToEvaluate=null
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
@@ -167,7 +165,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
 	var scoreChange
-	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
+	if correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
 			scoreChange=calculateScoreChange(Score.GOOD)
 			Global.score+=scoreChange
@@ -179,8 +177,6 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			Global.increaseScore(scoreChange)
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
-		buttonSequence.pop_front().queue_free()
-		
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
@@ -189,6 +185,8 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
+	if buttonPrompt!=null:
+		buttonPrompt.queue_free()
 	if(Global.score<=0):
 		gameOver()
 	
@@ -199,12 +197,20 @@ func gameOver():
 		Global.survivedTime=Time.get_unix_time_from_system()-Global.survivedTime
 		Global.stopMetronome()
 		Global.stopMetronomeArrows()
-	
-		
+
+func compareInput(prompt, inputString):
+	return prompt.getInput() == inputString
+
+func isPrompt(area):
+	return area.get_parent().is_in_group("InputPrompt")
+
 func registerInput(inputString):
-	if currentButtonToEvaluate!=null:
-		if currentButtonToEvaluate.getInput()==inputString:
-			evaluateScore(currentButtonToEvaluate,true)
+	var areasInRange = $HitZoneAnimatedSprite2D/GoodArea.get_overlapping_areas().filter(isPrompt)
+	if areasInRange.size() > 0:
+		for area in areasInRange:
+			if compareInput(area.get_parent(), inputString):
+				evaluateScore(area.get_parent(),true)
+				return
 	else: 
 		evaluateScore(null,false)
 		
@@ -227,16 +233,14 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	elif area.get_parent().is_in_group("EventTrigger"):
 		dealWithEventTrigger()
 	else:
-		goodHit=true
-		if buttonSequence.size() > 0 and buttonSequence.front()!=null:
-			currentButtonToEvaluate=buttonSequence.front()
-			area.get_parent().hitZoneEnter(true)
+		#goodHit=true
+		area.get_parent().hitZoneEnter(true)
 	
 func _on_good_area_area_exited(area: Area2D) -> void:
-	if !area.get_parent().is_in_group("InputPrompt"):
-		goodHit=false
+	#if !area.get_parent().is_in_group("InputPrompt"):
+		#goodHit=false
+	pass
 		
 func _on_late_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("InputPrompt"):
-		evaluateScore(currentButtonToEvaluate,false)
-		buttonSequence.pop_front().queue_free()
+		evaluateScore(area.get_parent(),false)
