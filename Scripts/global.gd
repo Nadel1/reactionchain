@@ -16,8 +16,10 @@ var recordingsFails = []
 var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
 var score = 10
-var currentHighScore=0#we want to display the highest score at game over
-var highScore=0
+var currentHighScoreViewers=0#we want to display the highest score at game over
+var survivedTime=0.0
+var highScoreViewers=0
+var highScoreTime=0.0
 var streamerIndices =[]
 var currentStreamer=null
 var chatDepth=5#at some point you cant read it anymore
@@ -27,6 +29,7 @@ var musicTracks=[]
 var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
 var chatLog=[]
+var decreaseWrongInput=1.1
 signal tact
 signal tactArrows
 
@@ -41,8 +44,8 @@ func _enter_tree():
 	
 func increaseScore(deltaScore):
 	score+=deltaScore
-	if score>currentHighScore:
-		currentHighScore=score
+	if score>currentHighScoreViewers:
+		currentHighScoreViewers=score
 
 func _ready():
 	$Metronome.wait_time=snippetLength
@@ -73,9 +76,13 @@ func stopMetronomeArrows():
 	
 func makeSaveDict():
 	var saveDict = {
-		"highScore" : highScore,
+		"highScoreViewers" : highScoreViewers,
+		"highScoreTime" : highScoreTime
 	}
 	return saveDict
+
+func startSurvivedTime():
+	survivedTime=Time.get_unix_time_from_system()
 	
 func saveGame():
 	var file = FileAccess.open_encrypted_with_pass(SAVEFILE_NAME, FileAccess.WRITE, "superorganism")
@@ -99,7 +106,8 @@ func loadGame():
 		var dict = JSON.parse_string(file.get_as_text())
 		file.close()
 		if typeof(dict) == TYPE_DICTIONARY:
-			highScore = loadDataFromDictSafe(dict, highScore, "highScore")
+			highScoreViewers = loadDataFromDictSafe(dict, highScoreViewers, "highScoreViewers")
+			highScoreTime = loadDataFromDictSafe(dict, highScoreTime, "highScoreTime")
 		else:
 			printerr("Corrupted data!")
 	else:
@@ -107,5 +115,5 @@ func loadGame():
 		printerr("No saved data!")
 		
 func resetSaveFile():
-	highScore=0
+	highScoreViewers=0
 	saveGame()

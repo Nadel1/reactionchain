@@ -5,6 +5,7 @@ func _ready() -> void:
 	$OptionsMenu/Difficulty.value = 5 - Global.difficulty
 
 func _on_start_button_down() -> void:
+	Global.startSurvivedTime()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
 

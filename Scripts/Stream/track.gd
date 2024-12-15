@@ -6,23 +6,30 @@ const BUTTONUP=preload("res://Scenes/Objects/Buttons/ButtonUp.tscn")
 const BUTTONDOWN=preload("res://Scenes/Objects/Buttons/ButtonDown.tscn")
 const MARKER=preload("res://Scenes/Objects/reactionPacketMarker.tscn")
 const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
+enum Score{GOOD, OKAY, BAD}
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
 
-@export var scoreChangeGoodHit=10
-@export var scoreChangeOkayHit=5
-@export var scoreChangeBadHit=-5
+@export var thresholdFastIncrease=1000
+@export var thresholdUpperFastIncrease=10000
+@export var increaseGoodHit=0.0125
+@export var increaseOkayHit=0.00625
+@export var changePerfectHitHighViewercount=2
+@export var changeOkHitHighViewercount=1
+@export var scoreOffset=10
+@export var removeScore=0.25
+@export var decreaseWrongInput=1.125
+@export var increaseOfLossPerWrongInput=0.1
+@export var startValueDecrease=5
+
 
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
 var buttonSequence=[]#keep track of current buttons spawned, so that they can be removed in case of too early button press
 var goodHit=false
-var judgingPromptsGood=["YEY","YIPPIE","WAHOO"]
-var judgingPromptsOkay=["okay"]
-var judgingPromptsBad=["uff","bad"]
 var arrowSpawnID = 0
 var currentButtonToEvaluate
 
@@ -32,7 +39,7 @@ var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
-var firstPacketStarted=false
+
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
 
@@ -52,11 +59,7 @@ func _input(event):
 			registerInput("down")
 		else:
 			evaluateScore(null,false)
-
-func _process(delta: float) -> void:
-	if firstPacketStarted:
-		currentPacketDuration += delta
-
+			
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
@@ -67,7 +70,30 @@ func spawnButton():
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
+func calculateScoreChange(score:Score):
+	var change=0
+	var x=Global.score
+	match score:
+		Score.GOOD:
+			if x<thresholdFastIncrease:
+				change=increaseGoodHit*x+scoreOffset
+			elif thresholdFastIncrease<=x and x< thresholdUpperFastIncrease:
+				change=increaseGoodHit*2*x+scoreOffset
+			else: 
+				change=changePerfectHitHighViewercount
+		Score.OKAY:
+			if x<thresholdFastIncrease:
+				change=increaseOkayHit*x+scoreOffset
+			elif thresholdFastIncrease<=x and x< thresholdUpperFastIncrease:
+				change=increaseOkayHit*2*x+scoreOffset
+			else:
+				x= changeOkHitHighViewercount
+		Score.BAD:
+			Global.decreaseWrongInput+=increaseOfLossPerWrongInput
+			change=startValueDecrease+x*removeScore*Global.decreaseWrongInput 
+	return int(change)
 
+	
 func spawnMarker(end : bool):
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=spawnPoint.global_position
@@ -123,19 +149,20 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
-	if(Global.score<=0):
-		gameOver()
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
+	var scoreChange
 	if goodHit&&correctInput&&buttonPrompt!=null:#correct input in hitzone
 		if buttonPrompt.goodHit:
-			Global.score+=scoreChangeGoodHit
-			Global.increaseScore(scoreChangeGoodHit)
+			scoreChange=calculateScoreChange(Score.GOOD)
+			Global.score+=scoreChange
+			Global.increaseScore(scoreChange)
 			splat.call_deferred("setText", 2)
 		else: 
-			Global.score+=scoreChangeOkayHit
-			Global.increaseScore(scoreChangeOkayHit)
+			scoreChange=calculateScoreChange(Score.OKAY)
+			Global.score+=scoreChange
+			Global.increaseScore(scoreChange)
 			splat.call_deferred("setText", 1)
 		playScoreIncrease()
 		buttonSequence.pop_front().queue_free()
@@ -143,22 +170,24 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
-		Global.score+=scoreChangeBadHit
+		scoreChange=calculateScoreChange(Score.BAD)
+		Global.score-=scoreChange
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
+	if(Global.score<=0):
+		gameOver()
 	
 
 func gameOver():
 	if !Global.developerMode: 
 		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+		Global.survivedTime=Time.get_unix_time_from_system()-Global.survivedTime
 		Global.stopMetronome()
 		Global.stopMetronomeArrows()
 	
 		
 func registerInput(inputString):
-	if buttonSequence.is_empty()==true:
-		evaluateScore(null,false)#substract points when input for example at end of level
 	if currentButtonToEvaluate!=null:
 		if currentButtonToEvaluate.getInput()==inputString:
 			evaluateScore(currentButtonToEvaluate,true)
@@ -166,7 +195,6 @@ func registerInput(inputString):
 		evaluateScore(null,false)
 		
 func dealWithMarker():
-	firstPacketStarted = true
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1

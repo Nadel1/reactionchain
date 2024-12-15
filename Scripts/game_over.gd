@@ -4,19 +4,41 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
-	if Global.currentHighScore>Global.highScore:
-		Global.highScore=Global.currentHighScore
-		$Text/HighScore.visible=true
+	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
+	var time=int(Global.survivedTime)
+	var strMinutes=str(time/60)
+	if (time/60)<10:
+		strMinutes="0"+strMinutes
+	var strSeconds=str(time%60)
+	if (time%60)<10:
+		strSeconds="0"+strSeconds
+	$Text/TimeScoreText.text="[center]"+"Time: "+strMinutes+":"+strSeconds+"[/center]"
+	if Global.currentHighScoreViewers>Global.highScoreViewers and Global.survivedTime>Global.highScoreTime:
+		$Text/HighScore.show()
+		$Text/HighScore/HighScore.text="[center] New viewer and time highscore! [/center]"
+		Global.highScoreViewers=Global.currentHighScoreViewers
+		Global.highScoreTime=Global.survivedTime
+		return
+	elif Global.currentHighScoreViewers>Global.highScoreViewers:
+		$Text/HighScore.show()
+		Global.highScoreViewers=Global.currentHighScoreViewers
+		$Text/HighScore/HighScore.text="[center] New viewer highscore! [/center]"
+		return
+	elif Global.survivedTime>Global.highScoreTime:
+		$Text/HighScore.show()
+		$Text/HighScore/HighScore.text="[center] New time highscore! [/center]"
+		Global.highScoreTime=Global.survivedTime
+		return
 	else:
-		$Text/HighScore.visible=false
-	$Text/ScoreText.text="[center]"+"Highest score: "+str(Global.currentHighScore)+"[/center]"
-
+		$Text/HighScore.hide()
+		
 
 func _on_restart_button_down() -> void:
 	Global.score=10
-	Global.currentHighScore=0
+	Global.currentHighScoreViewers=0
 	Global.mainSeed=randi()
 	Global.currentStreamIndex=0
+	Global.startSurvivedTime()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
 
