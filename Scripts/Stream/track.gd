@@ -37,14 +37,13 @@ var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
+var firstPacketStarted=false
 
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
 
 var debuglastButton=0
 
-func _ready():
-	countReactionPacket=0
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.is_action_pressed("right"):
@@ -62,8 +61,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if firstPacketStarted:
 		currentPacketDuration += delta
-	#if Global.debugLabel != null:
-		#Global.debugLabel.text = str(currentButtonsToEvaluate.size())
 
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:
