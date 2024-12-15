@@ -17,13 +17,17 @@ enum Score{GOOD, OKAY, BAD}
 @export var failTimerIncreasePerFail=1.1
 
 @export var thresholdFastIncrease=1000
+@export var thresholdUpperFastIncrease=10000
 @export var increaseGoodHit=0.0125
 @export var increaseOkayHit=0.00625
+@export var changePerfectHitHighViewercount=2
+@export var changeOkHitHighViewercount=1
 @export var scoreOffset=10
 @export var removeScore=0.25
 @export var decreaseWrongInput=1.125
 @export var increaseOfLossPerWrongInput=0.1
 @export var startValueDecrease=5
+
 
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
@@ -76,13 +80,17 @@ func calculateScoreChange(score:Score):
 		Score.GOOD:
 			if x<thresholdFastIncrease:
 				change=increaseGoodHit*x+scoreOffset
-			else:
+			elif thresholdFastIncrease<=x and x< thresholdUpperFastIncrease:
 				change=increaseGoodHit*2*x+scoreOffset
+			else: 
+				change=changePerfectHitHighViewercount
 		Score.OKAY:
 			if x<thresholdFastIncrease:
 				change=increaseOkayHit*x+scoreOffset
-			else:
+			elif thresholdFastIncrease<=x and x< thresholdUpperFastIncrease:
 				change=increaseOkayHit*2*x+scoreOffset
+			else:
+				x= changeOkHitHighViewercount
 		Score.BAD:
 			Global.decreaseWrongInput+=increaseOfLossPerWrongInput
 			change=startValueDecrease+x*removeScore*Global.decreaseWrongInput 
@@ -144,8 +152,6 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
-	if(Global.score<=0):
-		gameOver()
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
@@ -172,6 +178,8 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
+	if(Global.score<=0):
+		gameOver()
 	
 
 func gameOver():
