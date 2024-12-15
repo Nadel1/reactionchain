@@ -30,6 +30,7 @@ var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
 var chatLog=[]
 var decreaseWrongInput=1.1
+var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
 signal tact
 signal tactArrows
 

@@ -148,6 +148,9 @@ position = Vector2(299, 593)
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
 position = Vector2(-1, -1)
 
+[node name="DonationPlaceholder" type="Node2D" parent="UI"]
+position = Vector2(350, 150)
+
 [node name="TrackIndicatorWrong" type="Sprite2D" parent="UI"]
 position = Vector2(839, 230)
 texture = SubResource("GradientTexture2D_sgihh")

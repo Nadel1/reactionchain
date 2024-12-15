@@ -8,6 +8,7 @@ var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
+const DONATION=preload("res://Scenes/Objects/Donations/donation.tscn")
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -97,6 +98,11 @@ func _ready():
 func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
+	if Global.score==50 and Global.donationOnScreen==false:
+		var newDonation=DONATION.instantiate()
+		newDonation.position=$UI/DonationPlaceholder.position
+		newDonation.loadDonation(4)
+		find_child("UI").add_child(newDonation)
 	
 
 	

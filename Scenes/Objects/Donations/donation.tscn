@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://b6h0kgvl47nof"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_a2xco"]
-[ext_resource type="Texture2D" uid="uid://t5ncmqxa4p18" path="res://Assets/Sprites/Donations/DonationsNotification.png" id="1_otml8"]
-[ext_resource type="Texture2D" uid="uid://c2toesrj3n0dt" path="res://Assets/Sprites/Donations/DonationsNotificationOutline.png" id="2_e3ht8"]
-[ext_resource type="Texture2D" uid="uid://dtepub2co0j2b" path="res://Assets/Sprites/Donations/TrackBackground.png" id="3_bmdnf"]
+[ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
+[ext_resource type="Texture2D" uid="uid://t5ncmqxa4p18" path="res://Assets/Sprites/Donations/DonationsNotification.png" id="2_xwg41"]
+[ext_resource type="Texture2D" uid="uid://c2toesrj3n0dt" path="res://Assets/Sprites/Donations/DonationsNotificationOutline.png" id="3_tq2tc"]
+[ext_resource type="Texture2D" uid="uid://dtepub2co0j2b" path="res://Assets/Sprites/Donations/TrackBackground.png" id="4_ipnh6"]
 
 [sub_resource type="Animation" id="Animation_f4wxh"]
 length = 0.001
@@ -41,23 +41,27 @@ _data = {
 "timeForReaction": SubResource("Animation_helde")
 }
 
-[node name="Donations" type="Node2D"]
-script = ExtResource("1_a2xco")
+[node name="Donation" type="Node2D"]
+script = ExtResource("1_7ptrp")
 
 [node name="NotificationSprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_otml8")
+texture = ExtResource("2_xwg41")
 
 [node name="OutlineSprite" type="Sprite2D" parent="."]
 scale = Vector2(3, 3)
-texture = ExtResource("2_e3ht8")
+texture = ExtResource("3_tq2tc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_vux1m")
 }
+autoplay = "timeForReaction"
+speed_scale = 0.5
 
 [node name="DonationsTimer" type="Timer" parent="."]
 
 [node name="DonationsBanner" type="Sprite2D" parent="."]
 position = Vector2(0, -130)
-texture = ExtResource("3_bmdnf")
+texture = ExtResource("4_ipnh6")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

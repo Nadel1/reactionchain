@@ -57,7 +57,9 @@ func _input(event):
 			registerInput("up")
 		elif event.is_action_pressed("down"):
 			registerInput("down")
-		else:
+		elif Global.donationOnScreen and (event.is_action_pressed("w") or event.is_action_pressed("a") or event.is_action_pressed("s") or event.is_action_pressed("d")):
+				return #ignore wasd keys if donation 
+		else: 
 			evaluateScore(null,false)
 			
 func spawnButton():
