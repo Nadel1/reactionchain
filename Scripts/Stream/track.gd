@@ -10,6 +10,7 @@ const SPLAT=preload("res://Scenes/Objects/FX/splat.tscn")
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
+@onready var chat=get_parent().find_child("Chat")
 
 @export var scoreChangeGoodHit=10
 @export var scoreChangeOkayHit=5
@@ -34,8 +35,11 @@ var currentPacketDuration=0.0
 var firstPacketStarted=false
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
-	
-	
+
+var debuglastButton=0
+
+func _ready():
+	countReactionPacket=0
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.is_action_pressed("right"):
@@ -70,6 +74,8 @@ func spawnMarker(end : bool):
 	get_parent().call_deferred("add_child",newMarker)
 	newMarker.setVisible(Global.developerMode)
 	if end and lastButtonSpawned!=null:
+		#print("last button detected ",debuglastButton)
+		debuglastButton+=1
 		lastButtonSpawned.lastButton=true
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
@@ -104,12 +110,14 @@ func react(correctReaction=true):
 					reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 				else:
 					reaction=lastReaction
+			chat.initiateSendReactionMessage(reaction)
 		else:
 			reaction=RT.dirToInt(RT.Emotion.NONE)#the none reaction
 			inputRecorder.reactionFailed(currentPacketDuration)
 			currentPacketDuration = 0.0
 			Global.packetToBeDropped[countReactionPacket-1] = true
 		Global.currentStreamer.react(reaction)
+		
 		inputRecorder.appendRecordedReaction(reaction)
 		currentButtonToEvaluate=null
 		correctReactionPacket = true
@@ -159,11 +167,12 @@ func registerInput(inputString):
 		
 func dealWithMarker():
 	firstPacketStarted = true
-	countMarker+=1
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1
+		#print("count increased: ",countReactionPacket)
 		currentPacketDuration = 0.0
+	countMarker+=1
 		
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):

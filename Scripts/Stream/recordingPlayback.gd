@@ -6,9 +6,11 @@ var playing = true
 var timeSinceLastInput = 0.0
 var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
+var timeSinceLastMessage = 0.0
 var inputIndex = 0
 var reactionIndex = 0
 var failIndex = 0
+var messageIndex=0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
@@ -23,6 +25,7 @@ func _physics_process(delta: float) -> void:
 		timeSinceLastInput += delta
 		timeSinceLastReaction += delta
 		timeSinceLastFail += delta
+		timeSinceLastMessage+=delta
 		if inputIndex < Global.recordingsMovement[index].size() and Global.recordingsMovement[index][inputIndex][1] <= timeSinceLastInput:
 			var input = Global.recordingsMovement[index][inputIndex][0]
 			streamer.move(input)
@@ -34,6 +37,13 @@ func _physics_process(delta: float) -> void:
 				streamer.react(reaction)
 			timeSinceLastReaction = 0
 			reactionIndex += 1
+		if index>Global.currentStreamIndex-Global.chatDepth:
+			var chatIndex=index%Global.chatDepth
+			if messageIndex<Global.chatLog[chatIndex].size() and  Global.chatLog[chatIndex][messageIndex][0] <= timeSinceLastMessage:
+				var message=Global.chatLog[chatIndex][messageIndex][1]
+				$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
+				timeSinceLastMessage = 0
+				messageIndex+=1
 		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:
 			var fail = Global.recordingsFails[index][failIndex]
 			$TrackPlaybackHandler.failReaction(fail[1])
