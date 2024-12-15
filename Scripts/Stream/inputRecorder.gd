@@ -29,7 +29,6 @@ func stopRecording():
 	Global.recordingsFails.append(recordingFails)
 	if Global.chatLog.size()<Global.chatDepth:
 		Global.chatLog.append(recordingChat)
-		print("append")
 	else:
 		Global.chatLog[Global.currentStreamIndex%Global.chatDepth]=recordingChat
 

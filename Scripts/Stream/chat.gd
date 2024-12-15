@@ -7,14 +7,14 @@ var timerCounter=0
 var probabilityNextMessage=0.5
 @export var maxUserCount=10
 var lastScore=0#to have a relation between viewer counts and active commenters
-var usernameStrings=["new","user","destroyer","bob","spencer","dark","hunter","ree","wompwomp"]
-var messagesString=["why the hate?","haha nice one", "i love it when you do that","im your biggest fan!"]
-var welcomeStrings=["hi","hey","hewwo","how are you","wazzup"]
-var pogReactionStrings=["poooooooooooog","pog"]
-var laughReactionStrings=["xD","hahaha"]
-var cringeReactionStrings=["cringe","ew"]
-var angryReactionStrings=["buh!", "wtf"]
-var colors=["red","blue","green","yellow","violet","pink","darkgreen"]
+var usernameStrings=["new","user","destroyer","bob","spencer","dark","hunter","ree","wompwomp","myname"]
+var messagesString=["why the hate?","haha nice one","i love it when you do that","im your biggest fan!","notice me!","good video"]
+var welcomeStrings=["hi","hey","hewwo","how are you","wazzup","o/"]
+var pogReactionStrings=["poooooooooooog","pog","poggies","poggers","woah!"]
+var laughReactionStrings=["xD","hahaha","KEKW","LUL"]
+var cringeReactionStrings=["cringe","ew","HUH","what"]
+var angryReactionStrings=["boo!","wtf","wtf am i seeing","turn that off"]
+var colors=["red","blue","green","yellow","violet","pink","darkgreen","orange"]
 var reactionMessagesCount=0
 var currentReactionMessage=0
 var reactionMessageType=RT.Emotion.NONE
@@ -80,7 +80,6 @@ func sendReactionMessage():
 	
 #messages that pop up specifically when reaction occurs/reacting to reaction
 func initiateSendReactionMessage(reaction:RT.Emotion):
-	print("reaction messages!!")
 	var minimumMessages=randi()%10+5#between 5 and 15 messages
 	reactionMessagesCount=min(minimumMessages,Global.score/10)
 	currentReactionMessage=0
