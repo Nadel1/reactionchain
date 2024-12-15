@@ -12,7 +12,6 @@ enum Score{GOOD, OKAY, BAD}
 @onready var spawnPoint=$SpawnPoint
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
-@onready var failTimer=$FailTimer #is started whenever a wrong input is detected. if another wrong input is detected BEFORE the timer is over, the game is over. otherwise, the wait time increases
 
 @export var failTimerIncreasePerFail=1.1
 
@@ -222,8 +221,3 @@ func _on_late_area_area_entered(area: Area2D) -> void:
 	if !area.get_parent().is_in_group("PacketMarker"):
 		evaluateScore(currentButtonToEvaluate,false)
 		buttonSequence.pop_front().queue_free()
-
-
-func _on_fail_timer_timeout() -> void:
-	failTimer.wait_time=failTimer.wait_time*failTimerIncreasePerFail
-	failTimer.stop()
