@@ -13,8 +13,6 @@ enum Score{GOOD, OKAY, BAD}
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
 
-@export var failTimerIncreasePerFail=1.1
-
 @export var thresholdFastIncrease=1000
 @export var thresholdUpperFastIncrease=10000
 @export var increaseGoodHit=0.0125
