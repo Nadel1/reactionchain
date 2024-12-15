@@ -198,7 +198,6 @@ func registerInput(inputString):
 		evaluateScore(null,false)
 		
 func dealWithMarker():
-	firstPacketStarted = true
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1
