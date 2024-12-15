@@ -284,9 +284,9 @@ offset_bottom = 40.0
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 342.0
-offset_top = 382.0
+offset_top = 383.0
 offset_right = 445.0
-offset_bottom = 401.0
+offset_bottom = 402.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Restart"
@@ -294,9 +294,9 @@ text = "Restart"
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 342.0
-offset_top = 553.0
+offset_top = 539.0
 offset_right = 445.0
-offset_bottom = 573.0
+offset_bottom = 559.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Quit Game
@@ -305,9 +305,9 @@ text = "Quit Game
 [node name="Options" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 342.0
-offset_top = 465.0
+offset_top = 459.0
 offset_right = 445.0
-offset_bottom = 485.0
+offset_bottom = 479.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Options
@@ -322,16 +322,29 @@ offset_top = 80.0
 offset_right = -148.0
 offset_bottom = 120.0
 
-[node name="ScoreText" type="RichTextLabel" parent="Text"]
-layout_mode = 0
-offset_left = 511.0
+[node name="TimeScoreText" type="RichTextLabel" parent="Text"]
+offset_left = 492.0
 offset_top = 196.0
-offset_right = 623.0
+offset_right = 616.0
 offset_bottom = 212.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
+text = "Time
+"
+scroll_active = false
+
+[node name="ScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 492.0
+offset_top = 148.0
+offset_right = 616.0
+offset_bottom = 164.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
 text = "Score"
+scroll_active = false
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -341,10 +354,10 @@ rotation = 0.0349066
 script = ExtResource("5_6tkhb")
 
 [node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -200.0
-offset_top = -28.0
-offset_right = -96.0
-offset_bottom = -12.0
+offset_left = -267.0
+offset_top = -21.0
+offset_right = -131.0
+offset_bottom = -5.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true

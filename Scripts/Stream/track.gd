@@ -185,6 +185,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 func gameOver():
 	if !Global.developerMode: 
 		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+		Global.survivedTime=Time.get_unix_time_from_system()-Global.survivedTime
 		Global.stopMetronome()
 		Global.stopMetronomeArrows()
 	

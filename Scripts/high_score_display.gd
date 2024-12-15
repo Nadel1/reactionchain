@@ -8,5 +8,5 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	time += delta * 4
 	if time > 2*PI: time -= 2*PI
-	var magnitude = 0.4-(1/log(max(10,Global.highScore/10)))
+	var magnitude = 0.4-(1/log(max(10,Global.currentHighScoreViewers/10)))
 	rotation = sin(time) * PI/8.0 * max(0,magnitude)
