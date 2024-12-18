@@ -33,22 +33,27 @@ func _input(event):
 
 func incorrectDonation():
 	print("wrong donation")
-	Global.donationOnScreen=false
-	self.queue_free()
-
+	for i in range(0, inputArray.size()):
+		inputArray[i].hide()
+	$Notification.play("crumble")
+	$Outline.play("crumble")
+	$DonationsBanner.hide()
+	
 func correctInputDetected():
-	inputArray[compareIndex].find_child("Outline").hide()
+	inputArray[compareIndex].hide()
 	compareIndex+=1
 	if compareIndex>=inputArray.size():
 		correctDonation()
 	else: 
 		inputArray[compareIndex].find_child("Outline").show()
+		
 
 	
 func correctDonation():
 	print("yippie!!")
 	$Notification.play("open")
 	$Outline.play("open")
+	$DonationsBanner.hide()
 	#Global.donationOnScreen=false
 			
 func loadDonation(donationLevel):
@@ -67,9 +72,6 @@ func loadDonation(donationLevel):
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
 	inputArray[0].find_child("Outline").show()
-	#$AnimationPlayer.speed_scale=1/2
-	#$AnimationPlayer.play("timeForReaction")
-
 	
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	self.queue_free()
@@ -77,5 +79,5 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_notification_animation_finished() -> void:
-	if $Notification.animation == "open":
+	if $Notification.animation == "open" or $Notification.animation=="crumble":
 		self.queue_free()
