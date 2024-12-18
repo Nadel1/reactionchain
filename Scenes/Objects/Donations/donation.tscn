@@ -1,16 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6h0kgvl47nof"]
+[gd_scene load_steps=22 format=3 uid="uid://b6h0kgvl47nof"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
 [ext_resource type="Texture2D" uid="uid://t5ncmqxa4p18" path="res://Assets/Sprites/Donations/DonationsNotification.png" id="2_xwg41"]
+[ext_resource type="Texture2D" uid="uid://dwrg2p0jias45" path="res://Assets/Sprites/Donations/DonationsNotificationOpeningOutline.png" id="3_66sty"]
 [ext_resource type="Texture2D" uid="uid://c2toesrj3n0dt" path="res://Assets/Sprites/Donations/DonationsNotificationOutline.png" id="3_tq2tc"]
 [ext_resource type="Texture2D" uid="uid://dtepub2co0j2b" path="res://Assets/Sprites/Donations/TrackBackground.png" id="4_ipnh6"]
+[ext_resource type="Texture2D" uid="uid://dmow7802w8mp3" path="res://Assets/Sprites/Donations/DonationsNotificationOpening.png" id="5_834un"]
 
 [sub_resource type="Animation" id="Animation_f4wxh"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OutlineSprite:scale")
+tracks/0/path = NodePath("Outline:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -22,14 +24,15 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_helde"]
 resource_name = "timeForReaction"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("OutlineSprite:scale")
+tracks/0/path = NodePath("Outline:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(3, 3), Vector2(1, 1)]
@@ -41,15 +44,104 @@ _data = {
 "timeForReaction": SubResource("Animation_helde")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_djdnv"]
+atlas = ExtResource("3_tq2tc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o1am"]
+atlas = ExtResource("3_66sty")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nccla"]
+atlas = ExtResource("3_66sty")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xuog"]
+atlas = ExtResource("3_66sty")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7qie"]
+atlas = ExtResource("3_66sty")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r4eav"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djdnv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o1am")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nccla")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xuog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7qie")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wemcp"]
+atlas = ExtResource("2_xwg41")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8ar1"]
+atlas = ExtResource("5_834un")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xodwu"]
+atlas = ExtResource("5_834un")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnba5"]
+atlas = ExtResource("5_834un")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfrif"]
+atlas = ExtResource("5_834un")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1v8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemcp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8ar1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xodwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnba5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfrif")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
 [node name="Donation" type="Node2D"]
 script = ExtResource("1_7ptrp")
-
-[node name="NotificationSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_xwg41")
-
-[node name="OutlineSprite" type="Sprite2D" parent="."]
-scale = Vector2(3, 3)
-texture = ExtResource("3_tq2tc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -58,10 +150,20 @@ libraries = {
 autoplay = "timeForReaction"
 speed_scale = 0.5
 
+[node name="Outline" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_r4eav")
+animation = &"open"
+
 [node name="DonationsTimer" type="Timer" parent="."]
 
 [node name="DonationsBanner" type="Sprite2D" parent="."]
-position = Vector2(0, -130)
+position = Vector2(0, -127)
 texture = ExtResource("4_ipnh6")
 
+[node name="Notification" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_o1v8n")
+animation = &"open"
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="Notification" to="." method="_on_notification_animation_finished"]

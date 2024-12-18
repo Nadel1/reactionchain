@@ -1,18 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://biihjpup7a7dw"]
+[gd_scene load_steps=4 format=3 uid="uid://biihjpup7a7dw"]
 
 [ext_resource type="Texture2D" uid="uid://cot8b8v0n2fe2" path="res://Assets/Sprites/Donations/InputBackground.png" id="1_jhwf8"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="2_qnm3j"]
+[ext_resource type="Texture2D" uid="uid://dyggh6ghomtrd" path="res://Assets/Sprites/Donations/InputBackgroundOutline.png" id="3_qxnvd"]
 
 [node name="DonationInput" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_jhwf8")
 
+[node name="Outline" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_qxnvd")
+
 [node name="Input" type="RichTextLabel" parent="."]
-offset_left = -5.0
-offset_top = -16.0
+anchors_preset = -1
+offset_left = -15.0
+offset_top = -15.0
 offset_right = 2.0
-offset_bottom = -3.0
+offset_bottom = 1.0
 scale = Vector2(2, 2)
 theme = ExtResource("2_qnm3j")
-text = "E"
+bbcode_enabled = true
+text = "[center]S[/center]
+"
+scroll_active = false
