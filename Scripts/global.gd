@@ -34,6 +34,7 @@ var donationOnScreen=false#wasd inputs are not marked as wrong input if this is 
 signal tact
 signal tactArrows
 
+var nextDonationViewerCount=100
 var chatUsers=[]
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
