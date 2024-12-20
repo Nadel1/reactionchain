@@ -52,13 +52,15 @@ var eventIndexArrows = 0
 var eventIndexMusic = 0
 var eventEnds = []
 var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
+var fastPromptMult = 2
 var debugLabel : Label
+@onready var arrowTravelDelay = $ArrowTravelDelay
 
 signal tact
-signal tactArrows
+signal tactArrows(bool) # says whether the arrows should be fast
 signal eventImminent
 signal pastEvent(Event)
-signal pause(int)
+signal pause(int) # supplies the index of the stream that paused
 signal resume(int)
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
@@ -74,8 +76,9 @@ func increaseScore(deltaScore):
 		currentHighScoreViewers=score
 
 func _ready():
-	$Metronome.wait_time=snippetLength
-	$MetronomeArrows.wait_time=snippetLength
+	$Metronome.wait_time = snippetLength
+	$MetronomeArrows.wait_time = snippetLength
+	$UpcomingEvent.wait_time = snippetLength - 1.2
 	VideoCustomizer.generateFirstTitle()
 
 func resetPerStream():
@@ -110,21 +113,27 @@ func stopMetronome():
 
 
 func _on_metronome_arrows_timeout() -> void:
-	if eventIndexArrows < events.size() and events[eventIndexArrows].startIndex == arrowSnippetIndex:
+	var fast = false
+	if eventIndexArrows < events.size():
 		var event = events[eventIndexArrows]
-		if event.startIndex == arrowSnippetIndex and event.startLayer == currentStreamIndex:
-			eventImminent.emit()
+		if event.startIndex == arrowSnippetIndex + 1 and event.startLayer == currentStreamIndex:
+			$UpcomingEvent.start()
+			arrowSnippetIndex -= 1
 		eventIndexArrows += 1
-	tactArrows.emit()
+	tactArrows.emit(fast)
 	arrowSnippetIndex += 1
 	
 func startMetronomeArrows():
 	$MetronomeArrows.start()
-	tactArrows.emit()
+	$ArrowTravelDelay.start()
+	tactArrows.emit(false)
 	#arrowSnippetIndex += 1
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
+
+func currentStreamPaused():
+	return pauseDepths.size() > 0 and pauseDepths.back() == currentStreamIndex
 
 func pauseStream(depth : int):
 	pauseDepths.push_back(depth)
@@ -205,3 +214,11 @@ func resetSaveFile():
 	moneyHighScore=0
 	highScoreTime=0
 	saveGame()
+
+
+func _on_arrow_travel_delay_timeout() -> void:
+	startMetronome()
+
+
+func _on_upcoming_event_timeout() -> void:
+	eventImminent.emit()

@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var midiPlayerArrows=$MidiPlayerArrows
-@onready var startPlayingMusicTimer=$StartPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
@@ -25,7 +24,6 @@ var trackPlayers : Array[TrackPlaybackHandler]
 
 func _on_start_playing_music_timer_timeout() -> void:
 	$TrackPlaybackHandler.call_deferred("start")
-	Global.startMetronome()
 	for player in trackPlayers:
 		player.call_deferred("start")
 	
@@ -64,6 +62,7 @@ func _ready():
 	$MidiPlayerBass.setName("Bass")
 	$MidiPlayerBass.play_speed = Global.playbackSpeed
 	Global.tact.connect($MidiPlayerBass.play)
+	Global.arrowTravelDelay.timeout.connect(_on_start_playing_music_timer_timeout)
 	
 	AudioTrackProvider.prepareMusic()
 	prepareStreamer()
@@ -115,7 +114,7 @@ func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 	
-func nextArrowTact():
+func nextArrowTact(fast):
 	if Global.arrowSnippetIndex<Global.musicTracks[index].size():
 		arrowPlayingIndex = Global.arrowSnippetIndex
 		midiPlayerArrows.set_file(Global.musicTracks[index][arrowPlayingIndex].getLayer(index))

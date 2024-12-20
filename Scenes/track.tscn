@@ -78,7 +78,10 @@ position = Vector2(-112, -8)
 sprite_frames = SubResource("SpriteFrames_4ikor")
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(-379, -11)
+position = Vector2(-376, -8)
+
+[node name="FastSpawnPoint" type="Node2D" parent="."]
+position = Vector2(-648, -8)
 
 [node name="LateArea" type="Area2D" parent="."]
 position = Vector2(624, -8)

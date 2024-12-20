@@ -11,6 +11,8 @@ size = Vector2(57, 59)
 script = ExtResource("1_7urvn")
 
 [node name="DebugSprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+z_index = 4
 texture = ExtResource("2_d6blh")
 
 [node name="ReactionPacketArea2D" type="Area2D" parent="."]

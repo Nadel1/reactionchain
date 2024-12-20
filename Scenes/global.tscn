@@ -12,5 +12,14 @@ wait_time = 2.4
 [node name="MetronomeArrows" type="Timer" parent="."]
 wait_time = 2.4
 
+[node name="ArrowTravelDelay" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="UpcomingEvent" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="Metronome" to="." method="_on_metronome_timeout"]
 [connection signal="timeout" from="MetronomeArrows" to="." method="_on_metronome_arrows_timeout"]
+[connection signal="timeout" from="ArrowTravelDelay" to="." method="_on_arrow_travel_delay_timeout"]
+[connection signal="timeout" from="UpcomingEvent" to="." method="_on_upcoming_event_timeout"]

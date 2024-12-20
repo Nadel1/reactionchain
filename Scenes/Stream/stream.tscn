@@ -259,7 +259,6 @@ autoplay = "zoomOut"
 
 [connection signal="layerFinished" from="TrackPlaybackHandler" to="." method="_on_track_playback_handler_layer_finished"]
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
-[connection signal="timeout" from="StartPlayingMusicTimer" to="." method="_on_start_playing_music_timer_timeout"]
 [connection signal="timeout" from="StartSpawningArrowsTimer" to="." method="_on_start_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
 [connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]

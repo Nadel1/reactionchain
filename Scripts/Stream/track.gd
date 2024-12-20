@@ -11,6 +11,7 @@ enum Score{GOOD, OKAY, BAD}
 
 @onready var animatedSprite=$HitZoneAnimatedSprite2D
 @onready var spawnPoint=$SpawnPoint
+@onready var fastSpawnPoint = $FastSpawnPoint
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
 
@@ -57,16 +58,19 @@ func _input(event):
 
 func _ready() -> void:
 	Global.eventImminent.connect(spawnEventTrigger)
+	fastSpawnPoint.global_position = animatedSprite.global_position + (spawnPoint.global_position - animatedSprite.global_position) * Global.fastPromptMult
 
 func _process(delta: float) -> void:
 	if firstPacketStarted:
 		currentPacketDuration += delta
 
 func spawnButton():
+	var fast = Global.currentStreamPaused()
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
-		newButtonPrompt.global_position=spawnPoint.global_position
+		newButtonPrompt.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
+		newButtonPrompt.setFast(fast)
 		get_parent().call_deferred("add_child",newButtonPrompt)
 		return newButtonPrompt
 	arrowSpawnID += 1
@@ -96,8 +100,10 @@ func calculateScoreChange(score:Score):
 
 	
 func spawnMarker(end : bool):
+	var fast = Global.currentStreamPaused()
 	var newMarker=MARKER.instantiate()
-	newMarker.global_position=spawnPoint.global_position
+	newMarker.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
+	newMarker.setFast(fast)
 	get_parent().call_deferred("add_child",newMarker)
 	newMarker.setVisible(Global.developerMode)
 	if !end:
@@ -110,7 +116,7 @@ func spawnMarker(end : bool):
 func spawnEventTrigger():
 	var trigger = EVENTTRIGGER.instantiate()
 	trigger.global_position=spawnPoint.global_position
-	trigger.find_child("Label").text = str(Global.events[Global.eventIndexArrows].length)
+	trigger.find_child("Label").text = str(Global.events[Global.eventIndexArrows-1].length)
 	get_parent().call_deferred("add_child",trigger)
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:

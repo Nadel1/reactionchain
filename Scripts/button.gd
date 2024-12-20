@@ -5,9 +5,6 @@ extends GenericPrompt
 var goodHit=false
 var okayHit=false
 var lastButton=false
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
 
 func getInput():
 	return input
