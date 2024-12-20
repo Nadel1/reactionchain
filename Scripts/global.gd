@@ -36,6 +36,8 @@ signal tactArrows
 
 var nextDonationViewerCount=100
 var chatUsers=[]
+var difficultyDonations=3#how many donation inputs appear
+var viewersNeededToNextDonation=200
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
 @export var playbackSpeed = 0.575

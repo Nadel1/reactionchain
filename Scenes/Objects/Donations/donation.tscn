@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://b6h0kgvl47nof"]
+[gd_scene load_steps=45 format=3 uid="uid://b6h0kgvl47nof"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
 [ext_resource type="Texture2D" uid="uid://dwq3fpss8qnev" path="res://Assets/Sprites/Donations/DonationsNotificationCrumblingOutline.png" id="2_ie8mp"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dtepub2co0j2b" path="res://Assets/Sprites/Donations/TrackBackground.png" id="4_ipnh6"]
 [ext_resource type="Texture2D" uid="uid://dmow7802w8mp3" path="res://Assets/Sprites/Donations/DonationsNotificationOpening.png" id="5_834un"]
 [ext_resource type="Texture2D" uid="uid://dwrrur1ypkhaw" path="res://Assets/Sprites/Donations/DonationsNotificationCrumbling.png" id="5_st15k"]
+[ext_resource type="Texture2D" uid="uid://emlvbng2ugne" path="res://Assets/Sprites/Donations/ReceivedAnim.png" id="9_xjbyf"]
 
 [sub_resource type="Animation" id="Animation_f4wxh"]
 length = 0.001
@@ -26,7 +27,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_helde"]
 resource_name = "timeForReaction"
-length = 2.0
+length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -34,7 +35,7 @@ tracks/0/path = NodePath("Outline:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(3, 3), Vector2(1, 1)]
@@ -45,6 +46,42 @@ _data = {
 "RESET": SubResource("Animation_f4wxh"),
 "timeForReaction": SubResource("Animation_helde")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljwni"]
+atlas = ExtResource("9_xjbyf")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pv6p"]
+atlas = ExtResource("9_xjbyf")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sw0h2"]
+atlas = ExtResource("9_xjbyf")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wapls"]
+atlas = ExtResource("9_xjbyf")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jsq2s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljwni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pv6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sw0h2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wapls")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_657tg"]
 atlas = ExtResource("2_ie8mp")
@@ -208,34 +245,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_4tehm"]
-resource_name = "up_shake"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Notification:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Outline:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_17peq"]
 length = 0.001
 tracks/0/type = "value"
@@ -249,6 +258,72 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ReceivedAnim:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_tvn67"]
+resource_name = "down_shake"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Outline:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Notification:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kwc85"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notification:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.000520825, 0.0333333, 0.200521),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-20, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Outline:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-20, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ng52e"]
@@ -279,8 +354,9 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(20, 0), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_kwc85"]
-resource_name = "new_animation"
+[sub_resource type="Animation" id="Animation_4tehm"]
+resource_name = "up_shake"
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -288,10 +364,10 @@ tracks/0/path = NodePath("Notification:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.000520825, 0.0333333, 0.200521),
+"times": PackedFloat32Array(0, 0.0333333, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-20, 0), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -303,40 +379,30 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.0333333, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-20, 0), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_tvn67"]
-resource_name = "down_shake"
+[sub_resource type="Animation" id="Animation_rd6cg"]
+resource_name = "growReceivedBackground"
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Outline:position")
+tracks/0/path = NodePath("ReceivedAnim:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.966667, 2.03333, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Notification:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(2, 2), Vector2(3, 3)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1grbi"]
 _data = {
 "RESET": SubResource("Animation_17peq"),
 "down_shake": SubResource("Animation_tvn67"),
+"growReceivedBackground": SubResource("Animation_rd6cg"),
 "left_shake": SubResource("Animation_kwc85"),
 "right_shake": SubResource("Animation_ng52e"),
 "up_shake": SubResource("Animation_4tehm")
@@ -352,16 +418,19 @@ libraries = {
 autoplay = "timeForReaction"
 speed_scale = 0.5
 
-[node name="DonationsTimer" type="Timer" parent="."]
-
-[node name="DonationsBanner" type="Sprite2D" parent="."]
-position = Vector2(0, -127)
-texture = ExtResource("4_ipnh6")
+[node name="ReceivedAnim" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+sprite_frames = SubResource("SpriteFrames_jsq2s")
+frame_progress = 0.20712
 
 [node name="Outline" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_r4eav")
 animation = &"crumble"
+
+[node name="DonationsBanner" type="Sprite2D" parent="."]
+position = Vector2(0, -96)
+texture = ExtResource("4_ipnh6")
 
 [node name="Notification" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o1v8n")
@@ -372,5 +441,9 @@ libraries = {
 "": SubResource("AnimationLibrary_1grbi")
 }
 
+[node name="EndDontationTimer" type="Timer" parent="."]
+wait_time = 4.0
+
 [connection signal="animation_finished" from="AnimationPlayerOutline" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Notification" to="." method="_on_notification_animation_finished"]
+[connection signal="timeout" from="EndDontationTimer" to="." method="_on_end_dontation_timer_timeout"]

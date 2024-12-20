@@ -14,7 +14,6 @@ visible = false
 texture = ExtResource("3_qxnvd")
 
 [node name="Input" type="RichTextLabel" parent="."]
-anchors_preset = -1
 offset_left = -15.0
 offset_top = -15.0
 offset_right = 2.0

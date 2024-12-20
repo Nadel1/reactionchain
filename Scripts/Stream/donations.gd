@@ -54,9 +54,13 @@ func dealWithInput(correctInput):
 func correctDonation():
 	$Notification.play("open")
 	$Outline.play("open")
+	$ReceivedAnim.show()
+	$ReceivedAnim.play("default")
+	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
 			
 func loadDonation(donationLevel):
+	$ReceivedAnim.hide()
 	donationInputsBanner=find_child("DonationsBanner")
 	Global.donationOnScreen=true
 	$Notification.play("default")
@@ -76,7 +80,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	Global.donationOnScreen=false
 	self.queue_free()
 
-func _on_notification_animation_finished() -> void:
+
+func _on_end_dontation_timer_timeout() -> void:
 	Global.donationOnScreen=false
-	if $Notification.animation == "open" or $Notification.animation=="crumble":
+	self.queue_free()
+
+
+func _on_notification_animation_finished() -> void:
+	if $Notification.animation=="crumble":
+		Global.donationOnScreen=false
 		self.queue_free()

@@ -17,6 +17,8 @@ const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
 var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
+var donationsThresholdViewer=200#only once this threshold is reached will donations appear
+
 
 var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var index
@@ -98,11 +100,12 @@ func _ready():
 func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
-	if Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
-		Global.nextDonationViewerCount+=200
+	if Global.score>=donationsThresholdViewer and Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
+		Global.nextDonationViewerCount+=Global.viewersNeededToNextDonation
+		Global.viewersNeededToNextDonation+=100
 		var newDonation=DONATION.instantiate()
 		newDonation.position=$UI/DonationPlaceholder.position
-		newDonation.loadDonation(4)
+		newDonation.loadDonation(Global.difficultyDonations)
 		find_child("UI").add_child(newDonation)
 	
 
