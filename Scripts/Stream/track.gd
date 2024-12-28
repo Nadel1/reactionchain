@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 		currentPacketDuration += delta
 
 func spawnButton():
-	var fast = Global.currentStreamPaused()
+	var fast = Global.getPromptSpeedState()
 	if arrowSpawnID % Global.difficulty == 0:
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
@@ -100,7 +100,7 @@ func calculateScoreChange(score:Score):
 
 	
 func spawnMarker(end : bool):
-	var fast = Global.currentStreamPaused()
+	var fast = Global.getPromptSpeedState()
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
 	newMarker.setFast(fast)

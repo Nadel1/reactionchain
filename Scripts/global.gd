@@ -56,8 +56,8 @@ var fastPromptMult = 2
 var debugLabel : Label
 @onready var arrowTravelDelay = $ArrowTravelDelay
 
-signal tact
-signal tactArrows(bool) # says whether the arrows should be fast
+signal tact(int)
+signal tactArrows(int, bool) # says whether the arrows should be fast
 signal eventImminent
 signal pastEvent(Event)
 signal pause(int) # supplies the index of the stream that paused
@@ -98,34 +98,37 @@ func _on_metronome_timeout() -> void:
 				pastEvent.emit(event)
 		eventEnds.push_back(event.length + 1)
 		print("Event started, ends in: " + str(event.length + 1))
-	tact.emit()
+	tact.emit(musicSnippetIndex)
 	musicSnippetIndex += 1
 	if eventEnds.size() > 0:
 		eventEnds[eventEnds.size()-1] -= 1
 
 func startMetronome():
 	$Metronome.start()
-	tact.emit()
+	tact.emit(musicSnippetIndex)
 	#musicSnippetIndex += 1
 	
 func stopMetronome():
 	$Metronome.stop()
 
-
-func _on_metronome_arrows_timeout() -> void:
-	var fast = false
+func checkEventPrep():
 	if eventIndexArrows < events.size():
 		var event = events[eventIndexArrows]
 		if event.startIndex == arrowSnippetIndex + 1 and event.startLayer == currentStreamIndex:
 			$UpcomingEvent.start()
 			arrowSnippetIndex -= 1
 		eventIndexArrows += 1
-	tactArrows.emit(fast)
+
+func _on_metronome_arrows_timeout() -> void:
+	var fast = false
+	checkEventPrep()
+	tactArrows.emit(arrowSnippetIndex, fast)
 	arrowSnippetIndex += 1
 	
 func startMetronomeArrows():
 	$MetronomeArrows.start()
 	$ArrowTravelDelay.start()
+	checkEventPrep()
 	tactArrows.emit(false)
 	#arrowSnippetIndex += 1
 	
@@ -134,6 +137,13 @@ func stopMetronomeArrows():
 
 func currentStreamPaused():
 	return pauseDepths.size() > 0 and pauseDepths.back() == currentStreamIndex
+
+func getPromptSpeedState(): # Returns whether prompts should be fast right now
+	if eventIndexMusic < events.size() and events[eventIndexMusic].startIndex <= arrowSnippetIndex:
+		var event = events[eventIndexMusic]
+		var inRange = event.startIndex <= arrowSnippetIndex and event.startIndex + event.length > arrowSnippetIndex
+		return inRange and event.startLayer == currentStreamIndex
+	return false
 
 func pauseStream(depth : int):
 	pauseDepths.push_back(depth)

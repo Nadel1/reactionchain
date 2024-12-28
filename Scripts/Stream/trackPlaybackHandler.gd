@@ -78,9 +78,9 @@ func _process(_delta: float) -> void:
 	playerFail.set_volume_db(lerpf(zeroVolume, fullVolume, factor))
 	fade = factor
 
-func nextTact():
-	if Global.musicSnippetIndex<Global.musicTracks[layerIndex].size():
-		playingIndex = Global.musicSnippetIndex
+func nextTact(snippetIndex):
+	if snippetIndex<Global.musicTracks[layerIndex].size():
+		playingIndex = snippetIndex
 		playerCorrect.set_file(Global.musicTracks[layerIndex][playingIndex].getLayer(layerIndex))
 		playerFail.set_file(playerCorrect.file)
 		playerCorrect.play()

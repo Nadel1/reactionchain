@@ -114,9 +114,9 @@ func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 	
-func nextArrowTact(fast):
-	if Global.arrowSnippetIndex<Global.musicTracks[index].size():
-		arrowPlayingIndex = Global.arrowSnippetIndex
+func nextArrowTact(snippetIndex, fast):
+	if snippetIndex<Global.musicTracks[index].size():
+		arrowPlayingIndex = snippetIndex
 		midiPlayerArrows.set_file(Global.musicTracks[index][arrowPlayingIndex].getLayer(index))
 		midiPlayerArrows.play()
 	else:
