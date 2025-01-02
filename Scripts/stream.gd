@@ -60,9 +60,6 @@ func _ready():
 	Global.debugWindow = $UI/DebugWindow/DebugLabel
 	$UI/DebugWindow.visible = Global.developerMode
 	Global.resetPerStream()
-	$MidiPlayerBass.setName("Bass")
-	$MidiPlayerBass.play_speed = Global.playbackSpeed
-	Global.tact.connect($MidiPlayerBass.play)
 	Global.arrowTravelDelay.timeout.connect(_on_start_playing_music_timer_timeout)
 	
 	AudioTrackProvider.prepareMusic()
