@@ -1,13 +1,14 @@
 extends Node
 
-var players = []
+@export var players : Array[MidiPlayer] #exclude drums
 var playIndex = 0
 
 func _ready() -> void:
-	players = get_children()
 	$MidiPlayerBass1.setName("Bass1")
 	$MidiPlayerBass2.setName("Bass2")
 	$MidiPlayerChords.setName("Chords")
+	$MidiPlayerDrums.setName("Drums")
+	$MidiPlayerDrums.play_speed = Global.playbackSpeed
 	for player in players:
 		player.play_speed = Global.playbackSpeed
 	Global.tact.connect(tact)

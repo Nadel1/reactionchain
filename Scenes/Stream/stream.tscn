@@ -147,8 +147,9 @@ script = ExtResource("1_lwu7i")
 play_speed = 0.666
 bus = &"Arrows"
 
-[node name="BackingTrack" type="Node2D" parent="."]
+[node name="BackingTrack" type="Node2D" parent="." node_paths=PackedStringArray("players")]
 script = ExtResource("4_82cmv")
+players = [NodePath("MidiPlayerBass1"), NodePath("MidiPlayerBass2"), NodePath("MidiPlayerChords")]
 
 [node name="MidiPlayerBass1" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass1.MID"
@@ -169,6 +170,14 @@ file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_chords.MID"
 play_speed = 0.666
 volume_db = -30.0
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerDrums" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_drums.MID"
+playing = true
+play_speed = 0.666
+loop = true
+soundfont = "res://Assets/Audio/Instruments/Standard_Dum_Kit__by_Charlie.SF2"
 bus = &"Bass"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
