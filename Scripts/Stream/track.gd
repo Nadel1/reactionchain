@@ -228,13 +228,17 @@ func dealWithMarker():
 
 func dealWithEventTrigger():
 	Global.currentStreamer.event()
-	pass
+
+func dealWithEventStart():
+	Global.initPause()
 
 func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		dealWithMarker()
 	elif area.get_parent().is_in_group("EventTrigger"):
 		dealWithEventTrigger()
+	elif area.get_parent().is_in_group("EventStart"):
+		dealWithEventStart()
 	else:
 		#goodHit=true
 		area.get_parent().hitZoneEnter(true)

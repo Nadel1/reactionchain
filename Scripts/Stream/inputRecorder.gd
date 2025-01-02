@@ -5,13 +5,17 @@ var recordingMovement = []
 var recordingReaction = []
 var recordingFails = []
 var recordingChat = []
+var recordingEvents = []
 var recordDonationReaction=[]
 var timeSinceLastInput = 0.0
 var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
 var timeSinceLastMessage=0.0
+var timeSinceLastEvent = 0.0
 var timeSinceLastDonationReaction = 0.0
+
 var recordInputs = true
+var recordChat = true
 var streamer
 
 func setStreamer(newStreamer):
@@ -19,6 +23,9 @@ func setStreamer(newStreamer):
 
 func _ready() -> void:
 	Global.inputRecorder = self
+
+func setPotato():
+	recordChat = false
 
 func reactionFailed(packetDuration: float):
 	recordingFails.append([timeSinceLastFail-packetDuration, packetDuration])
@@ -34,6 +41,7 @@ func stopRecording():
 		Global.chatLog.append(recordingChat)
 	else:
 		Global.chatLog[Global.currentStreamIndex%Global.chatDepth]=recordingChat
+	Global.recordingsEvents.append(recordingEvents)
 
 func _physics_process(delta: float) -> void:
 	if Global.inputHandler == null: return
@@ -44,6 +52,7 @@ func _physics_process(delta: float) -> void:
 		timeSinceLastFail += delta
 		timeSinceLastMessage+=delta
 		timeSinceLastDonationReaction+=delta
+		timeSinceLastEvent += delta
 		if(input[1]):
 			recordingMovement.append([input[0], timeSinceLastInput])
 			timeSinceLastInput = 0
@@ -59,6 +68,10 @@ func appendRecordedReaction(reaction):
 	timeSinceLastReaction = 0
 
 func appendChatMessage(message):
-	recordingChat.append([timeSinceLastMessage,message])
-	timeSinceLastMessage=0
-	
+	if recordChat:
+		recordingChat.append([timeSinceLastMessage,message])
+		timeSinceLastMessage = 0
+
+func appendEvent(event):
+	recordingEvents.append([timeSinceLastEvent,event])
+	timeSinceLastEvent = 0

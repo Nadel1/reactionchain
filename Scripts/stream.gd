@@ -58,7 +58,7 @@ func _ready():
 	Global.pause.connect(pause)
 	Global.resume.connect(resume)
 	Global.resetPerStream()
-	Global.debugLabel = $UI/DebugLabel
+	Global.debugWindow = $UI/DebugWindow/DebugLabel
 	$MidiPlayerBass.setName("Bass")
 	$MidiPlayerBass.play_speed = Global.playbackSpeed
 	Global.tact.connect($MidiPlayerBass.play)
@@ -114,7 +114,7 @@ func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 	
-func nextArrowTact(snippetIndex, fast):
+func nextArrowTact(snippetIndex):
 	if snippetIndex<Global.musicTracks[index].size():
 		arrowPlayingIndex = snippetIndex
 		midiPlayerArrows.set_file(Global.musicTracks[index][arrowPlayingIndex].getLayer(index))

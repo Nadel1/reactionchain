@@ -53,11 +53,11 @@ var eventIndexMusic = 0
 var eventEnds = []
 var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
 var fastPromptMult = 2
-var debugLabel : Label
+var debugWindow : DebugWindow
 @onready var arrowTravelDelay = $ArrowTravelDelay
 
 signal tact(int)
-signal tactArrows(int, bool) # says whether the arrows should be fast
+signal tactArrows(int) # says whether the arrows should be fast
 signal eventImminent
 signal pastEvent(Event)
 signal pause(int) # supplies the index of the stream that paused
@@ -86,27 +86,24 @@ func resetPerStream():
 	arrowSnippetIndex = 0
 	eventIndexArrows = 0
 	eventIndexMusic = 0
+	events = []
 
 func _on_metronome_timeout() -> void:
 	if eventEnds.size() > 0 and eventEnds.back() <= 0:
 		eventEnds.pop_back()
 		resumeStream()
-	if eventIndexMusic < events.size() and events[eventIndexMusic].startIndex == arrowSnippetIndex:
-		var event = events[eventIndexMusic]
-		if event.startIndex == arrowSnippetIndex:
-			if event.startLayer != currentStreamIndex:
-				pastEvent.emit(event)
-		eventEnds.push_back(event.length + 1)
-		print("Event started, ends in: " + str(event.length + 1))
 	tact.emit(musicSnippetIndex)
 	musicSnippetIndex += 1
 	if eventEnds.size() > 0:
 		eventEnds[eventEnds.size()-1] -= 1
+	
+	debugWindow.setEntry("MusicIndex", musicSnippetIndex)
 
 func startMetronome():
 	$Metronome.start()
 	tact.emit(musicSnippetIndex)
 	#musicSnippetIndex += 1
+	debugWindow.setEntry("MusicIndex", musicSnippetIndex)
 	
 func stopMetronome():
 	$Metronome.stop()
@@ -116,21 +113,24 @@ func checkEventPrep():
 		var event = events[eventIndexArrows]
 		if event.startIndex == arrowSnippetIndex + 1 and event.startLayer == currentStreamIndex:
 			$UpcomingEvent.start()
-			arrowSnippetIndex -= 1
-		eventIndexArrows += 1
+			#arrowSnippetIndex -= 1
+		#eventIndexArrows += 1
+	debugWindow.setEntry("InEvent", getPromptSpeedState())
 
 func _on_metronome_arrows_timeout() -> void:
-	var fast = false
 	checkEventPrep()
-	tactArrows.emit(arrowSnippetIndex, fast)
+	tactArrows.emit(arrowSnippetIndex)
 	arrowSnippetIndex += 1
+	
+	debugWindow.setEntry("ArrowIndex", arrowSnippetIndex)
 	
 func startMetronomeArrows():
 	$MetronomeArrows.start()
 	$ArrowTravelDelay.start()
 	checkEventPrep()
-	tactArrows.emit(false)
+	tactArrows.emit(arrowSnippetIndex)
 	#arrowSnippetIndex += 1
+	debugWindow.setEntry("ArrowIndex", arrowSnippetIndex)
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
@@ -139,11 +139,20 @@ func currentStreamPaused():
 	return pauseDepths.size() > 0 and pauseDepths.back() == currentStreamIndex
 
 func getPromptSpeedState(): # Returns whether prompts should be fast right now
-	if eventIndexMusic < events.size() and events[eventIndexMusic].startIndex <= arrowSnippetIndex:
-		var event = events[eventIndexMusic]
-		var inRange = event.startIndex <= arrowSnippetIndex and event.startIndex + event.length > arrowSnippetIndex
-		return inRange and event.startLayer == currentStreamIndex
+	if eventIndexArrows < events.size():
+		var event = events[eventIndexArrows]
+		return event.startIndex <= arrowSnippetIndex + 1 and event.startIndex + event.length > arrowSnippetIndex
 	return false
+
+func initPause():
+	var event = events[eventIndexMusic]
+	if event.startIndex == arrowSnippetIndex:
+		if event.startLayer != currentStreamIndex:
+			pastEvent.emit(event)
+		else:
+			musicSnippetIndex -= 1
+	eventEnds.push_back(event.length)
+	print("Event started, ends in: " + str(event.length))
 
 func pauseStream(depth : int):
 	pauseDepths.push_back(depth)

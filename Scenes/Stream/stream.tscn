@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="7_fa6aa"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
+[ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="12_51xhv"]
+[ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5gam"]
 atlas = ExtResource("7_fa6aa")
@@ -241,15 +243,29 @@ texture = ExtResource("8_imbvg")
 [node name="TimerSinceLastMessage" type="Timer" parent="UI"]
 autostart = true
 
-[node name="DebugLabel" type="Label" parent="UI"]
-offset_left = 816.0
-offset_top = 584.0
-offset_right = 876.0
-offset_bottom = 600.0
+[node name="DebugWindow" type="NinePatchRect" parent="UI"]
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 132.0
+offset_bottom = 144.0
 scale = Vector2(4, 4)
+texture = ExtResource("12_51xhv")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+patch_margin_bottom = 5
+
+[node name="DebugLabel" type="Label" parent="UI/DebugWindow"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 112.0
+offset_bottom = 114.0
 theme = ExtResource("6_f2vs8")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Debug"
+script = ExtResource("13_ft7si")
 
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {

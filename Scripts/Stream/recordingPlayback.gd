@@ -9,11 +9,13 @@ var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
 var timeSinceLastMessage = 0.0
 var timeSinceLastDonationReaction=0.0
+var timeSinceLastEvent = 0.0
 var inputIndex = 0
 var reactionIndex = 0
 var failIndex = 0
 var messageIndex=0
 var donationReactionIndex=0
+var eventIndex = 0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
@@ -33,6 +35,7 @@ func _physics_process(delta: float) -> void:
 		timeSinceLastReaction += delta
 		timeSinceLastFail += delta
 		timeSinceLastMessage+=delta
+		timeSinceLastEvent += delta
 		timeSinceLastDonationReaction+=delta
 		if donationReactionIndex < Global.recordDonationReaction[index].size() and Global.recordDonationReaction[index][donationReactionIndex][0]<=timeSinceLastDonationReaction:
 			var donationReaction = Global.recordDonationReaction[index][donationReactionIndex][1]
@@ -64,7 +67,9 @@ func _physics_process(delta: float) -> void:
 			$TrackPlaybackHandler.failReaction(fail[1])
 			timeSinceLastFail = -fail[1]
 			failIndex += 1
-			
+		if eventIndex < Global.recordingsEvents[index].size() and Global.recordingsEvents[index][eventIndex][0] <= timeSinceLastEvent:
+			Global.pauseStream(index)
+		
 	pass
 
 func checkIndices():
