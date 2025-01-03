@@ -102,7 +102,6 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	if Global.score>=donationsThresholdViewer and Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
 		Global.nextDonationViewerCount+=Global.viewersNeededToNextDonation
-		Global.viewersNeededToNextDonation+=100
 		var newDonation=DONATION.instantiate()
 		newDonation.position=$UI/DonationPlaceholder.position
 		newDonation.loadDonation(Global.difficultyDonations)
