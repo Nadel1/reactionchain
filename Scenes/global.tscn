@@ -5,7 +5,7 @@
 [node name="Global" type="Node2D"]
 script = ExtResource("1_k6fim")
 playbackSpeed = 1.05
-snippetLength = 3.2
+snippetLength = 3.3
 
 [node name="Metronome" type="Timer" parent="."]
 wait_time = 2.4
