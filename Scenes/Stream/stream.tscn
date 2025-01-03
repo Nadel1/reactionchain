@@ -122,6 +122,17 @@ wait_time = 2.0
 [node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
 position = Vector2(808, 24)
 
+[node name="Money" type="Node2D" parent="UI"]
+position = Vector2(500, 500)
+
+[node name="Text" type="RichTextLabel" parent="UI/Money"]
+offset_right = 149.0
+offset_bottom = 15.0
+scale = Vector2(4, 4)
+theme = ExtResource("6_f2vs8")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "DEBUG: DEBUG"
+
 [node name="Score" type="Node2D" parent="UI"]
 z_index = 1
 position = Vector2(128, 536)

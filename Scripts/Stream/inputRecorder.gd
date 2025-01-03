@@ -51,7 +51,6 @@ func _physics_process(delta: float) -> void:
 	pass
 
 func appendDonationReaction(positive:bool):
-	print("append reaction!")
 	recordDonationReaction.append([timeSinceLastDonationReaction,positive])
 	timeSinceLastDonationReaction=0
 	

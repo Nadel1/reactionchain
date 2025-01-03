@@ -60,7 +60,12 @@ func correctDonation():
 	$ReceivedAnim.play("default")
 	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
+	Global.moneyEarned+=Global.increaseInMoney
+	Global.increaseInMoney+=Global.increaseInMoney+randi()%Global.increaseInMoney+Global.increaseInMoney/2
 	endDonationTimer.start()
+	var ui=get_parent()
+	var money=ui.get_node("Money/Text")
+	money.text="Money: "+str(Global.moneyEarned)
 			
 func loadDonation(donationLevel):
 	$ReceivedAnim.hide()

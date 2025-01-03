@@ -35,6 +35,8 @@ var donationOnScreen=false#wasd inputs are not marked as wrong input if this is 
 signal tact
 signal tactArrows
 
+var moneyEarned = 0
+var increaseInMoney=100
 var nextDonationViewerCount=500
 var chatUsers=[]
 var difficultyDonations=3#how many donation inputs appear

@@ -53,6 +53,7 @@ func prepareArrows():
 	
 	
 func _ready():
+	$UI/Money/Text.text= "Money: "+str(Global.moneyEarned)
 	$UI/TrackIndicatorWrong.visible=Global.developerMode
 	$UI/TrackIndicatorRight.visible=Global.developerMode
 	index=Global.currentStreamIndex

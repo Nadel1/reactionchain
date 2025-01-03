@@ -283,32 +283,32 @@ offset_bottom = 40.0
 
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 342.0
-offset_top = 383.0
-offset_right = 445.0
-offset_bottom = 402.0
-scale = Vector2(4, 4)
+offset_left = 370.0
+offset_top = 437.0
+offset_right = 473.0
+offset_bottom = 456.0
+scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
 text = "Restart"
 
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 342.0
-offset_top = 539.0
-offset_right = 445.0
-offset_bottom = 559.0
-scale = Vector2(4, 4)
+offset_left = 370.0
+offset_top = 571.0
+offset_right = 473.0
+offset_bottom = 591.0
+scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
 text = "Quit Game
 "
 
 [node name="Options" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 342.0
-offset_top = 459.0
-offset_right = 445.0
-offset_bottom = 479.0
-scale = Vector2(4, 4)
+offset_left = 370.0
+offset_top = 502.0
+offset_right = 473.0
+offset_bottom = 522.0
+scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
 text = "Options
 "
@@ -335,6 +335,18 @@ text = "Time
 "
 scroll_active = false
 
+[node name="MoneyText" type="RichTextLabel" parent="Text"]
+offset_left = 492.0
+offset_top = 240.0
+offset_right = 616.0
+offset_bottom = 256.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "Money
+"
+scroll_active = false
+
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 492.0
@@ -355,10 +367,10 @@ rotation = 0.0349066
 script = ExtResource("5_6tkhb")
 
 [node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -379.0
-offset_top = -21.0
-offset_right = -177.0
-offset_bottom = -5.0
+offset_left = -387.484
+offset_top = 21.5361
+offset_right = -185.484
+offset_bottom = 37.5361
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true

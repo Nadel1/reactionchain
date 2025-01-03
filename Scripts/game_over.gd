@@ -5,6 +5,7 @@ extends Node2D
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
+	$Text/ScoreText.text="[center]"+"Earned money: "+str(Global.currentHighScoreViewers)+"[/center]"
 	var time=int(Global.survivedTime)
 	var strMinutes=str(time/60)
 	if (time/60)<10:
@@ -39,6 +40,8 @@ func _on_restart_button_down() -> void:
 	Global.currentHighScoreViewers=0
 	Global.mainSeed=randi()
 	Global.currentStreamIndex=0
+	Global.increaseInMoney=100
+	Global.moneyEarned=0
 	Global.startSurvivedTime()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
