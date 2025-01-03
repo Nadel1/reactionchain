@@ -27,9 +27,10 @@ func _on_reaction_revert_timeout() -> void:
 func _on_movement_revert_timeout() -> void:
 	$Movement.play("RESET")
 	
-func donationReaction(positive:bool):
+func donationReaction(positive:bool,recorded:bool=true):
 	$DonationReaction.show()
-	Global.inputRecorder.appendDonationReaction(positive)
+	if recorded:
+		Global.inputRecorder.appendDonationReaction(positive)
 	if positive:
 		$DonationReaction.play("appreciate")
 	else:
