@@ -162,22 +162,23 @@ bus = &"Bass"
 file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass2.MID"
 play_speed = 0.666
 volume_db = -30.0
-soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
 bus = &"Bass"
 
 [node name="MidiPlayerChords" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_chords.MID"
 play_speed = 0.666
 volume_db = -30.0
-soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"
 bus = &"Bass"
 
 [node name="MidiPlayerDrums" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
 file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_drums.MID"
 playing = true
 play_speed = 0.666
+volume_db = -19.999
 loop = true
-soundfont = "res://Assets/Audio/Instruments/Standard_Dum_Kit__by_Charlie.SF2"
+soundfont = "res://Assets/Audio/Instruments/Drum Set JD Rockset 5.sf2"
 bus = &"Bass"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
@@ -185,7 +186,7 @@ wait_time = 4.0
 one_shot = true
 
 [node name="StartSpawningArrowsTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.932
 one_shot = true
 autostart = true
 
