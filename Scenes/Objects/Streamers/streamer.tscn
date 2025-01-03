@@ -1,11 +1,96 @@
-[gd_scene load_steps=28 format=3 uid="uid://bjfey2jmh5t2s"]
+[gd_scene load_steps=41 format=3 uid="uid://bjfey2jmh5t2s"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_brk8q"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_lxfp8"]
+[ext_resource type="Texture2D" uid="uid://dbv12p7xn0xq0" path="res://Assets/Sprites/Donations/reactionAppreciate.png" id="2_vv408"]
 [ext_resource type="Texture2D" uid="uid://b7h5ew50b7jcs" path="res://Assets/Sprites/Streamers/Parts/Body0/movement0.png" id="3_g627v"]
+[ext_resource type="Texture2D" uid="uid://bwk42kdepn3y" path="res://Assets/Sprites/Donations/reactionFail.png" id="3_m0bm1"]
 [ext_resource type="Texture2D" uid="uid://b638x4o8hc3hq" path="res://Assets/Sprites/Streamers/Parts/Body0/movement1.png" id="4_eq480"]
 [ext_resource type="Texture2D" uid="uid://bcj0wh2nygt5n" path="res://Assets/Sprites/Streamers/Parts/Head0.png" id="5_2yud5"]
 [ext_resource type="Texture2D" uid="uid://bc43tuambkcp6" path="res://Assets/Sprites/Streamers/Parts/Face0.png" id="7_bxhal"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjlq6"]
+atlas = ExtResource("2_vv408")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oywlw"]
+atlas = ExtResource("2_vv408")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvy5u"]
+atlas = ExtResource("2_vv408")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23y75"]
+atlas = ExtResource("2_vv408")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1g2i"]
+atlas = ExtResource("2_vv408")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwun8"]
+atlas = ExtResource("3_m0bm1")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2f3w5"]
+atlas = ExtResource("3_m0bm1")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4ool"]
+atlas = ExtResource("3_m0bm1")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70twk"]
+atlas = ExtResource("3_m0bm1")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nn61q"]
+atlas = ExtResource("3_m0bm1")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wwgfn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjlq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oywlw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvy5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23y75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1g2i")
+}],
+"loop": false,
+"name": &"appreciate",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bwun8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2f3w5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4ool")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70twk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nn61q")
+}],
+"loop": false,
+"name": &"fail",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_id6wl"]
 atlas = ExtResource("3_g627v")
@@ -865,6 +950,10 @@ script = ExtResource("1_brk8q")
 color = Color(7.12335e-06, 0.608189, 0.809683, 1)
 polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 
+[node name="DonationReaction" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wwgfn")
+animation = &"fail"
+
 [node name="Frame" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 z_index = 2
@@ -896,5 +985,6 @@ one_shot = true
 [node name="MovementRevert" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="animation_finished" from="DonationReaction" to="." method="_on_donation_reaction_animation_finished"]
 [connection signal="timeout" from="ReactionRevert" to="." method="_on_reaction_revert_timeout"]
 [connection signal="timeout" from="MovementRevert" to="." method="_on_movement_revert_timeout"]

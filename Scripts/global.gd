@@ -13,6 +13,7 @@ var inputRecorder : InputRecorder
 var recordingsMovement = []
 var recordingsReaction = []
 var recordingsFails = []
+var recordDonationReaction = []
 var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
 var score = 10

@@ -131,7 +131,7 @@ animations = [{
 
 [node name="Streamer" instance=ExtResource("1_fxgj4")]
 
-[node name="Head" parent="." index="3"]
+[node name="Head" parent="." index="4"]
 sprite_frames = SubResource("SpriteFrames_s5ls5")
 
 [node name="Face" parent="Head" index="0"]

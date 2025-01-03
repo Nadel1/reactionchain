@@ -35,6 +35,7 @@ func _input(event):
 
 func dealWithInput(correctInput):
 	if correctInput:
+		Global.currentStreamer.donationReaction(true)
 		inputArray[compareIndex].hide()
 		$AnimationPlayerFeedback.play(inputAnimations.pick_random())
 		compareIndex+=1
@@ -43,7 +44,7 @@ func dealWithInput(correctInput):
 		else: 
 			inputArray[compareIndex].find_child("Outline").show()
 	else:
-		print("wrong donation")
+		Global.currentStreamer.donationReaction(false)
 		for i in range(0, inputArray.size()):
 			inputArray[i].hide()
 		$Notification.play("crumble")
