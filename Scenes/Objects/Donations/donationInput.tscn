@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dyggh6ghomtrd" path="res://Assets/Sprites/Donations/InputBackgroundOutline.png" id="3_qxnvd"]
 
 [node name="DonationInput" type="Node2D"]
+scale = Vector2(2, 2)
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_jhwf8")

@@ -299,6 +299,22 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, 20), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_rd6cg"]
+resource_name = "growReceivedBackground"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ReceivedAnim:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.966667, 2.03333, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(2, 2), Vector2(3, 3)]
+}
+
 [sub_resource type="Animation" id="Animation_kwc85"]
 resource_name = "new_animation"
 tracks/0/type = "value"
@@ -382,22 +398,6 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_rd6cg"]
-resource_name = "growReceivedBackground"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ReceivedAnim:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.966667, 2.03333, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(2, 2), Vector2(3, 3)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1grbi"]
 _data = {
 "RESET": SubResource("Animation_17peq"),
@@ -429,7 +429,8 @@ sprite_frames = SubResource("SpriteFrames_r4eav")
 animation = &"crumble"
 
 [node name="DonationsBanner" type="Sprite2D" parent="."]
-position = Vector2(0, -96)
+position = Vector2(0, -121)
+scale = Vector2(1.5, 2.064)
 texture = ExtResource("4_ipnh6")
 
 [node name="Notification" type="AnimatedSprite2D" parent="."]
@@ -442,7 +443,7 @@ libraries = {
 }
 
 [node name="EndDontationTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 3.0
 
 [connection signal="animation_finished" from="AnimationPlayerOutline" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Notification" to="." method="_on_notification_animation_finished"]

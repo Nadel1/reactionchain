@@ -8,6 +8,7 @@ var sizeOfBanner=200
 var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
+@onready var endDonationTimer=$EndDontationTimer
 
 func _input(event):
 	if event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
@@ -58,6 +59,7 @@ func correctDonation():
 	$ReceivedAnim.play("default")
 	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
+	endDonationTimer.start()
 			
 func loadDonation(donationLevel):
 	$ReceivedAnim.hide()
