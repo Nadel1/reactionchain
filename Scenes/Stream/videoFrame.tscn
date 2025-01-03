@@ -194,7 +194,6 @@ autowrap_mode = 2
 [node name="Time" type="Timer" parent="."]
 wait_time = 25.0
 one_shot = true
-autostart = true
 
 [node name="PausePlay" type="AnimationPlayer" parent="."]
 libraries = {

@@ -33,6 +33,9 @@ func init(index : int):
 	value = 0.6 + 0.4 * (1-value * value)
 	$Background.color = Color.from_hsv(hue, 0.2, value * 0.79)
 	$StreamBorder.modulate = Color.from_hsv(hue, 0.2, value)
+	
+	$Time.wait_time = (Global.musicTracks.back().size() + 2) * Global.snippetLength
+	$Time.start()
 
 static func generateFirstTitle():
 	Global.videoTitle[1].append(getString(1, 0))

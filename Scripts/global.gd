@@ -26,7 +26,7 @@ var streamerIndices =[]
 var currentStreamer=null
 var chatDepth=5#at some point you cant read it anymore
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
-var developerMode = true
+var developerMode = false
 var musicTracks=[]
 var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
@@ -53,6 +53,7 @@ var eventIndexMusic = 0
 var eventEnds = []
 var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
 var fastPromptMult = 2
+var fakePromptsCountdown = -1
 var debugWindow : DebugWindow
 @onready var arrowTravelDelay = $ArrowTravelDelay
 
@@ -60,6 +61,7 @@ signal tact(int)
 signal tactArrows(int) # says whether the arrows should be fast
 signal eventImminent
 signal pastEvent(Event)
+signal tactFakeArrows
 signal pause(int) # supplies the index of the stream that paused
 signal resume(int)
 
@@ -97,6 +99,10 @@ func _on_metronome_timeout() -> void:
 	if eventEnds.size() > 0:
 		eventEnds[eventEnds.size()-1] -= 1
 	
+	var endsString = ""
+	for entry in eventEnds:
+		endsString += str(entry) + ","
+	debugWindow.setEntry("Events", endsString)
 	debugWindow.setEntry("MusicIndex", musicSnippetIndex)
 
 func startMetronome():
@@ -111,13 +117,17 @@ func stopMetronome():
 func checkEventPrep():
 	if eventIndexArrows < events.size():
 		var event = events[eventIndexArrows]
-		if event.startIndex == arrowSnippetIndex + 1 and event.startLayer == currentStreamIndex:
+		if event.startIndex == arrowSnippetIndex + 2 and event.startLayer == currentStreamIndex:
 			$UpcomingEvent.start()
+			fakePromptsCountdown = 0
 			#arrowSnippetIndex -= 1
 		#eventIndexArrows += 1
 	debugWindow.setEntry("InEvent", getPromptSpeedState())
 
 func _on_metronome_arrows_timeout() -> void:
+	if fakePromptsCountdown == 0:
+		$FakeArrowDelay.start()
+	fakePromptsCountdown -= 1
 	checkEventPrep()
 	tactArrows.emit(arrowSnippetIndex)
 	arrowSnippetIndex += 1
@@ -141,7 +151,7 @@ func currentStreamPaused():
 func getPromptSpeedState(): # Returns whether prompts should be fast right now
 	if eventIndexArrows < events.size():
 		var event = events[eventIndexArrows]
-		return event.startIndex <= arrowSnippetIndex + 1 and event.startIndex + event.length > arrowSnippetIndex
+		return event.startIndex <= arrowSnippetIndex and event.startIndex + event.length > arrowSnippetIndex
 	return false
 
 func initPause():
@@ -152,21 +162,22 @@ func initPause():
 		else:
 			musicSnippetIndex -= 1
 	eventEnds.push_back(event.length)
-	print("Event started, ends in: " + str(event.length))
+	#print("Event started, ends in: " + str(event.length))
+	pauseStream(currentStreamIndex)
 
 func pauseStream(depth : int):
 	pauseDepths.push_back(depth)
 	pause.emit(depth)
-	print("Paused. Pause Stack:")
-	for i in pauseDepths:
-		print("- " + str(i))
+	#print("Paused. Pause Stack:")
+	#for i in pauseDepths:
+		#print("- " + str(i))
 
 func resumeStream():
 	var depth = pauseDepths.pop_back()
 	resume.emit(depth)
-	print("Resumed. Pause Stack:")
-	for i in pauseDepths:
-		print("- " + str(i))
+	#print("Resumed. Pause Stack:")
+	#for i in pauseDepths:
+		#print("- " + str(i))
 
 func insertEvent(newEvent : Event):
 	if events.size() == 0 or events.back().startIndex <= newEvent.startIndex:
@@ -238,6 +249,8 @@ func resetSaveFile():
 func _on_arrow_travel_delay_timeout() -> void:
 	startMetronome()
 
-
 func _on_upcoming_event_timeout() -> void:
 	eventImminent.emit()
+
+func _on_fake_arrow_delay_timeout() -> void:
+		tactFakeArrows.emit()

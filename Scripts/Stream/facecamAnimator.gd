@@ -62,4 +62,5 @@ func _on_movement_animation_finished(anim_name: StringName) -> void:
 		$Movement.play("yap")
 
 func _on_event_start_timeout() -> void:
-	Global.pauseStream(layerIndex)
+	pass
+	#Global.pauseStream(layerIndex)

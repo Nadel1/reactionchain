@@ -5,10 +5,9 @@ var eventChances = [0.5]
 func generateEvents():
 	var newEvent = Event.new()
 	var length = randi_range(2,4)
-	var insertAt = randi_range(1,Global.musicTracks[0].size()-(length + 1))
-	if(insertAt < 1):
-		print("Event could not be generated")
-		return
+	# TODO: Find out why this breaks at 1 and 2
+	var insertAt = randi_range(3,Global.musicTracks[0].size()-1)
+	#print("Event at " + str(insertAt))
 	newEvent.length = length
 	newEvent.type = Event.Types.PAUSE_REWIND
 	newEvent.startIndex = insertAt

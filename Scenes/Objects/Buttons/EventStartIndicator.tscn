@@ -8,6 +8,7 @@ size = Vector2(16, 64)
 
 [node name="EventStartIndicator" type="Node2D" groups=["EventStart"]]
 script = ExtResource("1_tn8iu")
+deleteOnFreeze = true
 
 [node name="EventStart" type="Sprite2D" parent="."]
 z_index = 10

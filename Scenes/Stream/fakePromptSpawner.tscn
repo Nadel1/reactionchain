@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch1khsrq2hnia"]
+
+[ext_resource type="Script" path="res://Scripts/Stream/fakePromptSpawner.gd" id="1_73atu"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_vjewf"]
+
+[node name="FakePromptSpawner" type="Node2D"]
+script = ExtResource("1_73atu")
+
+[node name="MidiPlayerArrows" parent="." instance=ExtResource("2_vjewf")]
+file = "res://Assets/Audio/Tracks/snippets01/lead1_layer1.MID"
+play_speed = 0.666
+volume_db = -80.0
+soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"
+bus = &"Arrows"
+
+[connection signal="midi_event" from="MidiPlayerArrows" to="." method="_on_midi_player_arrows_midi_event"]

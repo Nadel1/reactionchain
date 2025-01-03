@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://c0bluohjgwimb"]
+[gd_scene load_steps=13 format=3 uid="uid://c0bluohjgwimb"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/track.gd" id="1_02ljk"]
 [ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="2_cvast"]
+[ext_resource type="PackedScene" uid="uid://ch1khsrq2hnia" path="res://Scenes/Stream/fakePromptSpawner.tscn" id="2_ngu6u"]
 [ext_resource type="Texture2D" uid="uid://bhoj52so4jvl1" path="res://Assets/Sprites/Buttons/HitZone.png" id="4_cbvy3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r0hus"]
@@ -72,6 +73,9 @@ size = Vector2(13.5, 62)
 
 [node name="Track" type="Node2D"]
 script = ExtResource("1_02ljk")
+
+[node name="FakePromptSpawner" parent="." node_paths=PackedStringArray("spawnPos") instance=ExtResource("2_ngu6u")]
+spawnPos = NodePath("../SpawnPoint")
 
 [node name="TrackAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-112, -8)

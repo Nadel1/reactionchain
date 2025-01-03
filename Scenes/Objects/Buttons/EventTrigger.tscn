@@ -11,6 +11,7 @@ size = Vector2(16, 64)
 script = ExtResource("1_3rstk")
 
 [node name="EventTrigger" type="Sprite2D" parent="."]
+visible = false
 z_index = 2
 scale = Vector2(4, 4)
 texture = ExtResource("1_jffjn")
