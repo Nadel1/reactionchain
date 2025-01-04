@@ -27,7 +27,7 @@ func _on_death_timer_timeout() -> void:
 func freeze(depth : int):
 	if !fast and depth == Global.currentStreamIndex:
 		speed = 0
-	if deleteOnFreeze:
+	if deleteOnFreeze and depth == Global.currentStreamIndex:
 		call_deferred("queue_free")
 
 func setFast(value : bool):

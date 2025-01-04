@@ -10,12 +10,14 @@ var timeSinceLastFail = 0.0
 var timeSinceLastMessage = 0.0
 var timeSinceLastDonationReaction=0.0
 var timeSinceLastEvent = 0.0
+var eventTime = 0.0
 var inputIndex = 0
 var reactionIndex = 0
 var failIndex = 0
 var messageIndex=0
 var donationReactionIndex=0
 var eventIndex = 0
+var currentEvent : Event
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
@@ -30,6 +32,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	checkIndices()
+
 	if playing and !paused:
 		timeSinceLastInput += delta
 		timeSinceLastReaction += delta
@@ -61,15 +64,22 @@ func _physics_process(delta: float) -> void:
 				var message=Global.chatLog[chatIndex][messageIndex][1]
 				$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
 				timeSinceLastMessage = 0
-				messageIndex+=1
+				messageIndex += 1
 		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:
 			var fail = Global.recordingsFails[index][failIndex]
 			$TrackPlaybackHandler.failReaction(fail[1])
 			timeSinceLastFail = -fail[1]
 			failIndex += 1
 		if eventIndex < Global.recordingsEvents[index].size() and Global.recordingsEvents[index][eventIndex][0] <= timeSinceLastEvent:
-			Global.pauseStream(index)
-		
+			currentEvent = Global.recordingsEvents[index][eventIndex][1]
+			streamer.event()
+			Global.pauseStream(currentEvent.startLayer)
+			eventIndex += 1
+		if currentEvent != null:
+			eventTime += delta
+			if eventTime > (currentEvent.length * Global.snippetLength + 1):
+				Global.resumeStream()
+				currentEvent = null
 	pass
 
 func checkIndices():

@@ -129,10 +129,10 @@ func updateArrowPlayingState():
 	#	midiPlayerArrows.playing = false
 	pass
 
-func pause():
+func pause(_depth):
 	pass
 	
-func resume():
+func resume(_depth):
 	pass
 
 func _on_track_playback_handler_layer_finished() -> void:

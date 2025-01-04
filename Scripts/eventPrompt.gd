@@ -2,6 +2,7 @@ extends GenericPrompt
 
 var startIndicator = preload("res://Scenes/Objects/Buttons/EventStartIndicator.tscn")
 @onready var startPos = global_position 
+var encodedEvent : Event
 
 func _ready() -> void:
 	$Label.visible = Global.developerMode

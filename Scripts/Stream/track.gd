@@ -113,8 +113,9 @@ func spawnMarker(end : bool):
 		debuglastButton+=1
 		lastButtonSpawned.lastButton=true
 
-func spawnEventTrigger():
+func spawnEventTrigger(event):
 	var trigger = EVENTTRIGGER.instantiate()
+	trigger.encodedEvent = event
 	trigger.global_position=spawnPoint.global_position
 	trigger.find_child("Label").text = str(Global.events[Global.eventIndexArrows-1].length)
 	get_parent().call_deferred("add_child",trigger)
@@ -226,8 +227,9 @@ func dealWithMarker():
 	countMarker+=1
 		
 
-func dealWithEventTrigger():
+func dealWithEventTrigger(eventTrigger):
 	Global.currentStreamer.event()
+	Global.inputRecorder.appendEvent(eventTrigger.encodedEvent)
 
 func dealWithEventStart():
 	Global.initPause()
@@ -236,7 +238,7 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("PacketMarker"):
 		dealWithMarker()
 	elif area.get_parent().is_in_group("EventTrigger"):
-		dealWithEventTrigger()
+		dealWithEventTrigger(area.get_parent())
 	elif area.get_parent().is_in_group("EventStart"):
 		dealWithEventStart()
 	else:

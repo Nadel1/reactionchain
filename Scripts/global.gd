@@ -59,7 +59,7 @@ var debugWindow : DebugWindow
 
 signal tact(int)
 signal tactArrows(int) # says whether the arrows should be fast
-signal eventImminent
+signal eventImminent(Event)
 signal pastEvent(Event)
 signal tactFakeArrows
 signal pause(int) # supplies the index of the stream that paused
@@ -250,7 +250,7 @@ func _on_arrow_travel_delay_timeout() -> void:
 	startMetronome()
 
 func _on_upcoming_event_timeout() -> void:
-	eventImminent.emit()
+	eventImminent.emit(events[eventIndexArrows])
 
 func _on_fake_arrow_delay_timeout() -> void:
 		tactFakeArrows.emit()
