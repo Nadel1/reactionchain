@@ -36,6 +36,9 @@ signal tact
 signal tactArrows
 
 var moneyEarned = 0
+var moneyHighScore=0
+var overallScore = 0
+var overallScoreHighScore=0
 var increaseInMoney=100
 var nextDonationViewerCount=500
 var chatUsers=[]
@@ -84,7 +87,9 @@ func stopMetronomeArrows():
 func makeSaveDict():
 	var saveDict = {
 		"highScoreViewers" : highScoreViewers,
-		"highScoreTime" : highScoreTime
+		"highScoreTime" : highScoreTime,
+		"moneyHighScore" : moneyHighScore,
+		"overallScoreHighScore" : overallScoreHighScore
 	}
 	return saveDict
 
@@ -115,6 +120,8 @@ func loadGame():
 		if typeof(dict) == TYPE_DICTIONARY:
 			highScoreViewers = loadDataFromDictSafe(dict, highScoreViewers, "highScoreViewers")
 			highScoreTime = loadDataFromDictSafe(dict, highScoreTime, "highScoreTime")
+			moneyHighScore =loadDataFromDictSafe(dict, moneyHighScore, "moneyHighScore")
+			overallScoreHighScore = loadDataFromDictSafe(dict, overallScoreHighScore, "overallScoreHighScore")
 		else:
 			printerr("Corrupted data!")
 	else:
@@ -123,4 +130,6 @@ func loadGame():
 		
 func resetSaveFile():
 	highScoreViewers=0
+	moneyHighScore=0
+	highScoreTime=0
 	saveGame()

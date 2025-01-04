@@ -65,6 +65,8 @@ func correctDonation():
 	endDonationTimer.start()
 	var ui=get_parent()
 	var money=ui.get_node("Money/Text")
+	ui.get_node("Money/MoneyVFX").show()
+	ui.get_node("Money/MoneyVFX").play("money")
 	money.text="Money: "+str(Global.moneyEarned)
 			
 func loadDonation(donationLevel):

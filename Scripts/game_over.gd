@@ -5,7 +5,14 @@ extends Node2D
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
-	$Text/ScoreText.text="[center]"+"Earned money: "+str(Global.currentHighScoreViewers)+"[/center]"
+	$Text/MoneyText.text="[center]"+"Earned money: "+str(Global.moneyEarned)+"[/center]"
+	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+Global.moneyEarned
+	$Text/OverallScoreText.text="[center] Overall score: "+str(Global.overallScore)
+	if Global.overallScore>Global.overallScoreHighScore:
+		$Text/HighScore.show()
+		Global.overallScoreHighScore=Global.overallScore
+	else: 
+		$Text/HighScore.hide()
 	var time=int(Global.survivedTime)
 	var strMinutes=str(time/60)
 	if (time/60)<10:
@@ -14,25 +21,6 @@ func _ready() -> void:
 	if (time%60)<10:
 		strSeconds="0"+strSeconds
 	$Text/TimeScoreText.text="[center]"+"Time: "+strMinutes+":"+strSeconds+"[/center]"
-	if Global.currentHighScoreViewers>Global.highScoreViewers and Global.survivedTime>Global.highScoreTime:
-		$Text/HighScore.show()
-		$Text/HighScore/HighScore.text="[center] New viewer and time highscore! [/center]"
-		Global.highScoreViewers=Global.currentHighScoreViewers
-		Global.highScoreTime=Global.survivedTime
-		return
-	elif Global.currentHighScoreViewers>Global.highScoreViewers:
-		$Text/HighScore.show()
-		Global.highScoreViewers=Global.currentHighScoreViewers
-		$Text/HighScore/HighScore.text="[center] New viewer highscore! [/center]"
-		return
-	elif Global.survivedTime>Global.highScoreTime:
-		$Text/HighScore.show()
-		$Text/HighScore/HighScore.text="[center] New time highscore! [/center]"
-		Global.highScoreTime=Global.survivedTime
-		return
-	else:
-		$Text/HighScore.hide()
-		
 
 func _on_restart_button_down() -> void:
 	Global.score=10

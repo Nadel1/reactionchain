@@ -240,20 +240,20 @@ autoplay = "slideTitle"
 [node name="Background" type="Node2D" parent="."]
 
 [node name="BackgroundSprite" type="Sprite2D" parent="Background"]
-position = Vector2(558, 365)
+position = Vector2(558, 320)
 scale = Vector2(10.0938, 11.3594)
 texture = ExtResource("7_1q6on")
 
 [node name="CameraSprite" type="Sprite2D" parent="Background"]
-position = Vector2(513, 228)
+position = Vector2(531, 188)
 scale = Vector2(4, 4)
 texture = ExtResource("8_jbcag")
 
 [node name="BackgroundText" type="RichTextLabel" parent="Background"]
-offset_left = 304.0
-offset_top = 68.0
-offset_right = 448.0
-offset_bottom = 106.0
+offset_left = 286.0
+offset_top = 23.0
+offset_right = 430.0
+offset_bottom = 61.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "> Technical difficulties...
@@ -283,9 +283,9 @@ offset_bottom = 40.0
 
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 370.0
+offset_left = 393.0
 offset_top = 437.0
-offset_right = 473.0
+offset_right = 496.0
 offset_bottom = 456.0
 scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
@@ -293,9 +293,9 @@ text = "Restart"
 
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 370.0
+offset_left = 393.0
 offset_top = 571.0
-offset_right = 473.0
+offset_right = 496.0
 offset_bottom = 591.0
 scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
@@ -304,9 +304,9 @@ text = "Quit Game
 
 [node name="Options" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 370.0
+offset_left = 393.0
 offset_top = 502.0
-offset_right = 473.0
+offset_right = 496.0
 offset_bottom = 522.0
 scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
@@ -325,17 +325,44 @@ offset_bottom = 120.0
 [node name="TimeScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 492.0
-offset_top = 196.0
-offset_right = 616.0
-offset_bottom = 212.0
-scale = Vector2(4, 4)
+offset_top = 149.0
+offset_right = 653.0
+offset_bottom = 165.0
+scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
-text = "Time
+text = "[center]Time[/center]
 "
 scroll_active = false
 
 [node name="MoneyText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 492.0
+offset_top = 192.0
+offset_right = 653.0
+offset_bottom = 208.0
+scale = Vector2(3, 3)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "[center]Money[/center]
+"
+scroll_active = false
+
+[node name="ScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 492.0
+offset_top = 108.0
+offset_right = 653.0
+offset_bottom = 124.0
+scale = Vector2(3, 3)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "[center]Score[/center]"
+scroll_active = false
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="OverallScoreText" type="RichTextLabel" parent="Text"]
 offset_left = 492.0
 offset_top = 240.0
 offset_right = 616.0
@@ -343,23 +370,8 @@ offset_bottom = 256.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
-text = "Money
-"
+text = "[center]DEBUG SCORE[/center]"
 scroll_active = false
-
-[node name="ScoreText" type="RichTextLabel" parent="Text"]
-layout_mode = 0
-offset_left = 492.0
-offset_top = 148.0
-offset_right = 616.0
-offset_bottom = 164.0
-scale = Vector2(4, 4)
-theme = ExtResource("3_xylrd")
-bbcode_enabled = true
-text = "Score"
-scroll_active = false
-visible_characters = 0
-visible_ratio = 0.0
 
 [node name="HighScore" type="Node2D" parent="Text"]
 position = Vector2(730, 268)
@@ -367,10 +379,10 @@ rotation = 0.0349066
 script = ExtResource("5_6tkhb")
 
 [node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -387.484
-offset_top = 21.5361
-offset_right = -185.484
-offset_bottom = 37.5361
+offset_left = -395.165
+offset_top = 25.571
+offset_right = -193.165
+offset_bottom = 41.571
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
