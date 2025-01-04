@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=27 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -9,8 +9,59 @@
 [ext_resource type="Script" path="res://Scripts/Stream/scoreDisplay.gd" id="6_a5we1"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="6_f2vs8"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
+[ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="7_fa6aa"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5gam"]
+atlas = ExtResource("7_fa6aa")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3yuw"]
+atlas = ExtResource("7_fa6aa")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8j7m"]
+atlas = ExtResource("7_fa6aa")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arg2n"]
+atlas = ExtResource("7_fa6aa")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtv5n"]
+atlas = ExtResource("7_fa6aa")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfu56"]
+atlas = ExtResource("7_fa6aa")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d77wq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5gam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3yuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8j7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arg2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtv5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfu56")
+}],
+"loop": false,
+"name": &"money",
+"speed": 5.0
+}]
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
@@ -122,6 +173,28 @@ wait_time = 2.0
 [node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
 position = Vector2(808, 24)
 
+[node name="Money" type="Node2D" parent="UI"]
+position = Vector2(500, 500)
+
+[node name="MoneyVFX" type="AnimatedSprite2D" parent="UI/Money"]
+z_index = 2
+position = Vector2(175, -10)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_d77wq")
+animation = &"money"
+frame = 5
+frame_progress = 1.0
+
+[node name="Text" type="RichTextLabel" parent="UI/Money"]
+offset_left = -19.0
+offset_top = -3.0
+offset_right = 130.0
+offset_bottom = 12.0
+scale = Vector2(4, 4)
+theme = ExtResource("6_f2vs8")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "DEBUG: DEBUG"
+
 [node name="Score" type="Node2D" parent="UI"]
 z_index = 1
 position = Vector2(128, 536)
@@ -147,6 +220,9 @@ position = Vector2(299, 593)
 
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
 position = Vector2(-1, -1)
+
+[node name="DonationPlaceholder" type="Node2D" parent="UI"]
+position = Vector2(355, 256)
 
 [node name="TrackIndicatorWrong" type="Sprite2D" parent="UI"]
 position = Vector2(839, 230)

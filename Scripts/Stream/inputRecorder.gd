@@ -5,10 +5,12 @@ var recordingMovement = []
 var recordingReaction = []
 var recordingFails = []
 var recordingChat = []
+var recordDonationReaction=[]
 var timeSinceLastInput = 0.0
 var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
 var timeSinceLastMessage=0.0
+var timeSinceLastDonationReaction = 0.0
 var recordInputs = true
 var streamer
 
@@ -27,6 +29,7 @@ func stopRecording():
 	Global.recordingsMovement.append(recordingMovement)
 	Global.recordingsReaction.append(recordingReaction)
 	Global.recordingsFails.append(recordingFails)
+	Global.recordDonationReaction.append(recordDonationReaction)
 	if Global.chatLog.size()<Global.chatDepth:
 		Global.chatLog.append(recordingChat)
 	else:
@@ -40,12 +43,17 @@ func _physics_process(delta: float) -> void:
 		timeSinceLastReaction += delta
 		timeSinceLastFail += delta
 		timeSinceLastMessage+=delta
+		timeSinceLastDonationReaction+=delta
 		if(input[1]):
 			recordingMovement.append([input[0], timeSinceLastInput])
 			timeSinceLastInput = 0
 			streamer.move(input[0])
 	pass
 
+func appendDonationReaction(positive:bool):
+	recordDonationReaction.append([timeSinceLastDonationReaction,positive])
+	timeSinceLastDonationReaction=0
+	
 func appendRecordedReaction(reaction):
 	recordingReaction.append([timeSinceLastReaction,reaction])
 	timeSinceLastReaction = 0

@@ -57,8 +57,6 @@ func _input(event):
 			registerInput("up")
 		elif event.is_action_pressed("down"):
 			registerInput("down")
-		else:
-			evaluateScore(null,false)
 			
 func spawnButton():
 	if arrowSpawnID % Global.difficulty == 0:

@@ -131,7 +131,7 @@ animations = [{
 
 [node name="Streamer" instance=ExtResource("1_s5lhc")]
 
-[node name="Head" parent="." index="3"]
+[node name="Head" parent="." index="4"]
 sprite_frames = SubResource("SpriteFrames_l50iy")
 animation = &"default"
 

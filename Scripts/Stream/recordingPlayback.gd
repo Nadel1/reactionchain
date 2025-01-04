@@ -7,10 +7,12 @@ var timeSinceLastInput = 0.0
 var timeSinceLastReaction = 0.0
 var timeSinceLastFail = 0.0
 var timeSinceLastMessage = 0.0
+var timeSinceLastDonationReaction=0.0
 var inputIndex = 0
 var reactionIndex = 0
 var failIndex = 0
 var messageIndex=0
+var donationReactionIndex=0
 
 func setStreamer(newStreamer):
 	streamer=newStreamer
@@ -26,6 +28,12 @@ func _physics_process(delta: float) -> void:
 		timeSinceLastReaction += delta
 		timeSinceLastFail += delta
 		timeSinceLastMessage+=delta
+		timeSinceLastDonationReaction+=delta
+		if donationReactionIndex < Global.recordDonationReaction[index].size() and Global.recordDonationReaction[index][donationReactionIndex][0]<=timeSinceLastDonationReaction:
+			var donationReaction = Global.recordDonationReaction[index][donationReactionIndex][1]
+			streamer.donationReaction(donationReaction,false)
+			timeSinceLastDonationReaction=0
+			donationReactionIndex+=1
 		if inputIndex < Global.recordingsMovement[index].size() and Global.recordingsMovement[index][inputIndex][1] <= timeSinceLastInput:
 			var input = Global.recordingsMovement[index][inputIndex][0]
 			streamer.move(input)

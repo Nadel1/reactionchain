@@ -13,6 +13,7 @@ var inputRecorder : InputRecorder
 var recordingsMovement = []
 var recordingsReaction = []
 var recordingsFails = []
+var recordDonationReaction = []
 var currentTrackHandler : TrackPlaybackHandler
 var currentStreamIndex = 0
 var score = 10
@@ -30,10 +31,19 @@ var packetToBeDropped=[]
 var videoTitle = [[],[],[]]
 var chatLog=[]
 var decreaseWrongInput=1.1
+var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
 signal tact
 signal tactArrows
 
+var moneyEarned = 0
+var moneyHighScore=0
+var overallScore = 0
+var overallScoreHighScore=0
+var increaseInMoney=100
+var nextDonationViewerCount=500
 var chatUsers=[]
+var difficultyDonations=3#how many donation inputs appear
+var viewersNeededToNextDonation=500
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
 @export var playbackSpeed = 0.575
@@ -77,7 +87,9 @@ func stopMetronomeArrows():
 func makeSaveDict():
 	var saveDict = {
 		"highScoreViewers" : highScoreViewers,
-		"highScoreTime" : highScoreTime
+		"highScoreTime" : highScoreTime,
+		"moneyHighScore" : moneyHighScore,
+		"overallScoreHighScore" : overallScoreHighScore
 	}
 	return saveDict
 
@@ -108,6 +120,8 @@ func loadGame():
 		if typeof(dict) == TYPE_DICTIONARY:
 			highScoreViewers = loadDataFromDictSafe(dict, highScoreViewers, "highScoreViewers")
 			highScoreTime = loadDataFromDictSafe(dict, highScoreTime, "highScoreTime")
+			moneyHighScore =loadDataFromDictSafe(dict, moneyHighScore, "moneyHighScore")
+			overallScoreHighScore = loadDataFromDictSafe(dict, overallScoreHighScore, "overallScoreHighScore")
 		else:
 			printerr("Corrupted data!")
 	else:
@@ -116,4 +130,6 @@ func loadGame():
 		
 func resetSaveFile():
 	highScoreViewers=0
+	moneyHighScore=0
+	highScoreTime=0
 	saveGame()

@@ -8,6 +8,7 @@ var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
+const DONATION=preload("res://Scenes/Objects/Donations/donation.tscn")
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -16,6 +17,7 @@ const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
 var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
+
 
 var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var index
@@ -50,6 +52,8 @@ func prepareArrows():
 	
 	
 func _ready():
+	Global.donationOnScreen=false
+	$UI/Money/Text.text= "Money: "+str(Global.moneyEarned)
 	$UI/TrackIndicatorWrong.visible=Global.developerMode
 	$UI/TrackIndicatorRight.visible=Global.developerMode
 	index=Global.currentStreamIndex
@@ -97,6 +101,12 @@ func _ready():
 func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
+	if Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
+		Global.nextDonationViewerCount+=Global.viewersNeededToNextDonation
+		var newDonation=DONATION.instantiate()
+		newDonation.position=$UI/DonationPlaceholder.position
+		newDonation.loadDonation(Global.difficultyDonations)
+		find_child("UI").add_child(newDonation)
 	
 
 	

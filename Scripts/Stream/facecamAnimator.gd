@@ -16,6 +16,7 @@ func react(emotion : RT.Emotion):
 
 func _ready():
 	$Head/Face.play("default")
+	$DonationReaction.hide()
 
 func _on_face_animation_finished() -> void:
 	$Head/Face.play("default")
@@ -25,3 +26,16 @@ func _on_reaction_revert_timeout() -> void:
 
 func _on_movement_revert_timeout() -> void:
 	$Movement.play("RESET")
+	
+func donationReaction(positive:bool,recorded:bool=true):
+	$DonationReaction.show()
+	if recorded:
+		Global.inputRecorder.appendDonationReaction(positive)
+	if positive:
+		$DonationReaction.play("appreciate")
+	else:
+		$DonationReaction.play("fail")
+
+
+func _on_donation_reaction_animation_finished() -> void:
+	$DonationReaction.hide()
