@@ -363,6 +363,7 @@ visible_characters = 0
 visible_ratio = 0.0
 
 [node name="OverallScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
 offset_left = 492.0
 offset_top = 240.0
 offset_right = 616.0

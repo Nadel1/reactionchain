@@ -177,10 +177,13 @@ position = Vector2(808, 24)
 position = Vector2(500, 500)
 
 [node name="MoneyVFX" type="AnimatedSprite2D" parent="UI/Money"]
-visible = false
-position = Vector2(175, 20)
+z_index = 2
+position = Vector2(175, -10)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_d77wq")
 animation = &"money"
+frame = 5
+frame_progress = 1.0
 
 [node name="Text" type="RichTextLabel" parent="UI/Money"]
 offset_left = -19.0
