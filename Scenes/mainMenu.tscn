@@ -184,6 +184,7 @@ text = "Quit
 "
 
 [node name="OptionsMenu" type="Node2D" parent="."]
+visible = false
 position = Vector2(576, 304)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="OptionsMenu"]
@@ -278,5 +279,6 @@ text = "Reset savefile"
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="button_down" from="Buttons/Quit" to="." method="_on_quit_button_down"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
+[connection signal="toggled" from="OptionsMenu/PerformanceMode" to="." method="_on_performance_mode_toggled"]
 [connection signal="value_changed" from="OptionsMenu/Difficulty" to="." method="_on_difficulty_value_changed"]
 [connection signal="pressed" from="OptionsMenu/ResetSaveFile" to="." method="_on_reset_save_file_pressed"]

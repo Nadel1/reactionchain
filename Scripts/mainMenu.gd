@@ -2,6 +2,7 @@ extends Node2D
 
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
+	$OptionsMenu/PerformanceMode.button_pressed = Global.performanceMode
 	$OptionsMenu/Difficulty.value = 5 - Global.difficulty
 
 func _on_start_button_down() -> void:
@@ -28,3 +29,7 @@ func _on_devmode_toggled(toggled_on: bool) -> void:
 
 func _on_reset_save_file_pressed() -> void:
 	Global.resetSaveFile()
+
+
+func _on_performance_mode_toggled(toggled_on: bool) -> void:
+	Global.performanceMode = toggled_on
