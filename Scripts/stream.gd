@@ -13,7 +13,8 @@ const DONATION=preload("res://Scenes/Objects/Donations/donation.tscn")
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
 const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
 const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
-var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
+const STREAMERAI=preload("res://Scenes/Objects/Streamers/streamerAI.tscn")
+var allStreamers=[STREAMERAI]#STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 
