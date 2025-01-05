@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://crg38quy1janw"]
+[gd_scene load_steps=71 format=3 uid="uid://crg38quy1janw"]
 
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_d03ad"]
 [ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_gpvie"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cqgp2ix3pmtcl" path="res://Assets/Sprites/Streamers/AI/angry.png" id="5_kmgj1"]
 [ext_resource type="Texture2D" uid="uid://cjmm1ptuculg" path="res://Assets/Sprites/Streamers/AI/cringe.png" id="6_0xyi1"]
 [ext_resource type="Texture2D" uid="uid://cm7bfm0pqk6c6" path="res://Assets/Sprites/Streamers/AI/laughter.png" id="7_qtm5k"]
+[ext_resource type="Texture2D" uid="uid://dtt5pkt4e6g2k" path="res://Assets/Sprites/Streamers/AI/yap.png" id="8_1p3fj"]
 [ext_resource type="Texture2D" uid="uid://buf3mofbddhog" path="res://Assets/Sprites/Streamers/AI/pog.png" id="8_uhcsa"]
 [ext_resource type="Texture2D" uid="uid://dbv12p7xn0xq0" path="res://Assets/Sprites/Donations/reactionAppreciate.png" id="9_15rec"]
 [ext_resource type="Texture2D" uid="uid://bwk42kdepn3y" path="res://Assets/Sprites/Donations/reactionFail.png" id="10_htwpm"]
@@ -214,6 +215,14 @@ region = Rect2(320, 0, 64, 64)
 atlas = ExtResource("8_uhcsa")
 region = Rect2(384, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_cupss"]
+atlas = ExtResource("8_1p3fj")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0640"]
+atlas = ExtResource("8_1p3fj")
+region = Rect2(64, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_o0oqx"]
 animations = [{
 "frames": [{
@@ -319,6 +328,17 @@ animations = [{
 }],
 "loop": false,
 "name": &"pog",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cupss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e0640")
+}],
+"loop": true,
+"name": &"yap",
 "speed": 5.0
 }]
 
@@ -881,7 +901,8 @@ sprite_frames = SubResource("SpriteFrames_k5jfn")
 [node name="Face" type="AnimatedSprite2D" parent="Head"]
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_o0oqx")
-animation = &"pog"
+animation = &"yap"
+frame_progress = 0.861221
 
 [node name="Frame" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
