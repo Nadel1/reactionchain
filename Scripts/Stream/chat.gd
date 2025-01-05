@@ -44,6 +44,7 @@ func deleteUsers():
 	
 #background fluff
 func sendNewMessage():
+	if Global.performanceMode: return
 	var message
 	if Global.chatUsers.size()<maxUserCount or Global.chatUsers.size()==0:#generate new user if the viewer count has doubled
 		lastScore=Global.score
@@ -58,6 +59,7 @@ func sendNewMessage():
 	
 
 func sendReactionMessage():
+	if Global.performanceMode: return
 	if currentReactionMessage>reactionMessagesCount:
 		return
 	var user=Global.chatUsers.pick_random()

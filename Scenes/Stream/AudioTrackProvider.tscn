@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2v4rw01rukni"]
+[gd_scene load_steps=4 format=3 uid="uid://c2v4rw01rukni"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/audioTrackProvider.gd" id="1_ioscl"]
 [ext_resource type="Script" path="res://Scripts/trackSnippet.gd" id="2_7oiyd"]
+[ext_resource type="Script" path="res://Scripts/Stream/eventScheduler.gd" id="2_e62ck"]
 
 [node name="AudioTrackProvider" type="Node" node_paths=PackedStringArray("snippets")]
 script = ExtResource("1_ioscl")
 snippets = [NodePath("Snippet"), NodePath("Snippet2"), NodePath("Snippet3")]
 soundfonts = Array[String](["res://Assets/Audio/Instruments/Hybrid_Synthetic_Str.sf2"])
+
+[node name="EventScheduler" type="Node" parent="."]
+script = ExtResource("2_e62ck")
 
 [node name="Snippet" type="Node" parent="."]
 script = ExtResource("2_7oiyd")

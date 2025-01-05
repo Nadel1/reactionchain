@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://edajm02im3be"]
+
+[ext_resource type="Script" path="res://Scripts/reaction_packet_marker.gd" id="1_7urvn"]
+[ext_resource type="Texture2D" uid="uid://cy6n3fmivyryf" path="res://Assets/Sprites/DebugMarker.png" id="2_d6blh"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_l812y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t7dr8"]
+size = Vector2(57, 59)
+
+[node name="ReactionPacketMarker" type="Node2D" groups=["PacketMarker"]]
+script = ExtResource("1_7urvn")
+
+[node name="DebugSprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+z_index = 4
+texture = ExtResource("2_d6blh")
+
+[node name="ReactionPacketArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReactionPacketArea2D"]
+shape = SubResource("RectangleShape2D_t7dr8")
+
+[node name="Label" type="Label" parent="."]
+z_index = 50
+offset_left = -32.0
+offset_top = -72.0
+offset_right = -16.0
+offset_bottom = -56.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_l812y")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

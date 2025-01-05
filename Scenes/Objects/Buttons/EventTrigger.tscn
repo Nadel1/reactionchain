@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://doruah8kywwy2"]
+
+[ext_resource type="Script" path="res://Scripts/eventPrompt.gd" id="1_3rstk"]
+[ext_resource type="Texture2D" uid="uid://b5hvytwyef37p" path="res://Assets/Sprites/Buttons/EventTrigger.png" id="1_jffjn"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_08513"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtnd6"]
+size = Vector2(16, 64)
+
+[node name="EventTrigger" type="Node2D" groups=["EventTrigger"]]
+script = ExtResource("1_3rstk")
+
+[node name="EventTrigger" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+scale = Vector2(4, 4)
+texture = ExtResource("1_jffjn")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_wtnd6")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+autostart = true
+
+[node name="SpawnStartVisual" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+z_index = 50
+offset_left = -32.0
+offset_top = 8.0
+offset_right = -16.0
+offset_bottom = 24.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_08513")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="SpawnStartVisual" to="." method="_on_spawn_start_visual_timeout"]

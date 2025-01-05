@@ -12,7 +12,7 @@ func getSoundFont(layerIndex : int):
 func prepareMusic():
 	var track = []
 	if Global.currentStreamIndex > 0:
-		for i in Global.lengthOfMusic:
+		for i in Global.musicTracks[0].size():
 			if Global.packetToBeDropped[i]:
 				track.append(snippets.pick_random())
 			else:
@@ -24,3 +24,16 @@ func prepareMusic():
 			Global.packetToBeDropped.append(false)
 	
 	Global.musicTracks.append(track)
+	$EventScheduler.generateEvents()
+
+func insertEvent(newEvent : Event): #TODO: Add type parameter
+	Global.insertEvent(newEvent)
+	
+	#TODO: add solo-specific snippets only
+	for i in range(0,newEvent.length):
+		Global.packetToBeDropped.append(false)
+		for j in Global.musicTracks.size():
+			Global.musicTracks[j].insert(newEvent.startIndex+i, snippets.pick_random())
+		for j in Global.recordingsReaction.size():
+			Global.recordingsReaction[j].insert(newEvent.startIndex+i, -1)
+	pass

@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var midiPlayerArrows=$MidiPlayerArrows
-@onready var startPlayingMusicTimer=$StartPlayingMusicTimer
 @onready var switchSceneTimer=$SwitchSceneTimer
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
@@ -18,15 +17,13 @@ var allStreamers=[STREAMER0, STREAMER1, STREAMER2]
 var currentStreamerIndex=0
 var currentStreamer=null
 
-
-var counterForArrowsPlayer=0#counter which index from musicToPlay should be inserted next
 var index
+var arrowPlayingIndex = -1
 
 var trackPlayers : Array[TrackPlaybackHandler]
 
 func _on_start_playing_music_timer_timeout() -> void:
 	$TrackPlaybackHandler.call_deferred("start")
-	Global.startMetronome()
 	for player in trackPlayers:
 		player.call_deferred("start")
 	
@@ -58,9 +55,15 @@ func _ready():
 	$UI/TrackIndicatorRight.visible=Global.developerMode
 	index=Global.currentStreamIndex
 	Global.tactArrows.connect(nextArrowTact)
+	Global.pause.connect(pause)
+	Global.resume.connect(resume)
+	Global.debugWindow = $UI/DebugWindow/DebugLabel
+	$UI/DebugWindow.visible = Global.developerMode
+	Global.resetPerStream()
 	$MidiPlayerBass.setName("Bass")
 	$MidiPlayerBass.play_speed = Global.playbackSpeed
 	Global.tact.connect($MidiPlayerBass.play)
+	Global.arrowTravelDelay.timeout.connect(_on_start_playing_music_timer_timeout)
 	
 	AudioTrackProvider.prepareMusic()
 	prepareStreamer()
@@ -108,22 +111,29 @@ func _process(_delta: float) -> void:
 		newDonation.loadDonation(Global.difficultyDonations)
 		find_child("UI").add_child(newDonation)
 	
-
-	
-func _on_eol_stop_spawning_arrows_timer_timeout() -> void:
-	midiPlayerArrows.playing=false
-	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 	
-func nextArrowTact():
-	if counterForArrowsPlayer<Global.musicTracks[index].size():
-		midiPlayerArrows.set_file(Global.musicTracks[index][counterForArrowsPlayer].getLayer(index))
+func nextArrowTact(snippetIndex):
+	if snippetIndex<Global.musicTracks[index].size():
+		arrowPlayingIndex = snippetIndex
+		midiPlayerArrows.set_file(Global.musicTracks[index][arrowPlayingIndex].getLayer(index))
 		midiPlayerArrows.play()
 	else:
 		Global.stopMetronomeArrows()
-	counterForArrowsPlayer+=1
+	updateArrowPlayingState()
+
+func updateArrowPlayingState():
+	#if Global.pauseDepths.size() > 0 and Global.pauseDepths.back() >= index:
+	#	midiPlayerArrows.playing = false
+	pass
+
+func pause(_depth):
+	pass
+	
+func resume(_depth):
+	pass
 
 func _on_track_playback_handler_layer_finished() -> void:
 	$TrackPlaybackHandler.stop()

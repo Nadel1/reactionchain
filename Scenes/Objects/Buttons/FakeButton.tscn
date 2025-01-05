@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://co1amc3lrd00p"]
+
+[ext_resource type="PackedScene" uid="uid://cbxqm0hn6vnfy" path="res://Scenes/Objects/Buttons/Button.tscn" id="1_ugly7"]
+[ext_resource type="Script" path="res://Scripts/fakeButton.gd" id="2_il0f7"]
+[ext_resource type="Texture2D" uid="uid://bsrim815d5p2o" path="res://Assets/Sprites/Buttons/UpButton.png" id="2_pjaui"]
+[ext_resource type="Texture2D" uid="uid://bpv7vci25yq6n" path="res://Assets/Sprites/Buttons/RightButton.png" id="3_34lbj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjmjm"]
+atlas = ExtResource("2_pjaui")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhcd2"]
+atlas = ExtResource("3_34lbj")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fk5q"]
+atlas = ExtResource("3_34lbj")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4akm"]
+atlas = ExtResource("2_pjaui")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vd00k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjmjm")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhcd2")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fk5q")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4akm")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[node name="Button" instance=ExtResource("1_ugly7")]
+script = ExtResource("2_il0f7")
+
+[node name="AnimatedSprite" parent="." index="0"]
+visible = false
+animation = &"default"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." index="1"]
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_vd00k")
+animation = &"up"
+autoplay = "up"

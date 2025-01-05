@@ -36,7 +36,7 @@ size = Vector2(19.5, 57)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8dxf"]
 size = Vector2(114, 57)
 
-[node name="Button" type="Node2D"]
+[node name="Button" type="Node2D" groups=["InputPrompt"]]
 script = ExtResource("1_6ju6v")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
@@ -45,6 +45,7 @@ sprite_frames = SubResource("SpriteFrames_xaey2")
 animation = &"hit"
 
 [node name="ButtonGoodArea" type="Area2D" parent="."]
+collision_layer = 3
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonGoodArea"]
@@ -56,5 +57,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonOkayArea"]
 shape = SubResource("RectangleShape2D_c8dxf")
 
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
 [connection signal="area_entered" from="ButtonGoodArea" to="." method="_on_button_good_area_area_entered"]
 [connection signal="area_entered" from="ButtonOkayArea" to="." method="_on_button_okay_area_area_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

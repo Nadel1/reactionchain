@@ -1,20 +1,12 @@
-extends Node2D
-@export var speed = 250
+extends GenericPrompt
+class_name InputPrompt
 @export var input=""
 @onready var animatedSprite=get_node("AnimatedSprite")
 
 var goodHit=false
 var okayHit=false
 var lastButton=false
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
-	position += Vector2(speed * delta,0)
-	
 func getInput():
 	return input
 	
@@ -25,10 +17,12 @@ func hitZoneEnter(enterHitZone):
 	else:
 		animatedSprite.play("default")
 
-
-func _on_button_good_area_area_entered(_area: Area2D) -> void:
-	goodHit=true
-
+func _process(delta: float) -> void:
+	if global_position.y > 700 or global_position.x > 1200:
+		call_deferred("queue_free")
 
 func _on_button_okay_area_area_entered(_area: Area2D) -> void:
 	okayHit=true
+
+func freeze(depth : int):
+	pass
