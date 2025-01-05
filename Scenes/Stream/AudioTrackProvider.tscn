@@ -15,11 +15,11 @@ script = ExtResource("2_e62ck")
 
 [node name="SnippetA1" type="Node" parent="."]
 script = ExtResource("2_7oiyd")
-layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer4.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer4.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a1_layer5.MID"])
 
 [node name="SnippetA2" type="Node" parent="."]
 script = ExtResource("2_7oiyd")
-layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer4.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer4.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer5.MID"])
 
 [node name="SnippetA3" type="Node" parent="."]
 script = ExtResource("2_7oiyd")
@@ -28,12 +28,12 @@ layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/a3_layer1.
 [node name="SnippetB1" type="Node" parent="."]
 script = ExtResource("2_7oiyd")
 type = 1
-layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer4.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer4.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b1_layer5.MID"])
 
 [node name="SnippetB2" type="Node" parent="."]
 script = ExtResource("2_7oiyd")
 type = 1
-layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer4.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer1.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer2.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer3.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer4.MID", "res://Assets/Audio/Tracks/snippets02_(bunny)/b2_layer5.MID"])
 
 [node name="SnippetB3" type="Node" parent="."]
 script = ExtResource("2_7oiyd")
