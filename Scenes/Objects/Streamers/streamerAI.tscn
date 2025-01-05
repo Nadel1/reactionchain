@@ -390,20 +390,11 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"yap"]
+"values": [&"default"]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Head/Face:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
+
+[sub_resource type="Animation" id="Animation_e7ood"]
+resource_name = "prepare_yap"
 
 [sub_resource type="Animation" id="Animation_may1f"]
 resource_name = "shift_down"
@@ -540,9 +531,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(0.859375, 1.10938), Vector2(1, 1)]
 }
-
-[sub_resource type="Animation" id="Animation_e7ood"]
-resource_name = "prepare_yap"
 
 [sub_resource type="Animation" id="Animation_7n6gf"]
 resource_name = "yap"
@@ -950,8 +938,6 @@ sprite_frames = SubResource("SpriteFrames_k5jfn")
 [node name="Face" type="AnimatedSprite2D" parent="Head"]
 position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_o0oqx")
-animation = &"yap"
-frame = 1
 
 [node name="Frame" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
