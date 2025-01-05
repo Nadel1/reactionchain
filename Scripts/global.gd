@@ -41,7 +41,6 @@ var overallScore = 0
 var overallScoreHighScore=0
 var increaseInMoney=100
 var nextDonationViewerCount=500
-var chatUsers=[]
 var difficultyDonations=3#how many donation inputs appear
 var viewersNeededToNextDonation=500
 
