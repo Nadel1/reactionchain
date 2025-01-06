@@ -108,7 +108,7 @@ func _on_metronome_timeout() -> void:
 func startMetronome():
 	$Metronome.start()
 	tact.emit(musicSnippetIndex)
-	#musicSnippetIndex += 1
+	musicSnippetIndex += 1
 	debugWindow.setEntry("MusicIndex", musicSnippetIndex)
 	
 func stopMetronome():
@@ -139,7 +139,7 @@ func startMetronomeArrows():
 	$ArrowTravelDelay.start()
 	checkEventPrep()
 	tactArrows.emit(arrowSnippetIndex)
-	#arrowSnippetIndex += 1
+	arrowSnippetIndex += 1
 	debugWindow.setEntry("ArrowIndex", arrowSnippetIndex)
 	
 func stopMetronomeArrows():

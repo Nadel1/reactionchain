@@ -42,6 +42,7 @@ var firstPacketStarted=false
 
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
+var inPacket = false
 
 var debuglastButton=0
 
@@ -101,6 +102,9 @@ func calculateScoreChange(score:Score):
 	
 func spawnMarker(end : bool):
 	var fast = Global.getPromptSpeedState()
+	if inPacket and !end:
+		spawnMarker(true)
+	inPacket = !end
 	var newMarker=MARKER.instantiate()
 	newMarker.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
 	newMarker.setFast(fast)
@@ -108,6 +112,7 @@ func spawnMarker(end : bool):
 	newMarker.setVisible(Global.developerMode)
 	if !end:
 		newMarker.setIndex(Global.arrowSnippetIndex)
+	newMarker.setStart(!end)
 	if end and lastButtonSpawned!=null:
 		#print("last button detected ",debuglastButton)
 		debuglastButton+=1
@@ -126,7 +131,7 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 			spawnMarker(false)
 		elif event.velocity==2:
 			spawnMarker(true)
-		elif event.velocity==127:
+		else:
 			lastButtonSpawned=spawnButton()
 	
 
@@ -147,8 +152,9 @@ func react(correctReaction=true):
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 			else:
 				#use last reaction, or if the last reaction was none, replace it with random
-				var lastReaction = Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1]
-				if lastReaction is int or lastReaction[1]==RT.dirToInt(RT.Emotion.NONE):
+				var lastReactionString = Global.recordingsReaction[Global.currentStreamIndex-1]
+				var lastReaction = lastReactionString[min(countReactionPacket-1, lastReactionString.size()-1)]
+				if countReactionPacket > lastReactionString.size () or lastReaction is int or lastReaction[1]==RT.dirToInt(RT.Emotion.NONE):
 					reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 				else:
 					reaction=lastReaction[1]

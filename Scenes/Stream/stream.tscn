@@ -1,9 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=30 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
 [ext_resource type="PackedScene" uid="uid://dylolctgual2i" path="res://Scenes/Stream/chat.tscn" id="2_p3jgj"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
+[ext_resource type="Script" path="res://Scripts/Stream/backingTrackPlayer.gd" id="4_82cmv"]
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
 [ext_resource type="Script" path="res://Scripts/Stream/scoreDisplay.gd" id="6_a5we1"]
@@ -146,10 +147,38 @@ script = ExtResource("1_lwu7i")
 play_speed = 0.666
 bus = &"Arrows"
 
-[node name="MidiPlayerBass" parent="." instance=ExtResource("3_b6yqj")]
-file = "res://Assets/Audio/Tracks/snippets01/bass.MID"
+[node name="BackingTrack" type="Node2D" parent="." node_paths=PackedStringArray("players")]
+script = ExtResource("4_82cmv")
+players = [NodePath("MidiPlayerBass1"), NodePath("MidiPlayerBass2"), NodePath("MidiPlayerChords")]
+
+[node name="MidiPlayerBass1" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass1.MID"
 play_speed = 0.666
+volume_db = -30.0
 soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerBass2" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass2.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerChords" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_chords.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"
+bus = &"Bass"
+
+[node name="MidiPlayerDrums" parent="BackingTrack" instance=ExtResource("3_b6yqj")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_drums.MID"
+playing = true
+play_speed = 0.666
+volume_db = -19.999
+loop = true
+soundfont = "res://Assets/Audio/Instruments/Drum Set JD Rockset 5.sf2"
 bus = &"Bass"
 
 [node name="StartPlayingMusicTimer" type="Timer" parent="."]
@@ -157,7 +186,7 @@ wait_time = 4.0
 one_shot = true
 
 [node name="StartSpawningArrowsTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.932
 one_shot = true
 autostart = true
 

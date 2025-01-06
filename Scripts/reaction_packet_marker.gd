@@ -7,3 +7,6 @@ func setVisible(visible: bool):
 func setIndex(index):
 	$Label.text = str(index)
 	$DebugSprite2D.modulate = Color.LIME
+
+func setStart(start):
+	$DebugSprite2D.modulate = Color.LIME if start else Color.RED
