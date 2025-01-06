@@ -32,12 +32,13 @@ func prepareMusic():
 
 func insertEvent(newEvent : Event): #TODO: Add type parameter
 	Global.insertEvent(newEvent)
-	
+	var A = Global.musicTracks[0][newEvent.startIndex].type == TrackSnippet.SnippetType.A
 	#TODO: add solo-specific snippets only
 	for i in range(0,newEvent.length):
 		Global.packetToBeDropped.append(false)
 		for j in Global.musicTracks.size():
-			Global.musicTracks[j].insert(newEvent.startIndex+i, snippets.pick_random())
+			Global.musicTracks[j].insert(newEvent.startIndex+i, Asnippets.pick_random() if A else Bsnippets.pick_random())
 		for j in Global.recordingsReaction.size():
 			Global.recordingsReaction[j].insert(newEvent.startIndex+i, -1)
+		A = !A
 	pass

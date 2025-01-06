@@ -13,7 +13,7 @@ func _ready() -> void:
 		player.play_speed = Global.playbackSpeed
 	Global.tact.connect(tact)
 
-func tact():
+func tact(_snippetIndex):
 	if playIndex % 2 == 0:
 		for player in players:
 			player.play()

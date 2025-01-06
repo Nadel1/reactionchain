@@ -152,8 +152,9 @@ func react(correctReaction=true):
 				reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 			else:
 				#use last reaction, or if the last reaction was none, replace it with random
-				var lastReaction = Global.recordingsReaction[Global.currentStreamIndex-1][countReactionPacket-1]
-				if lastReaction is int or lastReaction[1]==RT.dirToInt(RT.Emotion.NONE):
+				var lastReactionString = Global.recordingsReaction[Global.currentStreamIndex-1]
+				var lastReaction = lastReactionString[min(countReactionPacket-1, lastReactionString.size()-1)]
+				if countReactionPacket > lastReactionString.size () or lastReaction is int or lastReaction[1]==RT.dirToInt(RT.Emotion.NONE):
 					reaction=RT.intToDir(randi()%4)#randomly select one of the four emotions if first streamer or no reactions to pull from
 				else:
 					reaction=lastReaction[1]
