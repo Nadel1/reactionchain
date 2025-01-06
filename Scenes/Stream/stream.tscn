@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=33 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -65,6 +65,132 @@ animations = [{
 "name": &"money",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_s5mly"]
+resource_name = "increase"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Score:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Vector2(128, 534), Vector2(128, 536)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Score:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.95, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Score:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(0.466667, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mrka8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Score:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(128, 536)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Score:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Score:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_d1ocb"]
+resource_name = "decrease"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Score:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(126, 538), Vector2(130, 536), Vector2(128, 536)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Score:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.05, 0.9), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Score:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jg2sn"]
+_data = {
+"RESET": SubResource("Animation_mrka8"),
+"decrease": SubResource("Animation_d1ocb"),
+"increase": SubResource("Animation_s5mly")
+}
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
@@ -226,10 +352,16 @@ theme = ExtResource("6_f2vs8")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "DEBUG: DEBUG"
 
-[node name="Score" type="Node2D" parent="UI"]
+[node name="ScoreAnim" type="AnimationPlayer" parent="UI"]
+libraries = {
+"": SubResource("AnimationLibrary_jg2sn")
+}
+
+[node name="Score" type="Node2D" parent="UI" node_paths=PackedStringArray("animator")]
 z_index = 1
 position = Vector2(128, 536)
 script = ExtResource("6_a5we1")
+animator = NodePath("../ScoreAnim")
 
 [node name="Label" type="RichTextLabel" parent="UI/Score"]
 modulate = Color(0, 0, 0, 1)
@@ -239,7 +371,6 @@ offset_right = 30.0
 offset_bottom = -20.0
 scale = Vector2(4, 4)
 theme = ExtResource("6_f2vs8")
-theme_override_constants/shadow_outline_size = 0
 text = "Score: 0"
 
 [node name="ViewerUpdate" type="Timer" parent="UI/Score/Label"]
@@ -308,5 +439,6 @@ autoplay = "zoomOut"
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartSpawningArrowsTimer" to="." method="_on_start_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
+[connection signal="animation_finished" from="UI/ScoreAnim" to="UI/Score" method="_on_score_anim_animation_finished"]
 [connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]
 [connection signal="timeout" from="UI/TimerSinceLastMessage" to="UI/Chat" method="_on_timer_since_last_message_timeout"]
