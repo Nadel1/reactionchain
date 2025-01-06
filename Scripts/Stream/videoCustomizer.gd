@@ -1,6 +1,8 @@
 extends Node2D
 class_name VideoCustomizer
 
+@export var streamBorders : Array[Texture]
+
 # TODO: better system that supports streamer names
 const titles = [
 	["Reaction:", "My response to:", "Random guy reacts:", "I react to:"],
@@ -33,6 +35,8 @@ func init(index : int):
 	value = 0.6 + 0.4 * (1-value * value)
 	$Background.color = Color.from_hsv(hue, 0.2, value * 0.79)
 	$StreamBorder.modulate = Color.from_hsv(hue, 0.2, value)
+	var textureIndex = rand_from_seed(index + 10 + Global.mainSeed)[0] % streamBorders.size()
+	$StreamBorder.texture = streamBorders[textureIndex]
 	
 	$Time.wait_time = (Global.musicTracks[index].size() + 2) * Global.snippetLength
 	$Time.start()

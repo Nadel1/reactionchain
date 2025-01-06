@@ -250,6 +250,7 @@ autostart = true
 position = Vector2(299, 593)
 
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
+z_index = -1
 position = Vector2(-1, -1)
 
 [node name="DonationPlaceholder" type="Node2D" parent="UI"]
@@ -273,6 +274,7 @@ texture = ExtResource("8_imbvg")
 autostart = true
 
 [node name="DebugWindow" type="NinePatchRect" parent="UI"]
+visible = false
 offset_left = 16.0
 offset_top = 24.0
 offset_right = 132.0
