@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=42 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="12_51xhv"]
 [ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
+[ext_resource type="Texture2D" uid="uid://dn4mi8qh4mm1n" path="res://Assets/Sprites/UI/arrowKeys.png" id="15_68yvl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5gam"]
 atlas = ExtResource("7_fa6aa")
@@ -203,6 +204,79 @@ colors = PackedColorArray(0.2, 1, 0, 1, 0.2, 1, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_nh8vi"]
 gradient = SubResource("Gradient_it41p")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb2cs"]
+atlas = ExtResource("15_68yvl")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_044cs"]
+atlas = ExtResource("15_68yvl")
+region = Rect2(0, 32, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eubci"]
+atlas = ExtResource("15_68yvl")
+region = Rect2(0, 64, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e60kv"]
+atlas = ExtResource("15_68yvl")
+region = Rect2(0, 96, 48, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dqct1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb2cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_044cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eubci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e60kv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="Animation" id="Animation_ylv4e"]
+resource_name = "fade"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_we02f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lsvkg"]
+_data = {
+"RESET": SubResource("Animation_we02f"),
+"fade": SubResource("Animation_ylv4e")
+}
 
 [sub_resource type="Animation" id="Animation_637ko"]
 length = 0.001
@@ -428,6 +502,23 @@ theme = ExtResource("6_f2vs8")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Debug"
 script = ExtResource("13_ft7si")
+
+[node name="ArrowKeys" type="Node2D" parent="UI"]
+z_index = 4
+position = Vector2(1040, 592)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UI/ArrowKeys"]
+position = Vector2(8, -32)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_dqct1")
+autoplay = "default"
+frame_progress = 0.484023
+
+[node name="Fade" type="AnimationPlayer" parent="UI/ArrowKeys"]
+libraries = {
+"": SubResource("AnimationLibrary_lsvkg")
+}
+autoplay = "fade"
 
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {

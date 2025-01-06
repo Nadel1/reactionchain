@@ -76,6 +76,7 @@ func _ready():
 	currentNode.init(Global.currentStreamIndex)
 
 	if index > 0:
+		$UI/ArrowKeys.visible = false
 		for i in range(0,index):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[index-1-i]].instantiate()
