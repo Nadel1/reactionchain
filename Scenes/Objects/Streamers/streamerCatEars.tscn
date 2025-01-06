@@ -977,3 +977,4 @@ libraries = {
 [connection signal="timeout" from="ReactionRevert" to="." method="_on_reaction_revert_timeout"]
 [connection signal="timeout" from="MovementRevert" to="." method="_on_movement_revert_timeout"]
 [connection signal="timeout" from="EventStart" to="." method="_on_event_start_timeout"]
+[connection signal="animation_finished" from="BodyAnimation" to="." method="_on_body_animation_animation_finished"]

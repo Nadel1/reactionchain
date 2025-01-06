@@ -618,7 +618,6 @@ sprite_frames = SubResource("SpriteFrames_36wwq")
 animation = &"up"
 
 [node name="Face" type="AnimatedSprite2D" parent="Head"]
-visible = false
 sprite_frames = SubResource("SpriteFrames_88vwp")
 
 [node name="Movement" type="AnimationPlayer" parent="."]
