@@ -25,7 +25,7 @@ metadata/_edit_use_anchors_ = true
 [node name="TimerSinceLastMessage" type="Timer" parent="."]
 
 [node name="TimerSinceLastReactionMessage" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 
 [connection signal="timeout" from="TimerSinceLastMessage" to="." method="_on_timer_since_last_message_timeout"]
 [connection signal="timeout" from="TimerSinceLastReactionMessage" to="." method="_on_timer_since_last_reaction_message_timeout"]

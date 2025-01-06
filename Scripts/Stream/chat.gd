@@ -18,9 +18,18 @@ var colors=["red","blue","green","yellow","violet","pink","darkgreen","orange"]
 var reactionMessagesCount=0
 var currentReactionMessage=0
 var reactionMessageType=RT.Emotion.NONE
+var numMessages = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	chatText.text=""
+
+func appendAndTruncate(newMessage):
+	numMessages += 1
+	chatText.text=chatText.text+newMessage
+	if numMessages > 6:
+		var firstNewline = chatText.text.find("\n")
+		chatText.text = chatText.text.substr(firstNewline + 1)
+	
 
 func generateMessage(user,firstMessage=false):
 	var msg
@@ -29,7 +38,7 @@ func generateMessage(user,firstMessage=false):
 	else:
 		msg=messagesString.pick_random()
 	var newMessage="[color="+user[1]+"]"+user[0]+"[/color]:" +msg+"\n"
-	chatText.text=chatText.text+newMessage
+	appendAndTruncate(newMessage)
 	return newMessage
 	
 	
@@ -44,7 +53,7 @@ func deleteUsers():
 	
 #background fluff
 func sendNewMessage():
-	if Global.performanceMode: return
+	#if Global.performanceMode: return
 	var message
 	if Global.chatUsers.size()<maxUserCount or Global.chatUsers.size()==0:#generate new user if the viewer count has doubled
 		lastScore=Global.score
@@ -53,13 +62,13 @@ func sendNewMessage():
 		message=generateMessage(Global.chatUsers.pick_random())
 	Global.inputRecorder.appendChatMessage(message)
 		
-	var waittime=max(0.2,5-Global.score/100)
+	var waittime=max(0.5,5-Global.score/100)
 	timer.wait_time=waittime
 	timer.start()
 	
 
 func sendReactionMessage():
-	if Global.performanceMode: return
+	#if Global.performanceMode: return
 	if currentReactionMessage>reactionMessagesCount:
 		return
 	var user=Global.chatUsers.pick_random()
@@ -75,7 +84,7 @@ func sendReactionMessage():
 			msg=angryReactionStrings.pick_random()
 	var newMessage="[color="+user[1]+"]"+user[0]+"[/color]:" +msg+"\n"
 	Global.inputRecorder.appendChatMessage(newMessage)
-	chatText.text=chatText.text+newMessage
+	appendAndTruncate(newMessage)
 	currentReactionMessage+=1
 	reactionTimer.start()
 	
