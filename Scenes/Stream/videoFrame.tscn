@@ -1,10 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://dd2twf35woli5"]
+[gd_scene load_steps=18 format=3 uid="uid://dd2twf35woli5"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/videoCustomizer.gd" id="1_2n6c5"]
-[ext_resource type="Texture2D" uid="uid://dbuc1e2tp53bw" path="res://Assets/Sprites/Streamers/StreamBorder.png" id="2_pkgt7"]
+[ext_resource type="Texture2D" uid="uid://u8vlrpwby25x" path="res://Assets/Sprites/Streamers/StreamUI1.png" id="2_tw5sx"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_6olq0"]
+[ext_resource type="Texture2D" uid="uid://dclv4yduo7t6r" path="res://Assets/Sprites/Streamers/StreamUI2.png" id="3_b6qjb"]
+[ext_resource type="Texture2D" uid="uid://daax7vs46y5r5" path="res://Assets/Sprites/Streamers/StreamUI3.png" id="4_4doch"]
 [ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="4_8g86c"]
+[ext_resource type="Texture2D" uid="uid://da2i33j1u8aoa" path="res://Assets/Sprites/Streamers/StreamUI4.png" id="5_gmkmm"]
 [ext_resource type="Texture2D" uid="uid://dqdgw8i4qsq0n" path="res://Assets/Sprites/Streamers/VideoFrame.png" id="5_lcra2"]
+[ext_resource type="Texture2D" uid="uid://b4fwb25qusipi" path="res://Assets/Sprites/Streamers/StreamUI5.png" id="6_ao40n"]
 [ext_resource type="Texture2D" uid="uid://b620dlxfevx5c" path="res://Assets/Sprites/FX/PausePlay.png" id="6_vin5u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_apoy8"]
@@ -124,6 +128,7 @@ _data = {
 
 [node name="VideoFrame" type="Node2D"]
 script = ExtResource("1_2n6c5")
+streamBorders = Array[Texture]([ExtResource("2_tw5sx"), ExtResource("3_b6qjb"), ExtResource("4_4doch"), ExtResource("5_gmkmm"), ExtResource("6_ao40n")])
 
 [node name="Content" type="Node2D" parent="."]
 z_index = -1
@@ -169,16 +174,15 @@ color = Color(0.792157, 0.792157, 0.792157, 1)
 polygon = PackedVector2Array(0, 648, 0, 512, 800, 512, 800, 0, 1152, 0, 1152, 648)
 
 [node name="StreamBorder" type="NinePatchRect" parent="."]
-z_index = 1
-offset_right = 200.0
-offset_bottom = 128.0
+offset_right = 216.0
+offset_bottom = 160.0
 scale = Vector2(4, 4)
-texture = ExtResource("2_pkgt7")
+texture = ExtResource("5_gmkmm")
 region_rect = Rect2(0, 0, 64, 64)
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
+patch_margin_left = 23
+patch_margin_top = 15
+patch_margin_right = 39
+patch_margin_bottom = 47
 
 [node name="Title" type="RichTextLabel" parent="."]
 offset_left = 16.0

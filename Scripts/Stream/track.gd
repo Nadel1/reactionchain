@@ -39,6 +39,7 @@ var reactionIndex=0#when going through previous reactions
 var reactionArray=[]
 var currentPacketDuration=0.0
 var firstPacketStarted=false
+var firstPromptReached = false
 
 var countMarker=0#keep track if current marker is start or end marker
 var lastButtonSpawned
@@ -171,6 +172,8 @@ func react(correctReaction=true):
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
+	if !firstPromptReached:
+		return
 	var splat = SPLAT.instantiate()
 	get_parent().add_child(splat)
 	splat.global_position = $UI/SplatSpawnPos.global_position
@@ -250,6 +253,7 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	else:
 		#goodHit=true
 		area.get_parent().hitZoneEnter(true)
+		firstPromptReached = true
 	
 func _on_good_area_area_exited(area: Area2D) -> void:
 	#if !area.get_parent().is_in_group("InputPrompt"):

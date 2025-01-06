@@ -11,8 +11,10 @@ self_modulate = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 0, 256, 0, 256, 248, 0, 248)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ChatBackground"]
-offset_right = 240.0
-offset_bottom = 232.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 248.0
+offset_bottom = 240.0
 theme = ExtResource("2_i3wsg")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
