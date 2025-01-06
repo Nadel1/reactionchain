@@ -137,6 +137,5 @@ sprite_frames = SubResource("SpriteFrames_s5ls5")
 [node name="Face" parent="Head" index="0"]
 position = Vector2(0, 4)
 sprite_frames = SubResource("SpriteFrames_wt6lc")
-animation = &"cringe"
 
 [connection signal="animation_finished" from="Head/Face" to="." method="_on_face_animation_finished"]
