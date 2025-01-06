@@ -5,7 +5,12 @@ enum SnippetType {A, B}
 
 @export var type : SnippetType
 @export_file("*.MID") var layers : Array[String]
+@export_file("*.MID") var extremeLayer 
 
 func getLayer(index : int):
-	#return layers[index % layers.size()]
-	return layers[min(index, layers.size()-1)]
+	var above = index - layers.size()
+	var actualIndex = min(index, layers.size()-2)
+	if above > 0:
+		actualIndex += above % 2
+	var hardMode = (rand_from_seed(index + Global.mainSeed)[0] % 10) < above
+	return extremeLayer if hardMode else layers[actualIndex]
