@@ -38,7 +38,7 @@ func init(index : int):
 	var textureIndex = rand_from_seed(index + 10 + Global.mainSeed)[0] % streamBorders.size()
 	$StreamBorder.texture = streamBorders[textureIndex]
 	
-	$Time.wait_time = (Global.musicTracks[index].size() + 2) * Global.snippetLength
+	$Time.wait_time = (Global.lengthOfMusic + 2) * Global.snippetLength
 	$Time.start()
 
 static func generateFirstTitle():
