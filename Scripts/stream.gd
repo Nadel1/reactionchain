@@ -15,8 +15,8 @@ const STREAMER1=preload("res://Scenes/Objects/Streamers/streamerBasic1.tscn")
 const STREAMER2=preload("res://Scenes/Objects/Streamers/streamerBasic2.tscn")
 const STREAMERAI=preload("res://Scenes/Objects/Streamers/streamerAI.tscn")
 const STREAMERCATEARS=preload("res://Scenes/Objects/Streamers/streamerCatEars.tscn")
-var allStreamers=[STREAMERCATEARS,STREAMERCATEARS]#[STREAMER0, STREAMER1, STREAMER2,STREAMERAI]
-var aiStreamer=[STREAMERAI]
+const STREAMERSERVER=preload("res://Scenes/Objects/Streamers/streamerServer.tscn")
+var allStreamers=[STREAMERCATEARS,STREAMER0, STREAMER1, STREAMER2, STREAMERAI,STREAMERSERVER]
 var currentStreamerIndex=0
 var currentStreamer=null
 
@@ -32,13 +32,7 @@ func _on_start_playing_music_timer_timeout() -> void:
 	
 
 func prepareStreamer():
-	currentStreamerIndex = randi() % (allStreamers.size()-1)#to exclude ai streamer
-	if (Global.currentStreamIndex+1)%3==0:
-		currentStreamerIndex=allStreamers.size()-1
-	else: 
-		if Global.streamerIndices.size()>0 and currentStreamerIndex==Global.streamerIndices[Global.currentStreamIndex-1]: #making sure we dont pick the same streamer twice in a row
-			currentStreamerIndex += 1
-			currentStreamerIndex %= allStreamers.size()
+	currentStreamerIndex=Global.currentStreamIndex%(allStreamers.size())
 			
 	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
 	currentStreamer.position=$UI/StreamerPlaceholder.position
