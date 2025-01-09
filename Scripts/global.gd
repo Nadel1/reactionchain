@@ -38,6 +38,7 @@ var donationOnScreen=false#wasd inputs are not marked as wrong input if this is 
 
 var moneyEarned = 0
 var moneyHighScore=0
+var displayedMoney="0"
 var overallScore = 0
 var overallScoreHighScore=0
 var increaseInMoney=100

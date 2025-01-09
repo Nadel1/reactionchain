@@ -61,13 +61,22 @@ func correctDonation():
 	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
 	Global.moneyEarned+=Global.increaseInMoney
-	Global.increaseInMoney+=Global.increaseInMoney+randi()%Global.increaseInMoney+Global.increaseInMoney/2
+	Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
 	endDonationTimer.start()
 	var ui=get_parent()
 	var money=ui.get_node("Money/Text")
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
-	money.text="Money: "+str(Global.moneyEarned)
+	var displayedMoney=str(Global.moneyEarned)
+	if Global.moneyEarned>1000 and Global.moneyEarned<1000000:
+		print("money in thousands: ",Global.moneyEarned/1000)
+		displayedMoney=str(Global.moneyEarned/1000)+"."+str((Global.moneyEarned%1000)/100)
+		displayedMoney=str(displayedMoney)+"k"
+	elif Global.moneyEarned>1000000:
+		displayedMoney=str(Global.moneyEarned/1000000)+"."+str((Global.moneyEarned%1000000)/100000)
+		displayedMoney=str(displayedMoney)+"m"
+	Global.displayedMoney=displayedMoney
+	money.text="Money: "+str(displayedMoney)
 			
 func loadDonation(donationLevel):
 	$ReceivedAnim.hide()

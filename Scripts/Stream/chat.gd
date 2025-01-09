@@ -60,7 +60,7 @@ func sendNewMessage():
 		message=generateMessage(Global.chatUsers.pick_random())
 	Global.inputRecorder.appendChatMessage(message)
 		
-	var waittime=max(1,10-int(Global.score)/50)
+	var waittime=max(1,10-int(Global.score)/100)
 	print("wait time: ", waittime)
 	messageTimer.start(waittime)
 	

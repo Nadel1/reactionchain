@@ -50,7 +50,7 @@ func prepareArrows():
 	
 func _ready():
 	Global.donationOnScreen=false
-	$UI/Money/Text.text= "Money: "+str(Global.moneyEarned)
+	$UI/Money/Text.text= "Money: "+str(Global.displayedMoney)
 	$UI/TrackIndicatorWrong.visible=Global.developerMode
 	$UI/TrackIndicatorRight.visible=Global.developerMode
 	index=Global.currentStreamIndex
@@ -103,10 +103,10 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	if Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
-		Global.nextDonationViewerCount+=Global.viewersNeededToNextDonation
+		Global.nextDonationViewerCount+=100#Global.viewersNeededToNextDonation
 		var newDonation=DONATION.instantiate()
 		newDonation.position=$UI/DonationPlaceholder.position
-		newDonation.loadDonation(Global.difficultyDonations)
+		newDonation.loadDonation(2)#Global.difficultyDonations)
 		find_child("UI").add_child(newDonation)
 	
 func _on_switch_scene_timer_timeout() -> void:
