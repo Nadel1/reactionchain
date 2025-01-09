@@ -60,7 +60,7 @@ func sendNewMessage():
 		message=generateMessage(Global.chatUsers.pick_random())
 	Global.inputRecorder.appendChatMessage(message)
 		
-	var waittime=max(1,10-Global.score/50)
+	var waittime=max(1,10-int(Global.score)/50)
 	print("wait time: ", waittime)
 	messageTimer.start(waittime)
 	
@@ -98,7 +98,7 @@ func initiateSendReactionMessage(reaction:RT.Emotion):
 	sendReactionMessage()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Global.chatLog.size()>Global.currentStreamIndex:
 		#replay 
 		pass

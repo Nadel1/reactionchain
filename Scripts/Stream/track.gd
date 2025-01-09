@@ -249,11 +249,6 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 		#goodHit=true
 		area.get_parent().hitZoneEnter(true)
 		firstPromptReached = true
-	
-func _on_good_area_area_exited(area: Area2D) -> void:
-	#if !area.get_parent().is_in_group("InputPrompt"):
-		#goodHit=false
-	pass
 		
 func _on_late_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("InputPrompt"):

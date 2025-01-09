@@ -86,7 +86,7 @@ func loadDonation(donationLevel):
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
 	inputArray[0].find_child("Outline").show()
 	
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	Global.donationOnScreen=false
 	self.queue_free()
 

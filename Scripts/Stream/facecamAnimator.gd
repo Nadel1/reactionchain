@@ -81,7 +81,7 @@ func donationReaction(positive:bool,recorded:bool=true):
 func _on_donation_reaction_animation_finished() -> void:
 	$DonationReaction.hide()
 
-func _on_movement_animation_finished(anim_name: StringName) -> void:
+func _on_movement_animation_finished(_anim_name: StringName) -> void:
 	if yapping:
 		$Movement.play("yap")
 	if preparingYap:
@@ -94,6 +94,6 @@ func _on_event_start_timeout() -> void:
 	pass
 	#Global.pauseStream(layerIndex)
 
-func _on_body_animation_animation_finished(anim_name: StringName) -> void:
+func _on_body_animation_animation_finished(_anim_name: StringName) -> void:
 	if yapping:
 		$BodyAnimation.play("yap")
