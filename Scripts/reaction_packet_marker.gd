@@ -1,8 +1,8 @@
 extends GenericPrompt
 
-func setVisible(visible: bool):
-	$Label.visible=visible
-	$DebugSprite2D.visible=visible
+func setVisible(visibleVar: bool):
+	$Label.visible=visibleVar
+	$DebugSprite2D.visible=visibleVar
 
 func setIndex(index):
 	$Label.text = str(index)
