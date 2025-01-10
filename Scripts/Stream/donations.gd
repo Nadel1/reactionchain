@@ -13,25 +13,13 @@ var compareIndex=0
 func _input(event):
 	if event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
 		if event.pressed and event.keycode==KEY_W:
-			if expectedInputOrder[compareIndex]!="W":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="W")
 		if event.pressed and event.keycode==KEY_A:
-			if expectedInputOrder[compareIndex]!="A":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="A")
 		if event.pressed and event.keycode==KEY_S:
-			if expectedInputOrder[compareIndex]!="S":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="S")
 		if event.pressed and event.keycode==KEY_D:
-			if expectedInputOrder[compareIndex]!="D":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="D")
 
 func dealWithInput(correctInput):
 	if correctInput:
