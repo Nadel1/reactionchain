@@ -89,7 +89,7 @@ func sendReactionMessage():
 	
 #messages that pop up specifically when reaction occurs/reacting to reaction
 func initiateSendReactionMessage(reaction:RT.Emotion):
-	var minimumMessages=randi()%10+2
+	var minimumMessages=min(10+randi()%2,Global.score/500+1)
 	reactionMessagesCount=min(minimumMessages,Global.score/10)
 	currentReactionMessage=0
 	reactionMessageType=reaction
