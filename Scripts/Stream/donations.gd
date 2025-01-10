@@ -69,7 +69,6 @@ func correctDonation():
 	ui.get_node("Money/MoneyVFX").play("money")
 	var displayedMoney=str(Global.moneyEarned)
 	if Global.moneyEarned>1000 and Global.moneyEarned<1000000:
-		print("money in thousands: ",Global.moneyEarned/1000)
 		displayedMoney=str(Global.moneyEarned/1000)+"."+str((Global.moneyEarned%1000)/100)
 		displayedMoney=str(displayedMoney)+"k"
 	elif Global.moneyEarned>1000000:

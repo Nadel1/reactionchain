@@ -61,12 +61,10 @@ func sendNewMessage():
 	Global.inputRecorder.appendChatMessage(message)
 		
 	var waittime=max(1,10-int(Global.score)/100)
-	print("wait time: ", waittime)
 	messageTimer.start(waittime)
 	
 
 func sendReactionMessage():
-	#if Global.performanceMode: return
 	if currentReactionMessage>reactionMessagesCount:
 		return
 	if Global.chatUsers.size()==0:

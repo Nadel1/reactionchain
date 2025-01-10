@@ -15,12 +15,12 @@ enum Score{GOOD, OKAY, BAD}
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
 
-@export var thresholdFastIncrease=1000
+@export var thresholdFastIncrease=5000
 @export var thresholdUpperFastIncrease=10000
 @export var increaseGoodHit=0.0125
 @export var increaseOkayHit=0.00625
-@export var changePerfectHitHighViewercount=2
-@export var changeOkHitHighViewercount=1
+@export var changePerfectHitHighViewercount=4
+@export var changeOkHitHighViewercount=2
 @export var scoreOffset=10
 @export var removeScore=0.25
 @export var decreaseWrongInput=1.125
@@ -83,14 +83,14 @@ func calculateScoreChange(score:Score):
 	match score:
 		Score.GOOD:
 			if x<thresholdFastIncrease:
-				change=increaseGoodHit*x+scoreOffset
+				change=increaseGoodHit*x*0.5+scoreOffset
 			elif thresholdFastIncrease<=x and x< thresholdUpperFastIncrease:
 				change=increaseGoodHit*2*x+scoreOffset
 			else: 
 				change=changePerfectHitHighViewercount
 		Score.OKAY:
 			if x<thresholdFastIncrease:
-				change=increaseOkayHit*x+scoreOffset
+				change=increaseOkayHit*x*0.5+scoreOffset
 			elif thresholdFastIncrease<=x and x< thresholdUpperFastIncrease:
 				change=increaseOkayHit*2*x+scoreOffset
 			else:
@@ -164,7 +164,6 @@ func react(correctReaction=true):
 		Global.currentStreamer.react(reaction)
 		
 		inputRecorder.appendRecordedReaction(reaction)
-		#currentButtonToEvaluate=null
 		correctReactionPacket = true
 			
 func evaluateScore(buttonPrompt,correctInput=true):
@@ -226,7 +225,6 @@ func dealWithMarker():
 	if countMarker%2==1:
 		#startmarker
 		countReactionPacket += 1
-		#print("count increased: ",countReactionPacket)
 		currentPacketDuration = 0.0
 	countMarker+=1
 		
