@@ -22,7 +22,10 @@ func _process(delta: float) -> void:
 		call_deferred("queue_free")
 
 func _on_button_okay_area_area_entered(_area: Area2D) -> void:
-	okayHit=true
+	okayHit = true
+	
+func _on_button_good_area_area_entered(area: Area2D) -> void:
+	goodHit = true
 
 func freeze(depth : int):
 	pass
