@@ -115,7 +115,6 @@ func spawnMarker(end : bool):
 		newMarker.setIndex(Global.arrowSnippetIndex)
 	newMarker.setStart(!end)
 	if end and lastButtonSpawned!=null:
-		#print("last button detected ",debuglastButton)
 		debuglastButton+=1
 		lastButtonSpawned.lastButton=true
 
@@ -137,11 +136,8 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 	
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
-	animatedSprite.play("wrongHit")
 	Global.currentTrackHandler.failInput()
 
-func playScoreIncrease():
-	animatedSprite.play("hit")
 	
 	
 func react(correctReaction=true):
@@ -189,7 +185,6 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			Global.score+=scoreChange
 			Global.increaseScore(scoreChange)
 			splat.call_deferred("setText", 1)
-		playScoreIncrease()
 	else:#either incorrect input, no input at all (too late), or way too early
 		correctReactionPacket=false
 		playScoreDecrease()
@@ -263,3 +258,4 @@ func _on_good_area_area_exited(area: Area2D) -> void:
 func _on_late_area_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("InputPrompt"):
 		evaluateScore(area.get_parent(),false)
+		$LateArea/TrashCan.play("newTrash")
