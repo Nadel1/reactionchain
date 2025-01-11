@@ -1153,8 +1153,10 @@ _data = {
 "yap": SubResource("Animation_fgpil")
 }
 
-[node name="StreamerCatEars" type="Node2D"]
+[node name="StreamerCatEars" type="Node2D" node_paths=PackedStringArray("face", "head")]
 script = ExtResource("1_s6r5u")
+face = NodePath("Head/Face")
+head = NodePath("Head")
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color(7.12335e-06, 0.608189, 0.809683, 1)

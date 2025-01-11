@@ -3,13 +3,15 @@ extends Node2D
 var preparingYap = false
 var yapping = false
 var layerIndex : int
+@export var face:AnimatedSprite2D
+@export var head:AnimatedSprite2D
 
 func _ready():
 	Global.pastEvent.connect(pastEvent)
 	Global.pause.connect(pause)
 	Global.resume.connect(resume)
 	$DonationReaction.hide()
-	$Head/Face.play("default")
+	face.play("default")
 	
 func init(_streamerIndex : int, streamerSeed : int): #TODO: Make this randomize the streamer sprites too
 	layerIndex = streamerSeed # Awful naming but the seed is the layer in this case
@@ -23,12 +25,12 @@ func move(direction : RT.Direction):
 		$MovementRevert.start()
 		$Movement.play("shift_"+RT.dirToStr(direction))
 		if !yapping:
-			$Head.scale = Vector2(1,1)
+			head.scale = Vector2(1,1)
 			$BodyAnimation.play(RT.dirToStr(direction))
 
 func react(emotion : RT.Emotion):
 	$ReactionRevert.start()
-	$Head/Face.play(RT.emoteToStr(emotion))
+	face.play(RT.emoteToStr(emotion))
 
 func event(): #TODO: Add argument to enable more events
 	preparingYap = true
@@ -58,10 +60,10 @@ func resume(depth):
 		$MovementRevert.paused = false
 
 func _on_face_animation_finished() -> void:
-	$Head/Face.play("default")
+	face.play("default")
 
 func _on_reaction_revert_timeout() -> void:
-	$Head/Face.play("default")
+	face.play("default")
 
 func _on_movement_revert_timeout() -> void:
 	if !preparingYap and !yapping:

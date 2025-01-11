@@ -129,7 +129,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Streamer" instance=ExtResource("1_s5lhc")]
+[node name="Streamer" node_paths=PackedStringArray("face", "head") instance=ExtResource("1_s5lhc")]
+face = NodePath("Head/Face")
+head = NodePath("Head")
 
 [node name="Head" parent="." index="4"]
 sprite_frames = SubResource("SpriteFrames_l50iy")

@@ -1575,8 +1575,10 @@ gravity = Vector3(0, 200, 0)
 scale_min = 4.0
 scale_max = 4.0
 
-[node name="Streamer" type="Node2D"]
+[node name="Streamer" type="Node2D" node_paths=PackedStringArray("face", "head")]
 script = ExtResource("1_brk8q")
+face = NodePath("Head/Face")
+head = NodePath("Head")
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color(7.12335e-06, 0.608189, 0.809683, 1)

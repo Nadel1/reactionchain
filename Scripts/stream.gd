@@ -17,6 +17,7 @@ const STREAMERAI=preload("res://Scenes/Objects/Streamers/streamerAI.tscn")
 const STREAMERCATEARS=preload("res://Scenes/Objects/Streamers/streamerCatEars.tscn")
 const STREAMERSERVER=preload("res://Scenes/Objects/Streamers/streamerServer.tscn")
 var allStreamers=[STREAMERCATEARS,STREAMER0, STREAMER1, STREAMER2, STREAMERAI,STREAMERSERVER]
+
 var currentStreamerIndex=0
 var currentStreamer=null
 

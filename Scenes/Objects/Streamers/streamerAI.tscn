@@ -612,8 +612,10 @@ _data = {
 "yap": SubResource("Animation_o4c3f")
 }
 
-[node name="StreamerAi" type="Node2D"]
+[node name="StreamerAi" type="Node2D" node_paths=PackedStringArray("face", "head")]
 script = ExtResource("1_gpvie")
+face = NodePath("Head/Face")
+head = NodePath("Head")
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color(0, 0, 0, 1)
