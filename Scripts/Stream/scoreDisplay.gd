@@ -21,6 +21,6 @@ func _on_viewer_update_timeout() -> void:
 		animator.play("decrease")
 	viewersActual = Global.score
 
-func _on_score_anim_animation_finished(anim_name: StringName) -> void:
+func _on_score_anim_animation_finished(_anim_name: StringName) -> void:
 	if abs(viewersDisplayed - viewersActual) > 10:
 		animator.play()

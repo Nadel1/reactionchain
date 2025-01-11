@@ -24,10 +24,14 @@ scroll_active = false
 scroll_following = true
 metadata/_edit_use_anchors_ = true
 
-[node name="TimerSinceLastMessage" type="Timer" parent="."]
-
-[node name="TimerSinceLastReactionMessage" type="Timer" parent="."]
+[node name="ReactionTimer" type="Timer" parent="."]
 wait_time = 0.2
+one_shot = true
 
-[connection signal="timeout" from="TimerSinceLastMessage" to="." method="_on_timer_since_last_message_timeout"]
-[connection signal="timeout" from="TimerSinceLastReactionMessage" to="." method="_on_timer_since_last_reaction_message_timeout"]
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="ReactionTimer" to="." method="_on_timer_since_last_reaction_message_timeout"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

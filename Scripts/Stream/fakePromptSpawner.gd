@@ -18,7 +18,7 @@ func spawnButton():
 	newButton.setDirection()
 	get_parent().get_parent().add_child(newButton)
 
-func _on_midi_player_arrows_midi_event(channel: Variant, event: Variant) -> void:
+func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type == 144:
 		if event.velocity > 5:
 			spawnButton()

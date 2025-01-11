@@ -17,6 +17,7 @@ const STREAMERAI=preload("res://Scenes/Objects/Streamers/streamerAI.tscn")
 const STREAMERCATEARS=preload("res://Scenes/Objects/Streamers/streamerCatEars.tscn")
 const STREAMERSERVER=preload("res://Scenes/Objects/Streamers/streamerServer.tscn")
 var allStreamers=[STREAMERCATEARS,STREAMER0, STREAMER1, STREAMER2, STREAMERAI,STREAMERSERVER]
+
 var currentStreamerIndex=0
 var currentStreamer=null
 
@@ -32,8 +33,12 @@ func _on_start_playing_music_timer_timeout() -> void:
 	
 
 func prepareStreamer():
-	currentStreamerIndex=Global.currentStreamIndex%(allStreamers.size())
-			
+	if Global.currentStreamIndex<3:
+		currentStreamerIndex=randi()%2
+	elif Global.currentStreamIndex< 6:
+		currentStreamerIndex=randi()%2+2
+	else:
+		currentStreamerIndex=randi()%2+4
 	currentStreamer=allStreamers[currentStreamerIndex].instantiate()
 	currentStreamer.position=$UI/StreamerPlaceholder.position
 	currentStreamer.scale=$UI/StreamerPlaceholder.scale
@@ -50,7 +55,7 @@ func prepareArrows():
 	
 func _ready():
 	Global.donationOnScreen=false
-	$UI/Money/Text.text= "Money: "+str(Global.moneyEarned)
+	$UI/Money/Text.text= "Money: "+str(Global.displayedMoney)
 	$UI/TrackIndicatorWrong.visible=Global.developerMode
 	$UI/TrackIndicatorRight.visible=Global.developerMode
 	index=Global.currentStreamIndex

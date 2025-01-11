@@ -1,11 +1,10 @@
 extends Node2D
 
-@onready var timer=$TimerSinceLastMessage
-@onready var reactionTimer=$TimerSinceLastReactionMessage
+@onready var messageTimer=$MessageTimer
+@onready var reactionTimer=$ReactionTimer
 @onready var chatText=$ChatBackground/RichTextLabel
 var timerCounter=0
 var probabilityNextMessage=0.5
-@export var maxUserCount=10
 var lastScore=0#to have a relation between viewer counts and active commenters
 var usernameStrings=["new","user","destroyer","bob","spencer","dark","hunter","ree","wompwomp","myname"]
 var messagesString=["why the hate?","haha nice one","i love it when you do that","im your biggest fan!","notice me!","good video"]
@@ -53,24 +52,23 @@ func deleteUsers():
 	
 #background fluff
 func sendNewMessage():
-	#if Global.performanceMode: return
 	var message
-	if Global.chatUsers.size()<maxUserCount or Global.chatUsers.size()==0:#generate new user if the viewer count has doubled
+	if Global.chatUsers.size()<10 or Global.chatUsers.size()==0:#generate new user if the viewer count has doubled
 		lastScore=Global.score
 		message=generateMessage(generateNewUser(),true)#new users introduce themselves
 	else:
 		message=generateMessage(Global.chatUsers.pick_random())
 	Global.inputRecorder.appendChatMessage(message)
 		
-	var waittime=max(0.5,5-Global.score/100)
-	timer.wait_time=waittime
-	timer.start()
+	var waittime=max(1,10-int(Global.score)/100)
+	messageTimer.start(waittime)
 	
 
 func sendReactionMessage():
-	#if Global.performanceMode: return
 	if currentReactionMessage>reactionMessagesCount:
 		return
+	if Global.chatUsers.size()==0:
+		generateNewUser()
 	var user=Global.chatUsers.pick_random()
 	var msg=""
 	match reactionMessageType:
@@ -91,14 +89,14 @@ func sendReactionMessage():
 	
 #messages that pop up specifically when reaction occurs/reacting to reaction
 func initiateSendReactionMessage(reaction:RT.Emotion):
-	var minimumMessages=randi()%10+5#between 5 and 15 messages
+	var minimumMessages=min(10+randi()%2,Global.score/500+1)
 	reactionMessagesCount=min(minimumMessages,Global.score/10)
 	currentReactionMessage=0
 	reactionMessageType=reaction
 	sendReactionMessage()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Global.chatLog.size()>Global.currentStreamIndex:
 		#replay 
 		pass
@@ -109,10 +107,9 @@ func _process(delta: float) -> void:
 			lastScore=Global.score
 			deleteUsers()
 
-
-func _on_timer_since_last_message_timeout() -> void:
-	sendNewMessage()
-
-
 func _on_timer_since_last_reaction_message_timeout() -> void:
 	sendReactionMessage()
+
+
+func _on_message_timer_timeout() -> void:
+	sendNewMessage()

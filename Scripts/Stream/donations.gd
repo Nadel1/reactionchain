@@ -13,25 +13,13 @@ var compareIndex=0
 func _input(event):
 	if event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
 		if event.pressed and event.keycode==KEY_W:
-			if expectedInputOrder[compareIndex]!="W":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="W")
 		if event.pressed and event.keycode==KEY_A:
-			if expectedInputOrder[compareIndex]!="A":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="A")
 		if event.pressed and event.keycode==KEY_S:
-			if expectedInputOrder[compareIndex]!="S":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="S")
 		if event.pressed and event.keycode==KEY_D:
-			if expectedInputOrder[compareIndex]!="D":
-				dealWithInput(false)
-			else: 
-				dealWithInput(true)
+			dealWithInput(expectedInputOrder[compareIndex]=="D")
 
 func dealWithInput(correctInput):
 	if correctInput:
@@ -61,13 +49,21 @@ func correctDonation():
 	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
 	Global.moneyEarned+=Global.increaseInMoney
-	Global.increaseInMoney+=Global.increaseInMoney+randi()%Global.increaseInMoney+Global.increaseInMoney/2
+	Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
 	endDonationTimer.start()
 	var ui=get_parent()
 	var money=ui.get_node("Money/Text")
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
-	money.text="Money: "+str(Global.moneyEarned)
+	var displayedMoney=str(Global.moneyEarned)
+	if Global.moneyEarned>1000 and Global.moneyEarned<1000000:
+		displayedMoney=str(Global.moneyEarned/1000)+"."+str((Global.moneyEarned%1000)/100)
+		displayedMoney=str(displayedMoney)+"k"
+	elif Global.moneyEarned>1000000:
+		displayedMoney=str(Global.moneyEarned/1000000)+"."+str((Global.moneyEarned%1000000)/100000)
+		displayedMoney=str(displayedMoney)+"m"
+	Global.displayedMoney=displayedMoney
+	money.text="Money: "+str(displayedMoney)
 			
 func loadDonation(donationLevel):
 	$ReceivedAnim.hide()
@@ -86,7 +82,7 @@ func loadDonation(donationLevel):
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
 	inputArray[0].find_child("Outline").show()
 	
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	Global.donationOnScreen=false
 	self.queue_free()
 
