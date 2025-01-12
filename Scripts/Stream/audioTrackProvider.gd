@@ -12,7 +12,7 @@ extends Node
 #	return snippets[index % snippets.size()]
 
 func getSoundFont(layerIndex : int):
-	return soundfonts[layerIndex % soundfonts.size()]
+	return soundfonts[min(layerIndex, soundfonts.size() - 1)]
 
 func prepareMusic():
 	var track = []
