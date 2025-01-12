@@ -4,6 +4,10 @@ extends Node
 @export var Bsnippets : Array[TrackSnippet]
 @export_file("*.sf2") var soundfonts : Array[String]
 
+# first entry is the current layer, earlier layers without a corresponding entry are silent.
+# in dB, -20 is the default volume, -40 is silent
+@export var layerVolumes = [-20, -25, -30]
+
 #func getSnippet(index : int):
 #	return snippets[index % snippets.size()]
 
