@@ -1,21 +1,21 @@
 [gd_scene load_steps=6 format=3 uid="uid://bp8wnoyqm1yx0"]
 
 [ext_resource type="PackedScene" uid="uid://cbxqm0hn6vnfy" path="res://Scenes/Objects/Buttons/Button.tscn" id="1_nqstw"]
-[ext_resource type="Texture2D" uid="uid://bsrim815d5p2o" path="res://Assets/Sprites/Buttons/UpButton.png" id="1_vlade"]
+[ext_resource type="Texture2D" uid="uid://bi52ld5etc2ve" path="res://Assets/Sprites/Buttons/DownButton.png" id="2_u7tb6"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_punyr"]
-atlas = ExtResource("1_vlade")
+[sub_resource type="AtlasTexture" id="AtlasTexture_02kyj"]
+atlas = ExtResource("2_u7tb6")
 region = Rect2(0, 0, 18, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lv471"]
-atlas = ExtResource("1_vlade")
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4h08"]
+atlas = ExtResource("2_u7tb6")
 region = Rect2(18, 0, 18, 18)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kve1b"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_punyr")
+"texture": SubResource("AtlasTexture_02kyj")
 }],
 "loop": true,
 "name": &"default",
@@ -23,7 +23,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lv471")
+"texture": SubResource("AtlasTexture_h4h08")
 }],
 "loop": true,
 "name": &"hit",
@@ -36,4 +36,3 @@ input = "down"
 [node name="AnimatedSprite" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_kve1b")
 autoplay = "default"
-flip_v = true
