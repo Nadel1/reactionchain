@@ -1,11 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://cqq4br68kh14r"]
+[gd_scene load_steps=6 format=3 uid="uid://cqq4br68kh14r"]
 
 [ext_resource type="PackedScene" uid="uid://cbxqm0hn6vnfy" path="res://Scenes/Objects/Buttons/Button.tscn" id="1_7k87n"]
+[ext_resource type="Texture2D" uid="uid://2am0tydak3u4" path="res://Assets/Sprites/Buttons/LeftButton.png" id="2_t1qmh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rf2l2"]
+atlas = ExtResource("2_t1qmh")
+region = Rect2(0, 0, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esbjn"]
+atlas = ExtResource("2_t1qmh")
+region = Rect2(18, 0, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_527y0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rf2l2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esbjn")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}]
 
 [node name="Button" instance=ExtResource("1_7k87n")]
 input = "left"
 
 [node name="AnimatedSprite" parent="." index="0"]
-animation = &"default"
+sprite_frames = SubResource("SpriteFrames_527y0")
 autoplay = "default"
-flip_h = true
