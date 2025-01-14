@@ -6,7 +6,7 @@ func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
 	$Text/MoneyText.text="[center]"+"Money: "+str(int(Global.moneyEarned))+"[/center]"
-	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+Global.moneyEarned
+	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+int(Global.moneyEarned)
 	$Text/OverallScoreText.text="[center] Overall score: "+str(Global.overallScore)
 	if Global.overallScore>Global.overallScoreHighScore:
 		$Text/HighScore.show()
@@ -21,6 +21,8 @@ func _ready() -> void:
 	if (time%60)<10:
 		strSeconds="0"+strSeconds
 	$Text/TimeScoreText.text="[center]"+"Time: "+strMinutes+":"+strSeconds+"[/center]"
+	$Text/MoneyTipp.visible = Global.moneyEarned < 1
+	$Text/MoneyText.self_modulate = Color.ORANGE if Global.moneyEarned < 1 else Color.WHITE
 
 func _on_restart_button_down() -> void:
 	Global.score=10

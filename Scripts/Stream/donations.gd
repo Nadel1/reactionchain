@@ -8,10 +8,11 @@ var sizeOfBanner=200
 var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
+var failed = false
 @onready var endDonationTimer=$EndDontationTimer
 
 func _input(event):
-	if event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
+	if not failed and event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
 		if event.pressed and event.keycode==KEY_W:
 			dealWithInput(expectedInputOrder[compareIndex]=="W")
 		if event.pressed and event.keycode==KEY_A:
@@ -39,8 +40,9 @@ func dealWithInput(correctInput):
 		$Outline.play("crumble")
 		$DonationsBanner.hide()
 		Global.score-=Global.score/5
-		Global.score = min(Global.score, Global.nextDonationViewerCount - 100)
+		Global.score = min(Global.score, Global.nextDonationViewerCount/2)
 		$Fail.play()
+		failed = true
 		
 
 	
@@ -81,6 +83,8 @@ func loadDonation(donationLevel):
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	Global.donationOnScreen=false
 	Global.score-=Global.score/5
+	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
+	failed = true
 	self.queue_free()
 
 
