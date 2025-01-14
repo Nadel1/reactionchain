@@ -14,7 +14,11 @@ signal layerFinished
 
 func setIndex(id : int):
 	layerIndex = id
-	fullVolume = -20.0 - 5*(Global.currentStreamIndex - id)
+	var volumeIndex = Global.currentStreamIndex - id
+	if volumeIndex >= AudioTrackProvider.layerVolumes.size():
+		fullVolume = -40.0
+	else:
+		fullVolume = AudioTrackProvider.layerVolumes[volumeIndex]
 	if fullVolume <= zeroVolume: audible = false
 	call_deferred("setupPlayers")
 
