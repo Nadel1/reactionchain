@@ -33,18 +33,7 @@ func dealWithInput(correctInput):
 		else: 
 			inputArray[compareIndex].find_child("Outline").show()
 	else:
-		Global.currentStreamer.donationReaction(false)
-		for i in range(0, inputArray.size()):
-			inputArray[i].hide()
-		$Notification.play("crumble")
-		$Outline.play("crumble")
-		$DonationsBanner.hide()
-		Global.score-=Global.score/5
-		Global.score = min(Global.score, Global.nextDonationViewerCount/2)
-		$Fail.play()
-		failed = true
-		
-
+		crumble()
 	
 func correctDonation():
 	$Success.play()
@@ -79,13 +68,21 @@ func loadDonation(donationLevel):
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
 	inputArray[0].find_child("Outline").show()
-	
-func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
-	Global.donationOnScreen=false
+
+func crumble():
+	Global.currentStreamer.donationReaction(false)
+	for i in range(0, inputArray.size()):
+		inputArray[i].hide()
+	$Notification.play("crumble")
+	$Outline.play("crumble")
+	$DonationsBanner.hide()
 	Global.score-=Global.score/5
 	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
+	$Fail.play()
 	failed = true
-	self.queue_free()
+
+func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
+	crumble()
 
 
 func _on_end_dontation_timer_timeout() -> void:
