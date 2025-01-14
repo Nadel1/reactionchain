@@ -8,10 +8,11 @@ var sizeOfBanner=200
 var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
+var failed = false
 @onready var endDonationTimer=$EndDontationTimer
 
 func _input(event):
-	if event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
+	if not failed and event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
 		if event.pressed and event.keycode==KEY_W:
 			dealWithInput(expectedInputOrder[compareIndex]=="W")
 		if event.pressed and event.keycode==KEY_A:
@@ -32,16 +33,10 @@ func dealWithInput(correctInput):
 		else: 
 			inputArray[compareIndex].find_child("Outline").show()
 	else:
-		Global.currentStreamer.donationReaction(false)
-		for i in range(0, inputArray.size()):
-			inputArray[i].hide()
-		$Notification.play("crumble")
-		$Outline.play("crumble")
-		$DonationsBanner.hide()
-		
-
+		crumble()
 	
 func correctDonation():
+	$Success.play()
 	$Notification.play("open")
 	$Outline.play("open")
 	$ReceivedAnim.show()
@@ -49,21 +44,13 @@ func correctDonation():
 	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
 	Global.moneyEarned+=Global.increaseInMoney
-	Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
+	#Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
+	Global.nextDonationViewerCount+=Global.donationIncrease
 	endDonationTimer.start()
 	var ui=get_parent()
-	var money=ui.get_node("Money/Text")
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
-	var displayedMoney=str(Global.moneyEarned)
-	if Global.moneyEarned>1000 and Global.moneyEarned<1000000:
-		displayedMoney=str(Global.moneyEarned/1000)+"."+str((Global.moneyEarned%1000)/100)
-		displayedMoney=str(displayedMoney)+"k"
-	elif Global.moneyEarned>1000000:
-		displayedMoney=str(Global.moneyEarned/1000000)+"."+str((Global.moneyEarned%1000000)/100000)
-		displayedMoney=str(displayedMoney)+"m"
-	Global.displayedMoney=displayedMoney
-	money.text="Money: "+str(displayedMoney)
+	Global.moneyManager.updateMoneyDisplay()
 			
 func loadDonation(donationLevel):
 	$ReceivedAnim.hide()
@@ -81,10 +68,21 @@ func loadDonation(donationLevel):
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
 	inputArray[0].find_child("Outline").show()
-	
+
+func crumble():
+	Global.currentStreamer.donationReaction(false)
+	for i in range(0, inputArray.size()):
+		inputArray[i].hide()
+	$Notification.play("crumble")
+	$Outline.play("crumble")
+	$DonationsBanner.hide()
+	Global.score-=Global.score/5
+	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
+	$Fail.play()
+	failed = true
+
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
-	Global.donationOnScreen=false
-	self.queue_free()
+	crumble()
 
 
 func _on_end_dontation_timer_timeout() -> void:
