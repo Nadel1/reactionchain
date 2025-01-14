@@ -46,7 +46,7 @@ var overallScoreHighScore=0
 var increaseInMoney=100
 var nextDonationViewerCount=500
 var difficultyDonations=3#how many donation inputs appear
-var viewersNeededToNextDonation=500
+var donationIncrease=500
 
 var musicSnippetIndex = 0
 var arrowSnippetIndex = 0

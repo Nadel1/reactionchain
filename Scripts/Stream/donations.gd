@@ -52,7 +52,8 @@ func correctDonation():
 	$AnimationPlayerFeedback.play("growReceivedBackground")
 	$DonationsBanner.hide()
 	Global.moneyEarned+=Global.increaseInMoney
-	Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
+	#Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
+	Global.nextDonationViewerCount+=Global.donationIncrease
 	endDonationTimer.start()
 	var ui=get_parent()
 	ui.get_node("Money/MoneyVFX").show()
