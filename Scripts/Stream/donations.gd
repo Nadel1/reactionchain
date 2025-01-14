@@ -38,6 +38,7 @@ func dealWithInput(correctInput):
 		$Notification.play("crumble")
 		$Outline.play("crumble")
 		$DonationsBanner.hide()
+		Global.score-=Global.score/5
 		
 
 	
@@ -84,6 +85,7 @@ func loadDonation(donationLevel):
 	
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	Global.donationOnScreen=false
+	Global.score-=Global.score/5
 	self.queue_free()
 
 
