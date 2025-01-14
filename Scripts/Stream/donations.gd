@@ -39,6 +39,7 @@ func dealWithInput(correctInput):
 		$Outline.play("crumble")
 		$DonationsBanner.hide()
 		Global.score-=Global.score/5
+		Global.score = min(Global.score, Global.nextDonationViewerCount - 100)
 		$Fail.play()
 		
 
