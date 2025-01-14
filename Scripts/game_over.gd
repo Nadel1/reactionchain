@@ -5,7 +5,7 @@ extends Node2D
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
-	$Text/MoneyText.text="[center]"+"Earned money: "+str(Global.moneyEarned)+"[/center]"
+	$Text/MoneyText.text="[center]"+"Money: "+str(int(Global.moneyEarned))+"[/center]"
 	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+Global.moneyEarned
 	$Text/OverallScoreText.text="[center] Overall score: "+str(Global.overallScore)
 	if Global.overallScore>Global.overallScoreHighScore:
@@ -29,7 +29,7 @@ func _on_restart_button_down() -> void:
 	Global.mainSeed=randi()
 	Global.currentStreamIndex=0
 	Global.increaseInMoney=100
-	Global.moneyEarned=0
+	Global.moneyEarned=100
 	Global.startSurvivedTime()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b6h0kgvl47nof"]
+[gd_scene load_steps=48 format=3 uid="uid://b6h0kgvl47nof"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
 [ext_resource type="Texture2D" uid="uid://dwq3fpss8qnev" path="res://Assets/Sprites/Donations/DonationsNotificationCrumblingOutline.png" id="2_ie8mp"]
@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://dmow7802w8mp3" path="res://Assets/Sprites/Donations/DonationsNotificationOpening.png" id="5_834un"]
 [ext_resource type="Texture2D" uid="uid://dwrrur1ypkhaw" path="res://Assets/Sprites/Donations/DonationsNotificationCrumbling.png" id="5_st15k"]
 [ext_resource type="Texture2D" uid="uid://emlvbng2ugne" path="res://Assets/Sprites/Donations/ReceivedAnim.png" id="9_xjbyf"]
+[ext_resource type="AudioStream" uid="uid://cpaiq2pi5i4wb" path="res://Assets/Audio/SFX/notification.wav" id="10_k7dhs"]
+[ext_resource type="AudioStream" uid="uid://dd8xqpj8lw5ot" path="res://Assets/Audio/SFX/katsching.wav" id="11_q7x1d"]
+[ext_resource type="AudioStream" uid="uid://dldf6afhilnrv" path="res://Assets/Audio/SFX/crumple.wav" id="12_mje3h"]
 
 [sub_resource type="Animation" id="Animation_f4wxh"]
 length = 0.001
@@ -445,6 +448,16 @@ libraries = {
 
 [node name="EndDontationTimer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="Popup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_k7dhs")
+autoplay = true
+
+[node name="Success" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_q7x1d")
+
+[node name="Fail" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_mje3h")
 
 [connection signal="animation_finished" from="AnimationPlayerOutline" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Notification" to="." method="_on_notification_animation_finished"]

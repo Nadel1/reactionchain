@@ -39,10 +39,12 @@ func dealWithInput(correctInput):
 		$Outline.play("crumble")
 		$DonationsBanner.hide()
 		Global.score-=Global.score/5
+		$Fail.play()
 		
 
 	
 func correctDonation():
+	$Success.play()
 	$Notification.play("open")
 	$Outline.play("open")
 	$ReceivedAnim.show()
@@ -53,18 +55,9 @@ func correctDonation():
 	Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
 	endDonationTimer.start()
 	var ui=get_parent()
-	var money=ui.get_node("Money/Text")
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
-	var displayedMoney=str(Global.moneyEarned)
-	if Global.moneyEarned>1000 and Global.moneyEarned<1000000:
-		displayedMoney=str(Global.moneyEarned/1000)+"."+str((Global.moneyEarned%1000)/100)
-		displayedMoney=str(displayedMoney)+"k"
-	elif Global.moneyEarned>1000000:
-		displayedMoney=str(Global.moneyEarned/1000000)+"."+str((Global.moneyEarned%1000000)/100000)
-		displayedMoney=str(displayedMoney)+"m"
-	Global.displayedMoney=displayedMoney
-	money.text="Money: "+str(displayedMoney)
+	Global.moneyManager.updateMoneyDisplay()
 			
 func loadDonation(donationLevel):
 	$ReceivedAnim.hide()

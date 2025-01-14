@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Stream/track.gd" id="1_02ljk"]
 [ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="2_cvast"]
-[ext_resource type="PackedScene" uid="uid://ch1khsrq2hnia" path="res://Scenes/Stream/fakePromptSpawner.tscn" id="2_ngu6u"]
+[ext_resource type="PackedScene" path="res://Scenes/Stream/fakePromptSpawner.tscn" id="2_ngu6u"]
 [ext_resource type="Texture2D" uid="uid://ch3f014t0gss0" path="res://Assets/Sprites/Track/trashCan.png" id="4_at6ye"]
 [ext_resource type="Texture2D" uid="uid://cgrx3fqruo1vj" path="res://Assets/Sprites/Track/hitZone.png" id="4_mkmka"]
 

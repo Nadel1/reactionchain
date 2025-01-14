@@ -36,9 +36,11 @@ var chatUsers=[]
 var decreaseWrongInput=1.1
 var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
 
-var moneyEarned = 0
+var moneyManager : MoneyManager
+var moneyEarned = 100
 var moneyHighScore=0
 var displayedMoney="0"
+var moneyLoss = 2
 var overallScore = 0
 var overallScoreHighScore=0
 var increaseInMoney=100
@@ -207,6 +209,13 @@ func makeSaveDict():
 
 func startSurvivedTime():
 	survivedTime=Time.get_unix_time_from_system()
+
+func gameOver():
+	if !developerMode: 
+		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
+		survivedTime=Time.get_unix_time_from_system() - survivedTime
+		stopMetronome()
+		stopMetronomeArrows()
 	
 func saveGame():
 	var file = FileAccess.open_encrypted_with_pass(SAVEFILE_NAME, FileAccess.WRITE, "superorganism")
