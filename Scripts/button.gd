@@ -21,11 +21,14 @@ func _process(_delta: float) -> void:
 	if global_position.y > 700 or global_position.x > 1200:
 		call_deferred("queue_free")
 
+func freeze(_depth : int):
+	pass
+
 func _on_button_okay_area_area_entered(_area: Area2D) -> void:
 	okayHit = true
 	
 func _on_button_good_area_area_entered(area: Area2D) -> void:
 	goodHit = true
 
-func freeze(_depth : int):
-	pass
+func _on_button_good_area_area_exited(area: Area2D) -> void:
+	goodHit = false
