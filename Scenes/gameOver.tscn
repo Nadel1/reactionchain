@@ -154,7 +154,7 @@ tracks/4/path = NodePath("../Background/BackgroundText:visible_ratio")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -245,19 +245,23 @@ scale = Vector2(9, 10.125)
 texture = ExtResource("7_1q6on")
 
 [node name="CameraSprite" type="Sprite2D" parent="Background"]
+visible = false
 position = Vector2(531, 188)
 scale = Vector2(4, 4)
 texture = ExtResource("8_jbcag")
 
 [node name="BackgroundText" type="RichTextLabel" parent="Background"]
-offset_left = 286.0
-offset_top = 23.0
-offset_right = 430.0
-offset_bottom = 61.0
+offset_left = 275.0
+offset_right = 468.0
+offset_bottom = 55.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
+bbcode_enabled = true
 text = "> Technical difficulties...
-> We will be right back..."
+> You have become irrelavant ...
+> Costs are too high
+> Shutting off ...
+"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -334,9 +338,9 @@ offset_bottom = 120.0
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 358.0
-offset_top = 108.0
+offset_top = 120.0
 offset_right = 730.0
-offset_bottom = 124.0
+offset_bottom = 136.0
 scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -347,10 +351,10 @@ visible_ratio = 0.0
 
 [node name="TimeScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 421.0
-offset_top = 140.0
-offset_right = 735.0
-offset_bottom = 156.0
+offset_left = 358.0
+offset_top = 148.0
+offset_right = 730.0
+offset_bottom = 164.0
 scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -360,9 +364,9 @@ scroll_active = false
 
 [node name="MoneyText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 463.0
+offset_left = 358.0
 offset_top = 172.0
-offset_right = 745.0
+offset_right = 730.0
 offset_bottom = 188.0
 scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
@@ -386,13 +390,12 @@ scroll_active = false
 [node name="MoneyTipp" type="RichTextLabel" parent="Text"]
 self_modulate = Color(1, 0.851667, 0.11, 1)
 layout_mode = 0
-offset_left = 916.0
-offset_top = 120.0
-offset_right = 1047.0
-offset_bottom = 160.0
-scale = Vector2(3, 3)
+offset_left = 1079.0
+offset_top = 108.0
+offset_right = 1210.0
+offset_bottom = 148.0
+scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "(You get a donation opportunity every 500 viewers!)"
 
 [node name="HighScore" type="Node2D" parent="Text"]

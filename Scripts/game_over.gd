@@ -3,6 +3,12 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Background/BackgroundText.text="> Technical difficulties ...\n"
+	if Global.score<=0:
+		$Background/BackgroundText.text+= "> You have become irrelevant\n"
+	if Global.moneyEarned ==0:
+		$Background/BackgroundText.text+= "> No funds remaining\n"
+	$Background/BackgroundText.text+= "> Shutting off ..."
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
 	$Text/MoneyText.text="[center]"+"Money: "+str(int(Global.moneyEarned))+"[/center]"
