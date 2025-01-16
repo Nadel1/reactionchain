@@ -25,6 +25,12 @@ func _ready() -> void:
 	$Text/MoneyText.self_modulate = Color.ORANGE if Global.moneyEarned < 1 else Color.WHITE
 
 func _on_restart_button_down() -> void:
+	resetGlobalForNextPlay()
+	Global.startSurvivedTime()
+	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
+
+
+func resetGlobalForNextPlay():
 	Global.score=10
 	Global.nextDonationViewerCount=500
 	Global.currentHighScoreViewers=0
@@ -32,9 +38,6 @@ func _on_restart_button_down() -> void:
 	Global.currentStreamIndex=0
 	Global.increaseInMoney=100
 	Global.moneyEarned=100
-	Global.startSurvivedTime()
-	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
-
 
 func _on_quit_game_button_down() -> void:
 	Global.saveGame()
@@ -56,3 +59,8 @@ func _on_devmode_toggled(toggled_on: bool) -> void:
 
 func _on_delete_savefile_button_pressed() -> void:
 	Global.resetSaveFile()
+
+
+func _on_to_main_menu_button_down() -> void:
+	resetGlobalForNextPlay()
+	get_tree().change_scene_to_file("res://Scenes/mainMenu.tscn")

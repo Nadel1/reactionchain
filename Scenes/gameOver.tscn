@@ -284,12 +284,21 @@ offset_bottom = 40.0
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 393.0
+offset_top = 371.0
+offset_right = 496.0
+offset_bottom = 390.0
+scale = Vector2(3, 3)
+theme = ExtResource("3_xylrd")
+text = "Restart"
+
+[node name="ToMainMenu" type="Button" parent="Buttons"]
+offset_left = 393.0
 offset_top = 437.0
 offset_right = 496.0
 offset_bottom = 456.0
 scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
-text = "Restart"
+text = "Main Menu"
 
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
@@ -322,13 +331,27 @@ offset_top = 80.0
 offset_right = -148.0
 offset_bottom = 120.0
 
+[node name="ScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 358.0
+offset_top = 108.0
+offset_right = 730.0
+offset_bottom = 124.0
+scale = Vector2(2, 2)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "[center]Score[/center]"
+scroll_active = false
+visible_characters = 0
+visible_ratio = 0.0
+
 [node name="TimeScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 263.0
-offset_top = 149.0
-offset_right = 577.0
-offset_bottom = 165.0
-scale = Vector2(3, 3)
+offset_left = 421.0
+offset_top = 140.0
+offset_right = 735.0
+offset_bottom = 156.0
+scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "[center]Time[/center]
@@ -337,37 +360,23 @@ scroll_active = false
 
 [node name="MoneyText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 311.0
-offset_top = 192.0
-offset_right = 593.0
-offset_bottom = 208.0
-scale = Vector2(3, 3)
+offset_left = 463.0
+offset_top = 172.0
+offset_right = 745.0
+offset_bottom = 188.0
+scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "[center]Money[/center]
 "
 scroll_active = false
 
-[node name="ScoreText" type="RichTextLabel" parent="Text"]
-layout_mode = 0
-offset_left = 175.0
-offset_top = 108.0
-offset_right = 547.0
-offset_bottom = 124.0
-scale = Vector2(3, 3)
-theme = ExtResource("3_xylrd")
-bbcode_enabled = true
-text = "[center]Score[/center]"
-scroll_active = false
-visible_characters = 0
-visible_ratio = 0.0
-
 [node name="OverallScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 140.0
-offset_top = 240.0
+offset_top = 196.0
 offset_right = 440.0
-offset_bottom = 256.0
+offset_bottom = 212.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -392,10 +401,10 @@ rotation = 0.0349066
 script = ExtResource("5_6tkhb")
 
 [node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -395.165
-offset_top = 25.571
-offset_right = -193.165
-offset_bottom = 41.571
+offset_left = -398.294
+offset_top = -30.1181
+offset_right = -196.294
+offset_bottom = -14.1181
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -502,6 +511,7 @@ theme = ExtResource("3_xylrd")
 text = "Reset savefile"
 
 [connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
+[connection signal="button_down" from="Buttons/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
 [connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
