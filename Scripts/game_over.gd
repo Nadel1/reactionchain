@@ -6,7 +6,7 @@ func _ready() -> void:
 	$Background/BackgroundText.text="> Technical difficulties ...\n"
 	if Global.score<=0:
 		$Background/BackgroundText.text+= "> You have become irrelevant\n"
-	if Global.moneyEarned ==0:
+	if Global.moneyEarned <1:
 		$Background/BackgroundText.text+= "> No funds remaining\n"
 	$Background/BackgroundText.text+= "> Shutting off ..."
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
