@@ -296,6 +296,7 @@ theme = ExtResource("3_xylrd")
 text = "Restart"
 
 [node name="ToMainMenu" type="Button" parent="Buttons"]
+layout_mode = 0
 offset_left = 393.0
 offset_top = 437.0
 offset_right = 496.0

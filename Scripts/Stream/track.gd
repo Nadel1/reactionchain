@@ -15,6 +15,8 @@ enum Score{GOOD, OKAY, BAD}
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
 
+@onready var projectedArrow=$ProjectedArrow
+
 @export var thresholdFastIncrease=5000
 @export var thresholdUpperFastIncrease=10000
 @export var increaseGoodHit=0.0125
@@ -31,12 +33,12 @@ enum Score{GOOD, OKAY, BAD}
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
 var arrowSpawnID = 0
+var buttonSequence=[]
 
 #abstraction for reactions
 var correctReactionPacket=true
 var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
-var reactionArray=[]
 var currentPacketDuration=0.0
 var firstPacketStarted=false
 var firstPromptReached = false
@@ -59,6 +61,7 @@ func _input(event):
 			registerInput("down")
 
 func _ready() -> void:
+	projectedArrow.play("default")
 	Global.eventImminent.connect(spawnEventTrigger)
 	fastSpawnPoint.global_position = animatedSprite.global_position + (spawnPoint.global_position - animatedSprite.global_position) * Global.fastPromptMult
 
@@ -69,11 +72,14 @@ func _process(delta: float) -> void:
 func spawnButton():
 	var fast = Global.getPromptSpeedState()
 	if arrowSpawnID % Global.difficulty == 0:
+		if projectedArrow.get_animation()=="default":
+			adjustProjection()
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
 		newButtonPrompt.setFast(fast)
 		get_parent().call_deferred("add_child",newButtonPrompt)
+		buttonSequence.append(newButtonPrompt)
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
@@ -137,7 +143,6 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	Global.currentTrackHandler.failInput()
-
 	
 	
 func react(correctReaction=true):
@@ -165,8 +170,23 @@ func react(correctReaction=true):
 		
 		inputRecorder.appendRecordedReaction(reaction)
 		correctReactionPacket = true
-			
+
+func adjustProjection():
+	if buttonSequence.size()==0:
+		projectedArrow.play("default")
+		return
+	match buttonSequence.front().getInput():
+		"down":
+			projectedArrow.play("down")
+		"left":
+			projectedArrow.play("left")
+		"right":
+			projectedArrow.play("right")
+		"up":
+			projectedArrow.play("up")
+		
 func evaluateScore(buttonPrompt,correctInput=true):
+	
 	if !firstPromptReached:
 		return
 	var splat = SPLAT.instantiate()
@@ -193,7 +213,9 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
 	if buttonPrompt!=null:
+		buttonSequence.pop_front()
 		buttonPrompt.queue_free()
+		adjustProjection()
 	if(Global.score<=0):
 		Global.gameOver()
 
@@ -236,7 +258,6 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	elif area.get_parent().is_in_group("EventStart"):
 		dealWithEventStart()
 	else:
-		#goodHit=true
 		area.get_parent().hitZoneEnter(true)
 		firstPromptReached = true
 		

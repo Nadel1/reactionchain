@@ -74,6 +74,17 @@ signal resume(int)
 
 func _enter_tree():
 	loadGame()
+
+func prepareGame():
+	decreaseWrongInput=1.1
+	score=10
+	nextDonationViewerCount=500
+	currentHighScoreViewers=0
+	mainSeed=randi()
+	currentStreamIndex=0
+	increaseInMoney=100
+	moneyEarned=100
+	startSurvivedTime()
 	
 func increaseScore(deltaScore):
 	score+=deltaScore
