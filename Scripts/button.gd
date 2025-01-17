@@ -19,7 +19,8 @@ func hitZoneEnter(enterHitZone):
 
 func _process(_delta: float) -> void:
 	if global_position.y > 700 or global_position.x > 1200:
-		call_deferred("queue_free")
+		pass
+		#call_deferred("queue_free")
 
 func freeze(_depth : int):
 	pass
