@@ -84,6 +84,19 @@ func prepareGame():
 	currentStreamIndex=0
 	increaseInMoney=100
 	moneyEarned=100
+	recordingsMovement = []
+	recordingsReaction = []
+	recordingsFails = []
+	recordDonationReaction = []
+	recordingsEvents = []
+	videoTitle = [[],[],[]]
+	streamerIndices = []
+	musicTracks = []
+	packetToBeDropped = []
+	events = []
+	chatLog = []
+	chatUsers = []
+	VideoCustomizer.generateFirstTitle()
 	startSurvivedTime()
 	
 func increaseScore(deltaScore):
@@ -95,7 +108,6 @@ func _ready():
 	$Metronome.wait_time = snippetLength
 	$MetronomeArrows.wait_time = snippetLength
 	$UpcomingEvent.wait_time = snippetLength - 1.2
-	VideoCustomizer.generateFirstTitle()
 
 func resetPerStream():
 	musicSnippetIndex = 0
@@ -117,13 +129,13 @@ func _on_metronome_timeout() -> void:
 	for entry in eventEnds:
 		endsString += str(entry) + ","
 	debugWindow.setEntry("Events", endsString)
-	debugWindow.setEntry("MusicIndex", musicSnippetIndex)
+	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(musicTracks.back().size()))
 
 func startMetronome():
 	$Metronome.start()
 	tact.emit(musicSnippetIndex)
 	musicSnippetIndex += 1
-	debugWindow.setEntry("MusicIndex", musicSnippetIndex)
+	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(musicTracks.back().size()))
 	
 func stopMetronome():
 	$Metronome.stop()
@@ -146,7 +158,7 @@ func _on_metronome_arrows_timeout() -> void:
 	tactArrows.emit(arrowSnippetIndex)
 	arrowSnippetIndex += 1
 	
-	debugWindow.setEntry("ArrowIndex", arrowSnippetIndex)
+	debugWindow.setEntry("ArrowIndex", str(arrowSnippetIndex)+"/"+str(musicTracks.back().size()))
 	
 func startMetronomeArrows():
 	$MetronomeArrows.start()
@@ -154,7 +166,7 @@ func startMetronomeArrows():
 	checkEventPrep()
 	tactArrows.emit(arrowSnippetIndex)
 	arrowSnippetIndex += 1
-	debugWindow.setEntry("ArrowIndex", arrowSnippetIndex)
+	debugWindow.setEntry("ArrowIndex", str(arrowSnippetIndex)+"/"+str(musicTracks.back().size()))
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()
@@ -225,6 +237,9 @@ func gameOver():
 	if !developerMode or Input.is_action_pressed("ui_end"): 
 		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
 		survivedTime=Time.get_unix_time_from_system() - survivedTime
+		$ArrowTravelDelay.stop()
+		$UpcomingEvent.stop()
+		$FakeArrowDelay.stop()
 		stopMetronome()
 		stopMetronomeArrows()
 	
@@ -274,4 +289,4 @@ func _on_upcoming_event_timeout() -> void:
 	eventImminent.emit(events[eventIndexArrows])
 
 func _on_fake_arrow_delay_timeout() -> void:
-		tactFakeArrows.emit()
+	tactFakeArrows.emit()
