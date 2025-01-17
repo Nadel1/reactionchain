@@ -252,14 +252,14 @@ texture = ExtResource("8_jbcag")
 
 [node name="BackgroundText" type="RichTextLabel" parent="Background"]
 offset_left = 275.0
-offset_right = 468.0
-offset_bottom = 55.0
+offset_top = 20.0
+offset_right = 494.0
+offset_bottom = 75.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "> Technical difficulties...
-> You have become irrelavant ...
-> Costs are too high
+> You have become irrelavant Costs are too high
 > Shutting off ...
 "
 visible_characters = 0
