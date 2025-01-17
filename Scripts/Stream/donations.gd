@@ -31,7 +31,7 @@ func dealWithInput(correctInput):
 		if compareIndex>=inputArray.size():
 			correctDonation()
 		else: 
-			inputArray[compareIndex].find_child("Outline").show()
+			inputArray[compareIndex].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[compareIndex]))
 	else:
 		crumble()
 	
@@ -61,13 +61,13 @@ func loadDonation(donationLevel):
 	for i in range(0,donationLevel):
 		var donationInput=DONATION_INPUT.instantiate()
 		var inputString=donationInputKeys.pick_random()
-		donationInput.find_child("Input").text="[center]"+inputString+"[/center]"
+		donationInput.find_child("AnimatedSprite2DBackground").play(str("default"+inputString))
 		add_child(donationInput)
 		inputArray.append(donationInput)
 		expectedInputOrder.append(inputString)
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
-	inputArray[0].find_child("Outline").show()
+	inputArray[0].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[0]))
 
 func crumble():
 	Global.currentStreamer.donationReaction(false)
