@@ -430,7 +430,7 @@ position = Vector2(576, 304)
 offset_left = -253.0
 offset_top = -104.0
 offset_right = -141.0
-offset_bottom = 1.0
+offset_bottom = -30.0
 scale = Vector2(4, 4)
 texture = ExtResource("5_ltstr")
 region_rect = Rect2(0, 0, 32, 32)
@@ -441,15 +441,16 @@ patch_margin_bottom = 5
 
 [node name="Devmode" type="Button" parent="OptionsMenu"]
 offset_left = -206.0
-offset_top = 100.0
+offset_top = -20.0
 offset_right = -119.0
-offset_bottom = 119.0
+offset_bottom = -1.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 toggle_mode = true
 text = "Developer mode"
 
 [node name="Difficulty" type="HSlider" parent="OptionsMenu"]
+visible = false
 offset_left = -206.0
 offset_top = -24.0
 offset_right = -122.0
@@ -507,9 +508,9 @@ text = "X
 
 [node name="DeleteSavefileButton" type="Button" parent="OptionsMenu"]
 offset_left = -206.0
-offset_top = 198.0
+offset_top = 67.0
 offset_right = -119.0
-offset_bottom = 217.0
+offset_bottom = 86.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Reset savefile"

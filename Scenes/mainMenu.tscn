@@ -191,7 +191,7 @@ position = Vector2(576, 304)
 offset_left = -224.0
 offset_top = -227.0
 offset_right = -112.0
-offset_bottom = -102.0
+offset_bottom = -135.0
 scale = Vector2(4, 4)
 texture = ExtResource("7_8cedv")
 region_rect = Rect2(0, 0, 32, 32)
@@ -202,9 +202,9 @@ patch_margin_bottom = 5
 
 [node name="Devmode" type="Button" parent="OptionsMenu"]
 offset_left = -176.0
-offset_top = -8.0
+offset_top = -176.0
 offset_right = -89.0
-offset_bottom = 11.0
+offset_bottom = -157.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 toggle_mode = true
@@ -212,15 +212,16 @@ text = "Developer mode"
 
 [node name="PerformanceMode" type="Button" parent="OptionsMenu"]
 offset_left = -176.0
-offset_top = 80.0
+offset_top = -85.0
 offset_right = -89.0
-offset_bottom = 99.0
+offset_bottom = -66.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 toggle_mode = true
 text = "Potato mode"
 
 [node name="Difficulty" type="HSlider" parent="OptionsMenu"]
+visible = false
 offset_left = -168.0
 offset_top = -155.0
 offset_right = -84.0
@@ -268,9 +269,9 @@ vertical_alignment = 1
 
 [node name="ResetSaveFile" type="Button" parent="OptionsMenu"]
 offset_left = -176.0
-offset_top = 168.0
+offset_top = 8.0
 offset_right = -90.0
-offset_bottom = 187.0
+offset_bottom = 27.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 text = "Reset savefile"
