@@ -26,7 +26,7 @@ var streamerIndices =[]
 var currentStreamer=null
 var chatDepth=5#at some point you cant read it anymore
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
-var developerMode = false
+var developerMode = true
 var performanceMode = false
 var musicTracks=[]
 var packetToBeDropped=[]
@@ -222,7 +222,7 @@ func startSurvivedTime():
 	survivedTime=Time.get_unix_time_from_system()
 
 func gameOver():
-	if !developerMode: 
+	if !developerMode or Input.is_action_pressed("ui_end"): 
 		get_tree().call_deferred("change_scene_to_file","res://Scenes/gameOver.tscn")
 		survivedTime=Time.get_unix_time_from_system() - survivedTime
 		stopMetronome()

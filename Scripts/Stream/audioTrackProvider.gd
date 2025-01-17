@@ -32,6 +32,7 @@ func prepareMusic():
 			A = !A
 	
 	Global.musicTracks.append(track)
+	print("Created track with length " + str(track.size()))
 	$EventScheduler.generateEvents()
 
 func insertEvent(newEvent : Event): #TODO: Add type parameter
@@ -45,4 +46,5 @@ func insertEvent(newEvent : Event): #TODO: Add type parameter
 		for j in Global.recordingsReaction.size():
 			Global.recordingsReaction[j].insert(newEvent.startIndex+i, -1)
 		A = !A
+	print(" -> Extended to " + str(Global.musicTracks.back().size()))
 	pass
