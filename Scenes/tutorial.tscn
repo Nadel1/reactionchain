@@ -689,7 +689,7 @@ polygon = PackedVector2Array(0, 0, 1151.34, 0, 1151.34, 650.171, 0, 650.171)
 position = Vector2(582.445, 338.631)
 scale = Vector2(7, 7)
 sprite_frames = SubResource("SpriteFrames_flq5n")
-animation = &"NotePrompts"
+animation = &"DonationPrompts"
 autoplay = "NotePrompts"
 
 [node name="StreamerCatEars" parent="." instance=ExtResource("2_iuma5")]
