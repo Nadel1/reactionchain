@@ -1,11 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dd2twf35woli5"]
+[gd_scene load_steps=17 format=3 uid="uid://dd2twf35woli5"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/videoCustomizer.gd" id="1_2n6c5"]
 [ext_resource type="Texture2D" uid="uid://u8vlrpwby25x" path="res://Assets/Sprites/Streamers/StreamUI1.png" id="2_tw5sx"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_6olq0"]
 [ext_resource type="Texture2D" uid="uid://dclv4yduo7t6r" path="res://Assets/Sprites/Streamers/StreamUI2.png" id="3_b6qjb"]
 [ext_resource type="Texture2D" uid="uid://daax7vs46y5r5" path="res://Assets/Sprites/Streamers/StreamUI3.png" id="4_4doch"]
-[ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="4_8g86c"]
 [ext_resource type="Texture2D" uid="uid://da2i33j1u8aoa" path="res://Assets/Sprites/Streamers/StreamUI4.png" id="5_gmkmm"]
 [ext_resource type="Texture2D" uid="uid://dqdgw8i4qsq0n" path="res://Assets/Sprites/Streamers/VideoFrame.png" id="5_lcra2"]
 [ext_resource type="Texture2D" uid="uid://b4fwb25qusipi" path="res://Assets/Sprites/Streamers/StreamUI5.png" id="6_ao40n"]
@@ -135,9 +134,6 @@ z_index = -1
 position = Vector2(24, 24)
 scale = Vector2(0.590614, 0.590614)
 
-[node name="StartVideo" parent="Content" instance=ExtResource("4_8g86c")]
-position = Vector2(-40.6357, -40.6357)
-
 [node name="VideoBackground" type="Polygon2D" parent="."]
 z_index = -2
 color = Color(0.0807833, 0.0807833, 0.0807833, 1)
@@ -191,7 +187,7 @@ offset_right = 720.0
 offset_bottom = 507.0
 theme = ExtResource("3_6olq0")
 theme_override_font_sizes/normal_font_size = 48
-text = "[Video title here] dasd dasd d asd wdasd dsdwasd asdwa dasd wadwdasd dsdwd awdwdsdsd ww das"
+text = "How to stream (real) (no fake)"
 scroll_active = false
 autowrap_mode = 2
 
