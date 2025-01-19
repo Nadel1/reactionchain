@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=56 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -254,6 +254,67 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
+
+[sub_resource type="Animation" id="Animation_qnm0i"]
+resource_name = "donationstart"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DonationPlaceholder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(643, 262), Vector2(355, 256)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DonationPlaceholder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3.14159, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_wvib7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DonationPlaceholder:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(355, 256)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DonationPlaceholder:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c6j5v"]
+_data = {
+"RESET": SubResource("Animation_wvib7"),
+"donationstart": SubResource("Animation_qnm0i")
+}
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
@@ -536,6 +597,11 @@ scale = Vector2(10.625, 5.98438)
 sprite_frames = SubResource("SpriteFrames_j5wt6")
 autoplay = "default"
 frame_progress = 0.341186
+
+[node name="DonationMovement" type="AnimationPlayer" parent="UI"]
+libraries = {
+"": SubResource("AnimationLibrary_c6j5v")
+}
 
 [node name="DonationPlaceholder" type="Node2D" parent="UI"]
 position = Vector2(355, 256)
