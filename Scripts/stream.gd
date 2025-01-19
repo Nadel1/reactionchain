@@ -8,6 +8,7 @@ var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
 const DONATION=preload("res://Scenes/Objects/Donations/donation.tscn")
+@onready var donation=$UI/Donation
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -108,17 +109,9 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	if (Global.score>= 10 or Global.score>=200 and Global.moneyEarned<20) and Global.donationOnScreen==false:
-		var newDonation=DONATION.instantiate()
-		$UI/DonationMovement.play("donationstart")
-		newDonation.position=$UI/DonationPlaceholder.position
-		newDonation.rotation=$UI/DonationPlaceholder.rotation
-		newDonation.loadDonation(Global.difficultyDonations)
-		find_child("UI").add_child(newDonation)
-		get_node("UI/DonationBackground").show()
-	if Global.donationOnScreen:
-		$UI/Donation.position=$UI/DonationPlaceholder.position
-		$UI/Donation.rotation=$UI/DonationPlaceholder.rotation
-	
+		donation.show()
+		#donation.loadDonation(Global.difficultyDonations)
+		
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://b6h0kgvl47nof"]
+[gd_scene load_steps=51 format=3 uid="uid://b6h0kgvl47nof"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
 [ext_resource type="Texture2D" uid="uid://dwq3fpss8qnev" path="res://Assets/Sprites/Donations/DonationsNotificationCrumblingOutline.png" id="2_ie8mp"]
@@ -31,22 +31,10 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
+tracks/1/path = NodePath(".:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(300, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -162,7 +150,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h5utr")
 }],
-"loop": true,
+"loop": false,
 "name": &"crumble",
 "speed": 5.0
 }, {
@@ -436,8 +424,68 @@ _data = {
 "up_shake": SubResource("Animation_4tehm")
 }
 
+[sub_resource type="Animation" id="Animation_rxm33"]
+resource_name = "rotate"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notification:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.523599, 0.0, -0.523599, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Outline:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.523599, 0.0, -0.523599, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8vi1l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notification:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Outline:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8mrim"]
+_data = {
+"RESET": SubResource("Animation_8vi1l"),
+"rotate": SubResource("Animation_rxm33")
+}
+
 [node name="Donation" type="Node2D"]
-position = Vector2(300, 0)
 script = ExtResource("1_7ptrp")
 
 [node name="AnimationPlayerOutline" type="AnimationPlayer" parent="."]
@@ -484,6 +532,12 @@ stream = ExtResource("11_q7x1d")
 
 [node name="Fail" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_mje3h")
+
+[node name="AnimationPlayerRotate" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8mrim")
+}
+autoplay = "rotate"
 
 [connection signal="animation_finished" from="AnimationPlayerOutline" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="Notification" to="." method="_on_notification_animation_finished"]

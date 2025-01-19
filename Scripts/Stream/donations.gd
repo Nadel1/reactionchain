@@ -53,8 +53,11 @@ func correctDonation():
 	Global.moneyManager.updateMoneyDisplay()
 			
 func loadDonation(donationLevel):
+	inputArray=[]
 	donationInputsBanner=find_child("DonationsBanner")
 	Global.donationOnScreen=true
+	$Notification.show()
+	$Outline.show()
 	$Notification.play("default")
 	$ReceivedAnim.hide()
 	$Outline.play("default")
@@ -68,7 +71,6 @@ func loadDonation(donationLevel):
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
 		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
 	inputArray[0].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[0]))
-	#$AnimationPlayerOutline.play("movement")
 	
 	
 func crumble():
@@ -90,11 +92,13 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 func _on_end_dontation_timer_timeout() -> void:
 	get_parent().find_child("DonationBackground").hide()
 	Global.donationOnScreen=false
-	self.queue_free()
+	$Notification.hide()
+	$Outline.hide()
 
 
 func _on_notification_animation_finished() -> void:
 	if $Notification.animation=="crumble":
 		Global.donationOnScreen=false
 		get_parent().find_child("DonationBackground").hide()
-		self.queue_free()
+		$Notification.hide()
+		$Outline.hide()
