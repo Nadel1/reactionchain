@@ -4,12 +4,17 @@ const DONATION_INPUT=preload("res://Scenes/Objects/Donations/donationInput.tscn"
 var donationInputsBanner
 var donationInputKeys=["W","A","S","D"]
 var inputAnimations=["up_shake","left_shake","down_shake","right_shake"]
-var sizeOfBanner=200
+var sizeOfBanner=100
 var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
 var failed = false
 @onready var endDonationTimer=$EndDontationTimer
+@onready var notificationSprite=$Notification
+@onready var outlineSprite=$Outline
+@onready var donationsBanner=$DonationsBanner
+@onready var donationAnim=$AnimationPlayerOutline
+@export var videoOverlay:AnimatedSprite2D
 
 func _input(event):
 	if not failed and event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
@@ -37,12 +42,11 @@ func dealWithInput(correctInput):
 	
 func correctDonation():
 	$Success.play()
-	$Notification.play("open")
-	$Outline.play("open")
+	notificationSprite.play("open")
+	outlineSprite.play("open")
 	$ReceivedAnim.show()
 	$ReceivedAnim.play("default")
 	$AnimationPlayerFeedback.play("growReceivedBackground")
-	$DonationsBanner.hide()
 	Global.moneyEarned+=Global.increaseInMoney
 	#Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
 	Global.nextDonationViewerCount+=Global.donationIncrease
@@ -53,23 +57,18 @@ func correctDonation():
 	Global.moneyManager.updateMoneyDisplay()
 			
 func loadDonation(donationLevel):
-	inputArray=[]
 	donationInputsBanner=find_child("DonationsBanner")
-	Global.donationOnScreen=true
-	$Notification.show()
-	$Outline.show()
-	$Notification.play("default")
-	$ReceivedAnim.hide()
-	$Outline.play("default")
+	turnOn()
 	for i in range(0,donationLevel):
 		var donationInput=DONATION_INPUT.instantiate()
 		var inputString=donationInputKeys.pick_random()
 		donationInput.find_child("AnimatedSprite2DBackground").play(str("default"+inputString))
-		add_child(donationInput)
+		donationsBanner.add_child(donationInput)
 		inputArray.append(donationInput)
 		expectedInputOrder.append(inputString)
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
-		donationInput.position=donationInputsBanner.position+offset*i-Vector2(1,0)*sizeOfBanner/2
+		donationInput.position=offset*i-Vector2(1,0)*sizeOfBanner/2
+		donationInput.scale=Vector2(1,1)
 	inputArray[0].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[0]))
 	
 	
@@ -77,28 +76,54 @@ func crumble():
 	Global.currentStreamer.donationReaction(false)
 	for i in range(0, inputArray.size()):
 		inputArray[i].hide()
-	$Notification.play("crumble")
-	$Outline.play("crumble")
-	$DonationsBanner.hide()
+	notificationSprite.play("crumble")
+	outlineSprite.play("crumble")
 	Global.score-=Global.score/5
 	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
 	$Fail.play()
 	failed = true
 
-func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="popUp":
+		donationAnim.play("timeForReaction")
+	else:		
 		crumble()
+		turnOff()
 
 
 func _on_end_dontation_timer_timeout() -> void:
-	get_parent().find_child("DonationBackground").hide()
+	turnOff()
+
+func playNotificationBannerAnim():
+	donationAnim.play("popUp")
+	
+func turnOff():
 	Global.donationOnScreen=false
-	$Notification.hide()
-	$Outline.hide()
-
-
+	notificationSprite.hide()
+	outlineSprite.hide()
+	videoOverlay.hide()
+	donationsBanner.hide()
+	donationAnim.stop()
+	endDonationTimer.stop()
+	
+func turnOn():
+	failed=false
+	compareIndex=0
+	expectedInputOrder=[]
+	Global.donationOnScreen=true
+	notificationSprite.show()
+	outlineSprite.show()
+	donationsBanner.show()
+	notificationSprite.play("default")
+	$ReceivedAnim.hide()
+	outlineSprite.play("default")
+	inputArray=[]
+	videoOverlay.show()
+	donationAnim.play("timeForReaction")
+	
 func _on_notification_animation_finished() -> void:
-	if $Notification.animation=="crumble":
-		Global.donationOnScreen=false
-		get_parent().find_child("DonationBackground").hide()
-		$Notification.hide()
-		$Outline.hide()
+	turnOff()
+
+
+func _on_donation_animation_animation_finished(anim_name: StringName) -> void:
+	donationAnim.play("popUp")

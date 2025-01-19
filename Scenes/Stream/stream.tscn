@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=57 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -225,6 +225,67 @@ _data = {
 "RESET": SubResource("Animation_mrka8"),
 "decrease": SubResource("Animation_d1ocb"),
 "increase": SubResource("Animation_s5mly")
+}
+
+[sub_resource type="Animation" id="Animation_ejk3s"]
+resource_name = "incoming"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Donation:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(391, 385), Vector2(391, 262)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Donation:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mpm0a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Donation:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(391, 262)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Donation:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rq5oo"]
+_data = {
+"RESET": SubResource("Animation_mpm0a"),
+"incoming": SubResource("Animation_ejk3s")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ltnvm"]
@@ -528,8 +589,14 @@ position = Vector2(299, 593)
 z_index = -1
 position = Vector2(-1, -1)
 
-[node name="Donation" parent="UI" instance=ExtResource("20_plu0g")]
+[node name="Donation" parent="UI" node_paths=PackedStringArray("videoOverlay") instance=ExtResource("20_plu0g")]
 position = Vector2(391, 262)
+videoOverlay = NodePath("../DonationBackground")
+
+[node name="DonationAnimation" type="AnimationPlayer" parent="UI"]
+libraries = {
+"": SubResource("AnimationLibrary_rq5oo")
+}
 
 [node name="DonationBackground" type="AnimatedSprite2D" parent="UI"]
 visible = false
@@ -612,4 +679,5 @@ autoplay = "zoomOut"
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
 [connection signal="animation_finished" from="UI/ScoreAnim" to="UI/Score" method="_on_score_anim_animation_finished"]
 [connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]
+[connection signal="animation_finished" from="UI/DonationAnimation" to="UI/Donation" method="_on_donation_animation_animation_finished"]
 [connection signal="timeout" from="UI/TimerSinceLastMessage" to="UI/Chat" method="_on_timer_since_last_message_timeout"]

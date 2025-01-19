@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://b6h0kgvl47nof"]
+[gd_scene load_steps=52 format=3 uid="uid://b6h0kgvl47nof"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
 [ext_resource type="Texture2D" uid="uid://dwq3fpss8qnev" path="res://Assets/Sprites/Donations/DonationsNotificationCrumblingOutline.png" id="2_ie8mp"]
@@ -40,6 +40,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DonationsBanner:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.5, 2.064)]
+}
 
 [sub_resource type="Animation" id="Animation_helde"]
 resource_name = "timeForReaction"
@@ -57,9 +69,26 @@ tracks/0/keys = {
 "values": [Vector2(7, 7), Vector2(4, 4)]
 }
 
+[sub_resource type="Animation" id="Animation_114pb"]
+resource_name = "popUp"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DonationsBanner:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(2, 2)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vux1m"]
 _data = {
 "RESET": SubResource("Animation_f4wxh"),
+"popUp": SubResource("Animation_114pb"),
 "timeForReaction": SubResource("Animation_helde")
 }
 
@@ -424,6 +453,33 @@ _data = {
 "up_shake": SubResource("Animation_4tehm")
 }
 
+[sub_resource type="Animation" id="Animation_8vi1l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notification:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Outline:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_rxm33"]
 resource_name = "rotate"
 loop_mode = 1
@@ -452,33 +508,6 @@ tracks/1/keys = {
 "values": [0.0, 0.523599, 0.0, -0.523599, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_8vi1l"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Notification:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Outline:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8mrim"]
 _data = {
 "RESET": SubResource("Animation_8vi1l"),
@@ -492,7 +521,7 @@ script = ExtResource("1_7ptrp")
 libraries = {
 "": SubResource("AnimationLibrary_vux1m")
 }
-autoplay = "timeForReaction"
+autoplay = "popUp"
 speed_scale = 0.5
 
 [node name="ReceivedAnim" type="AnimatedSprite2D" parent="."]
@@ -513,7 +542,7 @@ texture = ExtResource("4_ipnh6")
 [node name="Notification" type="AnimatedSprite2D" parent="."]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_o1v8n")
-animation = &"crumble"
+animation = &"open"
 
 [node name="AnimationPlayerFeedback" type="AnimationPlayer" parent="."]
 libraries = {

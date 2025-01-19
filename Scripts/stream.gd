@@ -9,6 +9,7 @@ const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
 const DONATION=preload("res://Scenes/Objects/Donations/donation.tscn")
 @onready var donation=$UI/Donation
+@onready var donationAnimation=$UI/DonationAnimation
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -109,8 +110,9 @@ func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
 	if (Global.score>= 10 or Global.score>=200 and Global.moneyEarned<20) and Global.donationOnScreen==false:
-		donation.show()
-		#donation.loadDonation(Global.difficultyDonations)
+		donation.loadDonation(Global.difficultyDonations)
+		donation.playNotificationBannerAnim()
+		donationAnimation.play("incoming")
 		
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
