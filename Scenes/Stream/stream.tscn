@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=53 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cl55olhp7mk1x" path="res://Assets/Sprites/Donations/MoneyWarning.png" id="11_grdfd"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="12_51xhv"]
 [ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
+[ext_resource type="Texture2D" uid="uid://dodwqxhvwh3p" path="res://Assets/Sprites/Donations/Background.png" id="15_8i647"]
 [ext_resource type="Texture2D" uid="uid://dn4mi8qh4mm1n" path="res://Assets/Sprites/UI/arrowKeys.png" id="15_68yvl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5gam"]
@@ -224,6 +225,35 @@ _data = {
 "decrease": SubResource("Animation_d1ocb"),
 "increase": SubResource("Animation_s5mly")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltnvm"]
+atlas = ExtResource("15_8i647")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dn5e"]
+atlas = ExtResource("15_8i647")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kef74"]
+atlas = ExtResource("15_8i647")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j5wt6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltnvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dn5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kef74")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="Gradient" id="Gradient_fghfg"]
 colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
@@ -496,6 +526,16 @@ position = Vector2(299, 593)
 [node name="VideoFrame" parent="UI" instance=ExtResource("8_iwo4b")]
 z_index = -1
 position = Vector2(-1, -1)
+
+[node name="DonationBackground" type="AnimatedSprite2D" parent="UI"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.501961)
+z_index = -2
+position = Vector2(363, 215.5)
+scale = Vector2(10.625, 5.98438)
+sprite_frames = SubResource("SpriteFrames_j5wt6")
+autoplay = "default"
+frame_progress = 0.341186
 
 [node name="DonationPlaceholder" type="Node2D" parent="UI"]
 position = Vector2(355, 256)

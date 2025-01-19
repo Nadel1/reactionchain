@@ -107,12 +107,12 @@ func _ready():
 func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
-	if Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
-		#Global.nextDonationViewerCount+=Global.donationIncrease
+	if (Global.score>= Global.nextDonationViewerCount or Global.score>=200 and Global.moneyEarned<20) and Global.donationOnScreen==false:
 		var newDonation=DONATION.instantiate()
 		newDonation.position=$UI/DonationPlaceholder.position
 		newDonation.loadDonation(Global.difficultyDonations)
 		find_child("UI").add_child(newDonation)
+		get_node("UI/DonationBackground").show()
 	
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1

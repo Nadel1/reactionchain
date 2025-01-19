@@ -9,12 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://dmow7802w8mp3" path="res://Assets/Sprites/Donations/DonationsNotificationOpening.png" id="5_834un"]
 [ext_resource type="Texture2D" uid="uid://dwrrur1ypkhaw" path="res://Assets/Sprites/Donations/DonationsNotificationCrumbling.png" id="5_st15k"]
 [ext_resource type="Texture2D" uid="uid://emlvbng2ugne" path="res://Assets/Sprites/Donations/ReceivedAnim.png" id="9_xjbyf"]
-[ext_resource type="AudioStream" uid="uid://cpaiq2pi5i4wb" path="res://Assets/Audio/SFX/notification.wav" id="10_k7dhs"]
+[ext_resource type="AudioStream" uid="uid://bvipshpaei0ov" path="res://Assets/Audio/SFX/656735__adhdreaming__idk-man.wav" id="10_mf4qa"]
 [ext_resource type="AudioStream" uid="uid://dd8xqpj8lw5ot" path="res://Assets/Audio/SFX/katsching.wav" id="11_q7x1d"]
 [ext_resource type="AudioStream" uid="uid://dldf6afhilnrv" path="res://Assets/Audio/SFX/crumple.wav" id="12_mje3h"]
 
 [sub_resource type="Animation" id="Animation_f4wxh"]
 length = 0.001
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -26,6 +27,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(300, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_helde"]
@@ -412,6 +437,7 @@ _data = {
 }
 
 [node name="Donation" type="Node2D"]
+position = Vector2(300, 0)
 script = ExtResource("1_7ptrp")
 
 [node name="AnimationPlayerOutline" type="AnimationPlayer" parent="."]
@@ -450,7 +476,7 @@ libraries = {
 wait_time = 3.0
 
 [node name="Popup" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_k7dhs")
+stream = ExtResource("10_mf4qa")
 autoplay = true
 
 [node name="Success" type="AudioStreamPlayer2D" parent="."]
