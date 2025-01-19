@@ -558,6 +558,7 @@ scale = Vector2(4, 4)
 theme = ExtResource("6_f2vs8")
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Money: 0"
+metadata/_edit_use_anchors_ = true
 
 [node name="Warning" type="AnimatedSprite2D" parent="UI/Money"]
 visible = false

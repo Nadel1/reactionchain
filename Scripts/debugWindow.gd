@@ -3,6 +3,10 @@ class_name DebugWindow
 
 var values : Dictionary
 
+func _ready() -> void:
+	Global.debugWindow = self
+	get_parent().visible = Global.developerMode
+
 func setEntry(key, value):
 	values[key] = value
 	

@@ -1,11 +1,27 @@
-[gd_scene load_steps=66 format=3 uid="uid://b6lbu6lqbx7ds"]
+[gd_scene load_steps=111 format=3 uid="uid://da0w3mmtiivs4"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial.gd" id="1_in0n7"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="1_mrnbm"]
 [ext_resource type="PackedScene" uid="uid://nro5k78n78yo" path="res://Scenes/Objects/Streamers/streamerCatEars.tscn" id="2_iuma5"]
 [ext_resource type="Texture2D" uid="uid://dfyvugs7851w8" path="res://Assets/Sprites/Tutorial/NotePrompts.png" id="3_1xu7m"]
 [ext_resource type="Texture2D" uid="uid://4mi8she31nou" path="res://Assets/Sprites/Tutorial/DonationPrompts.png" id="3_7o2pd"]
-[ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="3_l0yti"]
+[ext_resource type="Texture2D" uid="uid://cjq3jjtq5xjjl" path="res://Assets/Sprites/Tutorial/Static.png" id="5_0yh3m"]
+[ext_resource type="Script" path="res://Scripts/tutorialTrack.gd" id="6_8aeuu"]
+[ext_resource type="PackedScene" path="res://Scenes/Stream/fakePromptSpawner.tscn" id="7_6836g"]
+[ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="8_0w2se"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="8_8opd4"]
+[ext_resource type="Texture2D" uid="uid://ch3f014t0gss0" path="res://Assets/Sprites/Track/trashCan.png" id="9_0qud0"]
+[ext_resource type="Script" path="res://Scripts/Stream/backingTrackPlayer.gd" id="9_qyr56"]
+[ext_resource type="Texture2D" uid="uid://cgrx3fqruo1vj" path="res://Assets/Sprites/Track/hitZone.png" id="10_s1oe0"]
+[ext_resource type="Script" path="res://Scripts/trackSnippet.gd" id="13_06wsj"]
+[ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="14_ctu5b"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="15_phmuq"]
+[ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="16_7w3h7"]
+[ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="17_yycpm"]
+[ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="18_ul6eh"]
+[ext_resource type="Script" path="res://Scripts/Stream/moneyManager.gd" id="20_5dqyv"]
+[ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="21_xh5wc"]
+[ext_resource type="Texture2D" uid="uid://cl55olhp7mk1x" path="res://Assets/Sprites/Donations/MoneyWarning.png" id="22_g4jvs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fckiu"]
 atlas = ExtResource("3_7o2pd")
@@ -239,6 +255,22 @@ region = Rect2(128, 384, 128, 96)
 atlas = ExtResource("3_1xu7m")
 region = Rect2(256, 384, 128, 96)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxjhh"]
+atlas = ExtResource("5_0yh3m")
+region = Rect2(0, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pf11"]
+atlas = ExtResource("5_0yh3m")
+region = Rect2(0, 96, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eahb"]
+atlas = ExtResource("5_0yh3m")
+region = Rect2(0, 192, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4a5k"]
+atlas = ExtResource("5_0yh3m")
+region = Rect2(0, 288, 128, 96)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_flq5n"]
 animations = [{
 "frames": [{
@@ -424,10 +456,228 @@ animations = [{
 "loop": true,
 "name": &"NotePrompts",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxjhh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pf11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eahb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4a5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxjhh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pf11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eahb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4a5k")
+}],
+"loop": false,
+"name": &"Static",
+"speed": 20.0
 }]
 
-[node name="Tutorial" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0hus"]
+atlas = ExtResource("8_0w2se")
+region = Rect2(0, 0, 1500, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ikor"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0hus")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fpjj"]
+atlas = ExtResource("9_0qud0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4nhl"]
+atlas = ExtResource("9_0qud0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kn10n"]
+atlas = ExtResource("9_0qud0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br365"]
+atlas = ExtResource("9_0qud0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0vlq"]
+atlas = ExtResource("9_0qud0")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w355h"]
+atlas = ExtResource("9_0qud0")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2em32"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fpjj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4nhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kn10n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br365")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0vlq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w355h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4nhl")
+}],
+"loop": false,
+"name": &"newTrash",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmqn4"]
+size = Vector2(15.5, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4s45"]
+atlas = ExtResource("10_s1oe0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c8ukd"]
+atlas = ExtResource("10_s1oe0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vamor"]
+atlas = ExtResource("10_s1oe0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pvy2y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4s45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c8ukd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vamor")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ucw"]
+size = Vector2(13.5, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5gam"]
+atlas = ExtResource("21_xh5wc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3yuw"]
+atlas = ExtResource("21_xh5wc")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8j7m"]
+atlas = ExtResource("21_xh5wc")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arg2n"]
+atlas = ExtResource("21_xh5wc")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtv5n"]
+atlas = ExtResource("21_xh5wc")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfu56"]
+atlas = ExtResource("21_xh5wc")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_83rpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5gam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3yuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8j7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arg2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rtv5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfu56")
+}],
+"loop": false,
+"name": &"money",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c48tm"]
+atlas = ExtResource("22_g4jvs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owhbb"]
+atlas = ExtResource("22_g4jvs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k5wg6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c48tm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owhbb")
+}],
+"loop": true,
+"name": &"warning",
+"speed": 5.0
+}]
+
+[node name="Tutorial" type="Node2D" node_paths=PackedStringArray("streamer")]
 script = ExtResource("1_in0n7")
+streamer = NodePath("StreamerCatEars")
 
 [node name="VideoFrame" parent="." instance=ExtResource("1_mrnbm")]
 
@@ -435,7 +685,7 @@ script = ExtResource("1_in0n7")
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 0, 1151.34, 0, 1151.34, 650.171, 0, 650.171)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VideoFrame/Content" index="1"]
+[node name="TutorialVideo" type="AnimatedSprite2D" parent="VideoFrame/Content" index="1"]
 position = Vector2(582.445, 338.631)
 scale = Vector2(7, 7)
 sprite_frames = SubResource("SpriteFrames_flq5n")
@@ -446,7 +696,197 @@ autoplay = "NotePrompts"
 position = Vector2(936, 416)
 scale = Vector2(4, 4)
 
-[node name="Track" parent="." instance=ExtResource("3_l0yti")]
+[node name="Track" type="Node2D" parent="." node_paths=PackedStringArray("arrowsPlayer", "musicPlayer", "Asnippets", "Bsnippets", "spawnPoint")]
 position = Vector2(304, 592)
+script = ExtResource("6_8aeuu")
+arrowsPlayer = NodePath("../MidiPlayerArrows")
+musicPlayer = NodePath("../MidiPlayerMusic")
+Asnippets = [NodePath("../Snippets/A1"), NodePath("../Snippets/A2")]
+Bsnippets = [NodePath("../Snippets/B1"), NodePath("../Snippets/B2")]
+spawnPoint = NodePath("SpawnPoint")
+
+[node name="FakePromptSpawner" parent="Track" node_paths=PackedStringArray("spawnPos") instance=ExtResource("7_6836g")]
+spawnPos = NodePath("../SpawnPoint")
+
+[node name="TrackAnimatedSprite2D" type="AnimatedSprite2D" parent="Track"]
+position = Vector2(-112, -8)
+sprite_frames = SubResource("SpriteFrames_4ikor")
+
+[node name="SpawnPoint" type="Node2D" parent="Track"]
+position = Vector2(-376, -8)
+
+[node name="LateArea" type="Area2D" parent="Track"]
+position = Vector2(624, -8)
+collision_layer = 2
+collision_mask = 3
+
+[node name="TrashCan" type="AnimatedSprite2D" parent="Track/LateArea"]
+position = Vector2(108, 8)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_2em32")
+animation = &"newTrash"
+frame = 5
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Track/LateArea"]
+position = Vector2(108, 0)
+shape = SubResource("RectangleShape2D_nmqn4")
+
+[node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="Track"]
+position = Vector2(624, -8)
+sprite_frames = SubResource("SpriteFrames_pvy2y")
+autoplay = "default"
+frame_progress = 0.122488
+
+[node name="GoodArea" type="Area2D" parent="Track/HitZoneAnimatedSprite2D"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Track/HitZoneAnimatedSprite2D/GoodArea"]
+shape = SubResource("RectangleShape2D_j5ucw")
+
+[node name="UI" type="Node2D" parent="Track"]
+
+[node name="SplatSpawnPos" type="Node2D" parent="Track/UI"]
+position = Vector2(624, -96)
+
+[node name="MidiPlayerArrows" parent="." instance=ExtResource("8_8opd4")]
+play_speed = 0.666
+bus = &"Arrows"
+
+[node name="MidiPlayerMusic" parent="." instance=ExtResource("8_8opd4")]
+play_speed = 0.666
+soundfont = "res://Assets/Audio/Instruments/Hybrid_Synthetic_Str.sf2"
+bus = &"Arrows"
+
+[node name="BackingTrack" type="Node2D" parent="." node_paths=PackedStringArray("players")]
+script = ExtResource("9_qyr56")
+players = [NodePath("MidiPlayerBass1"), NodePath("MidiPlayerBass2"), NodePath("MidiPlayerChords")]
+
+[node name="MidiPlayerBass1" parent="BackingTrack" instance=ExtResource("8_8opd4")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass1.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerBass2" parent="BackingTrack" instance=ExtResource("8_8opd4")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass2.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerChords" parent="BackingTrack" instance=ExtResource("8_8opd4")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_chords.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"
+bus = &"Bass"
+
+[node name="MidiPlayerDrums" parent="BackingTrack" instance=ExtResource("8_8opd4")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_drums.MID"
+playing = true
+play_speed = 0.666
+volume_db = -19.999
+loop = true
+soundfont = "res://Assets/Audio/Instruments/Drum Set JD Rockset 5.sf2"
+bus = &"Bass"
+
+[node name="StartSpawningArrowsTimer" type="Timer" parent="."]
+wait_time = 0.932
+one_shot = true
+autostart = true
+
+[node name="Snippets" type="Node" parent="."]
+
+[node name="A1" type="Node" parent="Snippets"]
+script = ExtResource("13_06wsj")
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a1_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a1_layer2.MID"])
+
+[node name="A2" type="Node" parent="Snippets"]
+script = ExtResource("13_06wsj")
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a2_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a2_layer2.MID"])
+
+[node name="B1" type="Node" parent="Snippets"]
+script = ExtResource("13_06wsj")
+type = 1
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b1_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b1_layer2.MID"])
+
+[node name="B2" type="Node" parent="Snippets"]
+script = ExtResource("13_06wsj")
+type = 1
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b2_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b2_layer2.MID"])
+
+[node name="DebugWindow" type="NinePatchRect" parent="."]
+visible = false
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 130.0
+offset_bottom = 120.0
+scale = Vector2(4, 4)
+texture = ExtResource("14_ctu5b")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+patch_margin_bottom = 5
+
+[node name="DebugLabel" type="Label" parent="DebugWindow"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 112.0
+offset_bottom = 114.0
+theme = ExtResource("15_phmuq")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Debug"
+script = ExtResource("16_7w3h7")
+
+[node name="InputHandler" type="Node" parent="."]
+script = ExtResource("17_yycpm")
+
+[node name="InputRecorder" type="Node" parent="."]
+script = ExtResource("18_ul6eh")
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="DonationPlaceholder" type="Node2D" parent="UI"]
+position = Vector2(355, 256)
+
+[node name="Money" type="Node2D" parent="UI"]
+position = Vector2(500, 500)
+script = ExtResource("20_5dqyv")
+
+[node name="MoneyVFX" type="AnimatedSprite2D" parent="UI/Money"]
+z_index = 2
+position = Vector2(175, -10)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_83rpd")
+animation = &"money"
+frame = 5
+
+[node name="Text" type="RichTextLabel" parent="UI/Money"]
+offset_left = -19.0
+offset_top = -3.0
+offset_right = 130.0
+offset_bottom = 12.0
+scale = Vector2(4, 4)
+theme = ExtResource("15_phmuq")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Money: 0"
+metadata/_edit_use_anchors_ = true
+
+[node name="Warning" type="AnimatedSprite2D" parent="UI/Money"]
+position = Vector2(-52, 28)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_k5wg6")
+autoplay = "default"
+
+[connection signal="animation_finished" from="VideoFrame/Content/TutorialVideo" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="Track/LateArea" to="Track" method="_on_late_area_area_entered"]
+[connection signal="area_entered" from="Track/HitZoneAnimatedSprite2D/GoodArea" to="Track" method="_on_good_area_area_entered"]
+[connection signal="area_exited" from="Track/HitZoneAnimatedSprite2D/GoodArea" to="Track" method="_on_good_area_area_exited"]
+[connection signal="midi_event" from="MidiPlayerArrows" to="Track" method="_on_midi_player_arrows_midi_event"]
+[connection signal="timeout" from="StartSpawningArrowsTimer" to="Track" method="_on_start_spawning_arrows_timer_timeout"]
 
 [editable path="VideoFrame"]

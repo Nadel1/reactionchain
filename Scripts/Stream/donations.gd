@@ -19,6 +19,10 @@ var failed = false
 
 func _ready():
 	donationAnim.play("RESET")
+
+signal claimed
+signal fail
+
 func _input(event):
 	if not failed and event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
 		if event.pressed and event.keycode==KEY_W:
@@ -56,6 +60,7 @@ func correctDonation():
 	ui.get_node("Money/MoneyVFX").play("money")
 	Global.moneyManager.updateMoneyDisplay()
 	Global.updateStreamerStats.emit()
+	claimed.emit()
 
 func loadDonation(donationLevel):
 	donationInputsBanner=find_child("DonationsBanner")
@@ -84,6 +89,7 @@ func fail():
 	$Fail.play()
 	print("failed donation")
 	failed = true
+	fail.emit()
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="popUp":
