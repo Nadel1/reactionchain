@@ -9,12 +9,16 @@ var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
 var failed = false
+var timerSuccessful=3
+var timerUnsuccessful=1
 @onready var endDonationTimer=$EndDontationTimer
 @onready var notificationSprite=$Notification
 @onready var outlineSprite=$Outline
 @onready var donationsBanner=$DonationsBanner
 @onready var donationAnim=$AnimationPlayerOutline
+@onready var playerFeedbackAnim=$AnimationPlayerFeedback
 @export var videoOverlay:AnimatedSprite2D
+
 
 func _input(event):
 	if not failed and event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
@@ -31,9 +35,10 @@ func dealWithInput(correctInput):
 	if correctInput:
 		Global.currentStreamer.donationReaction(true)
 		inputArray[compareIndex].hide()
-		$AnimationPlayerFeedback.play(inputAnimations.pick_random())
+		playerFeedbackAnim.play(inputAnimations.pick_random())
 		compareIndex+=1
 		if compareIndex>=inputArray.size():
+			donationsBanner.hide()
 			correctDonation()
 		else: 
 			inputArray[compareIndex].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[compareIndex]))
@@ -46,11 +51,11 @@ func correctDonation():
 	outlineSprite.play("open")
 	$ReceivedAnim.show()
 	$ReceivedAnim.play("default")
-	$AnimationPlayerFeedback.play("growReceivedBackground")
+	playerFeedbackAnim.play("growReceivedBackground")
 	Global.moneyEarned+=Global.increaseInMoney
 	#Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
 	Global.nextDonationViewerCount+=Global.donationIncrease
-	endDonationTimer.start()
+	endDonationTimer.start(timerSuccessful)
 	var ui=get_parent()
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
@@ -77,6 +82,8 @@ func crumble():
 	for i in range(0, inputArray.size()):
 		inputArray[i].hide()
 	notificationSprite.play("crumble")
+	donationsBanner.hide()
+	endDonationTimer.start(timerUnsuccessful)
 	outlineSprite.play("crumble")
 	Global.score-=Global.score/5
 	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
@@ -88,25 +95,26 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		donationAnim.play("timeForReaction")
 	else:		
 		crumble()
-		turnOff()
+		
 
 
 func _on_end_dontation_timer_timeout() -> void:
+	Global.donationOnScreen=false
 	turnOff()
 
 func playNotificationBannerAnim():
 	donationAnim.play("popUp")
 	
 func turnOff():
-	Global.donationOnScreen=false
 	notificationSprite.hide()
 	outlineSprite.hide()
 	videoOverlay.hide()
 	donationsBanner.hide()
 	donationAnim.stop()
-	endDonationTimer.stop()
+	#endDonationTimer.stop()
 	
 func turnOn():
+	$Popup.play()
 	failed=false
 	compareIndex=0
 	expectedInputOrder=[]
@@ -122,7 +130,11 @@ func turnOn():
 	donationAnim.play("timeForReaction")
 	
 func _on_notification_animation_finished() -> void:
-	turnOff()
+	if notificationSprite.animation=="open":
+		endDonationTimer.start(timerSuccessful)
+	else:
+		endDonationTimer.start(timerUnsuccessful)
+
 
 
 func _on_donation_animation_animation_finished(anim_name: StringName) -> void:

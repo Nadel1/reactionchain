@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dmow7802w8mp3" path="res://Assets/Sprites/Donations/DonationsNotificationOpening.png" id="5_834un"]
 [ext_resource type="Texture2D" uid="uid://dwrrur1ypkhaw" path="res://Assets/Sprites/Donations/DonationsNotificationCrumbling.png" id="5_st15k"]
 [ext_resource type="Texture2D" uid="uid://emlvbng2ugne" path="res://Assets/Sprites/Donations/ReceivedAnim.png" id="9_xjbyf"]
-[ext_resource type="AudioStream" uid="uid://bvipshpaei0ov" path="res://Assets/Audio/SFX/656735__adhdreaming__idk-man.wav" id="10_mf4qa"]
+[ext_resource type="AudioStream" uid="uid://bu2qtvqdrdyik" path="res://Assets/Audio/SFX/notificationNew.wav" id="10_h2tsu"]
 [ext_resource type="AudioStream" uid="uid://dd8xqpj8lw5ot" path="res://Assets/Audio/SFX/katsching.wav" id="11_q7x1d"]
 [ext_resource type="AudioStream" uid="uid://dldf6afhilnrv" path="res://Assets/Audio/SFX/crumple.wav" id="12_mje3h"]
 
@@ -551,9 +551,10 @@ libraries = {
 
 [node name="EndDontationTimer" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
 
 [node name="Popup" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_mf4qa")
+stream = ExtResource("10_h2tsu")
 autoplay = true
 
 [node name="Success" type="AudioStreamPlayer2D" parent="."]
