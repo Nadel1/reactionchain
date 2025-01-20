@@ -679,5 +679,4 @@ autoplay = "zoomOut"
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
 [connection signal="animation_finished" from="UI/ScoreAnim" to="UI/Score" method="_on_score_anim_animation_finished"]
 [connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]
-[connection signal="animation_finished" from="UI/DonationAnimation" to="UI/Donation" method="_on_donation_animation_animation_finished"]
 [connection signal="timeout" from="UI/TimerSinceLastMessage" to="UI/Chat" method="_on_timer_since_last_message_timeout"]
