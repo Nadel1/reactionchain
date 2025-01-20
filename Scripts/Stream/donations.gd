@@ -9,15 +9,13 @@ var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
 var failed = false
-var timerSuccessful=3
-var timerUnsuccessful=1
-@onready var endDonationTimer=$EndDontationTimer
 @onready var notificationSprite=$Notification
 @onready var outlineSprite=$Outline
 @onready var donationsBanner=$DonationsBanner
 @onready var donationAnim=$AnimationPlayerOutline
 @onready var playerFeedbackAnim=$AnimationPlayerFeedback
 @export var videoOverlay:AnimatedSprite2D
+@onready var animPlayerRotate=$AnimationPlayerRotate
 
 
 func _input(event):
@@ -43,19 +41,15 @@ func dealWithInput(correctInput):
 		else: 
 			inputArray[compareIndex].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[compareIndex]))
 	else:
-		crumble()
+		fail()
 	
 func correctDonation():
 	$Success.play()
-	notificationSprite.play("open")
-	outlineSprite.play("open")
-	$ReceivedAnim.show()
-	$ReceivedAnim.play("default")
-	playerFeedbackAnim.play("growReceivedBackground")
+	notificationSprite.play("success")
+	outlineSprite.hide()
 	Global.moneyEarned+=Global.increaseInMoney
 	#Global.increaseInMoney+=Global.increaseInMoney+randi()%(Global.increaseInMoney/4)
 	Global.nextDonationViewerCount+=Global.donationIncrease
-	endDonationTimer.start(timerSuccessful)
 	var ui=get_parent()
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
@@ -77,14 +71,13 @@ func loadDonation(donationLevel):
 	inputArray[0].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[0]))
 	
 	
-func crumble():
+func fail():
 	Global.currentStreamer.donationReaction(false)
 	for i in range(0, inputArray.size()):
 		inputArray[i].hide()
-	notificationSprite.play("crumble")
+	notificationSprite.play("fail")
 	donationsBanner.hide()
-	endDonationTimer.start(timerUnsuccessful)
-	outlineSprite.play("crumble")
+	outlineSprite.hide()
 	Global.score-=Global.score/5
 	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
 	$Fail.play()
@@ -94,7 +87,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="popUp":
 		donationAnim.play("timeForReaction")
 	else:		
-		crumble()
+		fail()
 		
 
 
@@ -117,25 +110,26 @@ func turnOn():
 	$Popup.play()
 	failed=false
 	compareIndex=0
+	animPlayerRotate.play("rotate")
 	expectedInputOrder=[]
 	Global.donationOnScreen=true
 	notificationSprite.show()
 	outlineSprite.show()
 	donationsBanner.show()
 	notificationSprite.play("default")
-	$ReceivedAnim.hide()
 	outlineSprite.play("default")
 	inputArray=[]
 	videoOverlay.show()
 	donationAnim.play("timeForReaction")
 	
 func _on_notification_animation_finished() -> void:
-	if notificationSprite.animation=="open":
-		endDonationTimer.start(timerSuccessful)
-	else:
-		endDonationTimer.start(timerUnsuccessful)
-
-
+	Global.donationOnScreen=false
+	turnOff()
 
 func _on_donation_animation_animation_finished(anim_name: StringName) -> void:
 	donationAnim.play("popUp")
+
+
+func _on_notification_animation_changed() -> void:
+	if notificationSprite.animation=="success" or notificationSprite.animation=="fail":
+		animPlayerRotate.play("RESET")
