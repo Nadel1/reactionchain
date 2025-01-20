@@ -79,7 +79,7 @@ func spawnButton():
 		newButtonPrompt.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
 		newButtonPrompt.setFast(fast)
 		get_parent().call_deferred("add_child",newButtonPrompt)
-		buttonSequence.append(newButtonPrompt)
+		buttonSequence.append(newButtonPrompt.getInput())
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
@@ -175,15 +175,7 @@ func adjustProjection():
 	if buttonSequence.size()==0:
 		projectedArrow.play("default")
 		return
-	match buttonSequence.front().getInput():
-		"down":
-			projectedArrow.play("down")
-		"left":
-			projectedArrow.play("left")
-		"right":
-			projectedArrow.play("right")
-		"up":
-			projectedArrow.play("up")
+	projectedArrow.play(buttonSequence.front())
 		
 func evaluateScore(buttonPrompt,correctInput=true):
 	
