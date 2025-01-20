@@ -39,6 +39,7 @@ func tact(_index):
 			0: return
 			1: TutorialVideo.play("Static")
 			2: spawnDonation()
+			3: switchToGame()
 
 func spawnDonation():
 	state = 3
@@ -53,7 +54,17 @@ func failedDonation():
 	state = 2
 
 func claimedDonation():
+	streamer.react(RT.Emotion.POG)
+	state = 3
+	tactCountdown = 2
 	pass
+
+func switchToGame():
+	Global.stopMetronome()
+	Global.stopMetronomeArrows()
+	Global.startSurvivedTime()
+	
+	get_tree().call_deferred("change_scene_to_file","res://Scenes/Stream/stream.tscn")
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	TutorialVideo.play("DonationPrompts")

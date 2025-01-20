@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://da0w3mmtiivs4"]
+[gd_scene load_steps=111 format=3 uid="uid://ctpdoa1epidi2"]
 
 [ext_resource type="Script" path="res://Scripts/tutorial.gd" id="1_in0n7"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="1_mrnbm"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://4mi8she31nou" path="res://Assets/Sprites/Tutorial/DonationPrompts.png" id="3_7o2pd"]
 [ext_resource type="Texture2D" uid="uid://cjq3jjtq5xjjl" path="res://Assets/Sprites/Tutorial/Static.png" id="5_0yh3m"]
 [ext_resource type="Script" path="res://Scripts/tutorialTrack.gd" id="6_8aeuu"]
-[ext_resource type="PackedScene" path="res://Scenes/Stream/fakePromptSpawner.tscn" id="7_6836g"]
+[ext_resource type="PackedScene" uid="uid://csbb42igbvky6" path="res://Scenes/Stream/fakePromptSpawner.tscn" id="7_6836g"]
 [ext_resource type="Texture2D" uid="uid://bjn1thnho1f1s" path="res://Assets/Sprites/Buttons/Track.png" id="8_0w2se"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="8_8opd4"]
 [ext_resource type="Texture2D" uid="uid://ch3f014t0gss0" path="res://Assets/Sprites/Track/trashCan.png" id="9_0qud0"]

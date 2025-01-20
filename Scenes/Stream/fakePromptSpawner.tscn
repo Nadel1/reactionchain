@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch1khsrq2hnia"]
+[gd_scene load_steps=3 format=3 uid="uid://csbb42igbvky6"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/fakePromptSpawner.gd" id="1_73atu"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_vjewf"]
@@ -7,7 +7,7 @@
 script = ExtResource("1_73atu")
 
 [node name="MidiPlayerArrows" parent="." instance=ExtResource("2_vjewf")]
-file = "res://Assets/Audio/Tracks/snippets01/lead1_layer1.MID"
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/a2_layer4.MID"
 play_speed = 0.666
 volume_db = -80.0
 soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"

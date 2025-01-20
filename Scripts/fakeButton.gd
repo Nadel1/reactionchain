@@ -17,5 +17,6 @@ func _on_button_good_area_area_entered(area: Area2D) -> void:
 		get_parent().add_child(splat)
 
 func freeze(depth : int):
-	if !fast and depth == Global.currentStreamIndex:
-		speed = 0
+	pass
+	#if !fast and depth == Global.currentStreamIndex:
+		#speed = 0
