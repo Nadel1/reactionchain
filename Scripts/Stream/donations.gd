@@ -17,7 +17,8 @@ var failed = false
 @export var videoOverlay:AnimatedSprite2D
 @onready var animPlayerRotate=$AnimationPlayerRotate
 
-
+func _ready():
+	donationAnim.play("RESET")
 func _input(event):
 	if not failed and event is InputEventKey and event.pressed and compareIndex<expectedInputOrder.size():
 		if event.pressed and event.keycode==KEY_W:
@@ -81,12 +82,13 @@ func fail():
 	Global.score-=Global.score/5
 	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
 	$Fail.play()
+	print("failed donation")
 	failed = true
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="popUp":
 		donationAnim.play("timeForReaction")
-	else:		
+	elif anim_name=="timeForReaction":
 		fail()
 		
 

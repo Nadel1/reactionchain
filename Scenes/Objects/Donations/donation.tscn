@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(3, 3)]
+"values": [Vector2(7, 7)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -48,6 +48,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1.5, 2.064)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_114pb"]
@@ -507,18 +519,20 @@ _data = {
 }
 
 [node name="Donation" type="Node2D"]
+visible = false
 script = ExtResource("1_7ptrp")
 
 [node name="AnimationPlayerOutline" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_vux1m")
 }
-autoplay = "popUp"
+autoplay = "RESET"
 speed_scale = 0.5
 
 [node name="Outline" type="AnimatedSprite2D" parent="."]
-scale = Vector2(3, 3)
+scale = Vector2(7, 7)
 sprite_frames = SubResource("SpriteFrames_r4eav")
+frame_progress = 0.644034
 
 [node name="DonationsBanner" type="Sprite2D" parent="."]
 position = Vector2(0, -178)
@@ -537,7 +551,6 @@ libraries = {
 
 [node name="Popup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_h2tsu")
-autoplay = true
 
 [node name="Success" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_q7x1d")
@@ -549,7 +562,6 @@ stream = ExtResource("12_mje3h")
 libraries = {
 "": SubResource("AnimationLibrary_8mrim")
 }
-autoplay = "rotate"
 
 [connection signal="animation_finished" from="AnimationPlayerOutline" to="." method="_on_animation_player_animation_finished"]
 [connection signal="animation_changed" from="Notification" to="." method="_on_notification_animation_changed"]
