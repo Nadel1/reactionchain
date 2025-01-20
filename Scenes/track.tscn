@@ -25,35 +25,35 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1fpjj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gdvd"]
 atlas = ExtResource("4_at6ye")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g4nhl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_egqql"]
 atlas = ExtResource("4_at6ye")
-region = Rect2(64, 0, 64, 64)
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kn10n"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg8gd"]
 atlas = ExtResource("4_at6ye")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_br365"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxpg2"]
 atlas = ExtResource("4_at6ye")
-region = Rect2(192, 0, 64, 64)
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n0vlq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v6ac"]
 atlas = ExtResource("4_at6ye")
-region = Rect2(256, 0, 64, 64)
+region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w355h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6hps"]
 atlas = ExtResource("4_at6ye")
-region = Rect2(320, 0, 64, 64)
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2em32"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1fpjj")
+"texture": SubResource("AtlasTexture_8gdvd")
 }],
 "loop": true,
 "name": &"default",
@@ -61,22 +61,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g4nhl")
+"texture": SubResource("AtlasTexture_egqql")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kn10n")
+"texture": SubResource("AtlasTexture_rg8gd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_br365")
+"texture": SubResource("AtlasTexture_bxpg2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n0vlq")
+"texture": SubResource("AtlasTexture_1v6ac")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w355h")
+"texture": SubResource("AtlasTexture_g6hps")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g4nhl")
+"texture": SubResource("AtlasTexture_egqql")
 }],
 "loop": false,
 "name": &"newTrash",
@@ -86,29 +86,29 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nmqn4"]
 size = Vector2(15.5, 62)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5g3ht"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8jo0"]
 atlas = ExtResource("4_mkmka")
-region = Rect2(0, 0, 64, 70)
+region = Rect2(0, 0, 18, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g5i1p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ml0t"]
 atlas = ExtResource("4_mkmka")
-region = Rect2(64, 0, 64, 70)
+region = Rect2(18, 0, 18, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i358h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bayn8"]
 atlas = ExtResource("4_mkmka")
-region = Rect2(128, 0, 64, 70)
+region = Rect2(36, 0, 18, 18)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pvy2y"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5g3ht")
+"texture": SubResource("AtlasTexture_l8jo0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g5i1p")
+"texture": SubResource("AtlasTexture_3ml0t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i358h")
+"texture": SubResource("AtlasTexture_bayn8")
 }],
 "loop": true,
 "name": &"default",
@@ -198,11 +198,9 @@ collision_mask = 3
 
 [node name="TrashCan" type="AnimatedSprite2D" parent="LateArea"]
 position = Vector2(108, 8)
-scale = Vector2(2, 2)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_2em32")
 animation = &"newTrash"
-frame = 5
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LateArea"]
 position = Vector2(108, 0)
@@ -210,10 +208,10 @@ shape = SubResource("RectangleShape2D_nmqn4")
 
 [node name="HitZoneAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(626, -8)
-scale = Vector2(1.163, 1)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_pvy2y")
 autoplay = "default"
-frame_progress = 0.122488
+frame_progress = 0.0342275
 
 [node name="GoodArea" type="Area2D" parent="HitZoneAnimatedSprite2D"]
 collision_layer = 2
