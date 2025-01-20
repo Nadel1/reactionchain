@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://t5ncmqxa4p18" path="res://Assets/Sprites/Donations/DonationsNotification.png" id="2_xwg41"]
 [ext_resource type="Texture2D" uid="uid://c2toesrj3n0dt" path="res://Assets/Sprites/Donations/DonationsNotificationOutline.png" id="3_tq2tc"]
 [ext_resource type="Texture2D" uid="uid://dtepub2co0j2b" path="res://Assets/Sprites/Donations/TrackBackground.png" id="4_ipnh6"]
+[ext_resource type="AudioStream" uid="uid://cpaiq2pi5i4wb" path="res://Assets/Audio/SFX/notification.wav" id="7_buldc"]
 [ext_resource type="Texture2D" uid="uid://bjv61e8kyndvd" path="res://Assets/Sprites/Donations/DonationsNotificationNewFail.png" id="7_h2swx"]
 [ext_resource type="Texture2D" uid="uid://bavxm1v47kg65" path="res://Assets/Sprites/Donations/DonationsNotificationNewSuccess.png" id="9_oegi5"]
-[ext_resource type="AudioStream" uid="uid://bu2qtvqdrdyik" path="res://Assets/Audio/SFX/notificationNew.wav" id="10_h2tsu"]
 [ext_resource type="AudioStream" uid="uid://dd8xqpj8lw5ot" path="res://Assets/Audio/SFX/katsching.wav" id="11_q7x1d"]
 [ext_resource type="AudioStream" uid="uid://dldf6afhilnrv" path="res://Assets/Audio/SFX/crumple.wav" id="12_mje3h"]
 
@@ -75,7 +75,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(2, 2)]
+"values": [Vector2(0, 0), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_helde"]
@@ -530,12 +530,14 @@ autoplay = "RESET"
 speed_scale = 0.5
 
 [node name="Outline" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 7.62939e-06)
 scale = Vector2(7, 7)
 sprite_frames = SubResource("SpriteFrames_r4eav")
 frame_progress = 0.644034
 
 [node name="DonationsBanner" type="Sprite2D" parent="."]
-position = Vector2(0, -178)
+z_index = 1
+position = Vector2(0, -171)
 scale = Vector2(1.5, 2.064)
 texture = ExtResource("4_ipnh6")
 
@@ -550,7 +552,7 @@ libraries = {
 }
 
 [node name="Popup" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_h2tsu")
+stream = ExtResource("7_buldc")
 
 [node name="Success" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_q7x1d")

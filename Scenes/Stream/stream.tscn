@@ -586,6 +586,7 @@ autostart = true
 position = Vector2(299, 593)
 
 [node name="Donation" parent="UI" node_paths=PackedStringArray("videoOverlay") instance=ExtResource("20_plu0g")]
+modulate = Color(0, 0, 0, 0)
 position = Vector2(391, 262)
 videoOverlay = NodePath("../DonationBackground")
 

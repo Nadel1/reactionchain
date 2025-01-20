@@ -4,7 +4,7 @@ const DONATION_INPUT=preload("res://Scenes/Objects/Donations/donationInput.tscn"
 var donationInputsBanner
 var donationInputKeys=["W","A","S","D"]
 var inputAnimations=["up_shake","left_shake","down_shake","right_shake"]
-var sizeOfBanner=100
+var sizeOfBanner=300
 var expectedInputOrder=[]
 var inputArray=[]
 var compareIndex=0
@@ -68,7 +68,6 @@ func loadDonation(donationLevel):
 		expectedInputOrder.append(inputString)
 		var offset= Vector2(1,0)*sizeOfBanner/(donationLevel-1)
 		donationInput.position=offset*i-Vector2(1,0)*sizeOfBanner/2
-		donationInput.scale=Vector2(1,1)
 	inputArray[0].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[0]))
 	
 	
