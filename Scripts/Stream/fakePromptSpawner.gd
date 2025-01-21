@@ -15,8 +15,8 @@ func start():
 func spawnButton():
 	var newButton = button.instantiate()
 	newButton.global_position = spawnPos.global_position
-	newButton.setDirection()
 	get_parent().get_parent().add_child(newButton)
+	newButton.setDirection()
 
 func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> void:
 	if event.type == 144:
