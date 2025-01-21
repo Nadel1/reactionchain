@@ -7,7 +7,8 @@ var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
 const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
-const DONATION=preload("res://Scenes/Objects/Donations/donation.tscn")
+@onready var donation=$UI/Donation
+@onready var donationAnimation=$UI/DonationAnimation
 
 #preload streamers
 const STREAMER0=preload("res://Scenes/Objects/Streamers/streamerBasic0.tscn")
@@ -54,6 +55,8 @@ func prepareArrows():
 	
 	
 func _ready():
+	donation.hide()
+	donationAnimation.play("incoming")
 	Global.donationOnScreen=false
 	$UI/Money/Text.text= "Money: "+str(Global.displayedMoney)
 	$UI/TrackIndicatorWrong.visible=Global.developerMode
@@ -107,13 +110,13 @@ func _ready():
 func _process(_delta: float) -> void:
 	$UI/TrackIndicatorWrong.scale.y = $TrackPlaybackHandler.fade
 	$UI/TrackIndicatorRight.scale.y = 1.0-$TrackPlaybackHandler.fade
-	if Global.score>= Global.nextDonationViewerCount and Global.donationOnScreen==false:
-		#Global.nextDonationViewerCount+=Global.donationIncrease
-		var newDonation=DONATION.instantiate()
-		newDonation.position=$UI/DonationPlaceholder.position
-		newDonation.loadDonation(Global.difficultyDonations)
-		find_child("UI").add_child(newDonation)
-	
+	if (Global.score>= Global.nextDonationViewerCount or (Global.score>=200 and Global.moneyEarned<20)) and Global.donationOnScreen==false:
+		donationAnimation.play("incoming")
+		donation.show()
+		donation.loadDonation(Global.difficultyDonations)
+		donation.playNotificationBannerAnim()
+		
+		
 func _on_switch_scene_timer_timeout() -> void:
 	Global.currentStreamIndex += 1
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
