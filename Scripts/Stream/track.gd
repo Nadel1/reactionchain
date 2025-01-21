@@ -180,6 +180,8 @@ func adjustProjection():
 	if buttonSequence.size()==0:
 		projectedArrow.play("default")
 		return
+	if buttonSequence.front()==null:
+		return	
 	projectedArrow.play(buttonSequence.front().getInput())
 		
 func evaluateScore(buttonPrompt,correctInput=true):
