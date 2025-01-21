@@ -210,7 +210,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
 	if buttonPrompt!=null:
-		if buttonSequence.front().getInput() == buttonPrompt.getInput():
+		if buttonSequence.front()!=null and buttonSequence.front().getInput() == buttonPrompt.getInput():
 			buttonSequence.pop_front()
 		else:
 			rebuildSequence()
