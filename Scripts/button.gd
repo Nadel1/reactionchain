@@ -6,6 +6,7 @@ class_name InputPrompt
 var goodHit=false
 var okayHit=false
 var lastButton=false
+var index = -1
 
 func getInput():
 	return input

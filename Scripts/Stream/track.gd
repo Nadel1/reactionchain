@@ -44,6 +44,7 @@ var firstPacketStarted=false
 var firstPromptReached = false
 
 var countMarker=0#keep track if current marker is start or end marker
+var buttonsSpawned = 0
 var lastButtonSpawned
 var inPacket = false
 
@@ -59,6 +60,8 @@ func _input(event):
 			registerInput("up")
 		elif event.is_action_pressed("down"):
 			registerInput("down")
+		#elif event.is_action_pressed("ui_page_down"):
+			#rebuildSequence()
 
 func _ready() -> void:
 	projectedArrow.play("default")
@@ -78,8 +81,10 @@ func spawnButton():
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
 		newButtonPrompt.setFast(fast)
-		get_parent().call_deferred("add_child",newButtonPrompt)
-		buttonSequence.append(newButtonPrompt.getInput())
+		newButtonPrompt.index = buttonsSpawned
+		buttonsSpawned += 1
+		get_parent().find_child("Prompts").call_deferred("add_child",newButtonPrompt)
+		buttonSequence.append(newButtonPrompt)
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
@@ -175,7 +180,7 @@ func adjustProjection():
 	if buttonSequence.size()==0:
 		projectedArrow.play("default")
 		return
-	projectedArrow.play(buttonSequence.front())
+	projectedArrow.play(buttonSequence.front().getInput())
 		
 func evaluateScore(buttonPrompt,correctInput=true):
 	
@@ -205,11 +210,25 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
 	if buttonPrompt!=null:
-		buttonSequence.pop_front()
+		if buttonSequence.front().getInput() == buttonPrompt.getInput():
+			buttonSequence.pop_front()
+		else:
+			rebuildSequence()
 		buttonPrompt.queue_free()
 		adjustProjection()
 	if(Global.score<=0):
 		Global.gameOver()
+
+func rebuildSequence():
+	print("UNEXPECTED PROMPT! Rebuilding sequence.")
+	var currentPrompts = get_parent().find_child("Prompts").get_children()
+	currentPrompts.sort_custom(sortPrompts)
+	buttonSequence = currentPrompts
+
+func sortPrompts(a, b):
+	if a.index < b.index:
+		return true
+	return false
 
 func compareInput(prompt, inputString):
 	return prompt.getInput() == inputString
