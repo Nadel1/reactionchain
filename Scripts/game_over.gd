@@ -27,8 +27,6 @@ func _ready() -> void:
 	if (time%60)<10:
 		strSeconds="0"+strSeconds
 	$Text/TimeScoreText.text="[center]"+"Time: "+strMinutes+":"+strSeconds+"[/center]"
-	$Text/MoneyTipp.visible = Global.moneyEarned < 1
-	$Text/MoneyText.self_modulate = Color.ORANGE if Global.moneyEarned < 1 else Color.WHITE
 
 func _on_restart_button_down() -> void:
 	Global.prepareGame()
