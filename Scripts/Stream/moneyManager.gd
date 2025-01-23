@@ -30,6 +30,7 @@ func updateMoneyDisplay(allowGameOver = true):
 	if moneyAmount < Global.moneyLoss * 10:
 		$Warning.play("warning")
 		if moneyAmount <= 0 and allowGameOver:
-			Global.gameOver()
+			pass
+			#Global.gameOver()
 	else:
 		$Warning.play("default")

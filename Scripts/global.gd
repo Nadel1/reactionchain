@@ -37,7 +37,7 @@ var decreaseWrongInput=1.1
 var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
 
 var moneyManager : MoneyManager
-var moneyEarned = 0
+var moneyEarned = 500
 var moneyHighScore=0
 var displayedMoney="0"
 var moneyLoss = 2
@@ -49,7 +49,8 @@ var difficultyDonations=3#how many donation inputs appear
 var donationIncrease=500
 
 var health = 1.0 #TODO: reset per game
-var healthLoss = 0.2
+var healthLossPerFail = 0.1
+var healthLoss0Viewers = 0.2
 var regenPer100Money = 0.2
 var regenSpeed = 100
 
@@ -111,8 +112,13 @@ func increaseScore(deltaScore):
 		currentHighScoreViewers=score
 
 func decreaseHealth():
-	health -= healthLoss
+	health -= healthLossPerFail
 	updateStreamerStats.emit()
+	checkHealthGameOver()
+
+func checkHealthGameOver():
+	if health <= 0:
+		gameOver()
 
 func _ready():
 	$Metronome.wait_time = snippetLength

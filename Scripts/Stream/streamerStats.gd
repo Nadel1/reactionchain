@@ -28,6 +28,11 @@ func _process(delta: float) -> void:
 	else:
 		$MoneyAnim.play("RESET")
 		$RegenParticles.emitting = false
+	
+	if Global.score <= 0:
+		Global.health -= Global.healthLoss0Viewers * delta
+		updateStats()
+		Global.checkHealthGameOver()
 
 func updateStats():
 	$Health.setValue(Global.health)
