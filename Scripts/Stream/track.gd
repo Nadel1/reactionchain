@@ -210,6 +210,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		playScoreDecrease()
 		scoreChange=calculateScoreChange(Score.BAD)
 		Global.score-=scoreChange
+		Global.decreaseHealth()
 		splat.call_deferred("setText", 0)
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)

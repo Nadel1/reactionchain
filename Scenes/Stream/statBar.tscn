@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://5dflcwmj0l0n"]
+
+[ext_resource type="Script" path="res://Scripts/Stream/statBar.gd" id="1_k4dyv"]
+[ext_resource type="Texture2D" uid="uid://cs70xxttuup8q" path="res://Assets/Sprites/UI/statBackground.png" id="2_p3hhd"]
+[ext_resource type="Texture2D" uid="uid://bbreobkocmnp0" path="res://Assets/Sprites/UI/statBar.png" id="3_yuqr0"]
+[ext_resource type="Texture2D" uid="uid://dwh413qifthkd" path="res://Assets/Sprites/UI/statForeground.png" id="4_boqwh"]
+
+[node name="StatBar" type="Node2D"]
+script = ExtResource("1_k4dyv")
+
+[node name="Background" type="NinePatchRect" parent="."]
+offset_right = 8.0
+offset_bottom = 56.0
+texture = ExtResource("2_p3hhd")
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="Bar" type="NinePatchRect" parent="."]
+self_modulate = Color(0, 0.666667, 1, 1)
+offset_top = 1.0
+offset_right = 8.0
+offset_bottom = 55.0
+texture = ExtResource("3_yuqr0")
+patch_margin_left = 4
+patch_margin_right = 4
+
+[node name="Foreground" type="NinePatchRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+offset_right = 8.0
+offset_bottom = 56.0
+texture = ExtResource("4_boqwh")
+patch_margin_left = 4
+patch_margin_top = 3
+patch_margin_right = 4
+patch_margin_bottom = 4

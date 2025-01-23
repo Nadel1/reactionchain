@@ -37,7 +37,7 @@ var decreaseWrongInput=1.1
 var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
 
 var moneyManager : MoneyManager
-var moneyEarned = 100
+var moneyEarned = 0
 var moneyHighScore=0
 var displayedMoney="0"
 var moneyLoss = 2
@@ -47,6 +47,11 @@ var increaseInMoney=100
 var nextDonationViewerCount=500
 var difficultyDonations=3#how many donation inputs appear
 var donationIncrease=500
+
+var health = 1.0 #TODO: reset per game
+var healthLoss = 0.2
+var regenPer100Money = 0.2
+var regenSpeed = 100
 
 var musicSnippetIndex = 0
 var arrowSnippetIndex = 0
@@ -67,6 +72,7 @@ signal pastEvent(Event)
 signal tactFakeArrows
 signal pause(int) # supplies the index of the stream that paused
 signal resume(int)
+signal updateStreamerStats
 
 @export var lengthOfMusic = 5 #number of reaction packets to play
 @export var playbackSpeed = 0.575
@@ -103,6 +109,10 @@ func increaseScore(deltaScore):
 	score+=deltaScore
 	if score>currentHighScoreViewers:
 		currentHighScoreViewers=score
+
+func decreaseHealth():
+	health -= healthLoss
+	updateStreamerStats.emit()
 
 func _ready():
 	$Metronome.wait_time = snippetLength

@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=58 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="6_f2vs8"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
 [ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="7_fa6aa"]
+[ext_resource type="PackedScene" uid="uid://bhy3xssw636sv" path="res://Scenes/Stream/streamerStats.tscn" id="7_veajl"]
 [ext_resource type="Script" path="res://Scripts/Stream/moneyManager.gd" id="8_42nob"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
@@ -524,6 +525,10 @@ script = ExtResource("6_o3x8b")
 wait_time = 2.0
 
 [node name="UI" type="Node2D" parent="."]
+
+[node name="StreamerStats" parent="UI" instance=ExtResource("7_veajl")]
+position = Vector2(1060, 288)
+scale = Vector2(4, 4)
 
 [node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
 position = Vector2(808, 24)

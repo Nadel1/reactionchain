@@ -8,10 +8,10 @@ func _ready() -> void:
 	Global.tact.connect(updateStreamState)
 	updateMoneyDisplay(false)
 
-func _process(delta: float) -> void:
-	if streamRunning:
-		Global.moneyEarned -= delta * Global.moneyLoss
-		updateMoneyDisplay()
+#func _process(delta: float) -> void:
+	#if streamRunning:
+		#Global.moneyEarned -= delta * Global.moneyLoss
+		#updateMoneyDisplay()
 
 func updateStreamState(snippetIndex):
 	streamRunning = snippetIndex < Global.musicTracks.back().size()
