@@ -216,6 +216,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			buttonSequence.pop_front()
 		else:
 			rebuildSequence()
+			buttonSequence.pop_front()
 		buttonPrompt.queue_free()
 		adjustProjection()
 	if(Global.score<=0):
@@ -225,12 +226,16 @@ func rebuildSequence():
 	print("UNEXPECTED PROMPT! Rebuilding sequence.")
 	var currentPrompts = get_parent().find_child("Prompts").get_children()
 	currentPrompts.sort_custom(sortPrompts)
+	currentPrompts.filter(filterNull)
 	buttonSequence = currentPrompts
 
 func sortPrompts(a, b):
 	if a.index < b.index:
 		return true
 	return false
+
+func filterNull(node):
+	return node != null
 
 func compareInput(prompt, inputString):
 	return prompt.getInput() == inputString
