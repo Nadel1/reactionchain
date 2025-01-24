@@ -1,11 +1,26 @@
-[gd_scene load_steps=13 format=3 uid="uid://bhy3xssw636sv"]
+[gd_scene load_steps=13 format=3 uid="uid://sf3lvxf1n2uo"]
 
-[ext_resource type="PackedScene" uid="uid://5dflcwmj0l0n" path="res://Scenes/Stream/statBar.tscn" id="1_2e687"]
+[ext_resource type="PackedScene" uid="uid://p3a85s2c5cos" path="res://Scenes/Stream/statBar.tscn" id="1_2e687"]
 [ext_resource type="Script" path="res://Scripts/Stream/streamerStats.gd" id="1_4m1jq"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_fv1vh"]
 [ext_resource type="Texture2D" uid="uid://dmrmnq0pmlowv" path="res://Assets/Sprites/UI/healthIcon.png" id="3_gwd4c"]
 [ext_resource type="Texture2D" uid="uid://dby7kuc33rjjs" path="res://Assets/Sprites/UI/moneyIcon.png" id="4_6r7x8"]
 [ext_resource type="Texture2D" uid="uid://cgfsqdtkpb1et" path="res://Assets/Sprites/UI/healthParticle.png" id="6_7y5tf"]
+
+[sub_resource type="Animation" id="Animation_ms1ke"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Money/Bar:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.19, 0.6, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_6qese"]
 resource_name = "turn_red"
@@ -21,21 +36,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(0.903408, 0.179983, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_ms1ke"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Money/Bar:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.19, 0.6, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_q6uy0"]

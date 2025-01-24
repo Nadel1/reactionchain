@@ -17,6 +17,7 @@ func updateStreamState(snippetIndex):
 	streamRunning = snippetIndex < Global.musicTracks.back().size()
 
 func updateMoneyDisplay(allowGameOver = true):
+	Global.currentMoneyHighScore = max(Global.currentMoneyHighScore, Global.moneyEarned)
 	var moneyAmount = int(Global.moneyEarned)
 	var displayedMoney=str(moneyAmount)
 	if moneyAmount>1000 and moneyAmount<1000000:

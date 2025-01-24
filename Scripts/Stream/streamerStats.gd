@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 func updateStats():
 	$Health.setValue(Global.health)
 	var moneyBars = floor(Global.moneyEarned / moneyPerBar)
-	$MoneyCount.text = str(moneyBars)
+	$MoneyCount.text = str(moneyBars) if moneyBars > 0 else ""
 	var moneyFillLevel = float(Global.moneyEarned - (moneyPerBar * moneyBars)) / moneyPerBar
 	$Money.setValue(moneyFillLevel)
 	$Money/Background.modulate = Color(0.1,0.1,0.1) if moneyBars <= 0 else Color.GREEN

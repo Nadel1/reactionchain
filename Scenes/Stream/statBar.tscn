@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://5dflcwmj0l0n"]
+[gd_scene load_steps=5 format=3 uid="uid://p3a85s2c5cos"]
 
 [ext_resource type="Script" path="res://Scripts/Stream/statBar.gd" id="1_k4dyv"]
 [ext_resource type="Texture2D" uid="uid://cs70xxttuup8q" path="res://Assets/Sprites/UI/statBackground.png" id="2_p3hhd"]

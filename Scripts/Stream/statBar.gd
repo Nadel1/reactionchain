@@ -1,4 +1,5 @@
-extends Node
+extends Node2D
+class_name StatBar
 
 var fullPos : float
 var emptyPos : float
@@ -14,5 +15,5 @@ func setValue(value):
 	value = clampf(value, 0, 1)
 	if fullPos == null:
 		_ready()
-	$Bar.position.y = lerpf(emptyPos, fullPos, value)
-	$Bar.size.y = lerpf(0, length, value)
+	$Bar.position.y = floor(lerpf(emptyPos, fullPos, value))
+	$Bar.size.y = ceil(lerpf(0, length, value))

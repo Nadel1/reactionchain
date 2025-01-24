@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=60 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -11,13 +11,14 @@
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="6_f2vs8"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
 [ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="7_fa6aa"]
-[ext_resource type="PackedScene" uid="uid://bhy3xssw636sv" path="res://Scenes/Stream/streamerStats.tscn" id="7_veajl"]
+[ext_resource type="PackedScene" uid="uid://sf3lvxf1n2uo" path="res://Scenes/Stream/streamerStats.tscn" id="7_veajl"]
 [ext_resource type="Script" path="res://Scripts/Stream/moneyManager.gd" id="8_42nob"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 [ext_resource type="Texture2D" uid="uid://cl55olhp7mk1x" path="res://Assets/Sprites/Donations/MoneyWarning.png" id="11_grdfd"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="12_51xhv"]
 [ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
+[ext_resource type="PackedScene" uid="uid://p3a85s2c5cos" path="res://Scenes/Stream/statBar.tscn" id="13_k8v6l"]
 [ext_resource type="Texture2D" uid="uid://crgjxiylykkfr" path="res://Assets/Sprites/UI/viewerIcon.png" id="14_550fi"]
 [ext_resource type="Texture2D" uid="uid://dodwqxhvwh3p" path="res://Assets/Sprites/Donations/Background.png" id="15_8i647"]
 [ext_resource type="Texture2D" uid="uid://dn4mi8qh4mm1n" path="res://Assets/Sprites/UI/arrowKeys.png" id="15_68yvl"]
@@ -574,11 +575,23 @@ autoplay = "RESET"
 [node name="ScorePos" type="Node2D" parent="UI"]
 position = Vector2(592, -8)
 
-[node name="Score" type="Node2D" parent="UI/ScorePos" node_paths=PackedStringArray("animator")]
+[node name="DonationProgress" parent="UI/ScorePos" instance=ExtResource("13_k8v6l")]
+position = Vector2(-200, 520)
+rotation = -1.5708
+scale = Vector2(-4, 4)
+
+[node name="Background" parent="UI/ScorePos/DonationProgress" index="0"]
+self_modulate = Color(0.1, 0.1, 0.1, 1)
+
+[node name="Bar" parent="UI/ScorePos/DonationProgress" index="1"]
+self_modulate = Color(0.950672, 0.483086, 0, 1)
+
+[node name="Score" type="Node2D" parent="UI/ScorePos" node_paths=PackedStringArray("animator", "donationProgress")]
 z_index = 1
 position = Vector2(128, 536)
 script = ExtResource("6_a5we1")
 animator = NodePath("../../ScoreAnim")
+donationProgress = NodePath("../DonationProgress")
 
 [node name="Label" type="RichTextLabel" parent="UI/ScorePos/Score"]
 modulate = Color(0, 0, 0, 1)
@@ -707,3 +720,5 @@ autoplay = "zoomOut"
 [connection signal="animation_finished" from="UI/ScoreAnim" to="UI/ScorePos/Score" method="_on_score_anim_animation_finished"]
 [connection signal="timeout" from="UI/ScorePos/Score/Label/ViewerUpdate" to="UI/ScorePos/Score" method="_on_viewer_update_timeout"]
 [connection signal="timeout" from="UI/TimerSinceLastMessage" to="UI/Chat" method="_on_timer_since_last_message_timeout"]
+
+[editable path="UI/ScorePos/DonationProgress"]

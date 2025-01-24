@@ -11,8 +11,9 @@ func _ready() -> void:
 	$Background/BackgroundText.text+= "> Shutting off ..."
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
-	$Text/MoneyText.text="[center]"+"Money: "+str(int(Global.moneyEarned))+"[/center]"
-	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+int(Global.moneyEarned)
+	$Text/MoneyText.text="[center]"+"Most money: "+str(int(Global.currentMoneyHighScore))+"[/center]"
+	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+int(Global.currentMoneyHighScore)
+	Global.moneyHighScore = max(Global.moneyHighScore, Global.currentMoneyHighScore)
 	$Text/OverallScoreText.text="[center] Overall score: "+str(Global.overallScore)
 	if Global.overallScore>Global.overallScoreHighScore:
 		$Text/HighScore.show()

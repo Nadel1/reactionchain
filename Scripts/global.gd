@@ -37,8 +37,9 @@ var decreaseWrongInput=1.1
 var donationOnScreen=false#wasd inputs are not marked as wrong input if this is set to true
 
 var moneyManager : MoneyManager
-var moneyEarned = 500
-var moneyHighScore=0
+var moneyEarned = 0
+var currentMoneyHighScore = 0
+var moneyHighScore = 0
 var displayedMoney="0"
 var moneyLoss = 2
 var overallScore = 0

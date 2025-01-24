@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var animator : AnimationPlayer
+@export var donationProgress : StatBar
 @onready var viewersActual = Global.score
 @onready var viewersDisplayed = viewersActual
 var time = 0.0
@@ -24,6 +25,7 @@ func updateDisplay():
 		displayedViewers=str(viewerAmount/1000000)+"."+str((viewerAmount%1000000)/100000)
 		displayedViewers=str(displayedViewers)+"m"
 	$Label.text=str(displayedViewers)
+	donationProgress.setValue(float(viewersDisplayed) / Global.nextDonationViewerCount)
 	if viewersDisplayed < 10:
 		$Warning.play("warning")
 
