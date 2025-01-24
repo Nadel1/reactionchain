@@ -26,7 +26,7 @@ var streamerIndices =[]
 var currentStreamer=null
 var chatDepth=5#at some point you cant read it anymore
 var difficulty = 1 # 1: arrow on every note, 4: arrow on every 4th note, etc
-var developerMode = true
+var developerMode = false
 var performanceMode = false
 var musicTracks=[]
 var packetToBeDropped=[]
@@ -223,9 +223,6 @@ func insertEvent(newEvent : Event):
 
 func makeSaveDict():
 	var saveDict = {
-		"highScoreViewers" : highScoreViewers,
-		"highScoreTime" : highScoreTime,
-		"moneyHighScore" : moneyHighScore,
 		"overallScoreHighScore" : overallScoreHighScore
 	}
 	return saveDict
@@ -265,9 +262,6 @@ func loadGame():
 		var dict = JSON.parse_string(file.get_as_text())
 		file.close()
 		if typeof(dict) == TYPE_DICTIONARY:
-			highScoreViewers = loadDataFromDictSafe(dict, highScoreViewers, "highScoreViewers")
-			highScoreTime = loadDataFromDictSafe(dict, highScoreTime, "highScoreTime")
-			moneyHighScore =loadDataFromDictSafe(dict, moneyHighScore, "moneyHighScore")
 			overallScoreHighScore = loadDataFromDictSafe(dict, overallScoreHighScore, "overallScoreHighScore")
 		else:
 			printerr("Corrupted data!")
