@@ -238,6 +238,7 @@ libraries = {
 autoplay = "slideTitle"
 
 [node name="Background" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="BackgroundSprite" type="Sprite2D" parent="Background"]
 position = Vector2(576, 324)
@@ -251,10 +252,10 @@ scale = Vector2(4, 4)
 texture = ExtResource("8_jbcag")
 
 [node name="BackgroundText" type="RichTextLabel" parent="Background"]
-offset_left = 275.0
-offset_top = 20.0
-offset_right = 494.0
-offset_bottom = 75.0
+offset_left = 62.0
+offset_top = 11.0
+offset_right = 281.0
+offset_bottom = 66.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -282,8 +283,9 @@ texture = ExtResource("2_ylw7e")
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -331.0
+offset_right = 320.0
+offset_bottom = 648.0
 
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
@@ -331,10 +333,10 @@ text = "Options
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 0
-offset_left = -188.0
-offset_top = 80.0
-offset_right = -148.0
-offset_bottom = 120.0
+offset_left = -522.0
+offset_top = 92.0
+offset_right = -482.0
+offset_bottom = 132.0
 
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
@@ -424,20 +426,20 @@ offset_bottom = 172.0
 
 [node name="Text" type="RichTextLabel" parent="Text/ScoreboardUI"]
 layout_mode = 0
-offset_left = 274.0
-offset_top = 208.0
-offset_right = 314.0
-offset_bottom = 224.0
+offset_left = 1050.0
+offset_top = 48.0
+offset_right = 1090.0
+offset_bottom = 64.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Name:"
 
 [node name="LineEdit" type="LineEdit" parent="Text/ScoreboardUI"]
 layout_mode = 0
-offset_left = 214.0
-offset_top = 274.0
-offset_right = 281.062
-offset_bottom = 305.0
+offset_left = 1214.0
+offset_top = 28.0
+offset_right = 1281.06
+offset_bottom = 59.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 placeholder_text = "enter"
