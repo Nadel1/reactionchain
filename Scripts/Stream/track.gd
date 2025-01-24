@@ -15,6 +15,8 @@ enum Score{GOOD, OKAY, BAD}
 @onready var inputRecorder=get_parent().get_parent().find_child("InputRecorder")
 @onready var chat=get_parent().find_child("Chat")
 
+@onready var projectedArrow=$ProjectedArrow
+
 @export var thresholdFastIncrease=5000
 @export var thresholdUpperFastIncrease=10000
 @export var increaseGoodHit=0.0125
@@ -31,17 +33,18 @@ enum Score{GOOD, OKAY, BAD}
 var buttonPrompts=[BUTTONRIGHT,BUTTONLEFT,BUTTONUP,BUTTONDOWN]
 var numberOfButtonPrompts=4
 var arrowSpawnID = 0
+var buttonSequence=[]
 
 #abstraction for reactions
 var correctReactionPacket=true
 var countReactionPacket=0
 var reactionIndex=0#when going through previous reactions
-var reactionArray=[]
 var currentPacketDuration=0.0
 var firstPacketStarted=false
 var firstPromptReached = false
 
 var countMarker=0#keep track if current marker is start or end marker
+var buttonsSpawned = 0
 var lastButtonSpawned
 var inPacket = false
 
@@ -57,8 +60,11 @@ func _input(event):
 			registerInput("up")
 		elif event.is_action_pressed("down"):
 			registerInput("down")
+		#elif event.is_action_pressed("ui_page_down"):
+			#rebuildSequence()
 
 func _ready() -> void:
+	projectedArrow.play("default")
 	Global.eventImminent.connect(spawnEventTrigger)
 	fastSpawnPoint.global_position = animatedSprite.global_position + (spawnPoint.global_position - animatedSprite.global_position) * Global.fastPromptMult
 
@@ -73,7 +79,12 @@ func spawnButton():
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
 		newButtonPrompt.setFast(fast)
-		get_parent().call_deferred("add_child",newButtonPrompt)
+		newButtonPrompt.index = buttonsSpawned
+		buttonsSpawned += 1
+		get_parent().find_child("Prompts").call_deferred("add_child",newButtonPrompt)
+		buttonSequence.append(newButtonPrompt)
+		if projectedArrow.get_animation()=="default":
+			adjustProjection()
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
@@ -113,6 +124,8 @@ func spawnMarker(end : bool):
 	newMarker.setVisible(Global.developerMode)
 	if !end:
 		newMarker.setIndex(Global.arrowSnippetIndex)
+	else:
+		rebuildSequence()
 	newMarker.setStart(!end)
 	if end and lastButtonSpawned!=null:
 		debuglastButton+=1
@@ -137,7 +150,6 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 
 func playScoreDecrease():#animate hitzone and maybe later add more music here? 
 	Global.currentTrackHandler.failInput()
-
 	
 	
 func react(correctReaction=true):
@@ -165,8 +177,17 @@ func react(correctReaction=true):
 		
 		inputRecorder.appendRecordedReaction(reaction)
 		correctReactionPacket = true
-			
+
+func adjustProjection():
+	if buttonSequence.size()==0:
+		projectedArrow.play("default")
+		return
+	if buttonSequence.front()==null:
+		rebuildSequence()	
+	projectedArrow.play(buttonSequence.front().getInput())
+		
 func evaluateScore(buttonPrompt,correctInput=true):
+	
 	if !firstPromptReached:
 		return
 	var splat = SPLAT.instantiate()
@@ -193,9 +214,30 @@ func evaluateScore(buttonPrompt,correctInput=true):
 	if buttonPrompt!=null and buttonPrompt.lastButton==true:
 		react(correctReactionPacket)
 	if buttonPrompt!=null:
+		if buttonSequence.front()!=null and buttonSequence.front().getInput() == buttonPrompt.getInput():
+			buttonSequence.pop_front()
+		else:
+			rebuildSequence()
+			buttonSequence.pop_front()
 		buttonPrompt.queue_free()
+		adjustProjection()
 	if(Global.score<=0):
 		Global.gameOver()
+
+func rebuildSequence():
+	var currentPrompts = get_parent().find_child("Prompts").get_children()
+	currentPrompts.sort_custom(sortPrompts)
+	currentPrompts.filter(filterNull)
+	buttonSequence = currentPrompts
+	adjustProjection()
+
+func sortPrompts(a, b):
+	if a.index < b.index:
+		return true
+	return false
+
+func filterNull(node):
+	return node != null
 
 func compareInput(prompt, inputString):
 	return prompt.getInput() == inputString
@@ -236,7 +278,6 @@ func _on_good_area_area_entered(area: Area2D) -> void:
 	elif area.get_parent().is_in_group("EventStart"):
 		dealWithEventStart()
 	else:
-		#goodHit=true
 		area.get_parent().hitZoneEnter(true)
 		firstPromptReached = true
 		

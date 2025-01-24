@@ -31,10 +31,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nd51l"]
-size = Vector2(19.5, 57)
+size = Vector2(12, 57)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8dxf"]
-size = Vector2(114, 57)
+size = Vector2(92, 57)
 
 [node name="Button" type="Node2D" groups=["InputPrompt"]]
 script = ExtResource("1_6ju6v")

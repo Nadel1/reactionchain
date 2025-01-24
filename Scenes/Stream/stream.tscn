@@ -668,6 +668,8 @@ libraries = {
 }
 autoplay = "fade"
 
+[node name="Prompts" type="Node2D" parent="UI"]
+
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_cfqdi")

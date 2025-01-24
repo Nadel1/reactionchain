@@ -8,8 +8,8 @@ extends Node
 # in dB, -20 is the default volume, -40 is silent
 @export var layerVolumes = [-20, -25, -30]
 
-#func getSnippet(index : int):
-#	return snippets[index % snippets.size()]
+func getSnippet(A = true):
+	return Asnippets.pick_random() if A else Bsnippets.pick_random()
 
 func getSoundFont(layerIndex : int):
 	return soundfonts[min(layerIndex, soundfonts.size() - 1)]
@@ -32,6 +32,7 @@ func prepareMusic():
 			A = !A
 	
 	Global.musicTracks.append(track)
+	#print("Created track with length " + str(track.size()))
 	$EventScheduler.generateEvents()
 
 func insertEvent(newEvent : Event): #TODO: Add type parameter
@@ -45,4 +46,5 @@ func insertEvent(newEvent : Event): #TODO: Add type parameter
 		for j in Global.recordingsReaction.size():
 			Global.recordingsReaction[j].insert(newEvent.startIndex+i, -1)
 		A = !A
+	#print(" -> Extended to " + str(Global.musicTracks.back().size()))
 	pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://oqtxuh6lfavi"]
+[gd_scene load_steps=14 format=3 uid="uid://oqtxuh6lfavi"]
 
 [ext_resource type="Texture2D" uid="uid://d2mo23t2gbb52" path="res://Assets/Sprites/MainMenu/Title1.png" id="1_ggqlj"]
 [ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="1_gvy58"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://coq1gsyd2r3ja" path="res://Assets/Sprites/MainMenu/Title3.png" id="3_g8fk8"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="4_jced4"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="7_8cedv"]
+[ext_resource type="Script" path="res://Scripts/menu_music.gd" id="8_jcyxb"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="9_ngp34"]
+[ext_resource type="Script" path="res://Scripts/Stream/backingTrackPlayer.gd" id="10_ng7j5"]
 
 [sub_resource type="Animation" id="Animation_1sc46"]
 length = 0.001
@@ -191,7 +194,7 @@ position = Vector2(576, 304)
 offset_left = -224.0
 offset_top = -227.0
 offset_right = -112.0
-offset_bottom = -102.0
+offset_bottom = -135.0
 scale = Vector2(4, 4)
 texture = ExtResource("7_8cedv")
 region_rect = Rect2(0, 0, 32, 32)
@@ -202,9 +205,9 @@ patch_margin_bottom = 5
 
 [node name="Devmode" type="Button" parent="OptionsMenu"]
 offset_left = -176.0
-offset_top = -8.0
+offset_top = -176.0
 offset_right = -89.0
-offset_bottom = 11.0
+offset_bottom = -157.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 toggle_mode = true
@@ -212,15 +215,16 @@ text = "Developer mode"
 
 [node name="PerformanceMode" type="Button" parent="OptionsMenu"]
 offset_left = -176.0
-offset_top = 80.0
+offset_top = -85.0
 offset_right = -89.0
-offset_bottom = 99.0
+offset_bottom = -66.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 toggle_mode = true
 text = "Potato mode"
 
 [node name="Difficulty" type="HSlider" parent="OptionsMenu"]
+visible = false
 offset_left = -168.0
 offset_top = -155.0
 offset_right = -84.0
@@ -268,12 +272,61 @@ vertical_alignment = 1
 
 [node name="ResetSaveFile" type="Button" parent="OptionsMenu"]
 offset_left = -176.0
-offset_top = 168.0
+offset_top = 8.0
 offset_right = -90.0
-offset_bottom = 187.0
+offset_bottom = 27.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 text = "Reset savefile"
+
+[node name="Music" type="Node2D" parent="."]
+script = ExtResource("8_jcyxb")
+
+[node name="Metronome" type="Timer" parent="Music"]
+
+[node name="Chords0" parent="Music" instance=ExtResource("9_ngp34")]
+play_speed = 0.666
+soundfont = "res://Assets/Audio/Instruments/Hybrid_Synthetic_Str.sf2"
+bus = &"Arrows"
+
+[node name="Chords1" parent="Music" instance=ExtResource("9_ngp34")]
+play_speed = 0.666
+soundfont = "res://Assets/Audio/Instruments/Hybrid_Synthetic_Str.sf2"
+bus = &"Arrows"
+
+[node name="BackingTrack" type="Node2D" parent="Music" node_paths=PackedStringArray("players")]
+script = ExtResource("10_ng7j5")
+players = [NodePath("MidiPlayerBass1"), NodePath("MidiPlayerBass2"), NodePath("MidiPlayerChords")]
+
+[node name="MidiPlayerBass1" parent="Music/BackingTrack" instance=ExtResource("9_ngp34")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass1.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerBass2" parent="Music/BackingTrack" instance=ExtResource("9_ngp34")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_bass2.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/LatelyBass 20240409.sf2"
+bus = &"Bass"
+
+[node name="MidiPlayerChords" parent="Music/BackingTrack" instance=ExtResource("9_ngp34")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_chords.MID"
+play_speed = 0.666
+volume_db = -30.0
+soundfont = "res://Assets/Audio/Instruments/AI-APiano02trans.SF2"
+bus = &"Bass"
+
+[node name="MidiPlayerDrums" parent="Music/BackingTrack" instance=ExtResource("9_ngp34")]
+file = "res://Assets/Audio/Tracks/snippets02_(bunny)/bg_drums.MID"
+playing = true
+play_speed = 0.666
+volume_db = -19.999
+loop = true
+soundfont = "res://Assets/Audio/Instruments/Drum Set JD Rockset 5.sf2"
+bus = &"Bass"
 
 [connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
@@ -282,3 +335,4 @@ text = "Reset savefile"
 [connection signal="toggled" from="OptionsMenu/PerformanceMode" to="." method="_on_performance_mode_toggled"]
 [connection signal="value_changed" from="OptionsMenu/Difficulty" to="." method="_on_difficulty_value_changed"]
 [connection signal="pressed" from="OptionsMenu/ResetSaveFile" to="." method="_on_reset_save_file_pressed"]
+[connection signal="timeout" from="Music/Metronome" to="Music" method="_on_metronome_timeout"]

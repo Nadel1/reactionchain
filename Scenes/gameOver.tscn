@@ -154,7 +154,7 @@ tracks/4/path = NodePath("../Background/BackgroundText:visible_ratio")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -245,19 +245,23 @@ scale = Vector2(9, 10.125)
 texture = ExtResource("7_1q6on")
 
 [node name="CameraSprite" type="Sprite2D" parent="Background"]
+visible = false
 position = Vector2(531, 188)
 scale = Vector2(4, 4)
 texture = ExtResource("8_jbcag")
 
 [node name="BackgroundText" type="RichTextLabel" parent="Background"]
-offset_left = 286.0
-offset_top = 23.0
-offset_right = 430.0
-offset_bottom = 61.0
+offset_left = 275.0
+offset_top = 20.0
+offset_right = 494.0
+offset_bottom = 75.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
+bbcode_enabled = true
 text = "> Technical difficulties...
-> We will be right back..."
+> You have become irrelavant Costs are too high
+> Shutting off ...
+"
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -284,12 +288,22 @@ offset_bottom = 40.0
 [node name="Restart" type="Button" parent="Buttons"]
 layout_mode = 0
 offset_left = 393.0
+offset_top = 371.0
+offset_right = 496.0
+offset_bottom = 390.0
+scale = Vector2(3, 3)
+theme = ExtResource("3_xylrd")
+text = "Restart"
+
+[node name="ToMainMenu" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 393.0
 offset_top = 437.0
 offset_right = 496.0
 offset_bottom = 456.0
 scale = Vector2(3, 3)
 theme = ExtResource("3_xylrd")
-text = "Restart"
+text = "Main Menu"
 
 [node name="QuitGame" type="Button" parent="Buttons"]
 layout_mode = 0
@@ -322,13 +336,27 @@ offset_top = 80.0
 offset_right = -148.0
 offset_bottom = 120.0
 
+[node name="ScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 358.0
+offset_top = 120.0
+offset_right = 730.0
+offset_bottom = 136.0
+scale = Vector2(2, 2)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "[center]Score[/center]"
+scroll_active = false
+visible_characters = 0
+visible_ratio = 0.0
+
 [node name="TimeScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 263.0
-offset_top = 149.0
-offset_right = 577.0
-offset_bottom = 165.0
-scale = Vector2(3, 3)
+offset_left = 358.0
+offset_top = 148.0
+offset_right = 730.0
+offset_bottom = 164.0
+scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "[center]Time[/center]
@@ -337,37 +365,23 @@ scroll_active = false
 
 [node name="MoneyText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
-offset_left = 311.0
-offset_top = 192.0
-offset_right = 593.0
-offset_bottom = 208.0
-scale = Vector2(3, 3)
+offset_left = 358.0
+offset_top = 172.0
+offset_right = 730.0
+offset_bottom = 188.0
+scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
 text = "[center]Money[/center]
 "
 scroll_active = false
 
-[node name="ScoreText" type="RichTextLabel" parent="Text"]
-layout_mode = 0
-offset_left = 175.0
-offset_top = 108.0
-offset_right = 547.0
-offset_bottom = 124.0
-scale = Vector2(3, 3)
-theme = ExtResource("3_xylrd")
-bbcode_enabled = true
-text = "[center]Score[/center]"
-scroll_active = false
-visible_characters = 0
-visible_ratio = 0.0
-
 [node name="OverallScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 140.0
-offset_top = 240.0
+offset_top = 196.0
 offset_right = 440.0
-offset_bottom = 256.0
+offset_bottom = 212.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -377,13 +391,12 @@ scroll_active = false
 [node name="MoneyTipp" type="RichTextLabel" parent="Text"]
 self_modulate = Color(1, 0.851667, 0.11, 1)
 layout_mode = 0
-offset_left = 916.0
-offset_top = 120.0
-offset_right = 1047.0
-offset_bottom = 160.0
-scale = Vector2(3, 3)
+offset_left = 1079.0
+offset_top = 108.0
+offset_right = 1210.0
+offset_bottom = 148.0
+scale = Vector2(2, 2)
 theme = ExtResource("3_xylrd")
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "(You get a donation opportunity every 500 viewers!)"
 
 [node name="HighScore" type="Node2D" parent="Text"]
@@ -392,10 +405,10 @@ rotation = 0.0349066
 script = ExtResource("5_6tkhb")
 
 [node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -395.165
-offset_top = 25.571
-offset_right = -193.165
-offset_bottom = 41.571
+offset_left = -398.294
+offset_top = -30.1181
+offset_right = -196.294
+offset_bottom = -14.1181
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
@@ -417,7 +430,7 @@ position = Vector2(576, 304)
 offset_left = -253.0
 offset_top = -104.0
 offset_right = -141.0
-offset_bottom = 1.0
+offset_bottom = -30.0
 scale = Vector2(4, 4)
 texture = ExtResource("5_ltstr")
 region_rect = Rect2(0, 0, 32, 32)
@@ -428,15 +441,16 @@ patch_margin_bottom = 5
 
 [node name="Devmode" type="Button" parent="OptionsMenu"]
 offset_left = -206.0
-offset_top = 100.0
+offset_top = -20.0
 offset_right = -119.0
-offset_bottom = 119.0
+offset_bottom = -1.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 toggle_mode = true
 text = "Developer mode"
 
 [node name="Difficulty" type="HSlider" parent="OptionsMenu"]
+visible = false
 offset_left = -206.0
 offset_top = -24.0
 offset_right = -122.0
@@ -494,14 +508,15 @@ text = "X
 
 [node name="DeleteSavefileButton" type="Button" parent="OptionsMenu"]
 offset_left = -206.0
-offset_top = 198.0
+offset_top = 67.0
 offset_right = -119.0
-offset_bottom = 217.0
+offset_bottom = 86.0
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Reset savefile"
 
 [connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
+[connection signal="button_down" from="Buttons/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
 [connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]

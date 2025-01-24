@@ -5,11 +5,7 @@ const directions = ["up","right","down","left"]
 
 func setDirection():
 	var index = randi_range(0,3)
-	$Sprite.animation = directions[index]
-	if index == 2:
-		$Sprite.flip_v = true
-	if index == 3:
-		$Sprite.flip_h = true
+	$Sprite.play(directions[index])
 
 func _on_button_good_area_area_entered(area: Area2D) -> void:
 	if !launched and area.get_parent().is_in_group("InputPrompt"):# and speed < 1:

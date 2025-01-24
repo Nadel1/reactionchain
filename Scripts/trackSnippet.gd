@@ -9,7 +9,7 @@ enum SnippetType {A, B}
 
 func getLayer(index : int):
 	var above = index - layers.size()
-	var actualIndex = min(index, layers.size()-2)
+	var actualIndex = max(0,min(index, layers.size()-2))
 	if above > 0:
 		actualIndex += above % 2
 	var hardMode = (rand_from_seed(index + Global.mainSeed)[0] % 10) < above

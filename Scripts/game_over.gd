@@ -3,6 +3,12 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Background/BackgroundText.text="> Technical difficulties ...\n"
+	if Global.score<=0:
+		$Background/BackgroundText.text+= "> You have become irrelevant\n"
+	elif Global.moneyEarned <1:
+		$Background/BackgroundText.text+= "> No funds remaining\n"
+	$Background/BackgroundText.text+= "> Shutting off ..."
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$Text/ScoreText.text="[center]"+"Most viewers: "+str(Global.currentHighScoreViewers)+"[/center]"
 	$Text/MoneyText.text="[center]"+"Money: "+str(int(Global.moneyEarned))+"[/center]"
@@ -25,14 +31,7 @@ func _ready() -> void:
 	$Text/MoneyText.self_modulate = Color.ORANGE if Global.moneyEarned < 1 else Color.WHITE
 
 func _on_restart_button_down() -> void:
-	Global.score=10
-	Global.nextDonationViewerCount=500
-	Global.currentHighScoreViewers=0
-	Global.mainSeed=randi()
-	Global.currentStreamIndex=0
-	Global.increaseInMoney=100
-	Global.moneyEarned=100
-	Global.startSurvivedTime()
+	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
 
@@ -56,3 +55,8 @@ func _on_devmode_toggled(toggled_on: bool) -> void:
 
 func _on_delete_savefile_button_pressed() -> void:
 	Global.resetSaveFile()
+
+
+func _on_to_main_menu_button_down() -> void:
+	Global.gameStart()
+	get_tree().change_scene_to_file("res://Scenes/mainMenu.tscn")

@@ -1,16 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://co1amc3lrd00p"]
+[gd_scene load_steps=12 format=3 uid="uid://co1amc3lrd00p"]
 
 [ext_resource type="PackedScene" uid="uid://cbxqm0hn6vnfy" path="res://Scenes/Objects/Buttons/Button.tscn" id="1_ugly7"]
 [ext_resource type="Script" path="res://Scripts/fakeButton.gd" id="2_il0f7"]
 [ext_resource type="Texture2D" uid="uid://bsrim815d5p2o" path="res://Assets/Sprites/Buttons/UpButton.png" id="2_pjaui"]
 [ext_resource type="Texture2D" uid="uid://bpv7vci25yq6n" path="res://Assets/Sprites/Buttons/RightButton.png" id="3_34lbj"]
+[ext_resource type="Texture2D" uid="uid://bi52ld5etc2ve" path="res://Assets/Sprites/Buttons/DownButton.png" id="3_jufo6"]
+[ext_resource type="Texture2D" uid="uid://2am0tydak3u4" path="res://Assets/Sprites/Buttons/LeftButton.png" id="4_le8n0"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bjmjm"]
-atlas = ExtResource("2_pjaui")
+[sub_resource type="AtlasTexture" id="AtlasTexture_q45al"]
+atlas = ExtResource("3_jufo6")
 region = Rect2(0, 0, 18, 18)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mhcd2"]
-atlas = ExtResource("3_34lbj")
+[sub_resource type="AtlasTexture" id="AtlasTexture_per65"]
+atlas = ExtResource("4_le8n0")
 region = Rect2(0, 0, 18, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5fk5q"]
@@ -25,7 +27,7 @@ region = Rect2(0, 0, 18, 18)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bjmjm")
+"texture": SubResource("AtlasTexture_q45al")
 }],
 "loop": true,
 "name": &"down",
@@ -33,7 +35,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mhcd2")
+"texture": SubResource("AtlasTexture_per65")
 }],
 "loop": true,
 "name": &"left",
