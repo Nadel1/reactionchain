@@ -388,17 +388,6 @@ bbcode_enabled = true
 text = "[center]DEBUG SCORE[/center]"
 scroll_active = false
 
-[node name="MoneyTipp" type="RichTextLabel" parent="Text"]
-self_modulate = Color(1, 0.851667, 0.11, 1)
-layout_mode = 0
-offset_left = 1079.0
-offset_top = 108.0
-offset_right = 1210.0
-offset_bottom = 148.0
-scale = Vector2(2, 2)
-theme = ExtResource("3_xylrd")
-text = "(You get a donation opportunity every 500 viewers!)"
-
 [node name="HighScore" type="Node2D" parent="Text"]
 position = Vector2(730, 268)
 rotation = 0.0349066

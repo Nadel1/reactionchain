@@ -8,15 +8,16 @@ func _ready() -> void:
 	Global.tact.connect(updateStreamState)
 	updateMoneyDisplay(false)
 
-func _process(delta: float) -> void:
-	if streamRunning:
-		Global.moneyEarned -= delta * Global.moneyLoss
-		updateMoneyDisplay()
+#func _process(delta: float) -> void:
+	#if streamRunning:
+		#Global.moneyEarned -= delta * Global.moneyLoss
+		#updateMoneyDisplay()
 
 func updateStreamState(snippetIndex):
 	streamRunning = snippetIndex < Global.musicTracks.back().size()
 
 func updateMoneyDisplay(allowGameOver = true):
+	Global.currentMoneyHighScore = max(Global.currentMoneyHighScore, Global.moneyEarned)
 	var moneyAmount = int(Global.moneyEarned)
 	var displayedMoney=str(moneyAmount)
 	if moneyAmount>1000 and moneyAmount<1000000:
@@ -30,6 +31,7 @@ func updateMoneyDisplay(allowGameOver = true):
 	if moneyAmount < Global.moneyLoss * 10:
 		$Warning.play("warning")
 		if moneyAmount <= 0 and allowGameOver:
-			Global.gameOver()
+			pass
+			#Global.gameOver()
 	else:
 		$Warning.play("default")

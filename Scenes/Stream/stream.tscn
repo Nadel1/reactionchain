@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=60 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -11,12 +11,15 @@
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="6_f2vs8"]
 [ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
 [ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="7_fa6aa"]
+[ext_resource type="PackedScene" uid="uid://sf3lvxf1n2uo" path="res://Scenes/Stream/streamerStats.tscn" id="7_veajl"]
 [ext_resource type="Script" path="res://Scripts/Stream/moneyManager.gd" id="8_42nob"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 [ext_resource type="Texture2D" uid="uid://cl55olhp7mk1x" path="res://Assets/Sprites/Donations/MoneyWarning.png" id="11_grdfd"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="12_51xhv"]
 [ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
+[ext_resource type="PackedScene" uid="uid://p3a85s2c5cos" path="res://Scenes/Stream/statBar.tscn" id="13_k8v6l"]
+[ext_resource type="Texture2D" uid="uid://crgjxiylykkfr" path="res://Assets/Sprites/UI/viewerIcon.png" id="14_550fi"]
 [ext_resource type="Texture2D" uid="uid://dodwqxhvwh3p" path="res://Assets/Sprites/Donations/Background.png" id="15_8i647"]
 [ext_resource type="Texture2D" uid="uid://dn4mi8qh4mm1n" path="res://Assets/Sprites/UI/arrowKeys.png" id="15_68yvl"]
 [ext_resource type="PackedScene" uid="uid://b6h0kgvl47nof" path="res://Scenes/Objects/Donations/donation.tscn" id="20_plu0g"]
@@ -106,7 +109,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Score:position")
+tracks/0/path = NodePath("ScorePos/Score:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -118,7 +121,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Score:scale")
+tracks/1/path = NodePath("ScorePos/Score:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -130,7 +133,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Score:modulate")
+tracks/2/path = NodePath("ScorePos/Score:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -146,7 +149,7 @@ length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Score:position")
+tracks/0/path = NodePath("ScorePos/Score:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -158,7 +161,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Score:scale")
+tracks/1/path = NodePath("ScorePos/Score:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -170,7 +173,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = false
-tracks/2/path = NodePath("Score:modulate")
+tracks/2/path = NodePath("ScorePos/Score:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -186,7 +189,7 @@ length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Score:position")
+tracks/0/path = NodePath("ScorePos/Score:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -198,7 +201,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Score:scale")
+tracks/1/path = NodePath("ScorePos/Score:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -210,7 +213,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = false
-tracks/2/path = NodePath("Score:modulate")
+tracks/2/path = NodePath("ScorePos/Score:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -525,16 +528,20 @@ wait_time = 2.0
 
 [node name="UI" type="Node2D" parent="."]
 
+[node name="StreamerStats" parent="UI" instance=ExtResource("7_veajl")]
+position = Vector2(1060, 288)
+scale = Vector2(4, 4)
+
 [node name="Chat" parent="UI" instance=ExtResource("2_p3jgj")]
 position = Vector2(808, 24)
 
 [node name="Money" type="Node2D" parent="UI"]
-position = Vector2(500, 500)
+position = Vector2(64, 496)
 script = ExtResource("8_42nob")
 
 [node name="MoneyVFX" type="AnimatedSprite2D" parent="UI/Money"]
 z_index = 2
-position = Vector2(175, -10)
+position = Vector2(1040, -80)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_d77wq")
 animation = &"money"
@@ -542,6 +549,7 @@ frame = 5
 frame_progress = 1.0
 
 [node name="Text" type="RichTextLabel" parent="UI/Money"]
+visible = false
 offset_left = -19.0
 offset_top = -3.0
 offset_right = 130.0
@@ -552,6 +560,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "Money: 0"
 
 [node name="Warning" type="AnimatedSprite2D" parent="UI/Money"]
+visible = false
 position = Vector2(-52, 28)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_8sw4y")
@@ -561,26 +570,53 @@ autoplay = "default"
 libraries = {
 "": SubResource("AnimationLibrary_jg2sn")
 }
+autoplay = "RESET"
 
-[node name="Score" type="Node2D" parent="UI" node_paths=PackedStringArray("animator")]
+[node name="ScorePos" type="Node2D" parent="UI"]
+position = Vector2(592, -8)
+
+[node name="DonationProgress" parent="UI/ScorePos" instance=ExtResource("13_k8v6l")]
+position = Vector2(-200, 520)
+rotation = -1.5708
+scale = Vector2(-4, 4)
+
+[node name="Background" parent="UI/ScorePos/DonationProgress" index="0"]
+self_modulate = Color(0.1, 0.1, 0.1, 1)
+
+[node name="Bar" parent="UI/ScorePos/DonationProgress" index="1"]
+self_modulate = Color(0.950672, 0.483086, 0, 1)
+
+[node name="Score" type="Node2D" parent="UI/ScorePos" node_paths=PackedStringArray("animator", "donationProgress")]
 z_index = 1
 position = Vector2(128, 536)
 script = ExtResource("6_a5we1")
-animator = NodePath("../ScoreAnim")
+animator = NodePath("../../ScoreAnim")
+donationProgress = NodePath("../DonationProgress")
 
-[node name="Label" type="RichTextLabel" parent="UI/Score"]
+[node name="Label" type="RichTextLabel" parent="UI/ScorePos/Score"]
 modulate = Color(0, 0, 0, 1)
-offset_left = -119.0
-offset_top = -35.0
-offset_right = 30.0
-offset_bottom = -20.0
+offset_left = -48.0
+offset_top = -32.0
+offset_right = -4.0
+offset_bottom = -17.0
 scale = Vector2(4, 4)
 theme = ExtResource("6_f2vs8")
-text = "Score: 0"
+text = "0"
 
-[node name="ViewerUpdate" type="Timer" parent="UI/Score/Label"]
-wait_time = 2.0
+[node name="ViewerUpdate" type="Timer" parent="UI/ScorePos/Score/Label"]
 autostart = true
+
+[node name="Warning" type="AnimatedSprite2D" parent="UI/ScorePos/Score"]
+position = Vector2(56, 0)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_8sw4y")
+animation = &"warning"
+autoplay = "default"
+
+[node name="Icon" type="Sprite2D" parent="UI/ScorePos/Score"]
+position = Vector2(-72, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("14_550fi")
 
 [node name="Track" parent="UI" instance=ExtResource("1_hd44i")]
 position = Vector2(299, 593)
@@ -680,6 +716,8 @@ autoplay = "zoomOut"
 [connection signal="midi_event" from="MidiPlayerArrows" to="UI/Track" method="_on_midi_player_arrows_midi_event"]
 [connection signal="timeout" from="StartSpawningArrowsTimer" to="." method="_on_start_spawning_arrows_timer_timeout"]
 [connection signal="timeout" from="SwitchSceneTimer" to="." method="_on_switch_scene_timer_timeout"]
-[connection signal="animation_finished" from="UI/ScoreAnim" to="UI/Score" method="_on_score_anim_animation_finished"]
-[connection signal="timeout" from="UI/Score/Label/ViewerUpdate" to="UI/Score" method="_on_viewer_update_timeout"]
+[connection signal="animation_finished" from="UI/ScoreAnim" to="UI/ScorePos/Score" method="_on_score_anim_animation_finished"]
+[connection signal="timeout" from="UI/ScorePos/Score/Label/ViewerUpdate" to="UI/ScorePos/Score" method="_on_viewer_update_timeout"]
 [connection signal="timeout" from="UI/TimerSinceLastMessage" to="UI/Chat" method="_on_timer_since_last_message_timeout"]
+
+[editable path="UI/ScorePos/DonationProgress"]

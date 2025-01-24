@@ -55,7 +55,8 @@ func correctDonation():
 	ui.get_node("Money/MoneyVFX").show()
 	ui.get_node("Money/MoneyVFX").play("money")
 	Global.moneyManager.updateMoneyDisplay()
-			
+	Global.updateStreamerStats.emit()
+
 func loadDonation(donationLevel):
 	donationInputsBanner=find_child("DonationsBanner")
 	turnOn()
