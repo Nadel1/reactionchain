@@ -75,8 +75,6 @@ func _process(delta: float) -> void:
 func spawnButton():
 	var fast = Global.getPromptSpeedState()
 	if arrowSpawnID % Global.difficulty == 0:
-		if projectedArrow.get_animation()=="default":
-			adjustProjection()
 		var spawnIndex=randi()%numberOfButtonPrompts
 		var newButtonPrompt=buttonPrompts[spawnIndex].instantiate()
 		newButtonPrompt.global_position=fastSpawnPoint.global_position if fast else spawnPoint.global_position
@@ -85,6 +83,8 @@ func spawnButton():
 		buttonsSpawned += 1
 		get_parent().find_child("Prompts").call_deferred("add_child",newButtonPrompt)
 		buttonSequence.append(newButtonPrompt)
+		if projectedArrow.get_animation()=="default":
+			adjustProjection()
 		return newButtonPrompt
 	arrowSpawnID += 1
 	
@@ -124,6 +124,8 @@ func spawnMarker(end : bool):
 	newMarker.setVisible(Global.developerMode)
 	if !end:
 		newMarker.setIndex(Global.arrowSnippetIndex)
+	else:
+		rebuildSequence()
 	newMarker.setStart(!end)
 	if end and lastButtonSpawned!=null:
 		debuglastButton+=1
@@ -181,7 +183,7 @@ func adjustProjection():
 		projectedArrow.play("default")
 		return
 	if buttonSequence.front()==null:
-		return	
+		rebuildSequence()	
 	projectedArrow.play(buttonSequence.front().getInput())
 		
 func evaluateScore(buttonPrompt,correctInput=true):
@@ -223,11 +225,11 @@ func evaluateScore(buttonPrompt,correctInput=true):
 		Global.gameOver()
 
 func rebuildSequence():
-	print("UNEXPECTED PROMPT! Rebuilding sequence.")
 	var currentPrompts = get_parent().find_child("Prompts").get_children()
 	currentPrompts.sort_custom(sortPrompts)
 	currentPrompts.filter(filterNull)
 	buttonSequence = currentPrompts
+	adjustProjection()
 
 func sortPrompts(a, b):
 	if a.index < b.index:
