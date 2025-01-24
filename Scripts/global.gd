@@ -91,7 +91,8 @@ func prepareGame():
 	mainSeed=randi()
 	currentStreamIndex=0
 	increaseInMoney=100
-	moneyEarned=100
+	moneyEarned=0
+	health = 1.0
 	recordingsMovement = []
 	recordingsReaction = []
 	recordingsFails = []

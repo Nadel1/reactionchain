@@ -4,10 +4,12 @@ extends Node2D
 @export var donationProgress : StatBar
 @onready var viewersActual = Global.score
 @onready var viewersDisplayed = viewersActual
+@onready var progressDisplayed = float(viewersActual) / Global.nextDonationViewerCount
 var time = 0.0
 
 func _process(delta: float) -> void:
 	viewersDisplayed = lerpf(viewersDisplayed, viewersActual, delta)
+	progressDisplayed = lerpf(progressDisplayed, float(viewersActual) / Global.nextDonationViewerCount, 5 * delta)
 	updateDisplay()
 	
 	#time += delta * 4
@@ -25,7 +27,7 @@ func updateDisplay():
 		displayedViewers=str(viewerAmount/1000000)+"."+str((viewerAmount%1000000)/100000)
 		displayedViewers=str(displayedViewers)+"m"
 	$Label.text=str(displayedViewers)
-	donationProgress.setValue(float(viewersDisplayed) / Global.nextDonationViewerCount)
+	donationProgress.setValue(progressDisplayed)
 	$Warning.play("warning" if viewersDisplayed < 10 else "default")
 
 func _on_viewer_update_timeout() -> void:

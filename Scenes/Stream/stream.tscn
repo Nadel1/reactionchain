@@ -604,7 +604,6 @@ theme = ExtResource("6_f2vs8")
 text = "0"
 
 [node name="ViewerUpdate" type="Timer" parent="UI/ScorePos/Score/Label"]
-wait_time = 2.0
 autostart = true
 
 [node name="Warning" type="AnimatedSprite2D" parent="UI/ScorePos/Score"]
