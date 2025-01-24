@@ -8,7 +8,7 @@
 script = ExtResource("1_ioscl")
 Asnippets = [NodePath("SnippetA1"), NodePath("SnippetA2"), NodePath("SnippetA3")]
 Bsnippets = [NodePath("SnippetB1"), NodePath("SnippetB2"), NodePath("SnippetB3")]
-soundfonts = Array[String](["res://Assets/Audio/Instruments/Hybrid_Synthetic_Str.sf2"])
+soundfonts = Array[String](["res://Assets/Audio/Instruments/robo01.sf2", "res://Assets/Audio/Instruments/robo02.sf2", "res://Assets/Audio/Instruments/robo03.sf2", "res://Assets/Audio/Instruments/robo04.sf2", "res://Assets/Audio/Instruments/robo05.sf2", "res://Assets/Audio/Instruments/robo06.sf2"])
 layerVolumes = [-20, -23, -27, -27, -27, -27]
 
 [node name="EventScheduler" type="Node" parent="."]

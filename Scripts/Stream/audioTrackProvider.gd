@@ -12,7 +12,11 @@ func getSnippet(A = true):
 	return Asnippets.pick_random() if A else Bsnippets.pick_random()
 
 func getSoundFont(layerIndex : int):
-	return soundfonts[min(layerIndex, soundfonts.size() - 1)]
+	var above = layerIndex - (soundfonts.size()-1)
+	var actualIndex = min(layerIndex, soundfonts.size()-2)
+	if above > 0:
+		actualIndex += above % 2
+	return soundfonts[actualIndex]
 
 func prepareMusic():
 	var track = []
