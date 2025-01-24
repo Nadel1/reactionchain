@@ -411,6 +411,38 @@ libraries = {
 "": SubResource("AnimationLibrary_dvshw")
 }
 
+[node name="ScoreboardUI" type="Control" parent="Text"]
+layout_mode = 1
+anchor_left = 4.7
+anchor_top = -2.0
+anchor_right = 4.7
+anchor_bottom = -2.0
+offset_left = -174.0
+offset_top = 92.0
+offset_right = -118.0
+offset_bottom = 172.0
+
+[node name="Text" type="RichTextLabel" parent="Text/ScoreboardUI"]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 208.0
+offset_right = 314.0
+offset_bottom = 224.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+text = "Name:"
+
+[node name="LineEdit" type="LineEdit" parent="Text/ScoreboardUI"]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 274.0
+offset_right = 281.062
+offset_bottom = 305.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_xylrd")
+placeholder_text = "enter"
+max_length = 10
+
 [node name="OptionsMenu" type="Node2D" parent="."]
 visible = false
 position = Vector2(576, 304)
@@ -508,6 +540,7 @@ text = "Reset savefile"
 [connection signal="button_down" from="Buttons/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
 [connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
+[connection signal="text_submitted" from="Text/ScoreboardUI/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
 [connection signal="pressed" from="OptionsMenu/QuitMenuButton" to="." method="_on_quit_menu_button_pressed"]
 [connection signal="pressed" from="OptionsMenu/DeleteSavefileButton" to="." method="_on_delete_savefile_button_pressed"]

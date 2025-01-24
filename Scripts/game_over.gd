@@ -59,3 +59,5 @@ func _on_delete_savefile_button_pressed() -> void:
 func _on_to_main_menu_button_down() -> void:
 	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/mainMenu.tscn")
+func _on_line_edit_text_submitted(new_text: String) -> void:
+	pass # Replace with function body.

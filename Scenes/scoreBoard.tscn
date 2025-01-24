@@ -1,0 +1,165 @@
+[gd_scene load_steps=4 format=3 uid="uid://cihi5jngaq6ep"]
+
+[ext_resource type="Script" path="res://Scripts/score_board.gd" id="1_kmunq"]
+[ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="1_sfjhh"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_ehyhn"]
+
+[node name="ScoreBoard" type="Node2D"]
+script = ExtResource("1_kmunq")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(615, 328.5)
+scale = Vector2(10, 10.7656)
+texture = ExtResource("1_sfjhh")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="backToMainMenu" type="Button" parent="UI"]
+offset_left = 435.0
+offset_top = 589.0
+offset_right = 538.0
+offset_bottom = 608.0
+scale = Vector2(3, 3)
+theme = ExtResource("3_ehyhn")
+text = "Main Menu"
+
+[node name="Title" type="RichTextLabel" parent="UI"]
+layout_mode = 0
+offset_left = 435.0
+offset_right = 506.0
+offset_bottom = 18.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]Scoreboard[/center]"
+
+[node name="ItemList" type="ItemList" parent="UI"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 159.0
+offset_right = 325.0
+offset_bottom = 258.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+item_count = 2
+max_columns = 5
+same_column_width = true
+item_0/selectable = false
+
+[node name="Titles" type="Control" parent="UI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Score" type="RichTextLabel" parent="UI/Titles"]
+offset_left = 284.0
+offset_top = 87.0
+offset_right = 355.0
+offset_bottom = 105.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]Score[/center]"
+
+[node name="Name" type="RichTextLabel" parent="UI/Titles"]
+offset_top = 87.0
+offset_right = 71.0
+offset_bottom = 105.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]Name
+[/center]"
+
+[node name="Time" type="RichTextLabel" parent="UI/Titles"]
+offset_left = 918.0
+offset_top = 87.0
+offset_right = 989.0
+offset_bottom = 105.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]Time[/center]"
+
+[node name="Viewers" type="RichTextLabel" parent="UI/Titles"]
+offset_left = 545.0
+offset_top = 87.0
+offset_right = 616.0
+offset_bottom = 105.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]Viewers[/center]"
+
+[node name="Money" type="RichTextLabel" parent="UI/Titles"]
+offset_left = 744.0
+offset_top = 87.0
+offset_right = 815.0
+offset_bottom = 105.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]Money[/center]"
+
+[node name="Values" type="Control" parent="UI"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TimeValues" type="RichTextLabel" parent="UI/Values"]
+layout_mode = 0
+offset_left = 996.0
+offset_top = 159.0
+offset_right = 1036.0
+offset_bottom = 253.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]69:69[/center]"
+
+[node name="MoneyValues" type="RichTextLabel" parent="UI/Values"]
+offset_left = 797.0
+offset_top = 159.0
+offset_right = 841.0
+offset_bottom = 253.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]4k20[/center]"
+
+[node name="ViewerValues" type="RichTextLabel" parent="UI/Values"]
+offset_left = 585.0
+offset_top = 159.0
+offset_right = 629.0
+offset_bottom = 253.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]69k200[/center]"
+
+[node name="ScoreValues" type="RichTextLabel" parent="UI/Values"]
+offset_left = 312.0
+offset_top = 159.0
+offset_right = 381.0
+offset_bottom = 258.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]1020030[/center]"
+
+[node name="NameValues" type="RichTextLabel" parent="UI/Values"]
+offset_left = 54.0
+offset_top = 159.0
+offset_right = 103.0
+offset_bottom = 258.0
+scale = Vector2(4, 4)
+theme = ExtResource("3_ehyhn")
+bbcode_enabled = true
+text = "[center]team[/center]"
+
+[connection signal="pressed" from="UI/backToMainMenu" to="." method="_on_back_to_main_menu_pressed"]
