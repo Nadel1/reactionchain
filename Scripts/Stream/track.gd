@@ -222,8 +222,7 @@ func evaluateScore(buttonPrompt,correctInput=true):
 			buttonSequence.pop_front()
 		buttonPrompt.queue_free()
 		adjustProjection()
-	#if(Global.score<=0):
-		#Global.gameOver()
+	Global.score = max(0, Global.score)
 
 func rebuildSequence():
 	var currentPrompts = get_parent().find_child("Prompts").get_children()

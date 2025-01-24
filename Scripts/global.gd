@@ -83,12 +83,12 @@ signal updateStreamerStats
 func _enter_tree():
 	loadGame()
 
-func prepareGame():
+func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1
 	score=10
 	nextDonationViewerCount=500
 	currentHighScoreViewers=0
-	mainSeed=randi()
+	if resetSeed: mainSeed=randi()
 	currentStreamIndex=0
 	increaseInMoney=100
 	moneyEarned=0
