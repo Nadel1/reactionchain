@@ -36,6 +36,7 @@ func _process(delta: float) -> void:
 
 func updateStats():
 	$Health.setValue(Global.health)
+	$Health/Background.modulate = lerp(Color(0.8,0.1,0.1), Color(0.1,0.1,0.1), Global.health * 2 if Global.health < 0.5 else 1.0)
 	var moneyBars = floor(Global.moneyEarned / moneyPerBar)
 	$MoneyCount.text = str(moneyBars) if moneyBars > 0 else ""
 	var moneyFillLevel = float(Global.moneyEarned - (moneyPerBar * moneyBars)) / moneyPerBar

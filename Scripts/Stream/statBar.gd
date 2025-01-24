@@ -15,5 +15,5 @@ func setValue(value):
 	value = clampf(value, 0, 1)
 	if fullPos == null:
 		_ready()
-	$Bar.position.y = floor(lerpf(emptyPos, fullPos, value))
-	$Bar.size.y = ceil(lerpf(0, length, value))
+	$Bar.position.y = ceil(lerpf(emptyPos, fullPos, value))
+	$Bar.size.y = floor(lerpf(0, length, value))

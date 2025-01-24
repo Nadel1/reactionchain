@@ -26,8 +26,7 @@ func updateDisplay():
 		displayedViewers=str(displayedViewers)+"m"
 	$Label.text=str(displayedViewers)
 	donationProgress.setValue(float(viewersDisplayed) / Global.nextDonationViewerCount)
-	if viewersDisplayed < 10:
-		$Warning.play("warning")
+	$Warning.play("warning" if viewersDisplayed < 10 else "default")
 
 func _on_viewer_update_timeout() -> void:
 	if viewersActual < Global.score:
