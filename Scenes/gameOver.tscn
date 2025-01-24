@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bv0ca4q3shcn5"]
+[gd_scene load_steps=16 format=3 uid="uid://bv0ca4q3shcn5"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
 [ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="5_ltstr"]
 [ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="7_1q6on"]
 [ext_resource type="Texture2D" uid="uid://wktqe8sxtius" path="res://Assets/Sprites/GameOver/backgroundCamera.png" id="8_jbcag"]
+[ext_resource type="PackedScene" uid="uid://cihi5jngaq6ep" path="res://Scenes/scoreBoard.tscn" id="8_ke287"]
 
 [sub_resource type="Animation" id="Animation_y1q0o"]
 length = 0.001
@@ -423,6 +424,9 @@ offset_left = -174.0
 offset_top = 92.0
 offset_right = -118.0
 offset_bottom = 172.0
+
+[node name="ScoreBoard" parent="Text/ScoreboardUI" instance=ExtResource("8_ke287")]
+position = Vector2(1103, 162)
 
 [node name="Text" type="RichTextLabel" parent="Text/ScoreboardUI"]
 layout_mode = 0

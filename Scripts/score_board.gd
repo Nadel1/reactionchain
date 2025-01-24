@@ -30,10 +30,17 @@ func _process(delta: float) -> void:
 
 func updateScoreboard():
 	sort()
+	itemListName.clear()
+	itemListScore.clear()
 	for i in range(names.size()):
 		itemListName.add_item("#"+str(i+1)+" "+names[i])
 		itemListScore.add_item(str(scores[i]))
 
+func addEntry(name:String,score:int):
+	names.append(name)
+	scores.append(score)
+	updateScoreboard()
+	
 func saveScores(filepath:String):
 	var file= FileAccess.open(filepath, FileAccess.READ_WRITE)
 	for i in range(names.size()):
