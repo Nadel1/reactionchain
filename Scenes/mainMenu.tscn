@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://oqtxuh6lfavi"]
+[gd_scene load_steps=15 format=3 uid="uid://oqtxuh6lfavi"]
 
 [ext_resource type="Texture2D" uid="uid://d2mo23t2gbb52" path="res://Assets/Sprites/MainMenu/Title1.png" id="1_ggqlj"]
 [ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="1_gvy58"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/menu_music.gd" id="8_jcyxb"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="9_ngp34"]
 [ext_resource type="Script" path="res://Scripts/Stream/backingTrackPlayer.gd" id="10_ng7j5"]
+[ext_resource type="PackedScene" uid="uid://cihi5jngaq6ep" path="res://Scenes/scoreBoard.tscn" id="11_07j6w"]
 
 [sub_resource type="Animation" id="Animation_1sc46"]
 length = 0.001
@@ -195,6 +196,14 @@ theme = ExtResource("4_jced4")
 text = "Quit
 "
 
+[node name="Scoreboard" type="Button" parent="Buttons"]
+offset_top = 64.0
+offset_right = 64.0
+offset_bottom = 83.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+text = "Scoreboard"
+
 [node name="OptionsMenu" type="Node2D" parent="."]
 visible = false
 position = Vector2(576, 304)
@@ -337,10 +346,15 @@ loop = true
 soundfont = "res://Assets/Audio/Instruments/Drum Set JD Rockset 5.sf2"
 bus = &"Bass"
 
+[node name="ScoreBoard" parent="." instance=ExtResource("11_07j6w")]
+visible = false
+position = Vector2(728, 169)
+
 [connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Buttons/Tutorial" to="." method="_on_tutorial_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="button_down" from="Buttons/Quit" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="Buttons/Scoreboard" to="." method="_on_scoreboard_button_down"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
 [connection signal="toggled" from="OptionsMenu/PerformanceMode" to="." method="_on_performance_mode_toggled"]
 [connection signal="value_changed" from="OptionsMenu/Difficulty" to="." method="_on_difficulty_value_changed"]

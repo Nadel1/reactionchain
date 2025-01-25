@@ -3,14 +3,21 @@ extends Node2D
 var names:Array[String]
 var scores:Array[int]
 
-@onready var itemListName=$MarginContainer/VBoxContainer/HBoxContainer2/ItemListName
-@onready var itemListScore=$MarginContainer/VBoxContainer/HBoxContainer2/ItemListScore
+@onready var nameValues=$MarginContainer/VBoxContainer/GridContainer/NameValues
+@onready var scoreValues=$MarginContainer/VBoxContainer/GridContainer/ScoreValues
+@onready var lineEditContainer= $MarginContainer/VBoxContainer/HBoxContainerLineEdit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	loadScores("scores.save")
 	updateScoreboard()
 	saveScores("scores.save")
+
+func showLineEdit():
+	if Global.overallScore>scores[scores.size()-1]:
+		lineEditContainer.show()
+	else:
+		lineEditContainer.hide()
 
 func sort():
 	var scoresSorted:Array[int]
@@ -30,16 +37,29 @@ func _process(delta: float) -> void:
 
 func updateScoreboard():
 	sort()
-	itemListName.clear()
-	itemListScore.clear()
-	for i in range(names.size()):
-		itemListName.add_item("#"+str(i+1)+" "+names[i])
-		itemListScore.add_item(str(scores[i]))
-
+	nameValues.text=""
+	scoreValues.text=""
+	for i in range(min(names.size(),10)):
+		var fillString=" "
+		for j in range(11-names[i].length()):
+			fillString+=" "
+		var nameFilled=names[i]+fillString
+		if i>=9:
+			nameValues.text+="> #"+str(i+1)+" "+names[i]+'\n'
+		else:	
+			nameValues.text+="> #"+str(i+1)+"  "+names[i]+'\n'
+		scoreValues.text+= str(scores[i])+'\n'
+	saveScores("scores.save")
+func checkHighScore(potentialHighScore:int):
+	if potentialHighScore>scores[0]:
+		return true
+	else:
+		return false
 func addEntry(name:String,score:int):
 	names.append(name)
 	scores.append(score)
 	updateScoreboard()
+	
 	
 func saveScores(filepath:String):
 	var file= FileAccess.open(filepath, FileAccess.READ_WRITE)
@@ -58,3 +78,7 @@ func loadScores(filepath : String):
 		names.append(entry[0])
 		scores.append(entry[1].to_int())
 	file.close()
+
+func _on_line_edit_text_submitted(new_text: String) -> void:
+	addEntry(new_text,Global.overallScore)
+	lineEditContainer.get_node("LineEdit").set_editable(false)

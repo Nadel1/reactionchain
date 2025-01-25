@@ -16,9 +16,8 @@ func _ready() -> void:
 	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+int(Global.currentMoneyHighScore)
 	Global.moneyHighScore = max(Global.moneyHighScore, Global.currentMoneyHighScore)
 	$Text/OverallScoreText.text="[center] Overall score: "+str(Global.overallScore)
-	if Global.overallScore>Global.overallScoreHighScore:
+	if scoreboard.checkHighScore(Global.overallScore):
 		$Text/HighScore.show()
-		Global.overallScoreHighScore=Global.overallScore
 	else: 
 		$Text/HighScore.hide()
 	var time=int(Global.survivedTime)
@@ -36,7 +35,6 @@ func _on_restart_button_down() -> void:
 
 
 func _on_quit_game_button_down() -> void:
-	Global.saveGame()
 	get_tree().quit()
 
 
@@ -60,5 +58,3 @@ func _on_delete_savefile_button_pressed() -> void:
 func _on_to_main_menu_button_down() -> void:
 	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/mainMenu.tscn")
-func _on_line_edit_text_submitted(new_text: String) -> void:
-	scoreboard.addEntry(new_text,Global.score)

@@ -6,7 +6,6 @@ extends Node
 # Random seed, constant within a game.
 # Derive from this via rand_from_seed() for things that should be random but consistent
 @onready var mainSeed = randi()
-const SAVEFILE_NAME = "deadInternetTheory.save"
 
 var inputHandler : InputHandler
 var inputRecorder : InputRecorder
@@ -81,8 +80,6 @@ signal updateStreamerStats
 @export var playbackSpeed = 0.575
 @export var snippetLength = 2.4
 
-func _enter_tree():
-	loadGame()
 
 func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1
@@ -268,11 +265,6 @@ func gameOver():
 		$FakeArrowDelay.stop()
 		stopMetronome()
 		stopMetronomeArrows()
-	
-func saveGame():
-	var file = FileAccess.open_encrypted_with_pass(SAVEFILE_NAME, FileAccess.WRITE, "superorganism")
-	file.store_string(JSON.stringify(makeSaveDict()))
-	file.close()
 
 #param(dict): the JSON dictionary object returned parsed from saveFile
 #param(value): the Global variable that should be set to the data from the savefile
@@ -285,24 +277,11 @@ func loadDataFromDictSafe(dict, value, data : String):
 		printerr("[Global.loadDataFromDictSafe] dict.get("+data+") returned null")
 		return value
 		
-func loadGame():
-	if FileAccess.file_exists(SAVEFILE_NAME):
-		var file = FileAccess.open_encrypted_with_pass(SAVEFILE_NAME, FileAccess.READ, "superorganism")
-		var dict = JSON.parse_string(file.get_as_text())
-		file.close()
-		if typeof(dict) == TYPE_DICTIONARY:
-			overallScoreHighScore = loadDataFromDictSafe(dict, overallScoreHighScore, "overallScoreHighScore")
-		else:
-			printerr("Corrupted data!")
-	else:
-		saveGame();
-		printerr("No saved data!")
 		
 func resetSaveFile():
 	highScoreViewers=0
 	moneyHighScore=0
 	highScoreTime=0
-	saveGame()
 
 
 func _on_arrow_travel_delay_timeout() -> void:
