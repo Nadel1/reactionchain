@@ -46,7 +46,7 @@ func dealWithInput(correctInput):
 		else: 
 			inputArray[compareIndex].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[compareIndex]))
 	else:
-		fail()
+		failDonation()
 	
 func correctDonation():
 	$Success.play()
@@ -77,7 +77,7 @@ func loadDonation(donationLevel):
 	inputArray[0].find_child("AnimatedSprite2DBackground").play(str("blinking"+expectedInputOrder[0]))
 	
 	
-func fail():
+func failDonation():
 	Global.currentStreamer.donationReaction(false)
 	for i in range(0, inputArray.size()):
 		inputArray[i].hide()
@@ -87,7 +87,6 @@ func fail():
 	Global.score-=Global.score/5
 	Global.score = min(Global.score, Global.nextDonationViewerCount/2)
 	$Fail.play()
-	print("failed donation")
 	failed = true
 	fail.emit()
 
@@ -95,7 +94,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name=="popUp":
 		donationAnim.play("timeForReaction")
 	elif anim_name=="timeForReaction":
-		fail()
+		failDonation()
 		
 
 

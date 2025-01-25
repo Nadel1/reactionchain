@@ -64,6 +64,7 @@ var eventEnds = []
 var pauseDepths = [] # stack of stream IDs. a pause event puts that stream's ID on top, resume takes it off again
 var fastPromptMult = 2
 var fakePromptsCountdown = -1
+var snippetCount = lengthOfMusic
 var debugWindow : DebugWindow
 @onready var arrowTravelDelay = $ArrowTravelDelay
 
@@ -133,6 +134,7 @@ func resetPerStream():
 	eventIndexArrows = 0
 	eventIndexMusic = 0
 	events = []
+	snippetCount = lengthOfMusic if musicTracks.is_empty() else musicTracks.back().size()
 
 func _on_metronome_timeout() -> void:
 	if eventEnds.size() > 0 and eventEnds.back() <= 0:
@@ -147,13 +149,13 @@ func _on_metronome_timeout() -> void:
 	for entry in eventEnds:
 		endsString += str(entry) + ","
 	debugWindow.setEntry("Events", endsString)
-	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(musicTracks.back().size()))
+	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(snippetCount))
 
 func startMetronome():
 	$Metronome.start()
 	tact.emit(musicSnippetIndex)
 	musicSnippetIndex += 1
-	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(musicTracks.back().size()))
+	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(snippetCount))
 	
 func stopMetronome():
 	$Metronome.stop()
@@ -176,15 +178,17 @@ func _on_metronome_arrows_timeout() -> void:
 	tactArrows.emit(arrowSnippetIndex)
 	arrowSnippetIndex += 1
 	
-	debugWindow.setEntry("ArrowIndex", str(arrowSnippetIndex)+"/"+str(musicTracks.back().size()))
+	debugWindow.setEntry("ArrowIndex", str(arrowSnippetIndex)+"/"+str(snippetCount))
 	
 func startMetronomeArrows():
+	if musicTracks.is_empty():
+		musicTracks.push_back([])
 	$MetronomeArrows.start()
 	$ArrowTravelDelay.start()
 	checkEventPrep()
 	tactArrows.emit(arrowSnippetIndex)
 	arrowSnippetIndex += 1
-	debugWindow.setEntry("ArrowIndex", str(arrowSnippetIndex)+"/"+str(musicTracks.back().size()))
+	debugWindow.setEntry("ArrowIndex", str(arrowSnippetIndex)+"/"+str(snippetCount))
 	
 func stopMetronomeArrows():
 	$MetronomeArrows.stop()

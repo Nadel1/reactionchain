@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://esuifwpqp2og"]
+[gd_scene load_steps=61 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
 [ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
 [ext_resource type="PackedScene" uid="uid://p3a85s2c5cos" path="res://Scenes/Stream/statBar.tscn" id="13_k8v6l"]
 [ext_resource type="Texture2D" uid="uid://crgjxiylykkfr" path="res://Assets/Sprites/UI/viewerIcon.png" id="14_550fi"]
+[ext_resource type="Texture2D" uid="uid://d10r14vr6uyvc" path="res://Assets/Sprites/Donations/DonationIcon.png" id="14_igh82"]
 [ext_resource type="Texture2D" uid="uid://dodwqxhvwh3p" path="res://Assets/Sprites/Donations/Background.png" id="15_8i647"]
 [ext_resource type="Texture2D" uid="uid://dn4mi8qh4mm1n" path="res://Assets/Sprites/UI/arrowKeys.png" id="15_68yvl"]
 [ext_resource type="PackedScene" uid="uid://b6h0kgvl47nof" path="res://Scenes/Objects/Donations/donation.tscn" id="20_plu0g"]
@@ -586,6 +587,11 @@ self_modulate = Color(0.1, 0.1, 0.1, 1)
 
 [node name="Bar" parent="UI/ScorePos/DonationProgress" index="1"]
 self_modulate = Color(0.950672, 0.483086, 0, 1)
+
+[node name="Icon" type="Sprite2D" parent="UI/ScorePos/DonationProgress"]
+position = Vector2(3.99998, -6.00001)
+rotation = -1.5708
+texture = ExtResource("14_igh82")
 
 [node name="Score" type="Node2D" parent="UI/ScorePos" node_paths=PackedStringArray("animator", "donationProgress")]
 z_index = 1

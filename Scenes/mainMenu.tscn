@@ -125,7 +125,6 @@ script = ExtResource("1_txtt8")
 
 [node name="StartVideo" parent="." instance=ExtResource("1_gvy58")]
 z_index = -5
-position = Vector2(16, 0)
 
 [node name="Title" type="Node2D" parent="."]
 

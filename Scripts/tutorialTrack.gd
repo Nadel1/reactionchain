@@ -12,6 +12,7 @@ const BUTTONS = [BUTTONUP,BUTTONRIGHT,BUTTONDOWN,BUTTONLEFT]
 @export var Bsnippets : Array[TrackSnippet]
 @export var spawnPoint : Node2D
 var musicTrack = []
+var prompts = []
 var stopIndex = -1
 
 signal successfulHit
@@ -50,6 +51,8 @@ func registerInput(inputString):
 			if compareInput(area.get_parent(), inputString):
 				area.get_parent().call_deferred("queue_free")
 				successfulHit.emit()
+				prompts.pop_front()
+				updateProjection()
 				return
 
 func arrowsTact(snippetIndex):
@@ -66,6 +69,11 @@ func spawnButton():
 	var newButtonPrompt = BUTTONS.pick_random().instantiate()
 	newButtonPrompt.global_position = spawnPoint.global_position
 	get_parent().call_deferred("add_child",newButtonPrompt)
+	prompts.push_back(newButtonPrompt.getInput())
+	updateProjection()
+
+func updateProjection():
+	$ProjectedArrow.play(prompts.front() if !prompts.is_empty() else "default")
 
 func stopMusic():
 	stopIndex = Global.arrowSnippetIndex
@@ -83,3 +91,5 @@ func _on_midi_player_arrows_midi_event(_channel: Variant, event: Variant) -> voi
 func _on_late_area_area_entered(area: Area2D) -> void:
 	area.get_parent().call_deferred("queue_free")
 	$LateArea/TrashCan.play("newTrash")
+	prompts.pop_front()
+	updateProjection()
