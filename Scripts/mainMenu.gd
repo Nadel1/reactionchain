@@ -34,3 +34,7 @@ func _on_reset_save_file_pressed() -> void:
 func _on_performance_mode_toggled(toggled_on: bool) -> void:
 	Global.performanceMode = toggled_on
 	Global.chatDepth = 3 if toggled_on else 5
+
+
+func _on_tutorial_button_down() -> void:
+	get_tree().change_scene_to_file("res://Scenes/tutorial.tscn")

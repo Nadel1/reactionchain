@@ -65,8 +65,6 @@ func _ready():
 	Global.tactArrows.connect(nextArrowTact)
 	Global.pause.connect(pause)
 	Global.resume.connect(resume)
-	Global.debugWindow = $UI/DebugWindow/DebugLabel
-	$UI/DebugWindow.visible = Global.developerMode
 	Global.resetPerStream()
 	Global.arrowTravelDelay.timeout.connect(_on_start_playing_music_timer_timeout)
 	

@@ -14,7 +14,8 @@ func _ready() -> void:
 		#updateMoneyDisplay()
 
 func updateStreamState(snippetIndex):
-	streamRunning = snippetIndex < Global.musicTracks.back().size()
+	if !Global.musicTracks.is_empty():
+		streamRunning = snippetIndex < Global.musicTracks.back().size()
 
 func updateMoneyDisplay(allowGameOver = true):
 	Global.currentMoneyHighScore = max(Global.currentMoneyHighScore, Global.moneyEarned)
