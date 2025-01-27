@@ -16,10 +16,7 @@ func _ready() -> void:
 	Global.overallScore=Global.currentHighScoreViewers+int(Global.survivedTime)+int(Global.currentMoneyHighScore)
 	Global.moneyHighScore = max(Global.moneyHighScore, Global.currentMoneyHighScore)
 	$Text/OverallScoreText.text="[center] Overall score: "+str(Global.overallScore)
-	if scoreboard.checkHighScore(Global.overallScore):
-		$Text/HighScore.show()
-	else: 
-		$Text/HighScore.hide()
+	
 	var time=int(Global.survivedTime)
 	var strMinutes=str(time/60)
 	if (time/60)<10:
@@ -29,6 +26,12 @@ func _ready() -> void:
 		strSeconds="0"+strSeconds
 	$Text/TimeScoreText.text="[center]"+"Time: "+strMinutes+":"+strSeconds+"[/center]"
 
+func _process(delta: float) -> void:
+	if scoreboard.receivedScoreboard:
+		if scoreboard.checkHighScore(Global.overallScore):
+			$Text/HighScore.show()
+		else: 
+			$Text/HighScore.hide()
 func _on_restart_button_down() -> void:
 	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")

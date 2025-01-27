@@ -16,3 +16,6 @@ mono_crash.*.json
 
 #ignore save files
 *.save
+
+#ignore config file
+*.config

@@ -6,7 +6,6 @@ extends Node
 # Random seed, constant within a game.
 # Derive from this via rand_from_seed() for things that should be random but consistent
 @onready var mainSeed = randi()
-
 var inputHandler : InputHandler
 var inputRecorder : InputRecorder
 var recordingsMovement = []
@@ -80,6 +79,7 @@ signal updateStreamerStats
 @export var playbackSpeed = 0.575
 @export var snippetLength = 2.4
 
+var url=""
 
 func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1
@@ -127,6 +127,10 @@ func _ready():
 	$Metronome.wait_time = snippetLength
 	$MetronomeArrows.wait_time = snippetLength
 	$UpcomingEvent.wait_time = snippetLength - 1.2
+	
+	var file=FileAccess.open("game.config", FileAccess.READ)
+	url=file.get_line()
+	file.close()
 
 func resetPerStream():
 	musicSnippetIndex = 0

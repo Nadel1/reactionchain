@@ -16,7 +16,6 @@ func _on_options_button_down() -> void:
 
 
 func _on_quit_button_down() -> void:
-	Global.saveGame()
 	get_tree().quit()
 
 
