@@ -199,18 +199,6 @@ position = Vector2(200, 232)
 scale = Vector2(4, 4)
 texture = ExtResource("3_aj0tl")
 
-[node name="Offline_Online" type="RichTextLabel" parent="."]
-offset_left = 32.0
-offset_top = 16.0
-offset_right = 212.0
-offset_bottom = 29.0
-size_flags_horizontal = 3
-theme = ExtResource("3_ehyhn")
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "Online
-"
-fit_content = true
-
 [node name="OnlineIndicator" type="AnimatedSprite2D" parent="."]
 position = Vector2(24, 24)
 scale = Vector2(2, 2)

@@ -59,6 +59,7 @@ func _process(_delta: float) -> void:
 			scoreboard = msg.erase(2,12)
 			print("[Network Node] Scoreboard is: \n"+scoreboard)
 			scoreboardReady = true
+			scoreboardAvailable.emit()
 
 #DEBUG. AUF JEDEN FALL AUSKOMMENTIERT LASSEN
 #func _input(event):
@@ -86,5 +87,6 @@ func _on_timer_timeout() -> void:
 			print("[Network Node] Connected to Scoreboard Server. Requesting Scoreboard.")
 			requestScoreboard()
 	else:
+		offline.emit()
 		printerr("[Network Node] Could not connect to scoreboard server.. self-destructing now...")
 		call_deferred("queue_free")
