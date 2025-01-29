@@ -25,6 +25,8 @@ func setStreamer(newStreamer):
 func setIndex(i : int):
 	index = i
 	$TrackPlaybackHandler.setIndex(i)
+	if index <= Global.currentStreamIndex - Global.chatDepth:
+		$ChatRecorded.off = true
 
 func _ready() -> void:
 	Global.pause.connect(pause)
@@ -58,11 +60,12 @@ func _physics_process(delta: float) -> void:
 				streamer.react(reaction)
 			timeSinceLastReaction = 0
 			reactionIndex += 1
-		if index>Global.currentStreamIndex-Global.chatDepth:
+		if !$ChatRecorded.off:
 			var chatIndex=index%Global.chatDepth
 			if messageIndex<Global.chatLog[chatIndex].size() and  Global.chatLog[chatIndex][messageIndex][0] <= timeSinceLastMessage:
 				var message=Global.chatLog[chatIndex][messageIndex][1]
-				$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
+				#$Chat/ChatBackground/RichTextLabel.text=$Chat/ChatBackground/RichTextLabel.text+message
+				$ChatRecorded.appendAndTruncate(message)
 				timeSinceLastMessage = 0
 				messageIndex += 1
 		if failIndex < Global.recordingsFails[index].size() and Global.recordingsFails[index][failIndex][0] <= timeSinceLastFail:

@@ -104,6 +104,8 @@ func prepareGame(resetSeed = true):
 	musicTracks = []
 	packetToBeDropped = []
 	events = []
+	eventEnds = []
+	pauseDepths = []
 	chatLog = []
 	chatUsers = []
 	VideoCustomizer.generateFirstTitle()

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Stream/recordingPlayback.gd" id="1_0vrxd"]
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="3_0pve0"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="3_147ex"]
-[ext_resource type="PackedScene" uid="uid://dylolctgual2i" path="res://Scenes/Stream/chat.tscn" id="4_gjjrr"]
+[ext_resource type="PackedScene" uid="uid://bobli6k1mcb1x" path="res://Scenes/Objects/ChatRecorded.tscn" id="4_tv0hw"]
 
 [node name="Recording" type="Node2D"]
 script = ExtResource("1_0vrxd")
@@ -12,5 +12,5 @@ script = ExtResource("1_0vrxd")
 
 [node name="VideoFrame" parent="." instance=ExtResource("3_147ex")]
 
-[node name="Chat" parent="." instance=ExtResource("4_gjjrr")]
+[node name="ChatRecorded" parent="." instance=ExtResource("4_tv0hw")]
 position = Vector2(808, 24)

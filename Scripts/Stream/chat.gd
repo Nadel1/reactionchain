@@ -18,7 +18,8 @@ var reactionMessagesCount=0
 var currentReactionMessage=0
 var reactionMessageType=RT.Emotion.NONE
 var numMessages = 0
-# Called when the node enters the scene tree for the first time.
+var off = false
+
 func _ready() -> void:
 	chatText.text=""
 
@@ -28,7 +29,6 @@ func appendAndTruncate(newMessage):
 	if numMessages > 6:
 		var firstNewline = chatText.text.find("\n")
 		chatText.text = chatText.text.substr(firstNewline + 1)
-	
 
 func generateMessage(user,firstMessage=false):
 	var msg
