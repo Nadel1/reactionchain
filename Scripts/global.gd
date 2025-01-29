@@ -259,12 +259,6 @@ func insertEvent(newEvent : Event):
 		else:
 			oldEvent.startIndex += newEvent.length
 
-func makeSaveDict():
-	var saveDict = {
-		"overallScoreHighScore" : overallScoreHighScore
-	}
-	return saveDict
-
 func startSurvivedTime():
 	survivedTime=Time.get_unix_time_from_system()
 

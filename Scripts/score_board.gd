@@ -17,6 +17,7 @@ const FILE_PATH="scores.save"
 
 signal scoreBoardAvailable
 func _ready() -> void:
+	Global.onlineMode=true
 	networkHandler.offline.connect(updateOffline)
 	networkHandler.scoreboardAvailable.connect(loadScores)
 	if Global.url=="":
@@ -65,6 +66,8 @@ func updateScoreboard():
 		scoreValues.text+= " "+str(scores[i])+'\n'
 
 func checkHighScore(potentialHighScore:int):
+	if scores.size()==0:
+		return true
 	if potentialHighScore>=scores[0]:
 		return true
 	else:
@@ -92,9 +95,9 @@ func saveScores():
 			onlineScoreboard+=names[i]+","+str(scores[i])+","
 		networkHandler.sendNewHighscore(sendScoreboard)
 	else:
-		var file= FileAccess.open(FILE_PATH, FileAccess.READ_WRITE)
+		var file= FileAccess.open_encrypted_with_pass(FILE_PATH, FileAccess.WRITE,"tsunamiii")
 		for i in range(min(names.size(),10)):
-			file.store_line(names[i]+","+str(scores[i]))
+			file.store_string(names[i]+","+str(scores[i])+"\n")
 		file.close()
 	
 func loadScores():
@@ -126,8 +129,9 @@ func loadScores():
 			scoreBoardAvailable.emit()
 	else:
 		if not FileAccess.file_exists(FILE_PATH):
-			return
-		var file = FileAccess.open(FILE_PATH, FileAccess.READ)
+			var f = FileAccess.open_encrypted_with_pass(FILE_PATH, FileAccess.WRITE,"tsunamiii")
+			f.close()
+		var file = FileAccess.open_encrypted_with_pass(FILE_PATH, FileAccess.READ,"tsunamiii")
 		var data = ""
 		while file.get_position() < file.get_length():
 			data = file.get_line()
@@ -142,21 +146,24 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 	if checkValidity(new_text):
 		print("name is valid")
 		addEntry(new_text,Global.overallScore)
+		if Global.onlineMode:
+			addedScoreToOnline=true
+		else:
+			addedScoreToLocal=true
 		lineEditContainer.get_node("LineEdit").set_editable(false)
 		saveScores()
 	else:
 		print("name is not valid!")
 
 func _on_tab_bar_tab_changed(tab: int) -> void:
+	lineEditContainer.get_node("LineEdit").set_editable(true)
 	if tab==0:
 		Global.onlineMode=true
-		print("online")
-		if !addedScoreToOnline:
-			lineEditContainer.get_node("LineEdit").set_editable(true)
+		if addedScoreToOnline:
+			lineEditContainer.get_node("LineEdit").set_editable(false)
 	else:
 		Global.onlineMode=false
-		print("offline")
-		if !addedScoreToLocal:
-			lineEditContainer.get_node("LineEdit").set_editable(true)
+		if addedScoreToLocal:
+			lineEditContainer.get_node("LineEdit").set_editable(false)
 	loadScores()
 	changedScoreboard.emit()
