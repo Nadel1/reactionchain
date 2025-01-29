@@ -4,7 +4,11 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	scoreboard.scoreBoardAvailable.connect(showHighScoreText)
+	if Global.onlineMode:
+		scoreboard.scoreBoardAvailable.connect(showHighScoreText)
+	else:
+		showHighScoreText()
+	scoreboard.changedScoreboard.connect(showHighScoreText)#if highscore on local scoreboard, but not online
 	$Background/BackgroundText.text="> Technical difficulties ...\n"
 	if Global.score<=0:
 		$Background/BackgroundText.text+= "> You have become irrelevant\n"
@@ -27,6 +31,7 @@ func _ready() -> void:
 		strSeconds="0"+strSeconds
 	$Text/TimeScoreText.text="[center]"+"Time: "+strMinutes+":"+strSeconds+"[/center]"
 
+	
 func showHighScoreText():
 	if scoreboard.checkHighScore(Global.overallScore):
 		$Text/HighScore.show()

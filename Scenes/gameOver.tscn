@@ -242,8 +242,8 @@ autoplay = "slideTitle"
 metadata/_edit_lock_ = true
 
 [node name="BackgroundSprite" type="Sprite2D" parent="Background"]
-position = Vector2(576, 324)
-scale = Vector2(9, 10.125)
+position = Vector2(610, 360)
+scale = Vector2(10.375, 12.875)
 texture = ExtResource("7_1q6on")
 
 [node name="CameraSprite" type="Sprite2D" parent="Background"]

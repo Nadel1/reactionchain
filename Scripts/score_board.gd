@@ -2,31 +2,34 @@ extends Node2D
 
 var names:Array[String]
 var scores:Array[int]
+var onlineScoreboard=""
 
 @onready var nameValues=$MarginContainer/VBoxContainer/GridContainer/NameValues
 @onready var scoreValues=$MarginContainer/VBoxContainer/GridContainer/ScoreValues
 @onready var lineEditContainer= $MarginContainer/VBoxContainer/HBoxContainerLineEdit
 @onready var networkHandler=$NetworkHandler
-@onready var onlineIndicator=$OnlineIndicator
-@export var onlineMode=false
+
+var addedScoreToLocal=false
+var addedScoreToOnline=false
+signal changedScoreboard
 
 const FILE_PATH="scores.save"
 
 signal scoreBoardAvailable
 func _ready() -> void:
-	networkHandler.offline.connect(updateAvailability)
+	networkHandler.offline.connect(updateOffline)
 	networkHandler.scoreboardAvailable.connect(loadScores)
-
-func debug():
-	print("display scores")
-func updateAvailability():
-	onlineIndicator.play("offline")
+	
+func updateOffline():
+	Global.cannotConnect=true
+	nameValues.text="No connection!"
+	scoreValues.text="No connection!"
+	lineEditContainer.hide()
 
 func showLineEdit():
-	#print("level is: ", get_tree().get_root().name)
 	if get_parent()!=null and get_parent().name=="MainMenu":
 		return  
-	if Global.overallScore>scores[scores.size()-1] or scores.size()<10:
+	if scores.size()<=1 or Global.overallScore>scores[scores.size()-1] or scores.size()<10:
 		lineEditContainer.show()
 	else:
 		lineEditContainer.hide()
@@ -54,10 +57,10 @@ func updateScoreboard():
 			fillString+=" "
 		var nameFilled=names[i]+fillString
 		if i>=9:
-			nameValues.text+="> #"+str(i+1)+" "+names[i]+'\n'
+			nameValues.text+=" > #"+str(i+1)+"  "+names[i]+'\n'
 		else:	
-			nameValues.text+="> #"+str(i+1)+"  "+names[i]+'\n'
-		scoreValues.text+= str(scores[i])+'\n'
+			nameValues.text+=" > #"+str(i+1)+"   "+names[i]+'\n'
+		scoreValues.text+= " "+str(scores[i])+'\n'
 
 func checkHighScore(potentialHighScore:int):
 	if potentialHighScore>=scores[0]:
@@ -66,10 +69,11 @@ func checkHighScore(potentialHighScore:int):
 		return false
 	
 func checkValidity(input:String):
-	if input.contains("!")or  input.contains("?") or  input.contains("\n"):
-		return false
-	else:
-		return true
+	for i in input.length():
+		print(input.unicode_at(i))
+		if not((input.unicode_at(i)>=48 and input.unicode_at(i)<=57) or (input.unicode_at(i)>=65 and input.unicode_at(i)<=122)):
+			return false
+	return true
 		
 func addEntry(name:String,score:int):
 	names.append(name)
@@ -78,21 +82,31 @@ func addEntry(name:String,score:int):
 	
 	
 func saveScores():
-	if onlineMode:
+	if Global.onlineMode:
+		onlineScoreboard=""
 		var sendScoreboard=""
-		for i in range(names.size()):
+		for i in range(min(names.size(),10)):
 			sendScoreboard+=names[i]+","+str(scores[i])+"\n"
-		print("sending scoreboard from scoreboard save score")
+			onlineScoreboard+=names[i]+","+str(scores[i])+","
 		networkHandler.sendNewHighscore(sendScoreboard)
 	else:
 		var file= FileAccess.open(FILE_PATH, FileAccess.READ_WRITE)
-		for i in range(names.size()):
+		for i in range(min(names.size(),10)):
 			file.store_line(names[i]+","+str(scores[i]))
 		file.close()
 	
 func loadScores():
-	if onlineMode:
-		var data=networkHandler.getScoreboard()
+	names=[]
+	scores=[]
+	if Global.onlineMode:
+		if Global.cannotConnect:
+			updateOffline()
+			return
+		var data=""
+		if onlineScoreboard=="":
+			data=networkHandler.getScoreboard()
+		else:
+			data=onlineScoreboard
 		if data=="":
 			printerr("[Scoreboard:loadScores] Wanted to get scoreboard, got empty string")
 		else:
@@ -102,16 +116,11 @@ func loadScores():
 			data=data.replace("'","")
 			data=data.replace("\n","")
 			data=data.replace(" ","")
-			print("sanitised data: ",data)
 			var entries= data.split(",")
-			print("entries: ", entries)
-			
-			for i in range(entries.size()-1):
+			for i in range(min(entries.size()-1,20)):
 				if i%2==0:
 					names.append(entries[i])
 					scores.append(entries[i+1].to_int())
-			print("all names: ", names)
-			print("all scores: ", scores)
 			scoreBoardAvailable.emit()
 	else:
 		if not FileAccess.file_exists(FILE_PATH):
@@ -132,6 +141,20 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		print("name is valid")
 		addEntry(new_text,Global.overallScore)
 		lineEditContainer.get_node("LineEdit").set_editable(false)
-		#saveScores()
+		saveScores()
 	else:
 		print("name is not valid!")
+
+func _on_tab_bar_tab_changed(tab: int) -> void:
+	if tab==0:
+		Global.onlineMode=true
+		print("online")
+		if !addedScoreToOnline:
+			lineEditContainer.get_node("LineEdit").set_editable(true)
+	else:
+		Global.onlineMode=false
+		print("offline")
+		if !addedScoreToLocal:
+			lineEditContainer.get_node("LineEdit").set_editable(true)
+	loadScores()
+	changedScoreboard.emit()

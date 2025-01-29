@@ -80,6 +80,8 @@ signal updateStreamerStats
 @export var snippetLength = 2.4
 
 var url=""
+var onlineMode=true
+var cannotConnect=false
 
 func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1
@@ -128,7 +130,7 @@ func _ready():
 	$MetronomeArrows.wait_time = snippetLength
 	$UpcomingEvent.wait_time = snippetLength - 1.2
 	
-	var file=FileAccess.open("game.config", FileAccess.READ)
+	var file=FileAccess.open_encrypted_with_pass("server.config", FileAccess.READ,"susususupernova")
 	url=file.get_line()
 	file.close()
 

@@ -1,37 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cihi5jngaq6ep"]
+[gd_scene load_steps=8 format=3 uid="uid://cihi5jngaq6ep"]
 
 [ext_resource type="Script" path="res://Scripts/score_board.gd" id="1_kmunq"]
 [ext_resource type="Texture2D" uid="uid://b8d6ev3aub1bf" path="res://Assets/Sprites/Scoreboard/Background.png" id="3_aj0tl"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_ehyhn"]
-[ext_resource type="Texture2D" uid="uid://c7yfgjf274gdl" path="res://Assets/Sprites/Scoreboard/onlineoffline.png" id="3_wt6jd"]
 [ext_resource type="PackedScene" uid="uid://s4lu63670yqo" path="res://Scenes/NetworkHandler.tscn" id="4_jkujq"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1jiyb"]
-atlas = ExtResource("3_wt6jd")
-region = Rect2(6, 0, 6, 6)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_01i6l"]
-atlas = ExtResource("3_wt6jd")
-region = Rect2(0, 0, 6, 6)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_h8735"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1jiyb")
-}],
-"loop": true,
-"name": &"offline",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_01i6l")
-}],
-"loop": true,
-"name": &"online",
-"speed": 5.0
-}]
 
 [sub_resource type="Animation" id="Animation_irptu"]
 length = 0.001
@@ -192,24 +164,17 @@ _data = {
 
 [node name="ScoreBoard" type="Node2D"]
 script = ExtResource("1_kmunq")
-onlineMode = true
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(200, 232)
+position = Vector2(200, 246)
 scale = Vector2(4, 4)
 texture = ExtResource("3_aj0tl")
 
-[node name="OnlineIndicator" type="AnimatedSprite2D" parent="."]
-position = Vector2(24, 24)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_h8735")
-animation = &"online"
-autoplay = "online"
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_left = 20.0
-offset_right = 200.0
-offset_bottom = 177.0
+offset_left = 16.0
+offset_top = 2.0
+offset_right = 198.0
+offset_bottom = 178.0
 scale = Vector2(2, 2)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
@@ -218,7 +183,17 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="TabBar" type="TabBar" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("3_ehyhn")
+current_tab = 0
+clip_tabs = false
+tab_count = 2
+tab_0/title = "Online"
+tab_1/title = "Local"
+
 [node name="Label" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_ehyhn")
@@ -235,7 +210,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_ehyhn")
 theme_override_colors/default_color = Color(0, 1, 0, 1)
-text = ">     Name"
+text = " >     Name"
 fit_content = true
 
 [node name="Score" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -243,7 +218,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_ehyhn")
 theme_override_colors/default_color = Color(0, 1, 0, 1)
-text = "Score"
+text = " Score"
 fit_content = true
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
@@ -276,7 +251,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("3_ehyhn")
 theme_override_colors/default_color = Color(0, 1, 0, 1)
-text = "> Name:"
+text = " > Name:"
 fit_content = true
 
 [node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainerLineEdit"]
@@ -284,7 +259,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_ehyhn")
 theme_override_colors/font_color = Color(0, 1, 1, 1)
-max_length = 10
+max_length = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -294,4 +269,5 @@ autoplay = "appear"
 
 [node name="NetworkHandler" parent="." instance=ExtResource("4_jkujq")]
 
+[connection signal="tab_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/TabBar" to="." method="_on_tab_bar_tab_changed"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainerLineEdit/LineEdit" to="." method="_on_line_edit_text_submitted"]

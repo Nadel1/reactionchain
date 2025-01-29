@@ -11,7 +11,7 @@ signal offline
 #Ok, erstmal ne socke anziehen
 func _ready() -> void:
 	if !socket.connect_to_url(Global.url):
-		printerr("[Network Node] initial connection attempt failed. Retrying two more times...")
+		print("[Network Node] initial connection attempt failed. Retrying two more times...")
 		connectionAttempt += 1
 		$ConnectionTimeoutTimer.start()
 	else:
@@ -80,7 +80,7 @@ func _exit_tree() -> void:
 func _on_timer_timeout() -> void:
 	if connectionAttempt < 3:
 		if !socket.connect_to_url(Global.url):
-			printerr("[Network Node] initial connection attempt failed...")
+			print("[Network Node] initial connection attempt failed...")
 			connectionAttempt += 1
 			$ConnectionTimeoutTimer.start()
 		else:
@@ -88,5 +88,5 @@ func _on_timer_timeout() -> void:
 			requestScoreboard()
 	else:
 		offline.emit()
-		printerr("[Network Node] Could not connect to scoreboard server.. self-destructing now...")
+		print("[Network Node] Could not connect to scoreboard server.. self-destructing now...")
 		call_deferred("queue_free")

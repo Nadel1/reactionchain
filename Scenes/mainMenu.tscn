@@ -349,7 +349,7 @@ bus = &"Bass"
 
 [node name="ScoreBoard" parent="." instance=ExtResource("11_07j6w")]
 visible = false
-position = Vector2(728, 169)
+position = Vector2(720, 112)
 
 [connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Buttons/Tutorial" to="." method="_on_tutorial_button_down"]
