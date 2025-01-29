@@ -125,15 +125,21 @@ func checkHealthGameOver():
 	if health <= 0:
 		gameOver()
 
+func _init():
+	if FileAccess.file_exists("server.config"):
+		var file=FileAccess.open_encrypted_with_pass("server.config", FileAccess.READ,"susususupernova")
+		url=file.get_line()
+		file.close()
+	else:
+		url=""
+		
 func _ready():
 	$Metronome.wait_time = snippetLength
 	$MetronomeArrows.wait_time = snippetLength
 	$UpcomingEvent.wait_time = snippetLength - 1.2
 	
-	var file=FileAccess.open_encrypted_with_pass("server.config", FileAccess.READ,"susususupernova")
-	url=file.get_line()
-	file.close()
-
+	
+		
 func resetPerStream():
 	musicSnippetIndex = 0
 	arrowSnippetIndex = 0

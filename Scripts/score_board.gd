@@ -19,6 +19,8 @@ signal scoreBoardAvailable
 func _ready() -> void:
 	networkHandler.offline.connect(updateOffline)
 	networkHandler.scoreboardAvailable.connect(loadScores)
+	if Global.url=="":
+		updateOffline()
 	
 func updateOffline():
 	Global.cannotConnect=true
