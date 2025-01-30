@@ -630,6 +630,7 @@ position = Vector2(299, 593)
 
 [node name="Donation" parent="UI" node_paths=PackedStringArray("videoOverlay") instance=ExtResource("20_plu0g")]
 modulate = Color(0, 0, 0, 0)
+z_index = 1
 position = Vector2(391, 262)
 videoOverlay = NodePath("../DonationBackground")
 
@@ -645,7 +646,6 @@ libraries = {
 [node name="DonationBackground" type="AnimatedSprite2D" parent="UI"]
 visible = false
 self_modulate = Color(1, 1, 1, 0.501961)
-z_index = -2
 position = Vector2(363, 215.5)
 scale = Vector2(10.625, 5.98438)
 sprite_frames = SubResource("SpriteFrames_j5wt6")

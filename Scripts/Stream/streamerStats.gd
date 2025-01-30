@@ -41,4 +41,4 @@ func updateStats():
 	$MoneyCount.text = str(moneyBars) if moneyBars > 0 else ""
 	var moneyFillLevel = float(Global.moneyEarned - (moneyPerBar * moneyBars)) / moneyPerBar
 	$Money.setValue(moneyFillLevel)
-	$Money/Background.modulate = Color(0.1,0.1,0.1) if moneyBars <= 0 else Color.GREEN
+	$Money/Background.modulate = Color(0.1,0.1,0.1) if moneyBars <= 0 else Color(0.3,0.0,0.0)
