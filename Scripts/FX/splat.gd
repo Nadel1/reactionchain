@@ -29,12 +29,15 @@ func setText(score : int): # 0 -> bad, 1 -> eh, 2 -> great
 	if score == 2:
 		newText = textsPositive.pick_random()
 		$Text.modulate = Color.LIME
+		self_modulate = Color(0.8,1.0,0.8)
 	elif score == 1:
 		newText = textsEh.pick_random()
-		$Text.modulate = Color.ORANGE
+		$Text.modulate = Color(1.0,0.9,0.1)
+		self_modulate = Color(1.0,1.0,0.8)
 	elif score == 0:
 		newText = textsNegative.pick_random()
 		$Text.modulate = Color.RED
+		self_modulate = Color(1.0,0.8,0.8)
 	
 	$Text.text = "[center]" + newText + "[/center]"
 
