@@ -179,10 +179,10 @@ text = "Play Tutorial"
 
 [node name="Scoreboard" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 736.0
-offset_top = 228.0
-offset_right = 808.0
-offset_bottom = 249.0
+offset_left = 684.0
+offset_top = 224.0
+offset_right = 756.0
+offset_bottom = 245.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 text = "Scoreboard"
@@ -350,7 +350,8 @@ bus = &"Bass"
 
 [node name="scoreboard2" parent="." instance=ExtResource("11_qfbj4")]
 visible = false
-position = Vector2(728, 248)
+position = Vector2(640, 64)
+scale = Vector2(2, 2)
 
 [connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Buttons/Tutorial" to="." method="_on_tutorial_button_down"]

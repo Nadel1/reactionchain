@@ -78,7 +78,9 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 	if scoreboard.checkValidity(new_text):
 		scoreboard.addScore(new_text, Global.overallScore)
 		$Text/NameEnter/NinePatchRect/LineEdit.hide()
+		$Text/NameEnter/AnimationPlayer.play("Zoom")
+		$Text/NameEnter/ErrorMessage.hide()
 	else:
-		pass
-		#TODO make error sound or something idk, maybe a lil wobble
+		$Text/NameEnter/AnimationPlayer.play("Error")
+		$Text/NameEnter/ErrorMessage.show()
 	pass # Replace with function body.

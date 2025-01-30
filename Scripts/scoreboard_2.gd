@@ -62,8 +62,12 @@ func buildScoreboard(lhighscore = -1, glhighscore = -1):
 		if(i == lhighscore):
 			namesLabelLocal.text += "[color=green]"
 			scoresLabelLocal.text += "[color=green]"
-		namesLabelLocal.text += "#"+str(i+1)+" "+lNames[i]
-		scoresLabelLocal.text += str(lScores[i])
+		if i<9:
+			namesLabelLocal.text += "#"+str(i+1)+"  "+lNames[i]
+			scoresLabelLocal.text += str(lScores[i])
+		else:
+			namesLabelLocal.text += "#"+str(i+1)+" "+lNames[i]
+			scoresLabelLocal.text += str(lScores[i])
 		if(i == lhighscore):
 			namesLabelLocal.text += "[/color]\n"
 			scoresLabelLocal.text += "[/color]\n"
@@ -79,8 +83,12 @@ func buildScoreboard(lhighscore = -1, glhighscore = -1):
 		if(i == lhighscore):
 			namesLabelGlobal.text += "[color=green]"
 			scoresLabelGlobal.text += "[color=green]"
-		namesLabelGlobal.text += "#"+str(i+1)+" "+lNames[i]
-		scoresLabelGlobal.text += str(lScores[i])
+		if i<9:
+			namesLabelGlobal.text += "#"+str(i+1)+"  "+glNames[i]
+			scoresLabelGlobal.text += str(glScores[i])
+		else:
+			namesLabelGlobal.text += "#"+str(i+1)+" "+glNames[i]
+			scoresLabelGlobal.text += str(glScores[i])
 		if(i == lhighscore):
 			namesLabelGlobal.text += "[/color]\n"
 			scoresLabelGlobal.text += "[/color]\n"
