@@ -1008,17 +1008,17 @@ layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut
 
 [node name="A2" type="Node" parent="Snippets"]
 script = ExtResource("13_06wsj")
-layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a2_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a2_layer2.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_a2_layer1.MID"])
 
 [node name="B1" type="Node" parent="Snippets"]
 script = ExtResource("13_06wsj")
 type = 1
-layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b1_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b1_layer2.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b2_layer1.MID"])
 
 [node name="B2" type="Node" parent="Snippets"]
 script = ExtResource("13_06wsj")
 type = 1
-layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b2_layer1.MID", "res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b2_layer2.MID"])
+layers = Array[String](["res://Assets/Audio/Tracks/tutorial_snippets_(bunny)/tut_b2_layer1.MID"])
 
 [node name="DebugWindow" type="NinePatchRect" parent="."]
 visible = false
