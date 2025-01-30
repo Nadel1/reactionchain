@@ -82,6 +82,7 @@ signal updateStreamerStats
 var url=""
 var onlineMode=true
 var cannotConnect=false
+@onready var network = $NetworkHandler
 
 func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1
@@ -181,8 +182,6 @@ func checkEventPrep():
 		if event.startIndex == arrowSnippetIndex + 2 and event.startLayer == currentStreamIndex:
 			$UpcomingEvent.start()
 			fakePromptsCountdown = 0
-			#arrowSnippetIndex -= 1
-		#eventIndexArrows += 1
 	debugWindow.setEntry("InEvent", getPromptSpeedState())
 
 func _on_metronome_arrows_timeout() -> void:
@@ -271,17 +270,6 @@ func gameOver():
 		$FakeArrowDelay.stop()
 		stopMetronome()
 		stopMetronomeArrows()
-
-#param(dict): the JSON dictionary object returned parsed from saveFile
-#param(value): the Global variable that should be set to the data from the savefile
-#param(data): the data name to be fetched from the json dict
-func loadDataFromDictSafe(dict, value, data : String):
-	var temp = dict.get(data)
-	if(temp != null):
-		return temp
-	else:
-		printerr("[Global.loadDataFromDictSafe] dict.get("+data+") returned null")
-		return value
 		
 		
 func resetSaveFile():

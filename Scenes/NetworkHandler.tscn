@@ -9,4 +9,9 @@ script = ExtResource("1_0wb8t")
 wait_time = 0.5
 one_shot = true
 
+[node name="UpdateScoreboardTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="timeout" from="ConnectionTimeoutTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="UpdateScoreboardTimer" to="." method="_on_update_scoreboard_timer_timeout"]

@@ -90,3 +90,8 @@ func _on_timer_timeout() -> void:
 		offline.emit()
 		print("[Network Node] Could not connect to scoreboard server.. self-destructing now...")
 		call_deferred("queue_free")
+
+
+func _on_update_scoreboard_timer_timeout() -> void:
+	requestScoreboard()
+	pass # Replace with function body.

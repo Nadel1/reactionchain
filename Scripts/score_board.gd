@@ -145,6 +145,10 @@ func loadScores():
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	if checkValidity(new_text):
 		print("name is valid")
+		if Global.onlineMode and addedScoreToOnline:
+			return
+		if !Global.onlineMode and addedScoreToLocal:
+			return
 		addEntry(new_text,Global.overallScore)
 		if Global.onlineMode:
 			addedScoreToOnline=true
@@ -154,6 +158,7 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		saveScores()
 	else:
 		print("name is not valid!")
+		return
 
 func _on_tab_bar_tab_changed(tab: int) -> void:
 	lineEditContainer.get_node("LineEdit").set_editable(true)
