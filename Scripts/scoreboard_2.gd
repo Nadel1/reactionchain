@@ -152,6 +152,8 @@ func checkHighScore(potentialHighScore:int):
 		return false
 
 func checkNameEdit(score:int)->bool:
+	if lScores.size()==0:
+		return true
 	if score>lScores[lScores.size()-1] or score>glScores[glScores.size()-1]:
 		return true
 	else:
