@@ -82,7 +82,6 @@ signal updateStreamerStats
 var url=""
 var onlineMode=true
 var cannotConnect=false
-@onready var network = $NetworkHandler
 
 func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1

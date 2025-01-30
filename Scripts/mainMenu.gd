@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var scoreboard=$ScoreBoard
+@onready var scoreboard=$scoreboard2
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$OptionsMenu/PerformanceMode.button_pressed = Global.performanceMode

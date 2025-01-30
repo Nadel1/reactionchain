@@ -75,6 +75,7 @@ func _process(_delta: float) -> void:
 func _exit_tree() -> void:
 	print('closing socket')
 	socket.close()
+	offline.emit()
 
 
 func _on_timer_timeout() -> void:
@@ -87,7 +88,6 @@ func _on_timer_timeout() -> void:
 			print("[Network Node] Connected to Scoreboard Server. Requesting Scoreboard.")
 			requestScoreboard()
 	else:
-		offline.emit()
 		print("[Network Node] Could not connect to scoreboard server.. self-destructing now...")
 		call_deferred("queue_free")
 

@@ -1,14 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://bv0ca4q3shcn5"]
+[gd_scene load_steps=19 format=3 uid="uid://bv0ca4q3shcn5"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
 [ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
 [ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
-[ext_resource type="Script" path="res://Scripts/high_score_display.gd" id="5_6tkhb"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="5_ltstr"]
 [ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="7_1q6on"]
+[ext_resource type="PackedScene" uid="uid://bj10nidhxaq5f" path="res://Scenes/scoreboard_2.tscn" id="8_7r33v"]
+[ext_resource type="Texture2D" uid="uid://bmhe3vxosw0vs" path="res://Assets/Sprites/Scoreboard/backgroundNinePatch.png" id="8_c5u4b"]
 [ext_resource type="Texture2D" uid="uid://wktqe8sxtius" path="res://Assets/Sprites/GameOver/backgroundCamera.png" id="8_jbcag"]
-[ext_resource type="PackedScene" uid="uid://cihi5jngaq6ep" path="res://Scenes/scoreBoard.tscn" id="8_ke287"]
 
 [sub_resource type="Animation" id="Animation_y1q0o"]
 length = 0.001
@@ -79,18 +79,6 @@ tracks/5/path = NodePath("../Text/ScoreText:visible_ratio")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("../Text/HighScore/HighScore:visible_ratio")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -172,18 +160,6 @@ tracks/5/keys = {
 "update": 0,
 "values": [0.0, 1.0]
 }
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("../Text/HighScore/HighScore:visible_ratio")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(1.5, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40nyb"]
 _data = {
@@ -191,41 +167,77 @@ _data = {
 "slideTitle": SubResource("Animation_ea673")
 }
 
-[sub_resource type="Animation" id="Animation_k84k1"]
+[sub_resource type="Animation" id="Animation_4ws83"]
+resource_name = "HighscoreJiggle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.0523599, 0.0523599, -0.0523599]
+}
+
+[sub_resource type="Animation" id="Animation_ni8u1"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("..:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0349066]
+"values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_5gvbc"]
-resource_name = "displayHighScore"
-loop_mode = 1
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n6ub7"]
+_data = {
+"HighscoreJiggle": SubResource("Animation_4ws83"),
+"RESET": SubResource("Animation_ni8u1")
+}
+
+[sub_resource type="Animation" id="Animation_4gid5"]
+resource_name = "Zoom"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(658, 244), Vector2(1250, 244)]
+}
+
+[sub_resource type="Animation" id="Animation_evrns"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.466667, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0349066, -0.0349066, 0.0349066]
+"values": [Vector2(658, 244)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_dvshw"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2lnod"]
 _data = {
-"RESET": SubResource("Animation_k84k1"),
-"displayHighScore": SubResource("Animation_5gvbc")
+"RESET": SubResource("Animation_evrns"),
+"Zoom": SubResource("Animation_4gid5")
 }
 
 [node name="GameOver" type="Node2D"]
@@ -242,9 +254,10 @@ autoplay = "slideTitle"
 metadata/_edit_lock_ = true
 
 [node name="BackgroundSprite" type="Sprite2D" parent="Background"]
-position = Vector2(610, 360)
-scale = Vector2(10.375, 12.875)
+position = Vector2(576, 324)
+scale = Vector2(9, 10.125)
 texture = ExtResource("7_1q6on")
+metadata/_edit_lock_ = true
 
 [node name="CameraSprite" type="Sprite2D" parent="Background"]
 visible = false
@@ -288,44 +301,32 @@ offset_left = -331.0
 offset_right = 320.0
 offset_bottom = 648.0
 
-[node name="Restart" type="Button" parent="Buttons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Buttons"]
 layout_mode = 0
-offset_left = 393.0
-offset_top = 371.0
-offset_right = 496.0
-offset_bottom = 390.0
-scale = Vector2(3, 3)
+offset_left = 483.0
+offset_top = 442.0
+offset_right = 543.0
+offset_bottom = 538.0
+scale = Vector2(2, 2)
+
+[node name="Restart" type="Button" parent="Buttons/VBoxContainer"]
+layout_mode = 2
 theme = ExtResource("3_xylrd")
 text = "Restart"
 
-[node name="ToMainMenu" type="Button" parent="Buttons"]
-layout_mode = 0
-offset_left = 393.0
-offset_top = 437.0
-offset_right = 496.0
-offset_bottom = 456.0
-scale = Vector2(3, 3)
+[node name="ToMainMenu" type="Button" parent="Buttons/VBoxContainer"]
+layout_mode = 2
 theme = ExtResource("3_xylrd")
 text = "Main Menu"
 
-[node name="QuitGame" type="Button" parent="Buttons"]
-layout_mode = 0
-offset_left = 393.0
-offset_top = 571.0
-offset_right = 496.0
-offset_bottom = 591.0
-scale = Vector2(3, 3)
+[node name="QuitGame" type="Button" parent="Buttons/VBoxContainer"]
+layout_mode = 2
 theme = ExtResource("3_xylrd")
 text = "Quit Game
 "
 
-[node name="Options" type="Button" parent="Buttons"]
-layout_mode = 0
-offset_left = 393.0
-offset_top = 502.0
-offset_right = 496.0
-offset_bottom = 522.0
-scale = Vector2(3, 3)
+[node name="Options" type="Button" parent="Buttons/VBoxContainer"]
+layout_mode = 2
 theme = ExtResource("3_xylrd")
 text = "Options
 "
@@ -338,6 +339,19 @@ offset_left = -522.0
 offset_top = 92.0
 offset_right = -482.0
 offset_bottom = 132.0
+
+[node name="TimeScoreText" type="RichTextLabel" parent="Text"]
+layout_mode = 0
+offset_left = 358.0
+offset_top = 129.0
+offset_right = 730.0
+offset_bottom = 145.0
+scale = Vector2(2, 2)
+theme = ExtResource("3_xylrd")
+bbcode_enabled = true
+text = "[center]Time[/center]
+"
+scroll_active = false
 
 [node name="ScoreText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
@@ -353,19 +367,6 @@ scroll_active = false
 visible_characters = 0
 visible_ratio = 0.0
 
-[node name="TimeScoreText" type="RichTextLabel" parent="Text"]
-layout_mode = 0
-offset_left = 358.0
-offset_top = 129.0
-offset_right = 730.0
-offset_bottom = 145.0
-scale = Vector2(2, 2)
-theme = ExtResource("3_xylrd")
-bbcode_enabled = true
-text = "[center]Time[/center]
-"
-scroll_active = false
-
 [node name="MoneyText" type="RichTextLabel" parent="Text"]
 layout_mode = 0
 offset_left = 358.0
@@ -379,54 +380,59 @@ text = "[center]Money[/center]
 "
 scroll_active = false
 
-[node name="OverallScoreText" type="RichTextLabel" parent="Text"]
-layout_mode = 0
-offset_left = 140.0
-offset_top = 179.0
-offset_right = 440.0
-offset_bottom = 195.0
+[node name="Score" type="Node2D" parent="Text"]
+position = Vector2(730, 212)
+
+[node name="OverallScoreText" type="RichTextLabel" parent="Text/Score"]
+offset_left = -208.178
+offset_top = -26.6408
+offset_right = -94.1785
+offset_bottom = -10.6408
 scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 bbcode_enabled = true
-text = "[center]DEBUG SCORE[/center]"
+text = "[center]New Highscore[/center]"
 scroll_active = false
+metadata/_edit_lock_ = true
 
-[node name="HighScore" type="Node2D" parent="Text"]
-position = Vector2(730, 268)
-rotation = 0.0349066
-script = ExtResource("5_6tkhb")
-
-[node name="HighScore" type="RichTextLabel" parent="Text/HighScore"]
-offset_left = -397.853
-offset_top = -46.1432
-offset_right = -195.853
-offset_bottom = -30.1432
-scale = Vector2(4, 4)
-theme = ExtResource("3_xylrd")
-bbcode_enabled = true
-text = "[center]New Highscore![/center]
-"
-visible_characters = 0
-visible_ratio = 0.0
-
-[node name="AnimationPlayerHighScore" type="AnimationPlayer" parent="Text/HighScore"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Text/Score"]
+root_node = NodePath("../OverallScoreText")
 libraries = {
-"": SubResource("AnimationLibrary_dvshw")
+"": SubResource("AnimationLibrary_n6ub7")
 }
 
-[node name="ScoreboardUI" type="Control" parent="Text"]
-layout_mode = 1
-anchor_left = 4.7
-anchor_top = -2.0
-anchor_right = 4.7
-anchor_bottom = -2.0
-offset_left = -174.0
-offset_top = 92.0
-offset_right = -118.0
-offset_bottom = 172.0
+[node name="scoreboard2" parent="Text" instance=ExtResource("8_7r33v")]
+z_index = 1
+position = Vector2(1160, 113)
 
-[node name="ScoreBoard" parent="Text/ScoreboardUI" instance=ExtResource("8_ke287")]
-position = Vector2(1146, 57)
+[node name="NameEnter" type="Node2D" parent="Text"]
+visible = false
+position = Vector2(658, 244)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Text/NameEnter"]
+offset_left = -16.0
+offset_right = 176.0
+offset_bottom = 55.0
+texture = ExtResource("8_c5u4b")
+region_rect = Rect2(0, 28, 32, 36)
+patch_margin_left = 13
+patch_margin_top = 26
+patch_margin_right = 13
+patch_margin_bottom = 29
+
+[node name="LineEdit" type="LineEdit" parent="Text/NameEnter/NinePatchRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 168.0
+offset_bottom = 43.0
+placeholder_text = "ENTER NAME!!"
+max_length = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Text/NameEnter"]
+libraries = {
+"": SubResource("AnimationLibrary_2lnod")
+}
 
 [node name="OptionsMenu" type="Node2D" parent="."]
 visible = false
@@ -521,10 +527,12 @@ scale = Vector2(4, 4)
 theme = ExtResource("3_xylrd")
 text = "Reset savefile"
 
-[connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
-[connection signal="button_down" from="Buttons/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
-[connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
-[connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="button_down" from="Buttons/VBoxContainer/Restart" to="." method="_on_restart_button_down"]
+[connection signal="button_down" from="Buttons/VBoxContainer/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
+[connection signal="button_down" from="Buttons/VBoxContainer/QuitGame" to="." method="_on_quit_game_button_down"]
+[connection signal="button_down" from="Buttons/VBoxContainer/Options" to="." method="_on_options_button_down"]
+[connection signal="text_submitted" from="Text/NameEnter/NinePatchRect/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
 [connection signal="pressed" from="OptionsMenu/QuitMenuButton" to="." method="_on_quit_menu_button_pressed"]
 [connection signal="pressed" from="OptionsMenu/DeleteSavefileButton" to="." method="_on_delete_savefile_button_pressed"]

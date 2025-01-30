@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dldtkg0hf41gy"]
+[gd_scene load_steps=2 format=3 uid="uid://dldtkg0hf41gy"]
 
 [ext_resource type="Script" path="res://Scripts/global.gd" id="1_k6fim"]
-[ext_resource type="PackedScene" uid="uid://s4lu63670yqo" path="res://Scenes/NetworkHandler.tscn" id="2_avyyx"]
 
 [node name="Global" type="Node2D"]
 script = ExtResource("1_k6fim")
@@ -23,8 +22,6 @@ one_shot = true
 
 [node name="FakeArrowDelay" type="Timer" parent="."]
 one_shot = true
-
-[node name="NetworkHandler" parent="." instance=ExtResource("2_avyyx")]
 
 [connection signal="timeout" from="Metronome" to="." method="_on_metronome_timeout"]
 [connection signal="timeout" from="MetronomeArrows" to="." method="_on_metronome_arrows_timeout"]

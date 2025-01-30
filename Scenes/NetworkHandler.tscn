@@ -6,11 +6,11 @@
 script = ExtResource("1_0wb8t")
 
 [node name="ConnectionTimeoutTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.2
 one_shot = true
 
 [node name="UpdateScoreboardTimer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 10.0
 autostart = true
 
 [connection signal="timeout" from="ConnectionTimeoutTimer" to="." method="_on_timer_timeout"]
