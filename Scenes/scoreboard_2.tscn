@@ -26,9 +26,9 @@ patch_margin_bottom = 10
 [node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 12.0
 offset_right = 224.0
-offset_bottom = 208.0
+offset_bottom = 204.0
 
 [node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
 layout_mode = 2

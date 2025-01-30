@@ -144,7 +144,7 @@ func addScore(name : String, score : int) -> bool:
 	return true
 
 func checkHighScore(potentialHighScore:int):
-	if lScores.size()==0:
+	if lScores.size()==0 or glScores.size()==0:
 		return true
 	if potentialHighScore>=lScores[0] or potentialHighScore>=glScores[0]:
 		return true
