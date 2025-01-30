@@ -80,7 +80,7 @@ func buildScoreboard(lhighscore = -1, glhighscore = -1):
 	namesLabelGlobal.text=""
 	scoresLabelGlobal.text=""
 	for i in range(glNames.size()):
-		if(i == lhighscore):
+		if(i == glhighscore):
 			namesLabelGlobal.text += "[color=green]"
 			scoresLabelGlobal.text += "[color=green]"
 		if i<9:
@@ -89,7 +89,7 @@ func buildScoreboard(lhighscore = -1, glhighscore = -1):
 		else:
 			namesLabelGlobal.text += "#"+str(i+1)+" "+glNames[i]
 			scoresLabelGlobal.text += str(glScores[i])
-		if(i == lhighscore):
+		if(i == glhighscore):
 			namesLabelGlobal.text += "[/color]\n"
 			scoresLabelGlobal.text += "[/color]\n"
 		else:
