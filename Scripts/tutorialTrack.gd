@@ -64,16 +64,32 @@ func musicTact(snippetIndex):
 	if stopIndex < 0 or snippetIndex < stopIndex:
 		musicPlayer.file = musicTrack[snippetIndex % musicTrack.size()].getLayer(0)
 		musicPlayer.play()
+		rebuildSequence()
 
 func spawnButton():
 	var newButtonPrompt = BUTTONS.pick_random().instantiate()
 	newButtonPrompt.global_position = spawnPoint.global_position
-	get_parent().call_deferred("add_child",newButtonPrompt)
-	prompts.push_back(newButtonPrompt.getInput())
+	get_parent().find_child("Prompts").call_deferred("add_child",newButtonPrompt)
+	prompts.push_back(newButtonPrompt)
 	updateProjection()
 
 func updateProjection():
-	$ProjectedArrow.play(prompts.front() if !prompts.is_empty() else "default")
+	$ProjectedArrow.play(prompts.front().getInput() if !prompts.is_empty() else "default")
+
+func rebuildSequence():
+	var currentPrompts = get_parent().find_child("Prompts").get_children()
+	currentPrompts.sort_custom(sortPrompts)
+	currentPrompts.filter(filterNull)
+	prompts = currentPrompts
+	updateProjection()
+
+func sortPrompts(a, b):
+	if a.index < b.index:
+		return true
+	return false
+
+func filterNull(node):
+	return node != null
 
 func stopMusic():
 	stopIndex = Global.arrowSnippetIndex

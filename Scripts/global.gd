@@ -88,6 +88,7 @@ func prepareGame(resetSeed = true):
 	decreaseWrongInput=1.1
 	score=10
 	nextDonationViewerCount=500
+	donationOnScreen = false
 	currentHighScoreViewers=0
 	if resetSeed: mainSeed=randi()
 	currentStreamIndex=0
@@ -136,7 +137,6 @@ func resetPerStream():
 	eventIndexArrows = 0
 	eventIndexMusic = 0
 	events = []
-	snippetCount = lengthOfMusic if musicTracks.is_empty() else musicTracks.back().size()
 
 func _on_metronome_timeout() -> void:
 	if eventEnds.size() > 0 and eventEnds.back() <= 0:
@@ -151,13 +151,17 @@ func _on_metronome_timeout() -> void:
 	for entry in eventEnds:
 		endsString += str(entry) + ","
 	debugWindow.setEntry("Events", endsString)
-	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(snippetCount))
+	var snippet = musicTracks[currentStreamIndex][musicSnippetIndex-1] if musicSnippetIndex-1<snippetCount else null
+	var snippetString = "-" if snippet == null else ("A" if snippet.type == TrackSnippet.SnippetType.A else "B")
+	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(snippetCount)+"("+snippetString+")")
 
 func startMetronome():
 	$Metronome.start()
 	tact.emit(musicSnippetIndex)
 	musicSnippetIndex += 1
-	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(snippetCount))
+	var snippet = musicTracks[currentStreamIndex][musicSnippetIndex-1] if musicSnippetIndex-1<snippetCount else null
+	var snippetString = "-" if snippet == null else ("A" if snippet.type == TrackSnippet.SnippetType.A else "B")
+	debugWindow.setEntry("MusicIndex", str(musicSnippetIndex)+"/"+str(snippetCount)+"("+snippetString+")")
 	
 func stopMetronome():
 	$Metronome.stop()
@@ -185,6 +189,7 @@ func _on_metronome_arrows_timeout() -> void:
 func startMetronomeArrows():
 	if musicTracks.is_empty():
 		musicTracks.push_back([])
+	snippetCount = lengthOfMusic if musicTracks.is_empty() else musicTracks.back().size()
 	$MetronomeArrows.start()
 	$ArrowTravelDelay.start()
 	checkEventPrep()

@@ -37,4 +37,5 @@ func _on_performance_mode_toggled(toggled_on: bool) -> void:
 
 
 func _on_tutorial_button_down() -> void:
+	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/tutorial.tscn")
