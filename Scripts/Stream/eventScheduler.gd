@@ -1,13 +1,14 @@
 extends Node
 
 var eventChances = 2 # Chance is "1 in [eventChances]"
+var eventLengths = [2,4]
 
 func generateEvents():
 	if Global.currentStreamIndex>0 and Global.score>200:
 		var coinflip = randi() % eventChances == 0
 		if coinflip:
 			var newEvent = Event.new()
-			var length = randi_range(2,4)
+			var length = eventLengths.pick_random()
 			# TODO: Find out why this breaks at 1 and 2
 			var insertAt = randi_range(3,Global.musicTracks[0].size()-1)
 			newEvent.length = length
