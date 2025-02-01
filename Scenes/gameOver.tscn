@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="7_1q6on"]
 [ext_resource type="PackedScene" uid="uid://bj10nidhxaq5f" path="res://Scenes/scoreboard_2.tscn" id="8_7r33v"]
 [ext_resource type="Texture2D" uid="uid://bmhe3vxosw0vs" path="res://Assets/Sprites/Scoreboard/backgroundNinePatch.png" id="8_c5u4b"]
+[ext_resource type="Script" path="res://Scripts/high_score_display.gd" id="5_6tkhb"]
+[ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="7_1q6on"]
+[ext_resource type="PackedScene" uid="uid://c0wmscy44obgl" path="res://Scenes/options_menu.tscn" id="7_sqo8n"]
 [ext_resource type="Texture2D" uid="uid://wktqe8sxtius" path="res://Assets/Sprites/GameOver/backgroundCamera.png" id="8_jbcag"]
 
 [sub_resource type="Animation" id="Animation_y1q0o"]
@@ -367,11 +370,8 @@ theme = ExtResource("3_xylrd")
 text = "Options
 "
 
-[node name="QuitGame" type="Button" parent="Buttons/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3_xylrd")
-text = "Quit Game
-"
+[node name="OptionsMenu" parent="." instance=ExtResource("7_sqo8n")]
+z_index = 3
 
 [node name="Text" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -493,106 +493,9 @@ bbcode_enabled = true
 text = "[center]No special characters allowed![/center]
 [center]Maximum length of 10 characters![/center]"
 
-[node name="OptionsMenu" type="Node2D" parent="."]
-visible = false
-z_index = 1
-position = Vector2(576, 304)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="OptionsMenu"]
-offset_left = -253.0
-offset_top = -104.0
-offset_right = -141.0
-offset_bottom = -30.0
-scale = Vector2(4, 4)
-texture = ExtResource("5_ltstr")
-region_rect = Rect2(0, 0, 32, 32)
-patch_margin_left = 2
-patch_margin_top = 5
-patch_margin_right = 2
-patch_margin_bottom = 5
-
-[node name="Devmode" type="Button" parent="OptionsMenu"]
-offset_left = -206.0
-offset_top = -20.0
-offset_right = -119.0
-offset_bottom = -1.0
-scale = Vector2(4, 4)
-theme = ExtResource("3_xylrd")
-toggle_mode = true
-text = "Developer mode"
-
-[node name="Difficulty" type="HSlider" parent="OptionsMenu"]
-visible = false
-offset_left = -206.0
-offset_top = -24.0
-offset_right = -122.0
-offset_bottom = -8.0
-scale = Vector2(4, 4)
-theme = ExtResource("3_xylrd")
-min_value = 1.0
-max_value = 4.0
-value = 4.0
-rounded = true
-tick_count = 4
-ticks_on_borders = true
-
-[node name="Label" type="Label" parent="OptionsMenu/Difficulty"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 0
-offset_top = -18.0
-offset_right = 47.0
-offset_bottom = 5.0
-theme = ExtResource("3_xylrd")
-text = "Difficulty"
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="OptionsMenu/Difficulty"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 0
-offset_left = -4.0
-offset_top = 10.0
-offset_right = 43.0
-offset_bottom = 33.0
-theme = ExtResource("3_xylrd")
-text = "Easy"
-vertical_alignment = 1
-
-[node name="Label3" type="Label" parent="OptionsMenu/Difficulty"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 0
-offset_left = 60.0
-offset_top = 10.0
-offset_right = 107.0
-offset_bottom = 33.0
-theme = ExtResource("3_xylrd")
-text = "Normal"
-vertical_alignment = 1
-
-[node name="QuitMenuButton" type="Button" parent="OptionsMenu"]
-offset_left = 142.0
-offset_top = -104.0
-offset_right = 154.0
-offset_bottom = -85.0
-scale = Vector2(4, 4)
-theme = ExtResource("3_xylrd")
-text = "X
-"
-
-[node name="DeleteSavefileButton" type="Button" parent="OptionsMenu"]
-offset_left = -206.0
-offset_top = 67.0
-offset_right = -119.0
-offset_bottom = 86.0
-scale = Vector2(4, 4)
-theme = ExtResource("3_xylrd")
-text = "Reset savefile"
-
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="button_down" from="Buttons/VBoxContainer/Restart" to="." method="_on_restart_button_down"]
-[connection signal="button_down" from="Buttons/VBoxContainer/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
-[connection signal="button_down" from="Buttons/VBoxContainer/Options" to="." method="_on_options_button_down"]
-[connection signal="button_down" from="Buttons/VBoxContainer/QuitGame" to="." method="_on_quit_game_button_down"]
 [connection signal="text_submitted" from="Text/NameEnter/NinePatchRect/LineEdit" to="." method="_on_line_edit_text_submitted"]
-[connection signal="toggled" from="OptionsMenu/Devmode" to="." method="_on_devmode_toggled"]
-[connection signal="pressed" from="OptionsMenu/QuitMenuButton" to="." method="_on_quit_menu_button_pressed"]
-[connection signal="pressed" from="OptionsMenu/DeleteSavefileButton" to="." method="_on_delete_savefile_button_pressed"]
+[connection signal="button_down" from="Buttons/Restart" to="." method="_on_restart_button_down"]
+[connection signal="button_down" from="Buttons/ToMainMenu" to="." method="_on_to_main_menu_button_down"]
+[connection signal="button_down" from="Buttons/QuitGame" to="." method="_on_quit_game_button_down"]
+[connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]

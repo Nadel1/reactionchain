@@ -38,27 +38,11 @@ func _on_restart_button_down() -> void:
 	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/Stream/stream.tscn")
 
-
 func _on_quit_game_button_down() -> void:
 	get_tree().quit()
 
-
 func _on_options_button_down() -> void:
-	$OptionsMenu.visible = true
-
-
-func _on_quit_menu_button_pressed() -> void:
-	$OptionsMenu.visible = false
-
-
-func _on_devmode_toggled(toggled_on: bool) -> void:
-	Global.developerMode=toggled_on
-	
-
-
-func _on_delete_savefile_button_pressed() -> void:
-	Global.resetSaveFile()
-
+	$OptionsMenu.visible = !$OptionsMenu.visible
 
 func _on_to_main_menu_button_down() -> void:
 	Global.prepareGame()

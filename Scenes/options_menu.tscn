@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0wmscy44obgl"]
+
+[ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="1_8equf"]
+[ext_resource type="Script" path="res://Scripts/optionsMenu.gd" id="1_wfaae"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="2_p1ywi"]
+
+[node name="OptionsMenu" type="Node2D"]
+visible = false
+position = Vector2(576, 304)
+script = ExtResource("1_wfaae")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_left = -240.0
+offset_top = -227.0
+offset_right = -120.0
+offset_bottom = -135.0
+scale = Vector2(4, 4)
+texture = ExtResource("1_8equf")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 2
+patch_margin_top = 5
+patch_margin_right = 2
+patch_margin_bottom = 5
+
+[node name="Close" type="Button" parent="."]
+offset_left = 176.0
+offset_top = -216.0
+offset_right = 190.0
+offset_bottom = -195.0
+scale = Vector2(4, 4)
+theme = ExtResource("2_p1ywi")
+toggle_mode = true
+text = "X"
+
+[node name="Devmode" type="Button" parent="."]
+offset_left = -176.0
+offset_top = -176.0
+offset_right = -89.0
+offset_bottom = -157.0
+scale = Vector2(4, 4)
+theme = ExtResource("2_p1ywi")
+toggle_mode = true
+text = "Developer mode"
+
+[node name="PerformanceMode" type="Button" parent="."]
+offset_left = -176.0
+offset_top = -85.0
+offset_right = -89.0
+offset_bottom = -66.0
+scale = Vector2(4, 4)
+theme = ExtResource("2_p1ywi")
+toggle_mode = true
+text = "Potato mode"
+
+[node name="ResetSaveFile" type="Button" parent="."]
+offset_left = -176.0
+offset_top = 8.0
+offset_right = -90.0
+offset_bottom = 27.0
+scale = Vector2(4, 4)
+theme = ExtResource("2_p1ywi")
+text = "Reset savefile"
+
+[connection signal="button_down" from="Close" to="." method="_on_close_button_down"]
+[connection signal="toggled" from="Devmode" to="." method="_on_devmode_toggled"]
+[connection signal="toggled" from="PerformanceMode" to="." method="_on_performance_mode_toggled"]
+[connection signal="button_down" from="ResetSaveFile" to="." method="_on_reset_save_file_button_down"]
