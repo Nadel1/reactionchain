@@ -1,0 +1,133 @@
+[gd_scene load_steps=6 format=3 uid="uid://bj10nidhxaq5f"]
+
+[ext_resource type="Texture2D" uid="uid://bmhe3vxosw0vs" path="res://Assets/Sprites/Scoreboard/backgroundNinePatch.png" id="1_f48cx"]
+[ext_resource type="Script" path="res://Scripts/scoreboard_2.gd" id="1_us3mw"]
+[ext_resource type="PackedScene" uid="uid://s4lu63670yqo" path="res://Scenes/NetworkHandler.tscn" id="2_674q3"]
+[ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="4_4t7ap"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_8iw5m"]
+color = Color(1, 1, 1, 1)
+
+[node name="scoreboard2" type="Node2D"]
+script = ExtResource("1_us3mw")
+
+[node name="NetworkHandler" parent="." instance=ExtResource("2_674q3")]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_right = 240.0
+offset_bottom = 232.0
+texture = ExtResource("1_f48cx")
+region_rect = Rect2(0, 0, 32, 64)
+patch_margin_left = 13
+patch_margin_top = 35
+patch_margin_right = 13
+patch_margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 224.0
+offset_bottom = 204.0
+
+[node name="TabContainer" type="TabContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("4_4t7ap")
+current_tab = 0
+
+[node name="Local" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HB0" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Local"]
+layout_mode = 2
+
+[node name=">Name" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Local/HB0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_4t7ap")
+text = ">	       Name"
+
+[node name="Score" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Local/HB0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_4t7ap")
+text = "Score"
+
+[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/TabContainer/Local"]
+layout_mode = 2
+theme = ExtResource("4_4t7ap")
+theme_override_styles/separator = SubResource("StyleBoxLine_8iw5m")
+
+[node name="HB1" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Local"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_4t7ap")
+
+[node name="Names" type="RichTextLabel" parent="NinePatchRect/MarginContainer/TabContainer/Local/HB1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_4t7ap")
+bbcode_enabled = true
+text = "> #1 Peter "
+
+[node name="Scores" type="RichTextLabel" parent="NinePatchRect/MarginContainer/TabContainer/Local/HB1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_4t7ap")
+bbcode_enabled = true
+text = "666"
+
+[node name="Global" type="VBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="HB0" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Global"]
+layout_mode = 2
+
+[node name=">Name" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Global/HB0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_4t7ap")
+text = ">	       Name"
+
+[node name="Score" type="Label" parent="NinePatchRect/MarginContainer/TabContainer/Global/HB0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("4_4t7ap")
+text = "Score"
+
+[node name="HSeparator" type="HSeparator" parent="NinePatchRect/MarginContainer/TabContainer/Global"]
+layout_mode = 2
+theme = ExtResource("4_4t7ap")
+theme_override_styles/separator = SubResource("StyleBoxLine_8iw5m")
+
+[node name="HB1" type="HBoxContainer" parent="NinePatchRect/MarginContainer/TabContainer/Global"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_4t7ap")
+
+[node name="Names" type="RichTextLabel" parent="NinePatchRect/MarginContainer/TabContainer/Global/HB1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_4t7ap")
+bbcode_enabled = true
+text = "No Connection"
+
+[node name="Scores" type="RichTextLabel" parent="NinePatchRect/MarginContainer/TabContainer/Global/HB1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_4t7ap")
+bbcode_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

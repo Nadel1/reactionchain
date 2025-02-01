@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var scoreboard=$scoreboard2
 func _ready() -> void:
 	$OptionsMenu/Devmode.button_pressed = Global.developerMode
 	$OptionsMenu/PerformanceMode.button_pressed = Global.performanceMode
@@ -15,7 +16,6 @@ func _on_options_button_down() -> void:
 
 
 func _on_quit_button_down() -> void:
-	Global.saveGame()
 	get_tree().quit()
 
 
@@ -39,3 +39,9 @@ func _on_performance_mode_toggled(toggled_on: bool) -> void:
 func _on_tutorial_button_down() -> void:
 	Global.prepareGame()
 	get_tree().change_scene_to_file("res://Scenes/tutorial.tscn")
+	
+func _on_scoreboard_button_down() -> void:
+	if scoreboard.visible:
+		scoreboard.hide()
+	else:
+		scoreboard.show()
