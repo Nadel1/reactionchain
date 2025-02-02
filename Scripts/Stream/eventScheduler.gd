@@ -3,7 +3,10 @@ extends Node
 var eventChances = 2 # Chance is "1 in [eventChances]"
 var eventLengths = [2,4]
 
+var actualMusicLengths = []
+
 func generateEvents():
+	actualMusicLengths.push_back(Global.musicTracks.back().size())
 	if Global.currentStreamIndex>0 and Global.score>200:
 		var coinflip = randi() % eventChances == 0
 		if coinflip:

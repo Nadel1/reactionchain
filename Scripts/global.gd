@@ -64,6 +64,7 @@ var fastPromptMult = 2
 var fakePromptsCountdown = -1
 var snippetCount = lengthOfMusic
 var debugWindow : DebugWindow
+var showDebugWindow = true
 @onready var arrowTravelDelay = $ArrowTravelDelay
 
 signal tact(int)
@@ -108,6 +109,7 @@ func prepareGame(resetSeed = true):
 	pauseDepths = []
 	chatLog = []
 	chatUsers = []
+	AudioTrackProvider.eventScheduler.actualMusicLengths = []
 	VideoCustomizer.generateFirstTitle()
 	startSurvivedTime()
 	
@@ -276,6 +278,9 @@ func resetSaveFile():
 	moneyHighScore=0
 	highScoreTime=0
 
+func toggleDebugWindow():
+	showDebugWindow = !showDebugWindow
+	debugWindow.setVisible(developerMode and showDebugWindow)
 
 func _on_arrow_travel_delay_timeout() -> void:
 	startMetronome()

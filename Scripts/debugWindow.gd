@@ -5,7 +5,10 @@ var values : Dictionary
 
 func _ready() -> void:
 	Global.debugWindow = self
-	get_parent().visible = Global.developerMode
+	get_parent().visible = Global.developerMode and Global.showDebugWindow
+
+func setVisible(value):
+	get_parent().visible = value
 
 func setEntry(key, value):
 	values[key] = value
