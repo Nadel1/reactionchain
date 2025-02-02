@@ -38,7 +38,8 @@ func init(index : int):
 	var textureIndex = rand_from_seed(index + 10 + Global.mainSeed)[0] % streamBorders.size()
 	$StreamBorder.texture = streamBorders[textureIndex]
 	
-	$Time.wait_time = (Global.lengthOfMusic + 2) * Global.snippetLength
+	var snippetCount = AudioTrackProvider.eventScheduler.actualMusicLengths[index]
+	$Time.wait_time = (snippetCount + 2) * Global.snippetLength
 	$Time.start()
 
 static func generateFirstTitle():
@@ -62,7 +63,8 @@ func pause(depth):
 func resume(depth):
 	if depth == layerIndex:
 		$PausePlay.play("play")
-	$Time.set_paused(not depth >= layerIndex)
+	if Global.pauseDepths.size() == 0 or Global.pauseDepths.back() < layerIndex:
+		$Time.set_paused(false)
 
 func _process(_delta: float) -> void:
 	$TimelineProgress.scale.x = 1 - $Time.time_left / $Time.wait_time

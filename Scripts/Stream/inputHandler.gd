@@ -10,6 +10,7 @@ func _ready() -> void:
 
 func getInput(): # Returns the currently held button and whether it was first pressed just now
 	if Input.is_action_pressed("ui_end"): Global.gameOver()
+	if Input.is_action_just_pressed("ui_home"): Global.toggleDebugWindow()
 	
 	if Input.is_action_pressed("ui_up"): return [ButtonInput.UP, Input.is_action_just_pressed("ui_up")]
 	if Input.is_action_pressed("ui_right"): return [ButtonInput.RIGHT, Input.is_action_just_pressed("ui_right")]

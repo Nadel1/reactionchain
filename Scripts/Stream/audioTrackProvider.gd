@@ -7,6 +7,7 @@ extends Node
 # first entry is the current layer, earlier layers without a corresponding entry are silent.
 # in dB, -20 is the default volume, -40 is silent
 @export var layerVolumes = [-20, -25, -30]
+@onready var eventScheduler = $EventScheduler
 
 func getSnippet(A = true):
 	return Asnippets.pick_random() if A else Bsnippets.pick_random()
@@ -37,7 +38,7 @@ func prepareMusic():
 	
 	Global.musicTracks.append(track)
 	#print("Created track with length " + str(track.size()))
-	$EventScheduler.generateEvents()
+	eventScheduler.generateEvents()
 
 func insertEvent(newEvent : Event): #TODO: Add type parameter
 	Global.insertEvent(newEvent)
