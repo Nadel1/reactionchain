@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://bv0ca4q3shcn5"]
 
 [ext_resource type="Texture2D" uid="uid://bs65c1wtmctfo" path="res://Assets/Sprites/GameOver/Title1.png" id="1_dqk7c"]
-[ext_resource type="Script" path="res://Scripts/game_over.gd" id="1_xsauy"]
+[ext_resource type="Script" uid="uid://dyk8y6stuefpd" path="res://Scripts/game_over.gd" id="1_xsauy"]
 [ext_resource type="Texture2D" uid="uid://dehnci1a0f5hs" path="res://Assets/Sprites/GameOver/Title2.png" id="2_ylw7e"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_xylrd"]
 [ext_resource type="Texture2D" uid="uid://ijjhsk8cj0ma" path="res://Assets/Sprites/GameOver/background.png" id="7_1q6on"]
@@ -165,8 +165,8 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40nyb"]
 _data = {
-"RESET": SubResource("Animation_y1q0o"),
-"slideTitle": SubResource("Animation_ea673")
+&"RESET": SubResource("Animation_y1q0o"),
+&"slideTitle": SubResource("Animation_ea673")
 }
 
 [sub_resource type="Animation" id="Animation_4ws83"]
@@ -202,8 +202,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n6ub7"]
 _data = {
-"HighscoreJiggle": SubResource("Animation_4ws83"),
-"RESET": SubResource("Animation_ni8u1")
+&"HighscoreJiggle": SubResource("Animation_4ws83"),
+&"RESET": SubResource("Animation_ni8u1")
 }
 
 [sub_resource type="Animation" id="Animation_dsojx"]
@@ -279,9 +279,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2lnod"]
 _data = {
-"Error": SubResource("Animation_dsojx"),
-"RESET": SubResource("Animation_evrns"),
-"Zoom": SubResource("Animation_4gid5")
+&"Error": SubResource("Animation_dsojx"),
+&"RESET": SubResource("Animation_evrns"),
+&"Zoom": SubResource("Animation_4gid5")
 }
 
 [node name="GameOver" type="Node2D"]
@@ -290,7 +290,7 @@ script = ExtResource("1_xsauy")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../GameOverText")
 libraries = {
-"": SubResource("AnimationLibrary_40nyb")
+&"": SubResource("AnimationLibrary_40nyb")
 }
 autoplay = "slideTitle"
 
@@ -435,7 +435,7 @@ scroll_active = false
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Text/Score"]
 root_node = NodePath("../OverallScoreText")
 libraries = {
-"": SubResource("AnimationLibrary_n6ub7")
+&"": SubResource("AnimationLibrary_n6ub7")
 }
 
 [node name="scoreboard2" parent="Text" instance=ExtResource("8_7r33v")]
@@ -473,7 +473,7 @@ metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Text/NameEnter"]
 libraries = {
-"": SubResource("AnimationLibrary_2lnod")
+&"": SubResource("AnimationLibrary_2lnod")
 }
 
 [node name="ErrorMessage" type="RichTextLabel" parent="Text/NameEnter"]

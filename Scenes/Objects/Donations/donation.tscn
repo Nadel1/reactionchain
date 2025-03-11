@@ -1,6 +1,6 @@
 [gd_scene load_steps=53 format=3 uid="uid://b6h0kgvl47nof"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
+[ext_resource type="Script" uid="uid://ckpd77ilsv1xo" path="res://Scripts/Stream/donations.gd" id="1_7ptrp"]
 [ext_resource type="Texture2D" uid="uid://t5ncmqxa4p18" path="res://Assets/Sprites/Donations/DonationsNotification.png" id="2_xwg41"]
 [ext_resource type="Texture2D" uid="uid://c2toesrj3n0dt" path="res://Assets/Sprites/Donations/DonationsNotificationOutline.png" id="3_tq2tc"]
 [ext_resource type="Texture2D" uid="uid://dtepub2co0j2b" path="res://Assets/Sprites/Donations/TrackBackground.png" id="4_ipnh6"]
@@ -96,9 +96,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vux1m"]
 _data = {
-"RESET": SubResource("Animation_f4wxh"),
-"popUp": SubResource("Animation_114pb"),
-"timeForReaction": SubResource("Animation_helde")
+&"RESET": SubResource("Animation_f4wxh"),
+&"popUp": SubResource("Animation_114pb"),
+&"timeForReaction": SubResource("Animation_helde")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_djdnv"]
@@ -450,11 +450,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1grbi"]
 _data = {
-"RESET": SubResource("Animation_17peq"),
-"down_shake": SubResource("Animation_tvn67"),
-"left_shake": SubResource("Animation_kwc85"),
-"right_shake": SubResource("Animation_ng52e"),
-"up_shake": SubResource("Animation_4tehm")
+&"RESET": SubResource("Animation_17peq"),
+&"down_shake": SubResource("Animation_tvn67"),
+&"left_shake": SubResource("Animation_kwc85"),
+&"right_shake": SubResource("Animation_ng52e"),
+&"up_shake": SubResource("Animation_4tehm")
 }
 
 [sub_resource type="Animation" id="Animation_8vi1l"]
@@ -514,8 +514,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8mrim"]
 _data = {
-"RESET": SubResource("Animation_8vi1l"),
-"rotate": SubResource("Animation_rxm33")
+&"RESET": SubResource("Animation_8vi1l"),
+&"rotate": SubResource("Animation_rxm33")
 }
 
 [node name="Donation" type="Node2D"]

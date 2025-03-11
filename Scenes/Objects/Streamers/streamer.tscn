@@ -1,6 +1,6 @@
 [gd_scene load_steps=60 format=3 uid="uid://bjfey2jmh5t2s"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_brk8q"]
+[ext_resource type="Script" uid="uid://cugfaj7ljht7i" path="res://Scripts/Stream/facecamAnimator.gd" id="1_brk8q"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_lxfp8"]
 [ext_resource type="Texture2D" uid="uid://dbv12p7xn0xq0" path="res://Assets/Sprites/Donations/reactionAppreciate.png" id="2_vv408"]
 [ext_resource type="Texture2D" uid="uid://b7h5ew50b7jcs" path="res://Assets/Sprites/Streamers/Parts/Body0/movement0.png" id="3_g627v"]
@@ -1270,13 +1270,13 @@ tracks/8/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hjhqc"]
 _data = {
-"RESET": SubResource("Animation_0e3ng"),
-"prepare_yap": SubResource("Animation_gncu7"),
-"shift_down": SubResource("Animation_may1f"),
-"shift_left": SubResource("Animation_wnkgi"),
-"shift_right": SubResource("Animation_uos02"),
-"shift_up": SubResource("Animation_oaxjv"),
-"yap": SubResource("Animation_o14ls")
+&"RESET": SubResource("Animation_0e3ng"),
+&"prepare_yap": SubResource("Animation_gncu7"),
+&"shift_down": SubResource("Animation_may1f"),
+&"shift_left": SubResource("Animation_wnkgi"),
+&"shift_right": SubResource("Animation_uos02"),
+&"shift_up": SubResource("Animation_oaxjv"),
+&"yap": SubResource("Animation_o14ls")
 }
 
 [sub_resource type="Animation" id="Animation_a6ate"]
@@ -1556,13 +1556,13 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bh3dr"]
 _data = {
-"RESET": SubResource("Animation_a6ate"),
-"down": SubResource("Animation_1dv3v"),
-"left": SubResource("Animation_ewa7p"),
-"prepare_yap": SubResource("Animation_rqp6x"),
-"right": SubResource("Animation_2imn6"),
-"up": SubResource("Animation_q8l4n"),
-"yap": SubResource("Animation_o4c3f")
+&"RESET": SubResource("Animation_a6ate"),
+&"down": SubResource("Animation_1dv3v"),
+&"left": SubResource("Animation_ewa7p"),
+&"prepare_yap": SubResource("Animation_rqp6x"),
+&"right": SubResource("Animation_2imn6"),
+&"up": SubResource("Animation_q8l4n"),
+&"yap": SubResource("Animation_o4c3f")
 }
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_egfh5"]
@@ -1609,13 +1609,13 @@ sprite_frames = SubResource("SpriteFrames_3ay6f")
 
 [node name="Movement" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hjhqc")
+&"": SubResource("AnimationLibrary_hjhqc")
 }
 autoplay = "RESET"
 
 [node name="BodyAnimation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_bh3dr")
+&"": SubResource("AnimationLibrary_bh3dr")
 }
 
 [node name="ReactionRevert" type="Timer" parent="."]
@@ -1632,10 +1632,10 @@ z_index = 1
 position = Vector2(-20, -3)
 emitting = false
 amount = 20
-process_material = SubResource("ParticleProcessMaterial_egfh5")
 texture = ExtResource("9_qdmxf")
 one_shot = true
 explosiveness = 0.58
+process_material = SubResource("ParticleProcessMaterial_egfh5")
 
 [connection signal="animation_finished" from="DonationReaction" to="." method="_on_donation_reaction_animation_finished"]
 [connection signal="animation_finished" from="Movement" to="." method="_on_movement_animation_finished"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://c2v4rw01rukni"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/audioTrackProvider.gd" id="1_ioscl"]
-[ext_resource type="Script" path="res://Scripts/trackSnippet.gd" id="2_7oiyd"]
-[ext_resource type="Script" path="res://Scripts/Stream/eventScheduler.gd" id="2_e62ck"]
+[ext_resource type="Script" uid="uid://b2h1qfwb1grc1" path="res://Scripts/Stream/audioTrackProvider.gd" id="1_ioscl"]
+[ext_resource type="Script" uid="uid://yjryvc52dnk8" path="res://Scripts/trackSnippet.gd" id="2_7oiyd"]
+[ext_resource type="Script" uid="uid://dhw5mesxtds4j" path="res://Scripts/Stream/eventScheduler.gd" id="2_e62ck"]
 
 [node name="AudioTrackProvider" type="Node" node_paths=PackedStringArray("Asnippets", "Bsnippets")]
 script = ExtResource("1_ioscl")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cbe1ttdb8mw80"]
 
 [ext_resource type="Texture2D" uid="uid://byvbcfglo8pvh" path="res://Assets/Sprites/endesga-32-1x.png" id="1_0baoc"]
-[ext_resource type="Script" path="res://Scripts/Stream/startVideoSelector.gd" id="1_ra6wx"]
+[ext_resource type="Script" uid="uid://dkqdeoq543l3a" path="res://Scripts/Stream/startVideoSelector.gd" id="1_ra6wx"]
 
 [sub_resource type="VideoStreamTheora" id="VideoStreamTheora_705m1"]
 file = "res://Assets/Videos/SmithSpaghet.ogv"

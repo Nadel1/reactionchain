@@ -1,7 +1,7 @@
 [gd_scene load_steps=67 format=3 uid="uid://crg38quy1janw"]
 
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="1_d03ad"]
-[ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_gpvie"]
+[ext_resource type="Script" uid="uid://cugfaj7ljht7i" path="res://Scripts/Stream/facecamAnimator.gd" id="1_gpvie"]
 [ext_resource type="Texture2D" uid="uid://bhdqp47oukatl" path="res://Assets/Sprites/Streamers/AI/default.png" id="4_xwn73"]
 [ext_resource type="Texture2D" uid="uid://cqgp2ix3pmtcl" path="res://Assets/Sprites/Streamers/AI/angry.png" id="5_kmgj1"]
 [ext_resource type="Texture2D" uid="uid://cjmm1ptuculg" path="res://Assets/Sprites/Streamers/AI/cringe.png" id="6_0xyi1"]
@@ -486,13 +486,13 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hjhqc"]
 _data = {
-"RESET": SubResource("Animation_0e3ng"),
-"prepare_yap": SubResource("Animation_e7ood"),
-"shift_down": SubResource("Animation_may1f"),
-"shift_left": SubResource("Animation_wnkgi"),
-"shift_right": SubResource("Animation_uos02"),
-"shift_up": SubResource("Animation_oaxjv"),
-"yap": SubResource("Animation_7n6gf")
+&"RESET": SubResource("Animation_0e3ng"),
+&"prepare_yap": SubResource("Animation_e7ood"),
+&"shift_down": SubResource("Animation_may1f"),
+&"shift_left": SubResource("Animation_wnkgi"),
+&"shift_right": SubResource("Animation_uos02"),
+&"shift_up": SubResource("Animation_oaxjv"),
+&"yap": SubResource("Animation_7n6gf")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qjlq6"]
@@ -603,13 +603,13 @@ length = 0.6
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bh3dr"]
 _data = {
-"RESET": SubResource("Animation_a6ate"),
-"down": SubResource("Animation_1dv3v"),
-"left": SubResource("Animation_ewa7p"),
-"prepare_yap": SubResource("Animation_rqp6x"),
-"right": SubResource("Animation_2imn6"),
-"up": SubResource("Animation_q8l4n"),
-"yap": SubResource("Animation_o4c3f")
+&"RESET": SubResource("Animation_a6ate"),
+&"down": SubResource("Animation_1dv3v"),
+&"left": SubResource("Animation_ewa7p"),
+&"prepare_yap": SubResource("Animation_rqp6x"),
+&"right": SubResource("Animation_2imn6"),
+&"up": SubResource("Animation_q8l4n"),
+&"yap": SubResource("Animation_o4c3f")
 }
 
 [node name="StreamerAi" type="Node2D" node_paths=PackedStringArray("face", "head")]
@@ -635,7 +635,7 @@ texture = ExtResource("1_d03ad")
 
 [node name="Movement" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hjhqc")
+&"": SubResource("AnimationLibrary_hjhqc")
 }
 
 [node name="ReactionRevert" type="Timer" parent="."]
@@ -650,7 +650,7 @@ animation = &"fail"
 
 [node name="BodyAnimation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_bh3dr")
+&"": SubResource("AnimationLibrary_bh3dr")
 }
 
 [node name="EventStart" type="Timer" parent="."]

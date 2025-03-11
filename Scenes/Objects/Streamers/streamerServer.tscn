@@ -1,6 +1,6 @@
 [gd_scene load_steps=46 format=3 uid="uid://chvh3cbh8xf57"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_hu73d"]
+[ext_resource type="Script" uid="uid://cugfaj7ljht7i" path="res://Scripts/Stream/facecamAnimator.gd" id="1_hu73d"]
 [ext_resource type="Texture2D" uid="uid://cbu5irxitgjej" path="res://Assets/Sprites/Streamers/Server/donationPositive.png" id="2_chgd3"]
 [ext_resource type="Texture2D" uid="uid://bsrcsyk5yb0qi" path="res://Assets/Sprites/Streamers/Server/donationNegative.png" id="3_cqp8h"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="3_rowql"]
@@ -613,13 +613,13 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hjhqc"]
 _data = {
-"RESET": SubResource("Animation_0e3ng"),
-"prepare_yap": SubResource("Animation_gncu7"),
-"shift_down": SubResource("Animation_may1f"),
-"shift_left": SubResource("Animation_wnkgi"),
-"shift_right": SubResource("Animation_uos02"),
-"shift_up": SubResource("Animation_oaxjv"),
-"yap": SubResource("Animation_o14ls")
+&"RESET": SubResource("Animation_0e3ng"),
+&"prepare_yap": SubResource("Animation_gncu7"),
+&"shift_down": SubResource("Animation_may1f"),
+&"shift_left": SubResource("Animation_wnkgi"),
+&"shift_right": SubResource("Animation_uos02"),
+&"shift_up": SubResource("Animation_oaxjv"),
+&"yap": SubResource("Animation_o14ls")
 }
 
 [sub_resource type="Animation" id="Animation_sr2t1"]
@@ -647,13 +647,13 @@ resource_name = "yap"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i6ha0"]
 _data = {
-"RESET": SubResource("Animation_sr2t1"),
-"down": SubResource("Animation_mtqmt"),
-"left": SubResource("Animation_rlbo0"),
-"prepare_yap": SubResource("Animation_ocd8q"),
-"right": SubResource("Animation_lkaj8"),
-"up": SubResource("Animation_xs22f"),
-"yap": SubResource("Animation_fgpil")
+&"RESET": SubResource("Animation_sr2t1"),
+&"down": SubResource("Animation_mtqmt"),
+&"left": SubResource("Animation_rlbo0"),
+&"prepare_yap": SubResource("Animation_ocd8q"),
+&"right": SubResource("Animation_lkaj8"),
+&"up": SubResource("Animation_xs22f"),
+&"yap": SubResource("Animation_fgpil")
 }
 
 [node name="StreamerServer" type="Node2D" node_paths=PackedStringArray("face", "head")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://csbb42igbvky6"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/fakePromptSpawner.gd" id="1_73atu"]
+[ext_resource type="Script" uid="uid://gddki0mslxaj" path="res://Scripts/Stream/fakePromptSpawner.gd" id="1_73atu"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="2_vjewf"]
 
 [node name="FakePromptSpawner" type="Node2D"]

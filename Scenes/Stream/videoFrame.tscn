@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://dd2twf35woli5"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/videoCustomizer.gd" id="1_2n6c5"]
+[ext_resource type="Script" uid="uid://bybmn08hd12v8" path="res://Scripts/Stream/videoCustomizer.gd" id="1_2n6c5"]
 [ext_resource type="Texture2D" uid="uid://u8vlrpwby25x" path="res://Assets/Sprites/Streamers/StreamUI1.png" id="2_tw5sx"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_6olq0"]
 [ext_resource type="Texture2D" uid="uid://dclv4yduo7t6r" path="res://Assets/Sprites/Streamers/StreamUI2.png" id="3_b6qjb"]
@@ -120,9 +120,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o6uh5"]
 _data = {
-"RESET": SubResource("Animation_5ibr3"),
-"pause": SubResource("Animation_d4s8t"),
-"play": SubResource("Animation_15s7l")
+&"RESET": SubResource("Animation_5ibr3"),
+&"pause": SubResource("Animation_d4s8t"),
+&"play": SubResource("Animation_15s7l")
 }
 
 [node name="VideoFrame" type="Node2D"]
@@ -204,6 +204,6 @@ autoplay = "pause"
 
 [node name="PausePlay" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_o6uh5")
+&"": SubResource("AnimationLibrary_o6uh5")
 }
 autoplay = "RESET"
