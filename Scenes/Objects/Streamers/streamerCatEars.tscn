@@ -1,7 +1,7 @@
 [gd_scene load_steps=81 format=3 uid="uid://nro5k78n78yo"]
 
 [ext_resource type="Texture2D" uid="uid://dbv12p7xn0xq0" path="res://Assets/Sprites/Donations/reactionAppreciate.png" id="1_s5fu1"]
-[ext_resource type="Script" path="res://Scripts/Stream/facecamAnimator.gd" id="1_s6r5u"]
+[ext_resource type="Script" uid="uid://cugfaj7ljht7i" path="res://Scripts/Stream/facecamAnimator.gd" id="1_s6r5u"]
 [ext_resource type="Texture2D" uid="uid://bwk42kdepn3y" path="res://Assets/Sprites/Donations/reactionFail.png" id="2_i1xlw"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="3_ctxhp"]
 [ext_resource type="Texture2D" uid="uid://bt0i66eek64ty" path="res://Assets/Sprites/Streamers/CatEarsStreamer/Streamer4body.png" id="5_5rl63"]
@@ -1015,13 +1015,13 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hjhqc"]
 _data = {
-"RESET": SubResource("Animation_0e3ng"),
-"prepare_yap": SubResource("Animation_gncu7"),
-"shift_down": SubResource("Animation_may1f"),
-"shift_left": SubResource("Animation_wnkgi"),
-"shift_right": SubResource("Animation_uos02"),
-"shift_up": SubResource("Animation_oaxjv"),
-"yap": SubResource("Animation_o14ls")
+&"RESET": SubResource("Animation_0e3ng"),
+&"prepare_yap": SubResource("Animation_gncu7"),
+&"shift_down": SubResource("Animation_may1f"),
+&"shift_left": SubResource("Animation_wnkgi"),
+&"shift_right": SubResource("Animation_uos02"),
+&"shift_up": SubResource("Animation_oaxjv"),
+&"yap": SubResource("Animation_o14ls")
 }
 
 [sub_resource type="Animation" id="Animation_sr2t1"]
@@ -1144,13 +1144,13 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i6ha0"]
 _data = {
-"RESET": SubResource("Animation_sr2t1"),
-"down": SubResource("Animation_mtqmt"),
-"left": SubResource("Animation_rlbo0"),
-"prepare_yap": SubResource("Animation_ocd8q"),
-"right": SubResource("Animation_lkaj8"),
-"up": SubResource("Animation_xs22f"),
-"yap": SubResource("Animation_fgpil")
+&"RESET": SubResource("Animation_sr2t1"),
+&"down": SubResource("Animation_mtqmt"),
+&"left": SubResource("Animation_rlbo0"),
+&"prepare_yap": SubResource("Animation_ocd8q"),
+&"right": SubResource("Animation_lkaj8"),
+&"up": SubResource("Animation_xs22f"),
+&"yap": SubResource("Animation_fgpil")
 }
 
 [node name="StreamerCatEars" type="Node2D" node_paths=PackedStringArray("face", "head")]

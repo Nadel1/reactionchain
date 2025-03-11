@@ -1,16 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://oqtxuh6lfavi"]
+[gd_scene load_steps=16 format=3 uid="uid://oqtxuh6lfavi"]
 
 [ext_resource type="Texture2D" uid="uid://d2mo23t2gbb52" path="res://Assets/Sprites/MainMenu/Title1.png" id="1_ggqlj"]
 [ext_resource type="PackedScene" uid="uid://cbe1ttdb8mw80" path="res://Scenes/Stream/startVideo.tscn" id="1_gvy58"]
-[ext_resource type="Script" path="res://Scripts/mainMenu.gd" id="1_txtt8"]
+[ext_resource type="Script" uid="uid://croe6d0gd08t3" path="res://Scripts/mainMenu.gd" id="1_txtt8"]
 [ext_resource type="Texture2D" uid="uid://cn65hxca57jml" path="res://Assets/Sprites/MainMenu/Title2.png" id="2_5038a"]
 [ext_resource type="Texture2D" uid="uid://coq1gsyd2r3ja" path="res://Assets/Sprites/MainMenu/Title3.png" id="3_g8fk8"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="4_jced4"]
-[ext_resource type="PackedScene" uid="uid://wh7p7mfwlh88" path="res://Scenes/options_menu.tscn" id="7_gsslm"]
-[ext_resource type="Script" path="res://Scripts/menu_music.gd" id="8_jcyxb"]
+[ext_resource type="PackedScene" uid="uid://c0wmscy44obgl" path="res://Scenes/options_menu.tscn" id="7_gsslm"]
+[ext_resource type="Script" uid="uid://b0hfbt0sh11dv" path="res://Scripts/menu_music.gd" id="8_jcyxb"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="9_ngp34"]
-[ext_resource type="Script" path="res://Scripts/Stream/backingTrackPlayer.gd" id="10_ng7j5"]
+[ext_resource type="Script" uid="uid://0bdk6pnihmuh" path="res://Scripts/Stream/backingTrackPlayer.gd" id="10_ng7j5"]
 [ext_resource type="PackedScene" uid="uid://bj10nidhxaq5f" path="res://Scenes/scoreboard_2.tscn" id="11_qfbj4"]
+[ext_resource type="Texture2D" uid="uid://bmhe3vxosw0vs" path="res://Assets/Sprites/Scoreboard/backgroundNinePatch.png" id="12_yij4q"]
 
 [sub_resource type="Animation" id="Animation_1sc46"]
 length = 0.001
@@ -117,8 +118,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_436wm"]
 _data = {
-"RESET": SubResource("Animation_1sc46"),
-"SlideIn": SubResource("Animation_cnhrj")
+&"RESET": SubResource("Animation_1sc46"),
+&"SlideIn": SubResource("Animation_cnhrj")
 }
 
 [node name="MainMenu" type="Node2D"]
@@ -146,7 +147,7 @@ texture = ExtResource("3_g8fk8")
 
 [node name="TitleAnim" type="AnimationPlayer" parent="Title"]
 libraries = {
-"": SubResource("AnimationLibrary_436wm")
+&"": SubResource("AnimationLibrary_436wm")
 }
 autoplay = "SlideIn"
 
@@ -179,13 +180,23 @@ text = "Play Tutorial"
 
 [node name="Scoreboard" type="Button" parent="Buttons"]
 layout_mode = 0
-offset_left = 684.0
+offset_left = 576.0
 offset_top = 224.0
-offset_right = 756.0
+offset_right = 648.0
 offset_bottom = 245.0
 scale = Vector2(4, 4)
 theme = ExtResource("4_jced4")
 text = "Scoreboard"
+
+[node name="Credits" type="Button" parent="Buttons"]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 224.0
+offset_right = 918.0
+offset_bottom = 245.0
+scale = Vector2(4, 4)
+theme = ExtResource("4_jced4")
+text = "Credits"
 
 [node name="Options" type="Button" parent="Buttons"]
 layout_mode = 0
@@ -262,9 +273,60 @@ visible = false
 position = Vector2(640, 64)
 scale = Vector2(2, 2)
 
+[node name="CreditsBoard" type="Node2D" parent="."]
+visible = false
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CreditsBoard"]
+offset_left = 640.0
+offset_top = 64.0
+offset_right = 880.0
+offset_bottom = 296.0
+scale = Vector2(2, 2)
+texture = ExtResource("12_yij4q")
+region_rect = Rect2(0, 0, 32, 64)
+patch_margin_left = 13
+patch_margin_top = 35
+patch_margin_right = 13
+patch_margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="CreditsBoard/NinePatchRect"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 32.0
+offset_right = 228.0
+offset_bottom = 224.0
+
+[node name="Label" type="Label" parent="CreditsBoard/NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("4_jced4")
+text = "Code & Sprites:
+- Natalia Piotrowski
+- Lukas Moersler
+Music:
+- Daniel Abert
+
+
+
+AI Videos:
+- u/chaindrop (Will Smith eating Spaghet)
+- u/Qemmish (Elderly Disco, Big Cats)
+- u/eclecticmethod (Godzilla)"
+
+[node name="Label" type="Label" parent="CreditsBoard/NinePatchRect"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 18.0
+scale = Vector2(2, 2)
+theme = ExtResource("4_jced4")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Credits"
+
 [connection signal="button_down" from="Buttons/Start" to="." method="_on_start_button_down"]
 [connection signal="button_down" from="Buttons/Tutorial" to="." method="_on_tutorial_button_down"]
 [connection signal="button_down" from="Buttons/Scoreboard" to="." method="_on_scoreboard_button_down"]
+[connection signal="button_down" from="Buttons/Credits" to="." method="_on_credits_button_down"]
 [connection signal="button_down" from="Buttons/Options" to="." method="_on_options_button_down"]
 [connection signal="button_down" from="Buttons/Quit" to="." method="_on_quit_button_down"]
 [connection signal="timeout" from="Music/Metronome" to="Music" method="_on_metronome_timeout"]

@@ -1,23 +1,23 @@
 [gd_scene load_steps=61 format=3 uid="uid://esuifwpqp2og"]
 
 [ext_resource type="PackedScene" uid="uid://c0bluohjgwimb" path="res://Scenes/track.tscn" id="1_hd44i"]
-[ext_resource type="Script" path="res://Scripts/stream.gd" id="1_lwu7i"]
+[ext_resource type="Script" uid="uid://bdm8vl3u48v4q" path="res://Scripts/stream.gd" id="1_lwu7i"]
 [ext_resource type="PackedScene" uid="uid://dylolctgual2i" path="res://Scenes/Stream/chat.tscn" id="2_p3jgj"]
 [ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_b6yqj"]
-[ext_resource type="Script" path="res://Scripts/Stream/backingTrackPlayer.gd" id="4_82cmv"]
+[ext_resource type="Script" uid="uid://0bdk6pnihmuh" path="res://Scripts/Stream/backingTrackPlayer.gd" id="4_82cmv"]
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="4_ta3ta"]
-[ext_resource type="Script" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
-[ext_resource type="Script" path="res://Scripts/Stream/scoreDisplay.gd" id="6_a5we1"]
+[ext_resource type="Script" uid="uid://enwv8yq5dgno" path="res://Scripts/Stream/inputHandler.gd" id="5_a0dki"]
+[ext_resource type="Script" uid="uid://boihflcbqrvd1" path="res://Scripts/Stream/scoreDisplay.gd" id="6_a5we1"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="6_f2vs8"]
-[ext_resource type="Script" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
+[ext_resource type="Script" uid="uid://ckwjao7508uvi" path="res://Scripts/Stream/inputRecorder.gd" id="6_o3x8b"]
 [ext_resource type="Texture2D" uid="uid://p7vxw7bqe4lk" path="res://Assets/Sprites/Donations/MoneyVisualiser.png" id="7_fa6aa"]
 [ext_resource type="PackedScene" uid="uid://sf3lvxf1n2uo" path="res://Scenes/Stream/streamerStats.tscn" id="7_veajl"]
-[ext_resource type="Script" path="res://Scripts/Stream/moneyManager.gd" id="8_42nob"]
+[ext_resource type="Script" uid="uid://djxjtd6t68q2d" path="res://Scripts/Stream/moneyManager.gd" id="8_42nob"]
 [ext_resource type="Texture2D" uid="uid://11u44lllufaq" path="res://Assets/Sprites/Streamers/FacecamFrame.png" id="8_imbvg"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="8_iwo4b"]
 [ext_resource type="Texture2D" uid="uid://cl55olhp7mk1x" path="res://Assets/Sprites/Donations/MoneyWarning.png" id="11_grdfd"]
 [ext_resource type="Texture2D" uid="uid://dqs175fup217t" path="res://Assets/Sprites/MainMenu/Box.png" id="12_51xhv"]
-[ext_resource type="Script" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
+[ext_resource type="Script" uid="uid://d0ewsymijd27p" path="res://Scripts/debugWindow.gd" id="13_ft7si"]
 [ext_resource type="PackedScene" uid="uid://p3a85s2c5cos" path="res://Scenes/Stream/statBar.tscn" id="13_k8v6l"]
 [ext_resource type="Texture2D" uid="uid://crgjxiylykkfr" path="res://Assets/Sprites/UI/viewerIcon.png" id="14_550fi"]
 [ext_resource type="Texture2D" uid="uid://d10r14vr6uyvc" path="res://Assets/Sprites/Donations/DonationIcon.png" id="14_igh82"]
@@ -226,9 +226,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jg2sn"]
 _data = {
-"RESET": SubResource("Animation_mrka8"),
-"decrease": SubResource("Animation_d1ocb"),
-"increase": SubResource("Animation_s5mly")
+&"RESET": SubResource("Animation_mrka8"),
+&"decrease": SubResource("Animation_d1ocb"),
+&"increase": SubResource("Animation_s5mly")
 }
 
 [sub_resource type="Animation" id="Animation_mpm0a"]
@@ -288,8 +288,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rq5oo"]
 _data = {
-"RESET": SubResource("Animation_mpm0a"),
-"incoming": SubResource("Animation_ejk3s")
+&"RESET": SubResource("Animation_mpm0a"),
+&"incoming": SubResource("Animation_ejk3s")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ltnvm"]
@@ -402,8 +402,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lsvkg"]
 _data = {
-"RESET": SubResource("Animation_we02f"),
-"fade": SubResource("Animation_ylv4e")
+&"RESET": SubResource("Animation_we02f"),
+&"fade": SubResource("Animation_ylv4e")
 }
 
 [sub_resource type="Animation" id="Animation_637ko"]
@@ -462,8 +462,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cfqdi"]
 _data = {
-"RESET": SubResource("Animation_637ko"),
-"zoomOut": SubResource("Animation_jxp2g")
+&"RESET": SubResource("Animation_637ko"),
+&"zoomOut": SubResource("Animation_jxp2g")
 }
 
 [node name="Stream" type="Node2D"]
@@ -570,7 +570,7 @@ autoplay = "default"
 
 [node name="ScoreAnim" type="AnimationPlayer" parent="UI"]
 libraries = {
-"": SubResource("AnimationLibrary_jg2sn")
+&"": SubResource("AnimationLibrary_jg2sn")
 }
 autoplay = "RESET"
 
@@ -640,7 +640,7 @@ position = Vector2(-1, -1)
 
 [node name="DonationAnimation" type="AnimationPlayer" parent="UI"]
 libraries = {
-"": SubResource("AnimationLibrary_rq5oo")
+&"": SubResource("AnimationLibrary_rq5oo")
 }
 
 [node name="DonationBackground" type="AnimatedSprite2D" parent="UI"]
@@ -707,7 +707,7 @@ frame_progress = 0.484023
 
 [node name="Fade" type="AnimationPlayer" parent="UI/ArrowKeys"]
 libraries = {
-"": SubResource("AnimationLibrary_lsvkg")
+&"": SubResource("AnimationLibrary_lsvkg")
 }
 autoplay = "fade"
 
@@ -715,7 +715,7 @@ autoplay = "fade"
 
 [node name="Transition" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_cfqdi")
+&"": SubResource("AnimationLibrary_cfqdi")
 }
 autoplay = "zoomOut"
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://sf3lvxf1n2uo"]
 
 [ext_resource type="PackedScene" uid="uid://p3a85s2c5cos" path="res://Scenes/Stream/statBar.tscn" id="1_2e687"]
-[ext_resource type="Script" path="res://Scripts/Stream/streamerStats.gd" id="1_4m1jq"]
+[ext_resource type="Script" uid="uid://dyjybuo47s223" path="res://Scripts/Stream/streamerStats.gd" id="1_4m1jq"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_fv1vh"]
 [ext_resource type="Texture2D" uid="uid://dmrmnq0pmlowv" path="res://Assets/Sprites/UI/healthIcon.png" id="3_gwd4c"]
 [ext_resource type="Texture2D" uid="uid://dby7kuc33rjjs" path="res://Assets/Sprites/UI/moneyIcon.png" id="4_6r7x8"]
@@ -40,8 +40,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_q6uy0"]
 _data = {
-"RESET": SubResource("Animation_ms1ke"),
-"turn_red": SubResource("Animation_6qese")
+&"RESET": SubResource("Animation_ms1ke"),
+&"turn_red": SubResource("Animation_6qese")
 }
 
 [sub_resource type="Gradient" id="Gradient_n0eju"]
@@ -97,15 +97,15 @@ text = "0"
 
 [node name="MoneyAnim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_q6uy0")
+&"": SubResource("AnimationLibrary_q6uy0")
 }
 
 [node name="RegenParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 37)
 emitting = false
 amount = 4
-process_material = SubResource("ParticleProcessMaterial_s183q")
 texture = ExtResource("6_7y5tf")
+process_material = SubResource("ParticleProcessMaterial_s183q")
 
 [editable path="Health"]
 [editable path="Money"]

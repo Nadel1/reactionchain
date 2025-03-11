@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://doruah8kywwy2"]
 
-[ext_resource type="Script" path="res://Scripts/eventPrompt.gd" id="1_3rstk"]
+[ext_resource type="Script" uid="uid://ccwrcfvobennp" path="res://Scripts/eventPrompt.gd" id="1_3rstk"]
 [ext_resource type="Texture2D" uid="uid://b5hvytwyef37p" path="res://Assets/Sprites/Buttons/EventTrigger.png" id="1_jffjn"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="3_08513"]
 

@@ -1,11 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://cbfggapgaey4o"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/recordingPlayback.gd" id="1_0vrxd"]
+[ext_resource type="Script" uid="uid://btsihkx75axsf" path="res://Scripts/Stream/recordingPlayback.gd" id="1_0vrxd"]
 [ext_resource type="PackedScene" uid="uid://ciayf6jvcdddn" path="res://Scenes/Stream/trackPlaybackHandler.tscn" id="3_0pve0"]
 [ext_resource type="PackedScene" uid="uid://dd2twf35woli5" path="res://Scenes/Stream/videoFrame.tscn" id="3_147ex"]
 [ext_resource type="PackedScene" uid="uid://bobli6k1mcb1x" path="res://Scenes/Objects/ChatRecorded.tscn" id="4_tv0hw"]
 
 [node name="Recording" type="Node2D"]
+modulate = Color(0.8, 0.8, 0.8, 1)
 script = ExtResource("1_0vrxd")
 
 [node name="TrackPlaybackHandler" parent="." instance=ExtResource("3_0pve0")]

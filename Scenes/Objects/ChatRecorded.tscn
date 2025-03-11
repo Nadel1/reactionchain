@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bobli6k1mcb1x"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/chatRecording.gd" id="1_loq4l"]
+[ext_resource type="Script" uid="uid://cnp45htpmlrac" path="res://Scripts/Stream/chatRecording.gd" id="1_loq4l"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="1_qj2l8"]
 
 [node name="ChatRecorded" type="Node2D"]

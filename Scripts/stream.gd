@@ -5,6 +5,7 @@ extends Node2D
 @onready var inputRecorder=$InputRecorder
 var recording = preload("res://Scenes/Stream/recording.tscn")
 var startVideo = preload("res://Scenes/Stream/startVideo.tscn")
+var blankVideo = preload("res://Scenes/Stream/blankVideo.tscn")
 const RECORDEDCHAT=preload("res://Scenes/Objects/ChatRecorded.tscn")
 var gameOverPossible=true#modified by developermode
 @onready var donation=$UI/Donation
@@ -83,7 +84,7 @@ func _ready():
 
 	if index > 0:
 		$UI/ArrowKeys.visible = false
-		for i in range(0,index):
+		for i in range(0,min(index,Global.recordingDepth)):
 			var recursionInstance = recording.instantiate()
 			var lastStreamer=allStreamers[Global.streamerIndices[index-1-i]].instantiate()
 			lastStreamer.position=$UI/StreamerPlaceholder.position
@@ -100,7 +101,11 @@ func _ready():
 				trackPlayer.find_child("MidiPlayerCorrect").bus = "Correct"+str((index-1)-i)
 				trackPlayer.find_child("MidiPlayerFail").bus = "Fail"+str((index-1)-i)
 			currentNode = recursionInstance
-	var video = startVideo.instantiate()
+	var video
+	if index <= Global.recordingDepth:
+		video = startVideo.instantiate()
+	else:
+		video = blankVideo.instantiate()
 	currentNode.find_child("Content").add_child(video)
 	Global.currentStreamer=currentStreamer#so that implementing reactions is easier
 	Global.streamerIndices.append(currentStreamerIndex)

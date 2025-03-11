@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bj10nidhxaq5f"]
 
 [ext_resource type="Texture2D" uid="uid://bmhe3vxosw0vs" path="res://Assets/Sprites/Scoreboard/backgroundNinePatch.png" id="1_f48cx"]
-[ext_resource type="Script" path="res://Scripts/scoreboard_2.gd" id="1_us3mw"]
+[ext_resource type="Script" uid="uid://d13pie40vo8ya" path="res://Scripts/scoreboard_2.gd" id="1_us3mw"]
 [ext_resource type="PackedScene" uid="uid://s4lu63670yqo" path="res://Scenes/NetworkHandler.tscn" id="2_674q3"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="4_4t7ap"]
 

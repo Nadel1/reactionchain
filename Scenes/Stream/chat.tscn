@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dylolctgual2i"]
 
-[ext_resource type="Script" path="res://Scripts/Stream/chat.gd" id="1_hp6my"]
+[ext_resource type="Script" uid="uid://bmpfl7y2266n4" path="res://Scripts/Stream/chat.gd" id="1_hp6my"]
 [ext_resource type="Theme" uid="uid://bciinuu1msc6n" path="res://Assets/Themes/MainMenuUI.tres" id="2_i3wsg"]
 
 [node name="Chat" type="Node2D"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c16mpxct47xcj" path="res://Assets/Sprites/FX/Splat.png" id="1_hs5a8"]
 [ext_resource type="Theme" uid="uid://dfyebrjr2v20w" path="res://Assets/Themes/FXFont.tres" id="2_ip0kx"]
-[ext_resource type="Script" path="res://Scripts/FX/splat.gd" id="2_tx5qx"]
+[ext_resource type="Script" uid="uid://col2jbw2f14p6" path="res://Scripts/FX/splat.gd" id="2_tx5qx"]
 
 [node name="Splat" type="Sprite2D"]
 z_index = 5
