@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bobli6k1mcb1x" path="res://Scenes/Objects/ChatRecorded.tscn" id="4_tv0hw"]
 
 [node name="Recording" type="Node2D"]
+modulate = Color(0.8, 0.8, 0.8, 1)
 script = ExtResource("1_0vrxd")
 
 [node name="TrackPlaybackHandler" parent="." instance=ExtResource("3_0pve0")]

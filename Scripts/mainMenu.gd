@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var scoreboard=$scoreboard2
+@onready var credits = $CreditsBoard
 
 func _on_start_button_down() -> void:
 	Global.prepareGame(false)
@@ -21,3 +22,11 @@ func _on_scoreboard_button_down() -> void:
 		scoreboard.hide()
 	else:
 		scoreboard.show()
+		credits.hide()
+
+func _on_credits_button_down() -> void:
+	if credits.visible:
+		credits.hide()
+	else:
+		credits.show()
+		scoreboard.hide()
